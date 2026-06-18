@@ -1,0 +1,9 @@
+[
+  {
+    "name": "个人博客",
+    "description": "基于 React + TypeScript + shadcn/ui 构建的个人博客，集成作品集展示与资源导航",
+    "tags": ["React", "TypeScript", "TailwindCSS", "shadcn/ui", "Cloudflare Pages"],
+    "github": "https://github.com/icemouce111/blog",
+    "demo": "https://blog.icemouce.com"
+  }
+]

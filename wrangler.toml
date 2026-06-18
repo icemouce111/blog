@@ -1,0 +1,7 @@
+name = "blog"
+pages_build_output_dir = "dist"
+compatibility_date = "2025-06-18"
+
+[env.production]
+# Cloudflare Pages auto-detects Vite build command
+# Build command: npm run build
