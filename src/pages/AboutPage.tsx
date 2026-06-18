@@ -33,14 +33,14 @@ export function AboutPage() {
             <MessageCircle className="h-5 w-5 text-green-500 shrink-0" />
             <div>
               <p className="text-sm font-medium">微信</p>
-              <p className="text-sm text-muted-foreground font-mono">待填写</p>
+              <p className="text-sm text-muted-foreground font-mono">icemouce101</p>
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-lg border p-4">
             <Mail className="h-5 w-5 text-blue-500 shrink-0" />
             <div>
               <p className="text-sm font-medium">邮箱</p>
-              <p className="text-sm text-muted-foreground font-mono">待填写</p>
+              <p className="text-sm text-muted-foreground font-mono">2925547464@qq.com</p>
             </div>
           </div>
         </div>
