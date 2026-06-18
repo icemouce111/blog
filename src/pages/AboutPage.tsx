@@ -33,7 +33,7 @@ export function AboutPage() {
             <MessageCircle className="h-5 w-5 text-green-500 shrink-0" />
             <div>
               <p className="text-sm font-medium">微信</p>
-              <p className="text-sm text-muted-foreground font-mono">icemouce101</p>
+              <p className="text-sm text-muted-foreground font-mono">icemouce101（注明来意）</p>
             </div>
           </div>
           <div className="flex items-center gap-3 rounded-lg border p-4">
