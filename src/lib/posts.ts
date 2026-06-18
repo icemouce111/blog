@@ -13,14 +13,14 @@ export interface Post extends PostMeta {
   content: string
 }
 
-const markdownModules = import.meta.glob('/public/content/blog/*.md', {
+const markdownModules = import.meta.glob('../content/blog/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
 })
 
 function getRawContent(slug: string): string | null {
-  const key = `/public/content/blog/${slug}.md`
+  const key = `../content/blog/${slug}.md`
   return (markdownModules[key] as string) || null
 }
 
@@ -28,7 +28,7 @@ export function getPosts(): PostMeta[] {
   const posts: PostMeta[] = []
 
   for (const [filePath, raw] of Object.entries(markdownModules)) {
-    const slug = filePath.replace('/public/content/blog/', '').replace(/\.md$/, '')
+    const slug = filePath.replace('../content/blog/', '').replace(/\.md$/, '')
     const { data } = matter(raw as string)
 
     posts.push({
