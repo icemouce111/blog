@@ -14,9 +14,9 @@ export function GiscusComments() {
     const script = document.createElement('script')
     script.src = 'https://giscus.app/client.js'
     script.setAttribute('data-repo', 'icemouce111/blog')
-    script.setAttribute('data-repo-id', 'R_kgDO_NOT_SET')
+    script.setAttribute('data-repo-id', 'R_kgDOS-I3zQ')
     script.setAttribute('data-category', 'Announcements')
-    script.setAttribute('data-category-id', 'DIC_kwDO_NOT_SET')
+    script.setAttribute('data-category-id', 'DIC_kwDOS-I3zc4C_ZZc')
     script.setAttribute('data-mapping', 'pathname')
     script.setAttribute('data-strict', '0')
     script.setAttribute('data-reactions-enabled', '1')
