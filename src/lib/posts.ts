@@ -1,5 +1,3 @@
-import matter from 'gray-matter'
-
 export interface PostMeta {
   slug: string
   title: string
@@ -11,6 +9,49 @@ export interface PostMeta {
 
 export interface Post extends PostMeta {
   content: string
+}
+
+function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
+  if (!match) return { data: {}, content: raw }
+
+  const yaml = match[1]
+  const content = raw.slice(match[0].length)
+  const data: Record<string, unknown> = {}
+
+  let currentKey = ''
+  let currentArray: string[] = []
+
+  for (const line of yaml.split('\n')) {
+    const listMatch = line.match(/^\s+-\s+(.+)/)
+    if (listMatch && currentKey) {
+      currentArray.push(listMatch[1])
+      continue
+    }
+
+    if (currentKey && currentArray.length > 0) {
+      data[currentKey] = currentArray
+      currentArray = []
+    }
+
+    const keyValue = line.match(/^(\w[\w-]*)\s*:\s*(.+)/)
+    if (keyValue) {
+      currentKey = keyValue[1]
+      const value = keyValue[2].trim()
+      if (value === '') {
+        currentArray = []
+      } else {
+        data[currentKey] = value
+        currentKey = ''
+      }
+    }
+  }
+
+  if (currentKey && currentArray.length > 0) {
+    data[currentKey] = currentArray
+  }
+
+  return { data, content }
 }
 
 const markdownModules = import.meta.glob('../content/blog/*.md', {
@@ -29,21 +70,21 @@ export function getPosts(): PostMeta[] {
 
   for (const [filePath, raw] of Object.entries(markdownModules)) {
     const slug = filePath.replace('../content/blog/', '').replace(/\.md$/, '')
-    const { data } = matter(raw as string)
+    const { data } = parseFrontmatter(raw as string)
 
     posts.push({
       slug,
-      title: data.title || slug,
+      title: (data.title as string) || slug,
       date: data.date
-        ? new Date(data.date).toLocaleDateString('zh-CN', {
+        ? new Date(data.date as string).toLocaleDateString('zh-CN', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })
         : '',
-      description: data.description || '',
-      tags: data.tags || [],
-      cover: data.cover || undefined,
+      description: (data.description as string) || '',
+      tags: (data.tags as string[]) || [],
+      cover: data.cover as string | undefined,
     })
   }
 
@@ -58,21 +99,21 @@ export function getPost(slug: string): Post | null {
   const raw = getRawContent(slug)
   if (!raw) return null
 
-  const { data, content } = matter(raw)
+  const { data, content } = parseFrontmatter(raw)
 
   return {
     slug,
-    title: data.title || slug,
+    title: (data.title as string) || slug,
     date: data.date
-      ? new Date(data.date).toLocaleDateString('zh-CN', {
+      ? new Date(data.date as string).toLocaleDateString('zh-CN', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
         })
       : '',
-    description: data.description || '',
-    tags: data.tags || [],
-    cover: data.cover || undefined,
+    description: (data.description as string) || '',
+    tags: (data.tags as string[]) || [],
+    cover: data.cover as string | undefined,
     content,
   }
 }
