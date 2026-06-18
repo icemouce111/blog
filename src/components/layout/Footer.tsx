@@ -36,7 +36,8 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-4 text-center text-xs text-muted-foreground">
-          Built with React + TypeScript + shadcn/ui · Deployed on Cloudflare Pages
+          <p>Copyright &copy; {new Date().getFullYear()} icemouce &middot; All rights reserved.</p>
+          <p className="mt-1">Built with React + TypeScript + shadcn/ui &middot; Deployed on Cloudflare Pages</p>
         </div>
       </div>
     </footer>
