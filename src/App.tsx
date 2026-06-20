@@ -4,6 +4,8 @@ import { Layout } from '@/components/layout/Layout'
 import { HomePage } from '@/pages/HomePage'
 import { BlogPage } from '@/pages/BlogPage'
 import { BlogPostPage } from '@/pages/BlogPostPage'
+import { AiDailyPage } from '@/pages/AiDailyPage'
+import { AiDailyPostPage } from '@/pages/AiDailyPostPage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
 import { ResourcesPage } from '@/pages/ResourcesPage'
 import { AboutPage } from '@/pages/AboutPage'
@@ -17,6 +19,8 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:slug" element={<BlogPostPage />} />
+            <Route path="ai-daily" element={<AiDailyPage />} />
+            <Route path="ai-daily/:slug" element={<AiDailyPostPage />} />
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="resources" element={<ResourcesPage />} />
             <Route path="about" element={<AboutPage />} />

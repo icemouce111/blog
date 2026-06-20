@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookOpen, FolderGit2, Link2 } from 'lucide-react'
+import { ArrowRight, BookOpen, FolderGit2, Link2, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -31,6 +31,13 @@ export function HomePage() {
       href: '/resources',
       color: 'text-purple-500',
     },
+    {
+      title: 'AI日报',
+      description: '每日 AI 行业动态汇总',
+      icon: Sparkles,
+      href: '/ai-daily',
+      color: 'text-orange-500',
+    },
   ]
 
   return (
@@ -46,7 +53,7 @@ export function HomePage() {
         </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
         {sections.map((section) => (
           <Link key={section.href} to={section.href} className="group">
             <Card className="h-full transition-colors hover:border-primary/50 cursor-pointer">
