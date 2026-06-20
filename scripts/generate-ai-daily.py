@@ -348,7 +348,7 @@ def fetch_reddit():
                 if data is None:
                     print(f"    [skip] bb-browser reddit/{sub}: JSON parse failed")
                     continue
-                posts = data.get("result", {}).get("posts", data if isinstance(data, list) else [])
+                posts = data.get("result", {}).get("posts", [])
                 for item in (posts[:5] if isinstance(posts, list) else [posts]):
                     results.append({
                         "title": item.get("title", ""),
@@ -383,9 +383,9 @@ def fetch_x_twitter():
             if r.returncode == 0 and r.stdout.strip():
                 data = _safe_parse_browser_json(r.stdout)
                 if data is None:
-                    print(f"    [skip] bb-browser twitter/query: JSON parse failed")
+                    print("    [skip] bb-browser twitter/query: JSON parse failed")
                     continue
-                tweets = data.get("result", {}).get("tweets", data if isinstance(data, list) else [])
+                tweets = data.get("result", {}).get("tweets", [])
                 for item in (tweets[:7] if isinstance(tweets, list) else [tweets]):
                     results.append({
                         "title": item.get("text", ""),
@@ -427,7 +427,12 @@ def fetch_youtube():
                 if not data:
                     continue
                 videos = data.get("result", {}).get("videos", [])
+                seen = set()
                 for v in videos[:5]:
+                    vid = v.get("url", v.get("videoId", ""))
+                    if vid in seen:
+                        continue
+                    seen.add(vid)
                     results.append({
                         "title": v.get("title", ""),
                         "url": v.get("url", ""),
@@ -461,10 +466,15 @@ def fetch_bilibili():
                 data = _safe_parse_browser_json(r.stdout)
                 if not data:
                     continue
-                videos = data.get("result", {}).get("videos", data if isinstance(data, list) else [])
+                videos = data.get("result", {}).get("videos", [])
+                seen = set()
                 for v in (videos if isinstance(videos, list) else [videos]):
                     if not v.get("title"):
                         continue
+                    vid = v.get("url", v.get("bvid", ""))
+                    if vid in seen:
+                        continue
+                    seen.add(vid)
                     results.append({
                         "title": v.get("title", ""),
                         "url": v.get("url", ""),
@@ -495,7 +505,7 @@ def fetch_zhihu():
             data = _safe_parse_browser_json(r.stdout)
             if not data:
                 return []
-            items = data.get("result", {}).get("items", data if isinstance(data, list) else [])
+            items = data.get("result", {}).get("items", [])
             return [
                 {
                     "title": item.get("title", ""),
@@ -530,7 +540,7 @@ def fetch_xiaohongshu():
             data = _safe_parse_browser_json(r.stdout)
             if not data:
                 return []
-            notes = data.get("result", {}).get("notes", data if isinstance(data, list) else [])
+            notes = data.get("result", {}).get("notes", [])
             return [
                 {
                     "title": n.get("title", n.get("display_title", "")),
@@ -603,7 +613,6 @@ def fetch_googletrends():
         else:
             print(f"    [skip] Google Trends: {err[:40]}")
         return []
-    return []
 
 
 # ── LLM 分析 ──────────────────────────
@@ -670,7 +679,6 @@ def generate_rss_feed():
     for fp in files:
         text = fp.read_text(encoding="utf-8")
         title = ""
-        desc = ""
         pub_date = ""
         for line in text.split("\n")[:10]:
             if line.startswith("title: "):
@@ -717,7 +725,6 @@ def generate_rss_feed():
     rss_path.write_text(rss_xml, encoding="utf-8")
     print("  [ok] RSS feed updated: %d items" % len(items))
 
-print("Function written to /tmp/rss_func.py")
 
 
 
@@ -764,7 +771,7 @@ def format_raw_data(sources_data):
             url = item.get("url", "")
             desc = item.get("description", "")
             extras = []
-            for key in ("score", "stars", "replies", "upvotes"):
+            for key in ("score", "stars", "replies", "upvotes", "views", "likes", "comments"):
                 if key in item and item[key]:
                     extras.append(f"{key}={item[key]}")
             extra_str = f" [{', '.join(extras)}]" if extras else ""
