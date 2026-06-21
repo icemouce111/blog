@@ -59,7 +59,7 @@ export function AiDailyPostPage() {
     <PageContainer size="wide">
       <div className="flex gap-8">
         {toc.length > 0 && (
-          <aside className="hidden lg:block w-64 shrink-0 order-first">
+          <aside className="hidden lg:block w-64 shrink-0">
             <div className="sticky top-24">
               <h4 className="text-xl font-bold mb-5">目录</h4>
               <nav className="space-y-1.5">
