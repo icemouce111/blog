@@ -1,50 +1,59 @@
 import { Link } from 'react-router-dom'
-import { Newspaper, Calendar } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { getAiDailyReports } from '@/lib/ai-daily-posts'
+import { Sparkles, Calendar } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { getAiDailyPosts } from '@/lib/ai-daily'
 
 export function AiDailyPage() {
-  const reports = getAiDailyReports()
+  const posts = getAiDailyPosts()
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
+    <div className="container mx-auto max-w-3xl px-4 py-12">
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
-          <Newspaper className="h-6 w-6 text-blue-500" />
-          <h1 className="text-3xl font-bold tracking-tight">AI 日报</h1>
+          <Sparkles className="h-6 w-6 text-orange-500" />
+          <h1 className="text-2xl font-bold tracking-tight">AI 日报</h1>
         </div>
-        <p className="text-muted-foreground">每日 AI 行业动态汇总，自动生成</p>
+        <p className="text-sm text-muted-foreground">
+          每日 AI 行业动态汇总 · 多分析师视角 · 技术趋势与机会洞察
+        </p>
       </div>
 
-      {reports.length === 0 ? (
-        <div className="text-center py-16 text-muted-foreground">
-          暂无日报内容
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {reports.map((report) => (
-            <Link key={report.slug} to={`/ai-daily/${report.slug}`}>
-              <Card className="h-full transition-colors hover:border-blue-500/50">
+      {posts.length === 0 ? (
+        <Card className="border-dashed">
+          <CardHeader>
+            <CardTitle className="text-lg">暂无日报</CardTitle>
+            <CardDescription>
+              AI 日报功能正在搭建中，很快会在每天早上 7:30 自动生成。
+            </CardDescription>
+          </CardHeader>
+        </Card>
+       ) : (
+        <div className="grid gap-4">
+          {posts.map((post) => (
+            <Card key={post.slug} className="hover:border-orange-500/50 transition-colors py-1">
+              <Link to={`/ai-daily/${post.slug}`} className="block">
                 <CardHeader>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                    <Calendar className="h-3.5 w-3.5" />
-                    <span>{report.date}</span>
+                  <CardTitle className="text-base">{post.title}</CardTitle>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
+                    <Calendar className="h-3 w-3" />
+                    {post.date}
                   </div>
-                  <CardTitle className="text-lg">{report.title}</CardTitle>
-                  <CardDescription className="text-sm">
-                    {report.description}
+                  <CardDescription className="mt-1 text-sm">
+                    {post.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <span className="text-sm text-blue-500 flex items-center gap-1 group-hover:text-blue-600 transition-colors">
-                    阅读详情 →
-                  </span>
-                </CardContent>
-              </Card>
-            </Link>
+              </Link>
+            </Card>
           ))}
         </div>
       )}
+
+      <div className="mt-8 text-center">
+        <Button variant="outline" render={<Link to="/blog" />}>
+          ← 返回博客
+        </Button>
+      </div>
     </div>
   )
 }
