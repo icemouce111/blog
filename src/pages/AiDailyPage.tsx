@@ -3,13 +3,12 @@ import { Sparkles, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getAiDailyPosts } from '@/lib/ai-daily'
-import { PageContainer } from '@/components/layout/PageContainer'
 
 export function AiDailyPage() {
   const posts = getAiDailyPosts()
 
   return (
-    <PageContainer size="narrow">
+    <div className="container mx-auto max-w-3xl px-4 py-12">
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-2">
           <Sparkles className="h-6 w-6 text-orange-500" />
@@ -55,6 +54,6 @@ export function AiDailyPage() {
           ← 返回博客
         </Button>
       </div>
-    </PageContainer>
+    </div>
   )
 }

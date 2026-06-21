@@ -1,8 +1,7 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import rehypeSlug from 'rehype-slug'
 import { ArrowLeft, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -10,7 +9,6 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { getPost } from '@/lib/posts'
 import { GiscusComments } from '@/components/blog/GiscusComments'
-import { PageContainer } from '@/components/layout/PageContainer'
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -33,54 +31,20 @@ export function BlogPostPage() {
     return result
   }, [post])
 
-  const [activeId, setActiveId] = useState('')
-
-  useEffect(() => {
-    if (headings.length === 0) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
-          }
-        }
-      },
-      {
-        rootMargin: '-80px 0px -60% 0px',
-        threshold: 0,
-      }
-    )
-
-    const elements: Element[] = []
-    headings.forEach((h) => {
-      const el = document.getElementById(h.id)
-      if (el) {
-        observer.observe(el)
-        elements.push(el)
-      }
-    })
-
-    return () => {
-      elements.forEach((el) => observer.unobserve(el))
-      observer.disconnect()
-    }
-  }, [headings])
-
   if (!post) {
     return (
-      <PageContainer size="narrow" className="py-24 text-center">
+      <div className="container mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-2xl font-bold mb-4">文章未找到</h1>
           <Button variant="outline" render={<Link to="/blog" />}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             返回博客
           </Button>
-      </PageContainer>
+      </div>
     )
   }
 
   return (
-    <PageContainer>
+    <div className="container mx-auto max-w-5xl px-4 py-12">
       <div className="flex gap-8">
         <article className="flex-1 min-w-0 max-w-3xl mx-auto">
           <Button variant="ghost" size="sm" className="mb-6" render={<Link to="/blog" />}>
@@ -108,7 +72,7 @@ export function BlogPostPage() {
 
           <Separator className="mb-8" />
 
-          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
 
@@ -119,7 +83,7 @@ export function BlogPostPage() {
 
         {headings.length > 0 && (
           <aside className="hidden lg:block w-52 shrink-0">
-            <div className="sticky top-24">
+            <div className="sticky top-20">
               <h4 className="text-sm font-semibold mb-3">目录</h4>
               <ScrollArea className="h-[calc(100vh-10rem)]">
                 <nav className="text-sm">
@@ -127,11 +91,7 @@ export function BlogPostPage() {
                     <a
                       key={heading.id}
                       href={`#${heading.id}`}
-                      className={`block py-1 transition-colors ${
-                        activeId === heading.id
-                          ? 'text-foreground font-medium'
-                          : 'text-muted-foreground hover:text-foreground'
-                      }`}
+                      className="block py-1 text-muted-foreground hover:text-foreground transition-colors"
                       style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
                     >
                       {heading.text}
@@ -143,6 +103,6 @@ export function BlogPostPage() {
           </aside>
         )}
       </div>
-    </PageContainer>
+    </div>
   )
 }
