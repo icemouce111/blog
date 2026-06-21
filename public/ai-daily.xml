@@ -6,22 +6,22 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.com/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 21 Jun 2026 06:20:24 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 14:05:41 +0800</lastBuildDate>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月21日]]></title>
         <link>https://blog.icemouce.com/ai-daily/2026-06-21</link>
         <description><![CDATA[# AI 日报 - 2026年06月21日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示/产品经理）多角色交叉分析生成。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
 
 ---
 
-## 📌 今日头条
+## 01 📌 今日头条
 
-1. **UK Home Office 推出 7500 万英镑“PoliceAI”计划**：英国政府将投入巨额资金，利用 AI 技术辅助警务工作，涵盖预测犯罪、自动化文书等。这标志着政府级 AI 应用从概念走向大规模投资，将为 AI 安防、数据分析等赛道打开巨大市场。https://www.publictechnology.net/2026/06/15/public-order-justice-and-rights/home-office-launches-75m-policeai-to-capitalise-on-artificial-intelligence/
-
-2. **SMPTE 开放所有媒体标准**：电影电视工程师协会宣布其]]></description>
+1. **MCP（Model Context Protocol）成为AI Agent开发核心议题** [高置信度]
+    YouTube 上多个视频（包括“What is MCP?” 61万次观看、“you need to learn MCP RIGHT NOW!!” 155万次观看）集中爆发，Reddit 和 Product Hunt 上 MCP 2000 工具也受关注。Google Trends 显示“MCP protocol”搜索平稳但基数低，说明该概念正在从开发者圈层向大众扩散，成为AI Agent集成数据库与API的标准协议。
+    https://www.youtube.com/watch?v=eur8dUO9mvE]]></description>
         <pubDate>Sun, 21 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.com/ai-daily/2026-06-21</guid>
     </item>
