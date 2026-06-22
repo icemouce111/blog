@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import projectsData from '@/data/projects.json'
+import { PageContainer } from '@/components/layout/PageContainer'
 
 interface Project {
   name: string
@@ -16,7 +17,7 @@ export function ProjectsPage() {
   const projects = projectsData as Project[]
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
+    <PageContainer>
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">作品集</h1>
         <p className="text-muted-foreground">项目与技术实践</p>
@@ -63,6 +64,6 @@ export function ProjectsPage() {
           ))}
         </div>
       )}
-    </div>
+    </PageContainer>
   )
 }

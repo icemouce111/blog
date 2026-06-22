@@ -6,7 +6,30 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.com/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 21 Jun 2026 14:05:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 09:30:20 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年06月22日]]></title>
+        <link>https://blog.icemouce.com/ai-daily/2026-06-22</link>
+        <description><![CDATA[# AI 日报 - 2026年06月22日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+好的，以下是基于今日原始数据生成的 AI 行业日报。
+
+## 01 📌 今日头条
+
+1.  **Apertus 开源基础模型发布，剑指“主权 AI”** **[高置信度]**
+    一个名为 Apertus 的全新开放基础模型在 HackerNews 上获得高分（180分），其核心目标是推动“主权 AI”的发展。这反映了当前业界对摆脱对少数巨头模型依赖、构建自主可控 AI 能力的强烈诉求。
+    *   来源：https://apertvs.ai/ (HackerNews)
+
+2.  **AI 项目“变现难”引发社区焦虑** **[中等置信度]**
+    V2EX 上关于“进入 AI 时代后，大家用 AI 做的项目都实实在在挣到钱了吗”的帖子获得45条回复，讨]]></description>
+        <pubDate>Mon, 22 Jun 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.com/ai-daily/2026-06-22</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月21日]]></title>
         <link>https://blog.icemouce.com/ai-daily/2026-06-21</link>

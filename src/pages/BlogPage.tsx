@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Search } from 'lucide-react'
 import { getPosts, getAllTags, type PostMeta } from '@/lib/posts'
+import { PageContainer } from '@/components/layout/PageContainer'
 
 export function BlogPage() {
   const posts = getPosts()
@@ -37,7 +38,7 @@ export function BlogPage() {
   }, [posts, searchQuery, selectedTag, fuse])
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
+    <PageContainer>
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">博客</h1>
         <p className="text-muted-foreground">技术文章与思考</p>
@@ -108,6 +109,6 @@ export function BlogPage() {
           ))}
         </div>
       )}
-    </div>
+    </PageContainer>
   )
 }

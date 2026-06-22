@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { getPosts } from '@/lib/posts'
+import { PageContainer } from '@/components/layout/PageContainer'
 
 export function HomePage() {
   const posts = getPosts().slice(0, 3)
@@ -41,7 +42,7 @@ export function HomePage() {
   ]
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
+    <PageContainer>
       <section className="flex flex-col items-center text-center mb-16">
         <Avatar className="h-24 w-24 mb-6">
           <AvatarImage src="/avatar.jpg" alt="avatar" />
@@ -116,6 +117,6 @@ export function HomePage() {
           </div>
         </>
       )}
-    </div>
+    </PageContainer>
   )
 }

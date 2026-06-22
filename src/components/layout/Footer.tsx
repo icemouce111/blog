@@ -1,27 +1,42 @@
 import { Link } from 'react-router-dom'
-import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import { siteContainerClass } from './constants'
+
+const footerLinks = [
+  { href: '/blog', label: '博客' },
+  { href: '/projects', label: '作品集' },
+  { href: '/resources', label: '资源导航' },
+  { href: '/ai-daily', label: 'AI日报' },
+  { href: '/about', label: '关于' },
+] as const
 
 export function Footer() {
   return (
     <footer className="border-t mt-auto">
-      <div className="container mx-auto max-w-5xl px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-foreground transition-colors">
+      <div className={cn(siteContainerClass, 'py-10')}>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
+          <div className="space-y-2">
+            <Link to="/" className="font-semibold hover:text-primary transition-colors">
               icemouce
             </Link>
-            <Separator orientation="vertical" className="h-4" />
-            <Link to="/blog" className="hover:text-foreground transition-colors">
-              博客
-            </Link>
-            <Link to="/projects" className="hover:text-foreground transition-colors">
-              作品集
-            </Link>
-            <Link to="/resources" className="hover:text-foreground transition-colors">
-              资源导航
-            </Link>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              全栈开发者，热爱开源与技术分享
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+
+          <nav className="flex flex-wrap gap-x-4 gap-y-2 md:justify-center">
+            {footerLinks.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-start gap-3 md:justify-end">
             <a
               href="https://github.com/icemouce111"
               target="_blank"
@@ -35,7 +50,8 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-4 text-center text-xs text-muted-foreground">
+
+        <div className="mt-8 pt-6 border-t text-center text-xs text-muted-foreground">
           <p>Copyright &copy; {new Date().getFullYear()} icemouce &middot; All rights reserved.</p>
         </div>
       </div>

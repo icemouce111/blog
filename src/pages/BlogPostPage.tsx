@@ -46,6 +46,28 @@ export function BlogPostPage() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
       <div className="flex gap-8">
+        {headings.length > 0 && (
+          <aside className="hidden lg:block w-52 shrink-0">
+            <div className="sticky top-20">
+              <h4 className="text-sm font-semibold mb-3">目录</h4>
+              <ScrollArea className="h-[calc(100vh-10rem)]">
+                <nav className="text-sm">
+                  {headings.map((heading) => (
+                    <a
+                      key={heading.id}
+                      href={`#${heading.id}`}
+                      className="block py-1 text-muted-foreground hover:text-foreground transition-colors"
+                      style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
+                    >
+                      {heading.text}
+                    </a>
+                  ))}
+                </nav>
+              </ScrollArea>
+            </div>
+          </aside>
+        )}
+
         <article className="flex-1 min-w-0 max-w-3xl mx-auto">
           <Button variant="ghost" size="sm" className="mb-6" render={<Link to="/blog" />}>
             <ArrowLeft className="h-4 w-4 mr-1" />
@@ -80,28 +102,6 @@ export function BlogPostPage() {
 
           <GiscusComments />
         </article>
-
-        {headings.length > 0 && (
-          <aside className="hidden lg:block w-52 shrink-0">
-            <div className="sticky top-20">
-              <h4 className="text-sm font-semibold mb-3">目录</h4>
-              <ScrollArea className="h-[calc(100vh-10rem)]">
-                <nav className="text-sm">
-                  {headings.map((heading) => (
-                    <a
-                      key={heading.id}
-                      href={`#${heading.id}`}
-                      className="block py-1 text-muted-foreground hover:text-foreground transition-colors"
-                      style={{ paddingLeft: `${(heading.level - 1) * 12}px` }}
-                    >
-                      {heading.text}
-                    </a>
-                  ))}
-                </nav>
-              </ScrollArea>
-            </div>
-          </aside>
-        )}
       </div>
     </div>
   )

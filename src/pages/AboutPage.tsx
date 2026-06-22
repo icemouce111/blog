@@ -3,6 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import friendsData from '@/data/friends.json'
+import { PageContainer } from '@/components/layout/PageContainer'
 
 interface Friend {
   name: string
@@ -14,7 +15,7 @@ export function AboutPage() {
   const friends = friendsData as Friend[]
 
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-12">
+    <PageContainer size="narrow">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">关于</h1>
         <p className="text-muted-foreground">个人简介</p>
@@ -90,6 +91,6 @@ export function AboutPage() {
           ))}
         </div>
       </div>
-    </div>
+    </PageContainer>
   )
 }

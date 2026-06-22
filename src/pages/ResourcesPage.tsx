@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import resourcesData from '@/data/resources.json'
 import { useState } from 'react'
+import { PageContainer } from '@/components/layout/PageContainer'
 
 interface ResourceItem {
   name: string
@@ -24,7 +25,7 @@ export function ResourcesPage() {
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false)
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12">
+    <PageContainer>
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight mb-2">资源导航</h1>
         <p className="text-muted-foreground">影视动漫 & 网盘资源合集</p>
@@ -112,6 +113,6 @@ export function ResourcesPage() {
           </TabsContent>
         ))}
       </Tabs>
-    </div>
+    </PageContainer>
   )
 }
