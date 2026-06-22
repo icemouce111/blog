@@ -2,11 +2,63 @@ import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useState, useMemo, useEffect } from 'react'
-import { ArrowLeft, Calendar, Sparkles } from 'lucide-react'
+import { ArrowLeft, Calendar, Sparkles, Target, DollarSign, MousePointerClick, GitCompare } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { getAiDailyPost } from '@/lib/ai-daily'
 import { PageContainer } from '@/components/layout/PageContainer'
+
+const pmFramework = [
+  {
+    icon: Target,
+    label: 'PMF 产品市场契合',
+    color: 'text-blue-500',
+    bg: 'bg-blue-500/5',
+    border: 'border-blue-500/20',
+    questions: [
+      '解决了谁的什么问题？',
+      '是刚需还是"有点意思"？',
+      '比同类产品好在哪？',
+    ],
+  },
+  {
+    icon: DollarSign,
+    label: '商业模型',
+    color: 'text-green-500',
+    bg: 'bg-green-500/5',
+    border: 'border-green-500/20',
+    questions: [
+      '开源还是闭源？怎么赚钱？',
+      '社区驱动还是销售驱动？',
+      '背后有公司/融资吗？',
+    ],
+  },
+  {
+    icon: MousePointerClick,
+    label: 'UX/DX 体验',
+    color: 'text-purple-500',
+    bg: 'bg-purple-500/5',
+    border: 'border-purple-500/20',
+    questions: [
+      '上手门槛高不高？',
+      '文档写得好不好？',
+      '3步跑通还是半天配置？',
+    ],
+  },
+  {
+    icon: GitCompare,
+    label: '竞争定位',
+    color: 'text-orange-500',
+    bg: 'bg-orange-500/5',
+    border: 'border-orange-500/20',
+    questions: [
+      '这个赛道还有谁？',
+      '怎么差异化？',
+      '场景重叠在哪？差异在哪？',
+    ],
+  },
+] as const
 
 export function AiDailyPostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -138,6 +190,37 @@ export function AiDailyPostPage() {
             >
               {post.content}
             </ReactMarkdown>
+
+            <Separator className="my-8" />
+
+            <div className="mb-8">
+              <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <Target className="h-5 w-5 text-orange-500" />
+                产品经理视角
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {pmFramework.map((item) => (
+                  <Card key={item.label} className={`${item.bg} ${item.border} border`}>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <item.icon className={`h-4 w-4 ${item.color}`} />
+                        {item.label}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-1 text-xs text-muted-foreground">
+                        {item.questions.map((q) => (
+                          <li key={q} className="flex items-start gap-2">
+                            <span className={`${item.color} mt-0.5 shrink-0`}>•</span>
+                            {q}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
         </article>
       </div>
