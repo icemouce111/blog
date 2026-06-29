@@ -40,6 +40,8 @@ test('parses numbered editorial sections and derives a lead story', () => {
   assert.equal(result.isSignalArchive, false)
   assert.match(result.sections[0].markdown, /第二条新闻/)
   assert.doesNotMatch(result.sections[0].markdown, /模型推理进入新阶段/)
+  assert.equal(result.footer, '*本日报由自动化系统生成*')
+  assert.doesNotMatch(result.sections[1].markdown, /本日报由自动化系统生成/)
 })
 
 test('recognizes a numbered signal archive and indented source items', () => {

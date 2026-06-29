@@ -171,7 +171,14 @@ function extractSections(content: string) {
 }
 
 export function parseAiDailyContent(content: string): ParsedAiDailyContent {
-  const sections = extractSections(content)
+  const footer = content.match(/^\*本日报[\s\S]*?\*$/m)?.[0] || ''
+  const editorialContent = footer
+    ? content
+        .slice(0, content.indexOf(footer))
+        .replace(/\n---\s*$/, '')
+        .trimEnd()
+    : content
+  const sections = extractSections(editorialContent)
   const originalSectionMarkdown = sections.map((section) => section.markdown)
   const firstItem = sections[0] ? extractFirstListItem(sections[0].markdown) : null
   const leadStory = firstItem ? parseLeadStory(firstItem.raw) : null
@@ -180,18 +187,18 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     sections[0] = { ...sections[0], markdown: firstItem.remainingMarkdown }
   }
 
-  const urls = (content.match(urlPattern) || []).map((url) => url.replace(/[.,;:]+$/, ''))
+  const urls = (editorialContent.match(urlPattern) || []).map((url) =>
+    url.replace(/[.,;:]+$/, '')
+  )
   const storyCount = originalSectionMarkdown.reduce(
     (total, markdown) =>
       total + markdown.split('\n').filter((line) => listItemPattern.test(line)).length,
     0
   )
-  const readableContent = content.replace(/[#>*_`|:[\]()!-]/g, ' ')
+  const readableContent = editorialContent.replace(/[#>*_`|:[\]()!-]/g, ' ')
   const readableUnits =
     (readableContent.match(/[\u4e00-\u9fff]/g)?.length || 0) +
     (readableContent.match(/[A-Za-z0-9]+/g)?.length || 0)
-  const footer = content.match(/^\*本日报[\s\S]*?\*$/m)?.[0] || ''
-
   return {
     sections,
     leadStory,
@@ -200,6 +207,6 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     readingMinutes: Math.max(1, Math.ceil(readableUnits / 500)),
     isSignalArchive: sections[0]?.title.includes('原始信号归档') || false,
     footer,
-    fallbackMarkdown: sections.length ? '' : content.trim(),
+    fallbackMarkdown: sections.length ? '' : editorialContent.trim(),
   }
 }
