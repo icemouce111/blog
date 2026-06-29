@@ -13,9 +13,9 @@
 ## File map
 
 - Create `src/lib/ai-daily-parser.ts`: pure parser and derived issue metrics.
-- Create `src/lib/ai-daily-parser.test.ts`: parser regression tests for editorial, archive, and malformed content.
+- Create `tests/ai-daily-parser.test.ts`: parser regression tests for editorial, archive, and malformed content.
 - Create `src/lib/ai-trends.ts`: validate and expose week/month/year trend snapshots.
-- Create `src/lib/ai-trends.test.ts`: trend schema and fallback tests.
+- Create `tests/ai-trends.test.ts`: trend schema and fallback tests.
 - Modify `src/lib/ai-daily.ts`: load Markdown and expose parsed issue models plus adjacent issues.
 - Create `src/components/ai-daily/AiDailyMasthead.tsx`: shared editorial masthead.
 - Create `src/components/ai-daily/AiDailyIssueList.tsx`: latest issue and compact archive rows.
@@ -39,7 +39,7 @@
 ### Task 1: Add the pure AI Daily parser with tests
 
 **Files:**
-- Create: `src/lib/ai-daily-parser.test.ts`
+- Create: `tests/ai-daily-parser.test.ts`
 - Create: `src/lib/ai-daily-parser.ts`
 - Modify: `package.json`
 
@@ -115,7 +115,7 @@ Add to `package.json`:
 
 ```json
 "test": "npm run test:ts && npm run test:py",
-"test:ts": "node --test --experimental-strip-types src/lib/*.test.ts",
+"test:ts": "node --test --experimental-strip-types tests/*.test.ts",
 "test:py": "python3 -m unittest scripts/test_generate_ai_daily.py scripts/test_ai_trends.py"
 ```
 
@@ -247,7 +247,7 @@ Expected: all parser tests PASS; TypeScript and Vite build PASS.
 - [ ] **Step 5: Commit parser work**
 
 ```bash
-git add package.json package-lock.json src/lib/ai-daily-parser.ts src/lib/ai-daily-parser.test.ts
+git add package.json package-lock.json src/lib/ai-daily-parser.ts tests/ai-daily-parser.test.ts
 git commit -m "feat: parse AI daily editorial content"
 ```
 
@@ -255,7 +255,7 @@ git commit -m "feat: parse AI daily editorial content"
 
 **Files:**
 - Modify: `src/lib/ai-daily.ts`
-- Modify: `src/lib/ai-daily-parser.test.ts`
+- Modify: `tests/ai-daily-parser.test.ts`
 
 - [ ] **Step 1: Add failing metadata tests**
 
@@ -334,14 +334,14 @@ Expected: PASS.
 - [ ] **Step 5: Commit data-layer work**
 
 ```bash
-git add src/lib/ai-daily.ts src/lib/ai-daily-parser.ts src/lib/ai-daily-parser.test.ts
+git add src/lib/ai-daily.ts src/lib/ai-daily-parser.ts tests/ai-daily-parser.test.ts
 git commit -m "feat: expose AI daily issue metadata"
 ```
 
 ### Task 3: Add validated global AI trend snapshots
 
 **Files:**
-- Create: `src/lib/ai-trends.test.ts`
+- Create: `tests/ai-trends.test.ts`
 - Create: `src/lib/ai-trends.ts`
 - Create: `src/data/ai-trends.json`
 
@@ -402,7 +402,7 @@ Run `npm run test:ts`.
 Expected: PASS.
 
 ```bash
-git add src/lib/ai-trends.ts src/lib/ai-trends.test.ts src/data/ai-trends.json
+git add src/lib/ai-trends.ts tests/ai-trends.test.ts src/data/ai-trends.json
 git commit -m "feat: add sourced global AI trend snapshots"
 ```
 
