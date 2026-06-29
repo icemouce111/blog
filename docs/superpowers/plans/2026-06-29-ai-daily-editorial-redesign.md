@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Rebuild the AI Daily archive and issue pages as a responsive Chinese editorial briefing, normalize the three raw historical issues, and make future fallback reports use the same parseable structure.
+**Goal:** Rebuild the AI Daily archive and issue pages as a responsive Chinese editorial briefing, add sourced week/month/year global AI application trends, normalize the three raw historical issues, and make future fallback reports use the same parseable structure.
 
-**Architecture:** Keep Markdown as the source of truth. Extract all Markdown-to-view-model logic into a pure TypeScript parser, then render focused React components for masthead, lead story, issue stream, sidebar, and mobile summary. Preserve existing generator changes and alter only its fallback output contract; mechanically migrate the three raw historical files without inventing editorial analysis.
+**Architecture:** Keep Markdown as the source of truth for daily issues and use a validated JSON snapshot for cross-issue trends. Extract Markdown-to-view-model logic into a pure TypeScript parser, then render focused React components for masthead, lead story, issue stream, trend rail, sidebar, and mobile summary. Preserve existing generator changes, add an isolated trend-refresh helper with source-whitelist validation, and mechanically migrate the three raw historical files without inventing editorial analysis.
 
 **Tech Stack:** React 19, React Router 7, TypeScript 6, Vite 8, Tailwind CSS 4, React Markdown, Node 26 built-in test runner, Python unittest.
 
@@ -14,17 +14,23 @@
 
 - Create `src/lib/ai-daily-parser.ts`: pure parser and derived issue metrics.
 - Create `src/lib/ai-daily-parser.test.ts`: parser regression tests for editorial, archive, and malformed content.
+- Create `src/lib/ai-trends.ts`: validate and expose week/month/year trend snapshots.
+- Create `src/lib/ai-trends.test.ts`: trend schema and fallback tests.
 - Modify `src/lib/ai-daily.ts`: load Markdown and expose parsed issue models plus adjacent issues.
 - Create `src/components/ai-daily/AiDailyMasthead.tsx`: shared editorial masthead.
 - Create `src/components/ai-daily/AiDailyIssueList.tsx`: latest issue and compact archive rows.
 - Create `src/components/ai-daily/AiDailyContent.tsx`: lead story and section rendering.
 - Create `src/components/ai-daily/AiDailyNavigation.tsx`: desktop sidebar and mobile chapter navigation.
+- Create `src/components/ai-daily/AiTrendInsights.tsx`: accessible week/month/year trend switcher and source disclosure.
 - Create `src/components/ai-daily/ai-daily.css`: scoped editorial visual system and responsive rules.
 - Modify `src/pages/AiDailyPage.tsx`: archive landing page.
 - Modify `src/pages/AiDailyPostPage.tsx`: responsive issue page.
 - Modify `src/content/ai-daily/2026-06-23.md`: normalize raw summary to signal archive.
 - Modify `src/content/ai-daily/2026-06-25.md`: normalize source dump to signal archive.
 - Modify `src/content/ai-daily/2026-06-26.md`: normalize source dump to signal archive.
+- Create `src/data/ai-trends.json`: sourced initial global AI application trend snapshot.
+- Create `scripts/ai_trends.py`: archive aggregation, cadence, thresholds, prompts, and source-whitelist validation.
+- Create `scripts/test_ai_trends.py`: trend refresh regression tests.
 - Modify `scripts/generate-ai-daily.py`: make fallback output a numbered signal archive while preserving existing unrelated edits.
 - Create `scripts/test_generate_ai_daily.py`: fallback-format regression test.
 - Modify `public/ai-daily.xml`: regenerate RSS from all Markdown issues after migration.
@@ -96,6 +102,11 @@ test('falls back to the original markdown when numbered sections are absent', ()
   assert.equal(result.sections.length, 0)
   assert.equal(result.fallbackMarkdown, '## Notes\\n\\nUnstructured content')
 })
+
+test('rejects template and non-date slugs', () => {
+  assert.equal(isAiDailySlug('2026-06-28'), true)
+  assert.equal(isAiDailySlug('TEMPLATE'), false)
+})
 ```
 
 - [ ] **Step 2: Add test scripts and verify RED**
@@ -104,8 +115,8 @@ Add to `package.json`:
 
 ```json
 "test": "npm run test:ts && npm run test:py",
-"test:ts": "node --test --experimental-strip-types src/lib/ai-daily-parser.test.ts",
-"test:py": "python3 -m unittest scripts/test_generate_ai_daily.py"
+"test:ts": "node --test --experimental-strip-types src/lib/*.test.ts",
+"test:py": "python3 -m unittest scripts/test_generate_ai_daily.py scripts/test_ai_trends.py"
 ```
 
 Run:
@@ -144,6 +155,10 @@ export interface ParsedAiDailyContent {
   isSignalArchive: boolean
   footer: string
   fallbackMarkdown: string
+}
+
+export function isAiDailySlug(slug: string) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(slug)
 }
 
 function createSectionId(number: string, title: string) {
@@ -303,7 +318,7 @@ newerSlug: string | null
 olderSlug: string | null
 ```
 
-Parse each Markdown module once per accessor, derive `dateISO` directly from frontmatter, and sort by `dateISO` instead of localized display text.
+Parse each Markdown module once per accessor, discard entries whose slugs do not match `YYYY-MM-DD`, derive `dateISO` directly from frontmatter, and sort by `dateISO` instead of localized display text.
 
 - [ ] **Step 4: Verify data layer**
 
@@ -323,13 +338,82 @@ git add src/lib/ai-daily.ts src/lib/ai-daily-parser.ts src/lib/ai-daily-parser.t
 git commit -m "feat: expose AI daily issue metadata"
 ```
 
-### Task 3: Build the shared editorial components
+### Task 3: Add validated global AI trend snapshots
+
+**Files:**
+- Create: `src/lib/ai-trends.test.ts`
+- Create: `src/lib/ai-trends.ts`
+- Create: `src/data/ai-trends.json`
+
+- [ ] **Step 1: Write failing trend validation tests**
+
+```ts
+import assert from 'node:assert/strict'
+import test from 'node:test'
+import { parseAiTrendData } from './ai-trends.ts'
+
+test('accepts three sourced insights for every valid time window', () => {
+  const data = parseAiTrendData({
+    windows: [{
+      window: 'week',
+      rangeStart: '2026-06-23',
+      rangeEnd: '2026-06-29',
+      updatedAt: '2026-06-29T09:00:00+08:00',
+      coverageCount: 7,
+      mode: 'curated',
+      insights: Array.from({ length: 3 }, (_, index) => ({
+        title: `趋势 ${index + 1}`,
+        summary: '有证据支持的应用趋势判断。',
+        sources: [{ title: 'Source', url: `https://example.com/${index}` }],
+      })),
+    }],
+  })
+  assert.equal(data.windows[0].insights.length, 3)
+})
+
+test('drops invalid windows instead of rendering unsourced claims', () => {
+  const data = parseAiTrendData({
+    windows: [{ window: 'week', insights: [{ title: '无来源', summary: 'x', sources: [] }] }],
+  })
+  assert.equal(data.windows.length, 0)
+})
+```
+
+- [ ] **Step 2: Verify RED**
+
+Run `npm run test:ts`.
+
+Expected: FAIL because `ai-trends.ts` does not exist.
+
+- [ ] **Step 3: Implement the validator**
+
+Create `src/lib/ai-trends.ts` with `TrendWindow`, `TrendInsight`, `TrendSource`, and `AiTrendData` interfaces. Implement `parseAiTrendData(input: unknown)` to accept only `week`, `month`, or `year` windows containing exactly three non-empty insights, each with at least one `http` or `https` source.
+
+- [ ] **Step 4: Research and seed current global trends**
+
+Use current primary or authoritative global sources. Create `src/data/ai-trends.json` with three windows and three insights per window. Record source title, direct URL, source publication date, actual coverage range, and `mode: "curated"`. Do not use search-result URLs, invented metrics, or unsourced claims.
+
+- [ ] **Step 5: Verify and commit the seed**
+
+Import the JSON in `ai-trends.test.ts`, pass it through `parseAiTrendData`, and assert all three windows survive with three insights each.
+
+Run `npm run test:ts`.
+
+Expected: PASS.
+
+```bash
+git add src/lib/ai-trends.ts src/lib/ai-trends.test.ts src/data/ai-trends.json
+git commit -m "feat: add sourced global AI trend snapshots"
+```
+
+### Task 4: Build the shared editorial components
 
 **Files:**
 - Create: `src/components/ai-daily/AiDailyMasthead.tsx`
 - Create: `src/components/ai-daily/AiDailyIssueList.tsx`
 - Create: `src/components/ai-daily/AiDailyContent.tsx`
 - Create: `src/components/ai-daily/AiDailyNavigation.tsx`
+- Create: `src/components/ai-daily/AiTrendInsights.tsx`
 - Create: `src/components/ai-daily/ai-daily.css`
 
 - [ ] **Step 1: Create semantic shared components**
@@ -359,7 +443,7 @@ export function AiDailyMasthead({ date, issueId }: AiDailyMastheadProps) {
 }
 ```
 
-`AiDailyIssueList` renders one featured latest issue followed by semantic archive rows. `AiDailyContent` renders the lead with a serif heading and each numbered section through `ReactMarkdown`. `AiDailyNavigation` renders both a sticky desktop `nav` and a horizontally scrollable mobile `nav`.
+`AiDailyIssueList` renders one featured latest issue followed by semantic archive rows. `AiDailyContent` renders the lead with a serif heading and each numbered section through `ReactMarkdown`. `AiDailyNavigation` renders both a sticky desktop `nav` and a horizontally scrollable mobile `nav`. `AiTrendInsights` uses validated trend data, defaults to `week`, exposes semantic week/month/year tabs, shows update and coverage metadata, and renders three open editorial rows.
 
 - [ ] **Step 2: Add the scoped visual system**
 
@@ -419,7 +503,7 @@ Run:
 
 ```bash
 npm run build
-npm run lint
+npx eslint src/components/ai-daily
 ```
 
 Expected: PASS.
@@ -431,7 +515,7 @@ git add src/components/ai-daily
 git commit -m "feat: add AI daily editorial components"
 ```
 
-### Task 4: Rebuild the archive and issue pages
+### Task 5: Rebuild the archive and issue pages
 
 **Files:**
 - Modify: `src/pages/AiDailyPage.tsx`
@@ -439,14 +523,17 @@ git commit -m "feat: add AI daily editorial components"
 
 - [ ] **Step 1: Replace the card archive page**
 
-Use `AiDailyMasthead` and `AiDailyIssueList`. Remove imports of `Card`, `Button`, `Sparkles`, and `Calendar`. Render:
+Use `AiDailyMasthead`, `AiDailyIssueList`, and `AiTrendInsights`. Preserve the latest issue's original frontmatter title above its derived lead-story title. Remove imports of `Card`, `Button`, `Sparkles`, and `Calendar`. Render:
 
 ```tsx
 <main className="ai-daily-shell">
   <PageContainer size="wide" className="ai-daily-paper">
     <AiDailyMasthead />
     {posts.length ? (
-      <AiDailyIssueList latest={posts[0]} archive={posts.slice(1)} />
+      <div className="ai-daily-archive-layout">
+        <AiDailyIssueList latest={posts[0]} archive={posts.slice(1)} />
+        <AiTrendInsights />
+      </div>
     ) : (
       <section className="ai-daily-empty">
         <p className="ai-daily-eyebrow">ARCHIVE</p>
@@ -485,7 +572,7 @@ Run:
 
 ```bash
 npm run build
-npm run lint
+npx eslint src/pages/AiDailyPage.tsx src/pages/AiDailyPostPage.tsx
 ```
 
 Expected: PASS with no unused imports or type errors.
@@ -497,7 +584,7 @@ git add src/pages/AiDailyPage.tsx src/pages/AiDailyPostPage.tsx
 git commit -m "feat: redesign AI daily pages"
 ```
 
-### Task 5: Normalize the three historical signal archives
+### Task 6: Normalize the three historical signal archives
 
 **Files:**
 - Modify: `src/content/ai-daily/2026-06-23.md`
@@ -554,10 +641,12 @@ git add src/content/ai-daily/2026-06-{23,25,26}.md
 git commit -m "content: normalize historical AI daily archives"
 ```
 
-### Task 6: Make future fallback output match the archive contract
+### Task 7: Make future fallback and trend output match the contracts
 
 **Files:**
 - Create: `scripts/test_generate_ai_daily.py`
+- Create: `scripts/ai_trends.py`
+- Create: `scripts/test_ai_trends.py`
 - Modify: `scripts/generate-ai-daily.py`
 
 - [ ] **Step 1: Write the failing Python test**
@@ -653,7 +742,75 @@ Expected: PASS.
 
 Run `git diff -- scripts/generate-ai-daily.py` and document that the file contained pre-existing source-quality changes. Do not stage or commit the entire file without the user's confirmation; if committing, use a cached patch that contains only `_generate_fallback`.
 
-### Task 7: Regenerate RSS and run full verification
+- [ ] **Step 6: Write failing trend refresh tests**
+
+Create `scripts/test_ai_trends.py`:
+
+```py
+import unittest
+from ai_trends import should_refresh, validate_insight_sources
+
+
+class AiTrendRefreshTest(unittest.TestCase):
+    def test_window_thresholds_and_cadence(self):
+        self.assertFalse(should_refresh("week", coverage_count=3, age_days=30))
+        self.assertTrue(should_refresh("week", coverage_count=4, age_days=1))
+        self.assertFalse(should_refresh("month", coverage_count=13, age_days=30))
+        self.assertTrue(should_refresh("month", coverage_count=14, age_days=7))
+        self.assertTrue(should_refresh("year", coverage_count=60, age_days=30))
+
+    def test_rejects_sources_outside_archive_whitelist(self):
+        allowed = {"https://example.com/known"}
+        candidate = {
+            "sources": [{"title": "Unknown", "url": "https://example.com/invented"}]
+        }
+        self.assertFalse(validate_insight_sources(candidate, allowed))
+```
+
+Run `python3 -m unittest scripts/test_ai_trends.py`.
+
+Expected: FAIL because `scripts/ai_trends.py` does not exist.
+
+- [ ] **Step 7: Implement isolated trend refresh**
+
+Create `scripts/ai_trends.py` with:
+
+```py
+WINDOWS = {
+    "week": {"days": 7, "minimum": 4, "cadence_days": 1},
+    "month": {"days": 30, "minimum": 14, "cadence_days": 7},
+    "year": {"days": 365, "minimum": 60, "cadence_days": 30},
+}
+
+def should_refresh(window, coverage_count, age_days):
+    config = WINDOWS[window]
+    return coverage_count >= config["minimum"] and age_days >= config["cadence_days"]
+
+def validate_insight_sources(insight, allowed_urls):
+    sources = insight.get("sources")
+    return (
+        isinstance(sources, list)
+        and len(sources) > 0
+        and all(source.get("url") in allowed_urls for source in sources)
+    )
+```
+
+Add focused helpers to select Markdown files by date, extract their URLs, build a JSON-only prompt requesting exactly three application-level insights, validate all fields and sources, and atomically replace only successfully generated windows. Preserve the prior window when coverage, cadence, parsing, LLM, or source validation fails.
+
+Modify `generate-ai-daily.py` to call the helper after saving the report and regenerating RSS. Update fallback overwrite detection to recognize `## 01 📡 原始信号归档`.
+
+- [ ] **Step 8: Verify trend automation**
+
+Run:
+
+```bash
+python3 -m unittest scripts/test_ai_trends.py scripts/test_generate_ai_daily.py
+python3 -m py_compile scripts/ai_trends.py scripts/generate-ai-daily.py
+```
+
+Expected: PASS.
+
+### Task 8: Regenerate RSS and run full verification
 
 **Files:**
 - Modify: `public/ai-daily.xml`
@@ -689,17 +846,19 @@ print(f"RSS verified: {len(items)} issues")
 PY
 npm test
 npm run build
-npm run lint
+npx eslint src/lib/ai-daily.ts src/lib/ai-daily-parser.ts src/lib/ai-trends.ts src/pages/AiDailyPage.tsx src/pages/AiDailyPostPage.tsx src/components/ai-daily
 git diff --check
 ```
 
-Expected: RSS count matches Markdown count; all tests, build, lint, and whitespace checks PASS.
+Expected: RSS count matches Markdown count; all tests, build, targeted lint, and whitespace checks PASS. Run full `npm run lint` separately and confirm it introduces no errors beyond the four documented baseline failures in shadcn exports and `useTheme`.
 
 - [ ] **Step 3: Run browser QA**
 
 Start `npm run dev -- --host 127.0.0.1`, then verify:
 
 - `/ai-daily` at 390px, 768px, and 1440px.
+- Original issue title remains visible above the lead-story title.
+- Week/month/year trend switching, update metadata, coverage, and source links.
 - `/ai-daily/2026-06-28` as an editorial issue.
 - `/ai-daily/2026-06-23`, `/2026-06-25`, and `/2026-06-26` as signal archives.
 - Light and dark themes.
@@ -714,7 +873,8 @@ Review `git diff` and separate:
 
 1. AI Daily UI/parser/history changes produced by this plan.
 2. Pre-existing generator and RSS changes already present before this plan.
-3. Temporary `.superpowers/` visual companion files, which must not be committed.
+3. The four pre-existing full-repository ESLint failures in shadcn exports and `useTheme`.
+4. Temporary `.superpowers/` visual companion files, which must not be committed.
 
 Commit only reviewed files with a message that states the actual scope, for example:
 
