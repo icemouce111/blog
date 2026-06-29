@@ -1,0 +1,178 @@
+{
+  "windows": [
+    {
+      "window": "week",
+      "rangeStart": "2026-06-23",
+      "rangeEnd": "2026-06-29",
+      "updatedAt": "2026-06-29T12:00:00+08:00",
+      "coverageCount": 0,
+      "mode": "curated",
+      "insights": [
+        {
+          "title": "智能体从对话入口走向可委派的工作流",
+          "summary": "应用重点正在从“回答一次问题”转向持续执行、跨工具协作和交付可检查结果。长任务与多智能体编排，开始成为生产环境里的常态能力。",
+          "sources": [
+            {
+              "title": "How agents are transforming work",
+              "url": "https://openai.com/index/how-agents-are-transforming-work/",
+              "publishedAt": "2026-06-25"
+            },
+            {
+              "title": "Anthropic Economic Index — June 2026",
+              "url": "https://www.anthropic.com/research/economic-index-june-2026-report",
+              "publishedAt": "2026-06-26"
+            }
+          ]
+        },
+        {
+          "title": "企业部署的竞争点转向治理与评估",
+          "summary": "大企业不再只比较模型能力，而是建设统一的上下文、权限、审计和效果评估层。能否把试点安全地复制到多个团队，正在决定应用扩张速度。",
+          "sources": [
+            {
+              "title": "HP and OpenAI announce frontier enterprise partnership",
+              "url": "https://openai.com/index/hp-frontier-partnership/",
+              "publishedAt": "2026-06-28"
+            },
+            {
+              "title": "TCS and Anthropic announce strategic partnership",
+              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
+              "publishedAt": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "title": "高频应用正在越过工程部门",
+          "summary": "编码仍是最成熟的智能体场景，但安全、销售、运营和知识工作已经出现可量化案例。下一阶段增长来自跨部门流程，而不是单一“编程助手”品类。",
+          "sources": [
+            {
+              "title": "How agents are transforming work",
+              "url": "https://openai.com/index/how-agents-are-transforming-work/",
+              "publishedAt": "2026-06-25"
+            },
+            {
+              "title": "HP and OpenAI announce frontier enterprise partnership",
+              "url": "https://openai.com/index/hp-frontier-partnership/",
+              "publishedAt": "2026-06-28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "window": "month",
+      "rangeStart": "2026-05-01",
+      "rangeEnd": "2026-06-29",
+      "updatedAt": "2026-06-29T12:00:00+08:00",
+      "coverageCount": 0,
+      "mode": "curated",
+      "insights": [
+        {
+          "title": "个人 AI 从问答工具变成持续服务",
+          "summary": "主动摘要、日程准备和跨应用执行，把 AI 从被动会话推向“理解上下文并提前行动”。入口仍是助手，但产品价值越来越依赖连续性与个性化。",
+          "sources": [
+            {
+              "title": "The next evolution of the Gemini app",
+              "url": "https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/",
+              "publishedAt": "2026-05-19"
+            },
+            {
+              "title": "Gemini intelligence on Android",
+              "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/",
+              "publishedAt": "2026-05-19"
+            }
+          ]
+        },
+        {
+          "title": "托管式智能体基础设施成为新产品层",
+          "summary": "沙箱、技能、数据连接与运行时托管被打包成平台能力，开发者开始从“拼接模型调用”转向定义任务、权限和结果。智能体的可运营性正在产品化。",
+          "sources": [
+            {
+              "title": "Build with Managed Agents in the Gemini API",
+              "url": "https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/",
+              "publishedAt": "2026-05-19"
+            },
+            {
+              "title": "The next phase of enterprise AI",
+              "url": "https://openai.com/index/next-phase-of-enterprise-ai/",
+              "publishedAt": "2026-04-08"
+            }
+          ]
+        },
+        {
+          "title": "组织设计成为 AI 回报的主要瓶颈",
+          "summary": "领先组织把智能体与工作流程、管理机制和质量控制一起重构。员工会不会用只是第一步，能否建立可复用的组织方法决定最终收益。",
+          "sources": [
+            {
+              "title": "2026 Work Trend Index",
+              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
+              "publishedAt": "2026-05-05"
+            },
+            {
+              "title": "HP and OpenAI announce frontier enterprise partnership",
+              "url": "https://openai.com/index/hp-frontier-partnership/",
+              "publishedAt": "2026-06-28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "window": "year",
+      "rangeStart": "2025-07-01",
+      "rangeEnd": "2026-06-29",
+      "updatedAt": "2026-06-29T12:00:00+08:00",
+      "coverageCount": 0,
+      "mode": "curated",
+      "insights": [
+        {
+          "title": "AI 已进入主流，智能体仍处早期扩散",
+          "summary": "企业 AI 使用率快速普及，但真正把智能体嵌入业务流程的比例仍低。市场正在从“是否采用”转向“哪些任务值得交给智能体”。",
+          "sources": [
+            {
+              "title": "The 2026 AI Index Report — Economy",
+              "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy",
+              "publishedAt": "2026-04-06"
+            },
+            {
+              "title": "2026 Work Trend Index",
+              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
+              "publishedAt": "2026-05-05"
+            }
+          ]
+        },
+        {
+          "title": "高价值垂直应用从试点走向规模部署",
+          "summary": "医疗与受监管行业正在扩大生产应用，同时把审计、责任边界和人工判断保留在流程中。落地速度提升，但证据质量与真实场景验证仍是短板。",
+          "sources": [
+            {
+              "title": "The 2026 AI Index Report — Medicine",
+              "url": "https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_6_medicine.pdf",
+              "publishedAt": "2026-04-06"
+            },
+            {
+              "title": "TCS and Anthropic announce strategic partnership",
+              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
+              "publishedAt": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "title": "应用价值转向结构化流程与人机协同",
+          "summary": "可衡量的生产力提升更多出现在目标清晰、反馈及时的任务里。未来一年，人工判断不会消失，而会集中到任务定义、例外处理与最终质量控制。",
+          "sources": [
+            {
+              "title": "The 2026 AI Index Report — Economy",
+              "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy",
+              "publishedAt": "2026-04-06"
+            },
+            {
+              "title": "2026 Work Trend Index",
+              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
+              "publishedAt": "2026-05-05"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
