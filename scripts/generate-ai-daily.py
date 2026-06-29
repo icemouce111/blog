@@ -146,6 +146,49 @@ def _safe_parse_browser_json(text):
     return None
 
 
+
+
+# -- 垃圾信息过滤规则 ------------------
+_GITHUB_SPAM_RE = re.compile(
+    r'(crack|keygen|activator|mod\s*jar|'
+    r'cheat|hack|spoofer|exploit|panel|'
+    r'license\s*key|pre.?activated|lifetime\s*(license|activation)|'
+    r'fortnite|mega\s*nuker|discord\s*nitro|steam\s*unlocker|'
+    r'idm\s*(manager|activator|crack)|lossless.?scaling|'
+    r'bypass|unban|account\s*creator)',
+    re.IGNORECASE
+)
+
+def _is_github_spam(name, description):
+    desc = f"{name} {description or ''}"
+    return bool(_GITHUB_SPAM_RE.search(desc))
+
+_BILIBILI_SCAM_RE = re.compile(
+    r'(清华大佬|全套|速成|零基础|白嫖|'
+    r'学不会我|拿走不谢|允许白嫖|看完少走|'
+    r'告别盲目自学|少走99|全部学会|'
+    r'一学就会|从入门到放弃|轻松玩转)',
+    flags=re.IGNORECASE
+)
+
+def _is_bilibili_scam(title):
+    return bool(_BILIBILI_SCAM_RE.search(title or ""))
+
+_TECH_KEYWORDS = re.compile(
+    r'(AI|人工智能|machine learning|deep learning|LLM|大模型|agent|'
+    r'MCP|GPT|Claude|Codex|Copilot|Cursor|Windsurf|'
+    r'open source|开源|模型|算法|编程|代码|'
+    r'developer|framework|library|SDK|API|'
+    r'GPU|CPU|token|训练|推理|部署|'
+    r'融资|funding|收购|acquisition|regulation|政策|'
+    r'startup|创业|技术|programming|software)',
+    flags=re.IGNORECASE
+)
+
+def _is_tech_related(title, description=""):
+    text = f"{title or ''} {description or ''}"
+    return bool(_TECH_KEYWORDS.search(text))
+
 # ── 数据源抓取 ────────────────────────
 def fetch_hackernews(n=12):
     """Hacker News Top Stories (Firebase API)"""
@@ -166,36 +209,9 @@ def fetch_hackernews(n=12):
     return stories
 
 
-def fetch_github_trending():
-    """GitHub Trending — GitHub Search API + HTML fallback"""
-    print("  Fetching GitHub Trending...")
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-    yesterday = (datetime.now(CST) - timedelta(days=1)).strftime("%Y-%m-%d")
-    headers = {"Accept": "application/vnd.github+json"}
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
-    data = _fetch_json(
-        f"https://api.github.com/search/repositories?q=created:>={yesterday}&sort=stars&order=desc&per_page=10",
-        headers,
-    )
-    if data and "items" in data:
-        return [
-            {
-                "name": r["full_name"],
-                "description": r.get("description") or "",
-                "stars": r.get("stargazers_count", 0),
-                "url": r["html_url"],
-                "language": r.get("language") or "",
-            }
-            for r in data["items"]
-        ]
-    # HTML fallback -- try optional BeautifulSoup first for more robust parsing
-    html = _fetch("https://github.com/trending")
-    if not html:
-        return []
-    text = html.decode("utf-8", errors="replace")
+def _parse_github_trending_html(text):
+    """Parse GitHub Trending HTML and return repo list (spam-filtered)"""
     repos = []
-
     _bs4 = None
     try:
         from bs4 import BeautifulSoup as _bs4
@@ -214,14 +230,11 @@ def fetch_github_trending():
             href = a_tag.get("href", "").strip("/")
             if "/" not in href:
                 continue
-            owner, name = href.split("/", 1)
-
+            owner, name_part = href.split("/", 1)
             desc_p = article.find("p")
             desc = desc_p.get_text(strip=True) if desc_p else ""
-
             lang_span = article.select_one('span[itemprop="programmingLanguage"]')
             language = lang_span.get_text(strip=True) if lang_span else ""
-
             stars = 0
             for svg in article.select("svg.octicon-star"):
                 parent = svg.parent
@@ -232,16 +245,16 @@ def fetch_github_trending():
                         val = float(match.group(1))
                         stars = int(val * 1000) if match.group(2) else int(val)
                     break
-
-            repos.append({
-                "name": f"{owner}/{name}",
+            repo = {
+                "name": f"{owner}/{name_part}",
                 "description": desc[:200],
-                "url": f"https://github.com/{owner}/{name}",
+                "url": f"https://github.com/{owner}/{name_part}",
                 "language": language,
                 "stars": stars,
-            })
+            }
+            if not _is_github_spam(repo["name"], repo["description"]):
+                repos.append(repo)
     else:
-        # Improved regex fallback
         for article in text.split("<article")[1:]:
             h2_match = re.search(r"<h2[^>]*>(.*?)</h2>", article, re.DOTALL)
             if not h2_match:
@@ -261,14 +274,55 @@ def fetch_github_trending():
                 desc = re.sub(r"<[^>]+>", "", desc_match.group(1)).strip()[:200]
             lang_match = re.search(r'itemprop="programmingLanguage"[^>]*>([^<]+)', article)
             language = lang_match.group(1).strip() if lang_match else ""
-            repos.append({
+            repo = {
                 "name": f"{owner}/{name_part}",
                 "description": desc[:200],
                 "url": f"https://github.com/{owner}/{name_part}",
                 "language": language,
                 "stars": 0,
-            })
-    return repos[:10]
+            }
+            if not _is_github_spam(repo["name"], repo["description"]):
+                repos.append(repo)
+    return repos
+
+def fetch_github_trending():
+    """GitHub Trending: HTML trending page first, API fallback with spam filter"""
+    print("  Fetching GitHub Trending...")
+    # Strategy 1: HTML trending page (best signal quality)
+    html = _fetch("https://github.com/trending")
+    if html:
+        repos = _parse_github_trending_html(html.decode("utf-8", errors="replace"))
+        if repos:
+            return repos[:10]
+        print("    [warn] Trending page empty or all spam, falling back to API")
+    # Strategy 2: GitHub Search API with stars>50 + spam filter
+    print("    [info] Using GitHub Search API...")
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    yesterday = (datetime.now(CST) - timedelta(days=1)).strftime("%Y-%m-%d")
+    headers = {"Accept": "application/vnd.github+json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    data = _fetch_json(
+        f"https://api.github.com/search/repositories?q=created:>={yesterday}+stars:>50&sort=stars&order=desc&per_page=10",
+        headers,
+    )
+    if data and "items" in data:
+        repos = []
+        for r in data["items"]:
+            repo = {
+                "name": r["full_name"],
+                "description": r.get("description") or "",
+                "stars": r.get("stargazers_count", 0),
+                "url": r["html_url"],
+                "language": r.get("language") or "",
+            }
+            if not _is_github_spam(repo["name"], repo["description"]):
+                repos.append(repo)
+        return repos[:10]
+    return []
+
+
+
 
 
 def fetch_v2ex():
@@ -277,15 +331,20 @@ def fetch_v2ex():
     data = _fetch_json("https://www.v2ex.com/api/topics/hot.json")
     if not data:
         return []
-    return [
-        {
-            "title": t.get("title", ""),
-            "url": f"https://www.v2ex.com/t/{t.get('id', '')}",
-            "node": t.get("node", {}).get("title", ""),
-            "replies": t.get("replies", 0),
-        }
-        for t in data[:15]
-    ]
+    results = []
+    for t in data:
+        title = t.get("title", "")
+        node_title = t.get("node", {}).get("title", "")
+        if _is_tech_related(title, node_title):
+            results.append({
+                "title": title,
+                "url": f"https://www.v2ex.com/t/{t.get('id', '')}",
+                "node": node_title,
+                "replies": t.get("replies", 0),
+            })
+        if len(results) >= 8:
+            break
+    return results
 
 
 def fetch_huggingface():
@@ -294,15 +353,23 @@ def fetch_huggingface():
     data = _fetch_json("https://huggingface.co/api/daily_papers")
     if not data:
         return []
-    return [
-        {
-            "title": p.get("title", ""),
-            "url": f"https://huggingface.co/papers/{p.get('id', '')}",
+    results = []
+    for p in data[:10]:
+        # Paper ID is nested under "paper" key in HF API response
+        paper_obj = p.get("paper") or {}
+        paper_id = paper_obj.get("id") or p.get("id", "")
+        if not paper_id:
+            paper_url = paper_obj.get("url") or p.get("paperUrl", "") or p.get("url", "")
+            if paper_url:
+                paper_id = paper_url.rstrip("/").rsplit("/", 1)[-1] if "/" in paper_url else ""
+        url = f"https://huggingface.co/papers/{paper_id}" if paper_id else (paper_obj.get("url") or p.get("url", ""))
+        results.append({
+            "title": paper_obj.get("title") or p.get("title", ""),
+            "url": url,
             "upvotes": p.get("upvotes", 0),
-            "summary": (p.get("summary") or "")[:200],
-        }
-        for p in data[:10]
-    ]
+            "summary": (paper_obj.get("summary") or p.get("summary") or "")[:200],
+        })
+    return results
 
 
 def fetch_producthunt():
@@ -322,6 +389,10 @@ def fetch_producthunt():
             summary = ""
             if summary_el is not None and summary_el.text:
                 summary = re.sub(r"<[^>]+>", "", summary_el.text)[:200]
+            if not summary:
+                content_el = entry.find("atom:content", ns)
+                if content_el is not None and content_el.text:
+                    summary = re.sub(r"<[^>]+>", "", content_el.text)[:200]
             items.append({
                 "title": title_el.text if title_el is not None else "",
                 "url": link_el.get("href") if link_el is not None else "",
@@ -469,7 +540,7 @@ def fetch_bilibili():
                 videos = data.get("result", {}).get("videos", [])
                 seen = set()
                 for v in (videos if isinstance(videos, list) else [videos]):
-                    if not v.get("title"):
+                    if not v.get("title") or _is_bilibili_scam(v.get("title", "")):
                         continue
                     vid = v.get("url", v.get("bvid", ""))
                     if vid in seen:
@@ -494,11 +565,11 @@ def fetch_bilibili():
 
 
 def fetch_zhihu():
-    """知乎 AI 热门讨论（需要 bb-browser 已登录知乎）"""
+    """知乎 AI 相关搜索（需要 bb-browser 已登录知乎）"""
     print("  Fetching Zhihu...")
     try:
         r = subprocess.run(
-            ["bb-browser", "site", "zhihu/hot", "10", "--json"],
+            ["bb-browser", "site", "zhihu/search", "AI 人工智能 大模型 2026", "10", "--json"],
             capture_output=True, text=True, timeout=20
         )
         if r.returncode == 0 and r.stdout.strip():
@@ -698,7 +769,10 @@ def generate_rss_feed():
             title = "AI Daily Report"
         link = "%s/ai-daily/%s" % (site_url, fp.stem)
         body = text.split("---\n", 2)[-1] if "---\n" in text else text
-        body_preview = re.sub(r"<[^>]+>", "", body[:500]).strip()
+        body_preview = "\n".join(
+            line.rstrip()
+            for line in re.sub(r"<[^>]+>", "", body[:500]).splitlines()
+        ).strip()
 
         items.append(
             '    <item>'
@@ -764,6 +838,40 @@ def call_llm(raw_data_text):
         return None
 
 
+def call_trend_llm(prompt):
+    """Request strict JSON for guarded cross-issue trend refreshes."""
+    if not LLM_API_KEY:
+        return None
+
+    payload = json.dumps({
+        "model": LLM_MODEL,
+        "messages": [
+            {
+                "role": "system",
+                "content": "你是严谨的 AI 行业研究编辑，只能输出符合用户约束的 JSON。",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        "temperature": 0.2,
+        "max_tokens": 2400,
+    }).encode("utf-8")
+    req = Request(
+        f"{LLM_BASE_URL}/chat/completions",
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {LLM_API_KEY}",
+        },
+    )
+    try:
+        with urlopen(req, timeout=120) as resp:
+            result = json.loads(resp.read())
+            return result["choices"][0]["message"]["content"]
+    except Exception as error:
+        print(f"  [warn] Trend LLM call failed: {error}")
+        return None
+
+
 def format_raw_data(sources_data):
     lines = []
     for source_name, items in sources_data.items():
@@ -815,9 +923,14 @@ def save_report(md_content, date_str, force=False):
     filepath = CONTENT_DIR / f"{date_str}.md"
     if filepath.exists() and not force:
         existing = filepath.read_text(encoding="utf-8")
-        if "## Raw Data Summary" in existing:
+        fallback_markers = (
+            "## Raw Data Summary",
+            "## \U0001f4ca",
+            "## 01 \U0001f4e1 \u539f\u59cb\u4fe1\u53f7\u5f52\u6863",
+        )
+        if any(marker in existing for marker in fallback_markers):
             filepath.write_text(md_content, encoding="utf-8")
-            print(f"  [ok] Overwrote: {filepath.name} (was fallback)")
+            print(f"  [ok] Overwrote: {filepath.name} (was fallback/non-llm)")
             return filepath
         print(f"  [skip] {filepath.name} already exists")
         return None
@@ -876,6 +989,34 @@ def git_commit_push(date_str):
         return False
 
 
+
+def _generate_fallback(sources_data):
+    """Return a parseable signal archive when LLM analysis is unavailable."""
+    parts = ["## 01 \U0001f4e1 \u539f\u59cb\u4fe1\u53f7\u5f52\u6863", ""]
+    for source_name, items in sources_data.items():
+        valid_items = [
+            item for item in items[:8]
+            if (item.get("title") or item.get("name") or "").strip()
+        ]
+        if not valid_items:
+            continue
+        parts.append(f"### {source_name}")
+        for item in valid_items:
+            title = (item.get("title") or item.get("name") or "").strip()
+            url = item.get("url", "")
+            desc = (item.get("description") or "").strip()
+            line = f"- **{title}**"
+            if desc:
+                line += f"\uff1a{desc[:120]}"
+            if url:
+                line += f" [\u94fe\u63a5]({url})"
+            parts.append(line)
+        parts.append("")
+    if len(parts) == 2:
+        parts.extend(["### \u7cfb\u7edf\u72b6\u6001", "- \u4eca\u65e5\u65e0\u6709\u6548\u6570\u636e\u3002"])
+    return "\n".join(parts).strip()
+
+
 # ── 主流程 ────────────────────────────
 def main():
 
@@ -921,8 +1062,8 @@ def main():
     if report:
         print(f"  [ok] Analysis done ({len(report)} chars)")
     else:
-        print("  [warn] LLM failed, using raw data as fallback")
-        report = "## Raw Data Summary\n\n" + raw_text
+        print("  [warn] LLM failed, generating structured fallback...")
+        report = _generate_fallback(active)
 
     # 3. Generate
     print("\n[3/4] Generating markdown...")
@@ -933,6 +1074,18 @@ def main():
         print("  [skip] Report already exists for today")
         return 0
     generate_rss_feed()
+    try:
+        from ai_trends import refresh_trends
+
+        refreshed = refresh_trends(
+            CONTENT_DIR,
+            BLOG_DIR / "src" / "data" / "ai-trends.json",
+            call_trend_llm,
+        )
+        if refreshed:
+            print("  [ok] AI application trends refreshed")
+    except Exception as error:
+        print(f"  [warn] Trend refresh skipped: {error}")
 
     # 4. Push
     print("\n[4/4] Deploying...")
