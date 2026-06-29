@@ -31,6 +31,58 @@ interface FirstListItem {
 const listItemPattern = /^\s{0,3}(?:\d+\.|[-*+])\s+/
 const urlPattern = /https?:\/\/[^\s)>\]]+/g
 
+function unquoteYamlScalar(value: string) {
+  const trimmed = value.trim()
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1)
+  }
+  return trimmed
+}
+
+export function parseFrontmatter(raw: string): {
+  data: Record<string, unknown>
+  content: string
+} {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
+  if (!match) return { data: {}, content: raw }
+
+  const data: Record<string, unknown> = {}
+  let arrayKey = ''
+  let arrayValue: string[] = []
+
+  for (const line of match[1].split('\n')) {
+    const listMatch = line.match(/^\s+-\s+(.+)/)
+    if (listMatch && arrayKey) {
+      arrayValue.push(unquoteYamlScalar(listMatch[1]))
+      continue
+    }
+
+    if (arrayKey) {
+      data[arrayKey] = arrayValue
+      arrayKey = ''
+      arrayValue = []
+    }
+
+    const keyValue = line.match(/^(\w[\w-]*)\s*:\s*(.*)$/)
+    if (!keyValue) continue
+    const value = keyValue[2].trim()
+    if (value) {
+      data[keyValue[1]] = unquoteYamlScalar(value)
+    } else {
+      arrayKey = keyValue[1]
+    }
+  }
+
+  if (arrayKey) {
+    data[arrayKey] = arrayValue
+  }
+
+  return { data, content: raw.slice(match[0].length) }
+}
+
 export function isAiDailySlug(slug: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(slug)
 }

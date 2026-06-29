@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { isAiDailySlug, parseAiDailyContent } from '../src/lib/ai-daily-parser.ts'
+import {
+  createIssueId,
+  createIssueNavigation,
+  isAiDailySlug,
+  parseFrontmatter,
+  parseAiDailyContent,
+} from '../src/lib/ai-daily-parser.ts'
 
 test('parses numbered editorial sections and derives a lead story', () => {
   const result = parseAiDailyContent(`
@@ -66,4 +72,28 @@ test('accepts only date-shaped daily slugs', () => {
   assert.equal(isAiDailySlug('2026-06-28'), true)
   assert.equal(isAiDailySlug('TEMPLATE'), false)
   assert.equal(isAiDailySlug('2026-6-28'), false)
+})
+
+test('creates stable issue ids and adjacent navigation', () => {
+  assert.equal(createIssueId('2026-06-28'), '20260628')
+  assert.deepEqual(
+    createIssueNavigation(['2026-06-28', '2026-06-27', '2026-06-26'], '2026-06-27'),
+    { newer: '2026-06-28', older: '2026-06-26' }
+  )
+  assert.deepEqual(
+    createIssueNavigation(['2026-06-28', '2026-06-27'], '2026-06-28'),
+    { newer: null, older: '2026-06-27' }
+  )
+})
+
+test('parses quoted frontmatter scalars without leaking YAML quotes', () => {
+  const parsed = parseFrontmatter(`---
+title: "AI 日报 - 2026年06月28日"
+date: 2026-06-28
+---
+正文`)
+
+  assert.equal(parsed.data.title, 'AI 日报 - 2026年06月28日')
+  assert.equal(parsed.data.date, '2026-06-28')
+  assert.equal(parsed.content, '正文')
 })

@@ -1,55 +1,37 @@
+import {
+  createIssueId,
+  createIssueNavigation,
+  isAiDailySlug,
+  parseAiDailyContent,
+  parseFrontmatter,
+  type ParsedAiDailyContent,
+} from './ai-daily-parser'
+
 export interface AiDailyMeta {
   slug: string
   title: string
   date: string
+  dateISO: string
   description: string
+  issueId: string
+  leadTitle: string
+  leadSummary: string
+  storyCount: number
+  sourceCount: number
+  readingMinutes: number
+  isSignalArchive: boolean
 }
 
 export interface AiDailyPost extends AiDailyMeta {
   content: string
+  parsed: ParsedAiDailyContent
+  newerSlug: string | null
+  olderSlug: string | null
 }
 
-function parseFrontmatter(raw: string): { data: Record<string, unknown>; content: string } {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
-  if (!match) return { data: {}, content: raw }
-
-  const yaml = match[1]
-  const content = raw.slice(match[0].length)
-  const data: Record<string, unknown> = {}
-
-  let currentKey = ''
-  let currentArray: string[] = []
-
-  for (const line of yaml.split('\n')) {
-    const listMatch = line.match(/^\s+-\s+(.+)/)
-    if (listMatch && currentKey) {
-      currentArray.push(listMatch[1])
-      continue
-    }
-
-    if (currentKey && currentArray.length > 0) {
-      data[currentKey] = currentArray
-      currentArray = []
-    }
-
-    const keyValue = line.match(/^(\w[\w-]*)\s*:\s*(.+)/)
-    if (keyValue) {
-      currentKey = keyValue[1]
-      const value = keyValue[2].trim()
-      if (value === '') {
-        currentArray = []
-      } else {
-        data[currentKey] = value
-        currentKey = ''
-      }
-    }
-  }
-
-  if (currentKey && currentArray.length > 0) {
-    data[currentKey] = currentArray
-  }
-
-  return { data, content }
+interface AiDailyRecord extends AiDailyMeta {
+  content: string
+  parsed: ParsedAiDailyContent
 }
 
 const markdownModules = import.meta.glob('../content/ai-daily/*.md', {
@@ -58,56 +40,82 @@ const markdownModules = import.meta.glob('../content/ai-daily/*.md', {
   eager: true,
 })
 
-function getRawContent(slug: string): string | null {
-  const key = `../content/ai-daily/${slug}.md`
-  return (markdownModules[key] as string) || null
+function formatDate(dateISO: string) {
+  if (!dateISO) return ''
+  return new Intl.DateTimeFormat('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'Asia/Shanghai',
+  }).format(new Date(`${dateISO}T00:00:00+08:00`))
 }
 
-export function getAiDailyPosts(): AiDailyMeta[] {
-  const posts: AiDailyMeta[] = []
-
-  for (const [filePath, raw] of Object.entries(markdownModules)) {
-    const slug = filePath.replace('../content/ai-daily/', '').replace(/\.md$/, '')
-    const { data } = parseFrontmatter(raw as string)
-
-    posts.push({
-      slug,
-      title: (data.title as string) || slug,
-      date: data.date
-        ? new Date(data.date as string).toLocaleDateString('zh-CN', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })
-        : '',
-      description: (data.description as string) || '',
-    })
-  }
-
-  return posts.sort((a, b) => {
-    if (!a.date) return 1
-    if (!b.date) return -1
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
-}
-
-export function getAiDailyPost(slug: string): AiDailyPost | null {
-  const raw = getRawContent(slug)
-  if (!raw) return null
+function createRecord(filePath: string, raw: string): AiDailyRecord | null {
+  const slug = filePath.replace('../content/ai-daily/', '').replace(/\.md$/, '')
+  if (!isAiDailySlug(slug)) return null
 
   const { data, content } = parseFrontmatter(raw)
+  const dateISO = (data.date as string) || slug
+  const parsed = parseAiDailyContent(content)
 
   return {
     slug,
-    title: (data.title as string) || slug,
-    date: data.date
-      ? new Date(data.date as string).toLocaleDateString('zh-CN', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-      : '',
+    title: (data.title as string) || `AI 日报 - ${dateISO}`,
+    date: formatDate(dateISO),
+    dateISO,
     description: (data.description as string) || '',
+    issueId: createIssueId(dateISO),
+    leadTitle: parsed.leadStory?.title || (data.title as string) || slug,
+    leadSummary: parsed.leadStory?.summaryMarkdown || (data.description as string) || '',
+    storyCount: parsed.storyCount,
+    sourceCount: parsed.sourceCount,
+    readingMinutes: parsed.readingMinutes,
+    isSignalArchive: parsed.isSignalArchive,
     content,
+    parsed,
+  }
+}
+
+const records = Object.entries(markdownModules)
+  .map(([filePath, raw]) => createRecord(filePath, raw as string))
+  .filter((record): record is AiDailyRecord => record !== null)
+  .toSorted((a, b) => b.dateISO.localeCompare(a.dateISO))
+
+function toMeta(record: AiDailyRecord): AiDailyMeta {
+  return {
+    slug: record.slug,
+    title: record.title,
+    date: record.date,
+    dateISO: record.dateISO,
+    description: record.description,
+    issueId: record.issueId,
+    leadTitle: record.leadTitle,
+    leadSummary: record.leadSummary,
+    storyCount: record.storyCount,
+    sourceCount: record.sourceCount,
+    readingMinutes: record.readingMinutes,
+    isSignalArchive: record.isSignalArchive,
+  }
+}
+
+export function getAiDailyPosts(): AiDailyMeta[] {
+  return records.map(toMeta)
+}
+
+export function getAiDailyPost(slug: string): AiDailyPost | null {
+  const record = records.find((item) => item.slug === slug)
+  if (!record) return null
+
+  const navigation = createIssueNavigation(
+    records.map((item) => item.slug),
+    slug
+  )
+
+  return {
+    ...toMeta(record),
+    content: record.content,
+    parsed: record.parsed,
+    newerSlug: navigation.newer,
+    olderSlug: navigation.older,
   }
 }
