@@ -747,7 +747,7 @@ def generate_rss_feed():
     """从所有 AI 日报 markdown 文件生成 RSS feed XML"""
     if not CONTENT_DIR.exists():
         return
-    site_url = "https://blog.icemouce.com"
+    site_url = "https://blog.icemouce.cc"
     files = sorted(CONTENT_DIR.glob("????-??-??.md"), reverse=True)[:30]
 
     items = []

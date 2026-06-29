@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>AI Daily - https://blog.icemouce.com</title>
-    <link>https://blog.icemouce.com</link>
+    <title>AI Daily - https://blog.icemouce.cc</title>
+    <link>https://blog.icemouce.cc</link>
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
-    <atom:link href="https://blog.icemouce.com/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 29 Jun 2026 16:08:17 +0800</lastBuildDate>
+    <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
+    <lastBuildDate>Tue, 30 Jun 2026 00:37:04 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年06月29日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-29</link>
+        <description><![CDATA[# AI 日报 - 2026年06月29日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1. **GLM-5.2 在 Semgrep 的特定 IDOR 检测配置中超过 Claude Code** **[中等置信度]**
+
+   Semgrep 公布的结果显示，GLM-5.2 以裸提示方式取得 39% F1，高于 Claude Code 的对应成绩；但测试框架和模型配置并不完全相同，不能外推为通用能力排名。V2EX 同日出现国产模型 API 的高热讨论，说明开发者对其性价比兴趣升温。
+   * 来源: https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/
+   * 来源: https:/]]></description>
+        <pubDate>Mon, 29 Jun 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-29</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月28日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-28</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-28</link>
         <description><![CDATA[# AI 日报 - 2026年06月28日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -25,11 +45,11 @@
 
 2. **匿名 GitHub 账号批量释放未公开 0-day 漏洞，引发安全恐慌** **[高置信度]**]]></description>
         <pubDate>Sun, 28 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-28</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-28</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月27日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-27</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-27</link>
         <description><![CDATA[# AI 日报 - 2026年06月27日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -43,11 +63,11 @@
 
 2. **MCP 协议成为 AI Agent 开发核心趋势，搜索量激增**：YouTube 上 MCP（Model Context Protocol）相关教程视频播放量超 150 万，多个教程频道集中发布 AI Agents 和 MCP 内容。Google Trends 显示“AI]]></description>
         <pubDate>Sat, 27 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-27</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-27</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月26日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-26</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-26</link>
         <description><![CDATA[# AI 日报 - 2026年06月26日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -62,11 +82,11 @@
 - **The 'papers, please' era of the internet will decimate your privacy** [链接](https://expression.fire.org/p/the-papers-please-era-of-the-internet)
 - **Un-0: Generating Images with Coupled Oscill]]></description>
         <pubDate>Fri, 26 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-26</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-26</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月25日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-25</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-25</link>
         <description><![CDATA[# AI 日报 - 2026年06月25日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -81,11 +101,11 @@
 - **PostgreSQL Is Enough** [链接](https://gist.github.com/cpursley/c8fb81fe8a7e5df038158bdfe0f06dbb)
 - **Qualcomm to Acquire Modular** [链接](https://w]]></description>
         <pubDate>Thu, 25 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-25</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-25</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月24日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-24</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-24</link>
         <description><![CDATA[# AI 日报 - 2026年06月24日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -99,11 +119,11 @@
    多来源交叉验证显示MCP热度极高：YouTube上“What is MCP?”视频获61.7万次观看，另一讲解视频达155.7万次观看，Reddit社区频繁讨论“Best Local Agents”。MCP正从概念普及走向开发者大规模采用，成为连接AI Agent与数据库/API的事实标准。
    来源：https://www.youtube.com/watch?v=eur8dUO9mvE, https://www.reddit.com/r/LocalLLaMA/comments/1uaebfe/best_loca]]></description>
         <pubDate>Wed, 24 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-24</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-24</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月23日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-23</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-23</link>
         <description><![CDATA[# AI 日报 - 2026年06月23日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -123,11 +143,11 @@
 
   3. Unsloth GLM-5.2 –]]></description>
         <pubDate>Tue, 23 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-23</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-23</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月22日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-22</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-22</link>
         <description><![CDATA[# AI 日报 - 2026年06月22日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -146,11 +166,11 @@
 2.  **AI 项目“变现难”引发社区焦虑** **[中等置信度]**
     V2EX 上关于“进入 AI 时代后，大家用 AI 做的项目都实实在在挣到钱了吗”的帖子获得45条回复，讨]]></description>
         <pubDate>Mon, 22 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-22</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-22</guid>
     </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月21日]]></title>
-        <link>https://blog.icemouce.com/ai-daily/2026-06-21</link>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-21</link>
         <description><![CDATA[# AI 日报 - 2026年06月21日
 
 > 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
@@ -164,7 +184,7 @@
     YouTube 上多个视频（包括“What is MCP?” 61万次观看、“you need to learn MCP RIGHT NOW!!” 155万次观看）集中爆发，Reddit 和 Product Hunt 上 MCP 2000 工具也受关注。Google Trends 显示“MCP protocol”搜索平稳但基数低，说明该概念正在从开发者圈层向大众扩散，成为AI Agent集成数据库与API的标准协议。
     https://www.youtube.com/watch?v=eur8dUO9mvE]]></description>
         <pubDate>Sun, 21 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.com/ai-daily/2026-06-21</guid>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-21</guid>
     </item>
 </channel>
 </rss>
