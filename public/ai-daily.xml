@@ -6,7 +6,29 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 30 Jun 2026 00:37:04 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 08:19:30 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年06月30日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-06-30</link>
+        <description><![CDATA[# AI 日报 - 2026年06月30日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+好的，各位读者，早上好。我是主编。今天的数据池异常热闹，从法律裁决到模型开源，从社区抗议到资本并购，信号密集且相互交织。我们的分析师团队已经完成了今天的信号梳理。以下是为您呈上的2026年6月30日AI行业日报。
+
+## 01 📌 今日头条
+
+1.  **美国最高法院裁定：地理围栏搜查令需受宪法保护** **[高置信度]**
+    最高法院作出里程碑式裁决，要求执法部门获取地理围栏（Geofence）搜查令时必须满足宪法第四修正案的要求。这一裁决将深刻影响基于位置数据的AI应用、广告投放和数字取证行业。多个来源交叉验证，信号明确且影响深远。
+    *来源：HackerNews (The Guardian)*
+
+2.  **Anthropic CEO 言论引爆社区]]></description>
+        <pubDate>Tue, 30 Jun 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-06-30</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月29日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-06-29</link>

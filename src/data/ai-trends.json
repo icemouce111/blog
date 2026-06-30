@@ -2,57 +2,67 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-23",
-      "rangeEnd": "2026-06-29",
-      "updatedAt": "2026-06-29T12:00:00+08:00",
-      "coverageCount": 0,
-      "mode": "curated",
+      "rangeStart": "2026-06-24",
+      "rangeEnd": "2026-06-30",
+      "updatedAt": "2026-06-30T08:19:30+08:00",
+      "coverageCount": 7,
+      "mode": "generated",
       "insights": [
         {
-          "title": "智能体从对话入口走向可委派的工作流",
-          "summary": "应用重点正在从“回答一次问题”转向持续执行、跨工具协作和交付可检查结果。长任务与多智能体编排，开始成为生产环境里的常态能力。",
+          "title": "AI Agent 开发基础设施走向成熟",
+          "summary": "MCP协议成为连接Agent与外部工具的标准接口，相关教程视频累计观看超260万次。字节跳动开源长时程SuperAgent框架DeerFlow，同时Foglamp等可观测性工具上线，标志Agent开发从概念验证进入工程化阶段。",
           "sources": [
             {
-              "title": "How agents are transforming work",
-              "url": "https://openai.com/index/how-agents-are-transforming-work/",
-              "publishedAt": "2026-06-25"
+              "title": "字节跳动发布开源长时程SuperAgent框架DeerFlow",
+              "url": "https://github.com/bytedance/deer-flow",
+              "publishedAt": "2026-06-24"
             },
             {
-              "title": "Anthropic Economic Index — June 2026",
-              "url": "https://www.anthropic.com/research/economic-index-june-2026-report",
-              "publishedAt": "2026-06-26"
+              "title": "Foglamp：发布你能真正看到的AI Agent",
+              "url": "https://www.producthunt.com/products/foglamp",
+              "publishedAt": "2026-06-28"
+            },
+            {
+              "title": "MCP协议成为AI Agent开发核心趋势",
+              "url": "https://www.youtube.com/watch?v=GuTcle5edjk",
+              "publishedAt": "2026-06-29"
             }
           ]
         },
         {
-          "title": "企业部署的竞争点转向治理与评估",
-          "summary": "大企业不再只比较模型能力，而是建设统一的上下文、权限、审计和效果评估层。能否把试点安全地复制到多个团队，正在决定应用扩张速度。",
+          "title": "开源模型与闭源模型竞争加剧",
+          "summary": "GLM-5.2在特定安全基准测试中超越Claude Code，国产模型API以低价策略吸引开发者。同时Anthropic CEO发表开源威胁论引发社区撕裂，Claude使用限制导致用户信任危机，开源生态正快速追赶闭源。",
           "sources": [
             {
-              "title": "HP and OpenAI announce frontier enterprise partnership",
-              "url": "https://openai.com/index/hp-frontier-partnership/",
-              "publishedAt": "2026-06-28"
+              "title": "GLM-5.2在Semgrep的特定IDOR检测配置中超过Claude Code",
+              "url": "https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/",
+              "publishedAt": "2026-06-29"
             },
             {
-              "title": "TCS and Anthropic announce strategic partnership",
-              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
-              "publishedAt": "2026-06-12"
+              "title": "Anthropic CEO言论引爆社区：开源模型将“吃掉你的孩子”",
+              "url": "https://www.reddit.com/r/ClaudeCode/comments/1uim4jb/this_is_a_message_for_anthropic_bring_back_the/",
+              "publishedAt": "2026-06-29"
+            },
+            {
+              "title": "Claude使用限制引发用户集体抗议",
+              "url": "https://www.v2ex.com/t/1223523",
+              "publishedAt": "2026-06-29"
             }
           ]
         },
         {
-          "title": "高频应用正在越过工程部门",
-          "summary": "编码仍是最成熟的智能体场景，但安全、销售、运营和知识工作已经出现可量化案例。下一阶段增长来自跨部门流程，而不是单一“编程助手”品类。",
+          "title": "AI治理与监管进入新阶段",
+          "summary": "美国最高法院裁定地理围栏搜查令需受宪法保护，直接影响依赖位置数据的AI应用。OpenAI同意美国政府审查GPT-5.6用户资格，标志着AI治理从企业自律转向政府监管，对全球AI部署模式产生深远影响。",
           "sources": [
             {
-              "title": "How agents are transforming work",
-              "url": "https://openai.com/index/how-agents-are-transforming-work/",
-              "publishedAt": "2026-06-25"
+              "title": "美国最高法院裁定：地理围栏搜查令需受宪法保护",
+              "url": "https://apnews.com/article/germany-trains-halted-communications-radio-problem-deutsche-bahn-e8fd970b2d889f3ae7ce03322d5c726b",
+              "publishedAt": "2026-06-24"
             },
             {
-              "title": "HP and OpenAI announce frontier enterprise partnership",
-              "url": "https://openai.com/index/hp-frontier-partnership/",
-              "publishedAt": "2026-06-28"
+              "title": "OpenAI says US government will vet users its latest AI model",
+              "url": "https://www.washingtonpost.com/technology/2026/06/26/openai-says-us-government-will-vet-users-its-latest-ai-model/",
+              "publishedAt": "2026-06-27"
             }
           ]
         }
