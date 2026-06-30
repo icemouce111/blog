@@ -1,9 +1,14 @@
 [
   {
-    "name": "个人博客",
-    "description": "基于 React + TypeScript + shadcn/ui 构建的个人博客，集成作品集展示与资源导航",
-    "tags": ["React", "TypeScript", "TailwindCSS", "shadcn/ui", "Cloudflare Pages"],
-    "github": "https://github.com/icemouce111/blog",
-    "demo": "https://blog.icemouce.com"
+    "name": "browser-smart",
+    "description": "面向 Hermes Agent 的智能浏览器操控 Skill，可自动定位用户当前正在浏览的 Chrome 标签页",
+    "tags": ["Hermes Agent", "浏览器自动化", "Chrome", "Shell", "agent-browser-cli"],
+    "github": "https://github.com/icemouce111/browser-smart"
+  },
+  {
+    "name": "接触网缺陷复核 Demo",
+    "description": "面向接触网 AI 缺陷检测业务的复核环节 Demo，用于展示缺陷审阅界面与业务流程原型",
+    "tags": ["AI 缺陷检测", "接触网", "业务原型", "UI Demo"],
+    "github": "https://github.com/icemouce111/catenary-defect-review-demo"
   }
 ]
