@@ -80,13 +80,18 @@ class OfficialSourceTest(unittest.TestCase):
           <lastmod>2026-06-30</lastmod></url>
         </urlset>"""
         transport.text["https://www.anthropic.com/news"] = """
-        <html><body><a href="/news/sonnet-5">Introducing Claude Sonnet 5</a></body></html>
+        <html><body><a href="/news/sonnet-5">
+          Product Jun 30, 2026
+          <h4>Introducing Claude Sonnet 5</h4>
+          <p>Agentic model release details.</p>
+        </a></body></html>
         """
 
         result = AnthropicNewsSource(transport).fetch(context())
 
         self.assertEqual(result.status, SourceStatus.ACTIVE)
         self.assertEqual(result.items[0].title, "Introducing Claude Sonnet 5")
+        self.assertEqual(result.items[0].summary, "Agentic model release details.")
         self.assertEqual(result.items[0].published_at, "2026-06-30")
         self.assertEqual(result.items[0].source_tier, SourceTier.OFFICIAL)
 

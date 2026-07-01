@@ -251,13 +251,23 @@ class AnthropicNewsSource:
                 url = urljoin(self.newsroom_url, anchor["href"])
                 if "/news/" not in url or url in seen:
                     continue
-                title = " ".join(anchor.get_text(" ", strip=True).split())
+                heading = anchor.find(["h1", "h2", "h3", "h4"])
+                title_node = heading or anchor
+                title = " ".join(
+                    title_node.get_text(" ", strip=True).split()
+                )
                 if not title:
                     continue
+                summary_node = anchor.find("p")
                 seen.add(url)
                 items.append({
                     "title": title,
                     "url": url,
+                    "summary": (
+                        " ".join(summary_node.get_text(" ", strip=True).split())
+                        if summary_node
+                        else ""
+                    ),
                     "published_at": dates.get(url),
                 })
             return SourceResult.from_dicts(

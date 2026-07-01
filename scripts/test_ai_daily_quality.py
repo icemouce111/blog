@@ -117,6 +117,34 @@ class ReportValidationTest(unittest.TestCase):
         self.assertFalse(validation.valid)
         self.assertTrue(any("最快" in issue for issue in validation.issues))
 
+    def test_requires_a_collected_source_url_for_every_numbered_item(self):
+        report = """## 01 📌 今日头条
+
+1. **OpenAI 发布新模型**
+   官方发布了新模型，但这里没有来源链接。
+"""
+
+        validation = validate_report(report, [official_item()])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(any("has no source URL" in issue for issue in validation.issues))
+
+    def test_rejects_metrics_not_present_in_evidence(self):
+        unsupported = """## 01 📌 今日头条
+
+1. **搜索热度上升**
+   关键词搜索量上涨 120%。来源：https://openai.com/index/new-model
+"""
+        supported = """## 01 📌 今日头条
+
+1. **模型效率提升**
+   官方材料称效率提升 25%。来源：https://openai.com/index/new-model
+"""
+        evidence = official_item(summary="官方材料称效率提升 25%。")
+
+        self.assertFalse(validate_report(unsupported, [evidence]).valid)
+        self.assertTrue(validate_report(supported, [evidence]).valid)
+
 
 class RepairFallbackTest(unittest.TestCase):
     def test_accepts_one_valid_repair(self):
@@ -158,6 +186,7 @@ class RepairFallbackTest(unittest.TestCase):
         self.assertIn("https://openai.com/index/new-model", result.content)
         self.assertIn("https://linux.do/t/topic/123", result.content)
         self.assertNotIn("invented.example", result.content)
+        self.assertTrue(any("repair" in issue for issue in result.issues))
         self.assertTrue(
             validate_report(
                 result.content,

@@ -41,6 +41,10 @@ RESTRICTED_CLAIMS = (
     "必然成为",
     "唯一选择",
 )
+METRIC_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:%|倍|万|亿|元)")
+ORDERED_ITEM_PATTERN = re.compile(
+    r"(?ms)^\d+\.\s+.*?(?=^\d+\.\s+|^##\s+|\Z)"
+)
 
 
 class QualityMode(str, Enum):
@@ -96,6 +100,10 @@ def validate_report(
         if key not in allowed:
             issues.append(f"report URL is not in collected evidence: {url}")
 
+    for index, block in enumerate(ORDERED_ITEM_PATTERN.findall(content), 1):
+        if not _extract_urls(block):
+            issues.append(f"numbered item {index} has no source URL")
+
     for block in re.split(r"\n\s*\n", content):
         community_urls = [
             url
@@ -115,13 +123,19 @@ def validate_report(
             )
 
     evidence_text = "\n".join(
-        f"{item.title}\n{item.summary}" for item in items
+        f"{item.title}\n{item.summary}\n{item.engagement}"
+        for item in items
     )
     for phrase in RESTRICTED_CLAIMS:
         if phrase in content and phrase not in evidence_text:
             issues.append(
                 f"unsupported absolute or promotional claim: {phrase}"
             )
+    normalized_evidence = re.sub(r"\s+", "", evidence_text)
+    for metric in METRIC_PATTERN.findall(content):
+        normalized_metric = re.sub(r"\s+", "", metric)
+        if normalized_metric not in normalized_evidence:
+            issues.append(f"unsupported metric: {metric.strip()}")
 
     return ValidationResult(not issues, tuple(issues))
 
@@ -138,6 +152,7 @@ def validate_repair_or_fallback(
     if initial.valid:
         return QualityResult(content, QualityMode.ORIGINAL, ())
 
+    final_issues = list(initial.issues)
     if repair is not None:
         repaired = repair(_repair_prompt(content, initial.issues, items))
         if repaired:
@@ -148,9 +163,16 @@ def validate_repair_or_fallback(
                     QualityMode.REPAIRED,
                     initial.issues,
                 )
+            final_issues.extend(
+                f"repair: {issue}" for issue in repaired_validation.issues
+            )
 
     fallback = build_signal_fallback(results, target_date=target_date)
-    return QualityResult(fallback, QualityMode.FALLBACK, initial.issues)
+    return QualityResult(
+        fallback,
+        QualityMode.FALLBACK,
+        tuple(final_issues),
+    )
 
 
 def build_signal_fallback(
@@ -210,6 +232,8 @@ def _repair_prompt(
 - 保留 `## NN` 编号栏目结构。
 - 社区来源必须明确写成“据社区讨论”或“有用户/开发者指出”。
 - 删除证据不支持的最快、第一、唯一、蓝海和确定性预测。
+- 每个编号条目至少保留一个证据清单中的来源 URL。
+- 删除证据清单中没有出现的百分比、倍数、金额和数量。
 - 不得添加证据清单之外的 URL。
 - 只输出修复后的 Markdown 正文。
 
