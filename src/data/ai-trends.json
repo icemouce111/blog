@@ -2,66 +2,71 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-24",
-      "rangeEnd": "2026-06-30",
-      "updatedAt": "2026-06-30T08:19:30+08:00",
+      "rangeStart": "2026-06-25",
+      "rangeEnd": "2026-07-01",
+      "updatedAt": "2026-07-01T23:03:45+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent 开发基础设施走向成熟",
-          "summary": "MCP协议成为连接Agent与外部工具的标准接口，相关教程视频累计观看超260万次。字节跳动开源长时程SuperAgent框架DeerFlow，同时Foglamp等可观测性工具上线，标志Agent开发从概念验证进入工程化阶段。",
+          "title": "AI Agent 可观测性与上下文管理工具需求爆发",
+          "summary": "本周多个产品（如 Polygraph、Foglamp）聚焦 AI Agent 的跨仓库记忆与运行透明度，同时 MCP 协议教程在 YouTube 播放量超 260 万次，显示开发者对 Agent 调试、记忆持久化及标准化连接的需求急剧上升，推动工具链从“能跑”向“可观测、可管理”演进。",
           "sources": [
             {
-              "title": "字节跳动发布开源长时程SuperAgent框架DeerFlow",
-              "url": "https://github.com/bytedance/deer-flow",
-              "publishedAt": "2026-06-24"
+              "title": "Polygraph - Let AI agents see cross repo and maintain session memory",
+              "url": "https://www.producthunt.com/products/polygraph",
+              "publishedAt": "2026-07-01"
             },
             {
-              "title": "Foglamp：发布你能真正看到的AI Agent",
+              "title": "Foglamp - Ship AI agents you can actually see",
               "url": "https://www.producthunt.com/products/foglamp",
               "publishedAt": "2026-06-28"
             },
             {
-              "title": "MCP协议成为AI Agent开发核心趋势",
-              "url": "https://www.youtube.com/watch?v=GuTcle5edjk",
+              "title": "What is MCP? Integrate AI Agents with Databases & APIs",
+              "url": "https://www.youtube.com/watch?v=eur8dUO9mvE",
               "publishedAt": "2026-06-29"
             }
           ]
         },
         {
-          "title": "开源模型与闭源模型竞争加剧",
-          "summary": "GLM-5.2在特定安全基准测试中超越Claude Code，国产模型API以低价策略吸引开发者。同时Anthropic CEO发表开源威胁论引发社区撕裂，Claude使用限制导致用户信任危机，开源生态正快速追赶闭源。",
+          "title": "开源与闭源模型竞争加剧，用户信任与监管成焦点",
+          "summary": "Anthropic 因使用限制引发用户抗议，同时 GPT-5.6 Sol 预览版引入政府用户审查，而 GLM-5.2 在安全基准测试中超越 Claude。社区对闭源模型的成本与限制不满，转向开源替代品，但监管风险同步上升，模型选择从纯性能比拼转向信任与合规权衡。",
           "sources": [
             {
-              "title": "GLM-5.2在Semgrep的特定IDOR检测配置中超过Claude Code",
-              "url": "https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/",
-              "publishedAt": "2026-06-29"
-            },
-            {
-              "title": "Anthropic CEO言论引爆社区：开源模型将“吃掉你的孩子”",
+              "title": "This is a message for Anthropic: bring back the...",
               "url": "https://www.reddit.com/r/ClaudeCode/comments/1uim4jb/this_is_a_message_for_anthropic_bring_back_the/",
               "publishedAt": "2026-06-29"
             },
             {
-              "title": "Claude使用限制引发用户集体抗议",
-              "url": "https://www.v2ex.com/t/1223523",
+              "title": "Previewing GPT-5.6 Sol: a next-generation model",
+              "url": "https://openai.com/index/previewing-gpt-5-6-sol",
+              "publishedAt": "2026-07-01"
+            },
+            {
+              "title": "We have Mythos at home: GLM-5.2 beats Claude in our cyber benchmarks",
+              "url": "https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/",
               "publishedAt": "2026-06-29"
             }
           ]
         },
         {
-          "title": "AI治理与监管进入新阶段",
-          "summary": "美国最高法院裁定地理围栏搜查令需受宪法保护，直接影响依赖位置数据的AI应用。OpenAI同意美国政府审查GPT-5.6用户资格，标志着AI治理从企业自律转向政府监管，对全球AI部署模式产生深远影响。",
+          "title": "AI 推理效率与本地部署成为开发者核心关注点",
+          "summary": "DeepSeek 发布 DSpark 推测解码论文以加速推理，同时社区围绕本地推理硬件（如改装显卡）展开激烈讨论，Bilibili 上“不要买显卡”视频获高赞。推理成本与隐私需求推动混合推理模式兴起，开发者寻求在云端算力与本地数据主权间取得平衡。",
           "sources": [
             {
-              "title": "美国最高法院裁定：地理围栏搜查令需受宪法保护",
-              "url": "https://apnews.com/article/germany-trains-halted-communications-radio-problem-deutsche-bahn-e8fd970b2d889f3ae7ce03322d5c726b",
-              "publishedAt": "2026-06-24"
+              "title": "DSpark paper",
+              "url": "https://github.com/deepseek-ai/DeepSpec/blob/main/DSpark_paper.pdf",
+              "publishedAt": "2026-06-28"
             },
             {
-              "title": "OpenAI says US government will vet users its latest AI model",
-              "url": "https://www.washingtonpost.com/technology/2026/06/26/openai-says-us-government-will-vet-users-its-latest-ai-model/",
+              "title": "96GB 4090s and 5090 are literally a scam, I mods...",
+              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1uh1lc7/96gb_4090s_and_5090_are_literally_a_scam_i_mods/",
+              "publishedAt": "2026-06-28"
+            },
+            {
+              "title": "不要购买显卡用于本地 AI 推理",
+              "url": "https://www.bilibili.com/video/BV1KKE96CELt",
               "publishedAt": "2026-06-27"
             }
           ]
