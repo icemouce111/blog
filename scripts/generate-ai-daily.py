@@ -5,18 +5,19 @@ AI 日报生成器 — 每日自动抓取与分析
 使用方式:
   python3 scripts/generate-ai-daily.py
 
-依赖: stdlib only (零外部依赖)
+依赖: scripts/requirements.txt
 
 流程:
-  1. 并行抓取 6 个免费数据源
+  1. 并行抓取注册的数据源
   2. LLM 多角色分析师 (7 个角色) 分析
-  3. 生成 markdown 日报文件
-  4. 写入 src/content/ai-daily/
-  5. git commit + push → Cloudflare 自动部署
+  3. 自动质量控制并生成 markdown
+  4. 从 origin/main 隔离提交并推送
+  5. 验证远端 SHA 与 Cloudflare RSS
 
 环境变量:
   DEEPSEEK_API_KEY (推荐) or OPENAI_API_KEY — LLM 调用
-  GITHUB_TOKEN or GH_TOKEN — git push 认证（可选，默认走 SSH）
+  X_BEARER_TOKEN — X 官方 recent search API（可选）
+  XIAOHONGSHU_API_BASE — 小红书 MCP 地址（可选）
 """
 
 import argparse
@@ -799,7 +800,7 @@ def build_source_registry():
         ),
         CallableSource(
             "GitHub Trending",
-            SourceTier.COMMUNITY,
+            SourceTier.AGGREGATOR,
             fetch_github_trending,
         ),
         CallableSource("V2EX", SourceTier.COMMUNITY, fetch_v2ex),
@@ -1284,6 +1285,8 @@ def _run_generation(args):
     print(f"  [ok] Quality mode: {quality.mode.value}")
     if quality.issues:
         print(f"  [info] Quality issues handled: {len(quality.issues)}")
+        for issue in quality.issues:
+            print(f"    - {issue}")
 
     if args.dry_run:
         print("\n[3/3] Dry run complete; no files were written.")
