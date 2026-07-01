@@ -40,6 +40,26 @@ RESTRICTED_CLAIMS = (
     "我锁定",
     "必然成为",
     "唯一选择",
+    "所有请求",
+    "全部请求",
+    "用于追踪和识别",
+)
+KNOWN_SOURCE_NAMES = (
+    "Hacker News",
+    "GitHub Trending",
+    "V2EX",
+    "HuggingFace Papers",
+    "Product Hunt",
+    "OpenAI",
+    "Anthropic",
+    "Linux.do",
+    "Reddit",
+    "X/Twitter",
+    "YouTube",
+    "Bilibili",
+    "Zhihu",
+    "Xiaohongshu",
+    "Google Trends",
 )
 METRIC_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:%|倍|万|亿|元)")
 ORDERED_ITEM_PATTERN = re.compile(
@@ -136,6 +156,12 @@ def validate_report(
         normalized_metric = re.sub(r"\s+", "", metric)
         if normalized_metric not in normalized_evidence:
             issues.append(f"unsupported metric: {metric.strip()}")
+    active_sources = {item.source for item in items}
+    for source_name in KNOWN_SOURCE_NAMES:
+        if source_name in content and source_name not in active_sources:
+            issues.append(
+                f"report attributes a claim to unavailable source: {source_name}"
+            )
 
     return ValidationResult(not issues, tuple(issues))
 
@@ -160,6 +186,14 @@ def validate_repair_or_fallback(
             if repaired_validation.valid:
                 return QualityResult(
                     repaired,
+                    QualityMode.REPAIRED,
+                    initial.issues,
+                )
+            pruned = _prune_invalid_numbered_items(repaired, items)
+            pruned_validation = validate_report(pruned, items)
+            if pruned_validation.valid:
+                return QualityResult(
+                    pruned,
                     QualityMode.REPAIRED,
                     initial.issues,
                 )
@@ -232,6 +266,8 @@ def _repair_prompt(
 - 保留 `## NN` 编号栏目结构。
 - 社区来源必须明确写成“据社区讨论”或“有用户/开发者指出”。
 - 删除证据不支持的最快、第一、唯一、蓝海和确定性预测。
+- 不得引用本次证据清单中不存在或抓取失败的数据源。
+- 单一调查不得扩写成“所有请求”，不得把推测目的写成既定事实。
 - 每个编号条目至少保留一个证据清单中的来源 URL。
 - 删除证据清单中没有出现的百分比、倍数、金额和数量。
 - 不得添加证据清单之外的 URL。
@@ -246,6 +282,31 @@ def _repair_prompt(
 待修复正文：
 {content}
 """
+
+
+def _prune_invalid_numbered_items(
+    content: str,
+    evidence: Iterable[SourceItem],
+) -> str:
+    items = list(evidence)
+
+    def keep_valid(match: re.Match[str]) -> str:
+        block = match.group(0).strip()
+        candidate = f"## 01 校验\n\n{block}\n"
+        return match.group(0) if validate_report(candidate, items).valid else ""
+
+    pruned = ORDERED_ITEM_PATTERN.sub(keep_valid, content)
+    sections = re.split(r"(?m)(?=^##\s+)", pruned)
+    kept = []
+    for section in sections:
+        if not section.strip():
+            continue
+        if section.lstrip().startswith("## ") and not ORDERED_ITEM_PATTERN.search(
+            section
+        ):
+            continue
+        kept.append(section.strip())
+    return "\n\n".join(kept).strip()
 
 
 def _extract_urls(content: str) -> list[str]:

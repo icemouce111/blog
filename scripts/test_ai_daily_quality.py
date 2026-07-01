@@ -145,6 +145,31 @@ class ReportValidationTest(unittest.TestCase):
         self.assertFalse(validate_report(unsupported, [evidence]).valid)
         self.assertTrue(validate_report(supported, [evidence]).valid)
 
+    def test_rejects_claims_attributed_to_an_unavailable_source(self):
+        report = """## 01 📌 今日头条
+
+1. **搜索趋势**
+   Google Trends 显示搜索热度上升。来源：https://openai.com/index/new-model
+"""
+
+        validation = validate_report(report, [official_item()])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(any("Google Trends" in issue for issue in validation.issues))
+
+    def test_rejects_tracking_purpose_and_all_requests_without_evidence(self):
+        report = """## 01 📌 今日头条
+
+1. **工具标记所有请求**
+   有开发者指出这些标记用于追踪和识别用户。来源：https://linux.do/t/topic/123
+"""
+
+        validation = validate_report(report, [community_item()])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(any("所有请求" in issue for issue in validation.issues))
+        self.assertTrue(any("用于追踪和识别" in issue for issue in validation.issues))
+
 
 class RepairFallbackTest(unittest.TestCase):
     def test_accepts_one_valid_repair(self):
@@ -193,6 +218,34 @@ class RepairFallbackTest(unittest.TestCase):
                 [official_item(), community_item()],
             ).valid
         )
+
+    def test_prunes_unverifiable_repaired_items_before_fallback(self):
+        invalid = "No numbered sections."
+        repaired = """## 01 📌 今日头条
+
+1. **有来源的消息**
+   OpenAI 发布了新模型。来源：https://openai.com/index/new-model
+
+2. **无来源预测**
+   这项技术必然改变市场。
+
+## 02 🎯 机会方向
+
+1. **无依据机会**
+   这是一个新机会。
+"""
+
+        result = validate_repair_or_fallback(
+            invalid,
+            result_for(official_item()),
+            target_date=date(2026, 7, 1),
+            repair=lambda _prompt: repaired,
+        )
+
+        self.assertEqual(result.mode, QualityMode.REPAIRED)
+        self.assertIn("有来源的消息", result.content)
+        self.assertNotIn("无来源预测", result.content)
+        self.assertNotIn("机会方向", result.content)
 
 
 if __name__ == "__main__":
