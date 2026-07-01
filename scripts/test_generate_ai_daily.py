@@ -2,7 +2,14 @@ import importlib.util
 import pathlib
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+
+from scripts.ai_daily_sources import (
+    SourceItem,
+    SourceResult,
+    SourceStatus,
+    SourceTier,
+)
 
 
 MODULE_PATH = pathlib.Path(__file__).with_name("generate-ai-daily.py")
@@ -193,6 +200,37 @@ class SourceRegistryContractTest(unittest.TestCase):
                 "Xiaohongshu",
                 "Google Trends",
             },
+        )
+
+    def test_filters_registered_results_before_llm_analysis(self):
+        results = {
+            "OpenAI": SourceResult(
+                "OpenAI",
+                SourceStatus.ACTIVE,
+                [
+                    SourceItem(
+                        source="OpenAI",
+                        title="Current",
+                        url="https://openai.com/current",
+                        published_at="2026-06-30",
+                        source_tier=SourceTier.OFFICIAL,
+                    ),
+                    SourceItem(
+                        source="OpenAI",
+                        title="Future",
+                        url="https://openai.com/future",
+                        published_at="2026-07-10",
+                        source_tier=SourceTier.OFFICIAL,
+                    ),
+                ],
+            )
+        }
+
+        filtered = MODULE.filter_source_results(results, date(2026, 7, 1))
+
+        self.assertEqual(
+            [item.title for item in filtered["OpenAI"].items],
+            ["Current"],
         )
 
 

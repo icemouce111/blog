@@ -37,6 +37,7 @@ from xml.etree import ElementTree
 try:
     from scripts.ai_daily_quality import (
         QualityMode,
+        filter_usable_items,
         validate_repair_or_fallback,
     )
     from scripts.ai_daily_sop import Publisher
@@ -48,12 +49,17 @@ try:
         RedditSource,
         SourceContext,
         SourceRegistry,
+        SourceStatus,
         SourceTier,
         XiaohongshuSource,
         XSource,
     )
 except ModuleNotFoundError:
-    from ai_daily_quality import QualityMode, validate_repair_or_fallback
+    from ai_daily_quality import (
+        QualityMode,
+        filter_usable_items,
+        validate_repair_or_fallback,
+    )
     from ai_daily_sop import Publisher
     from ai_daily_sources import (
         AnthropicNewsSource,
@@ -63,6 +69,7 @@ except ModuleNotFoundError:
         RedditSource,
         SourceContext,
         SourceRegistry,
+        SourceStatus,
         SourceTier,
         XiaohongshuSource,
         XSource,
@@ -858,6 +865,18 @@ def source_results_to_legacy(results):
     return converted
 
 
+def filter_source_results(results, target_date):
+    """Remove unusable evidence before it reaches prompts or core quorum checks."""
+    for result in results.values():
+        before = len(result.items)
+        result.items = filter_usable_items(result.items, target_date)
+        if before and not result.items:
+            result.status = SourceStatus.SKIPPED
+            reason = "all items failed URL/date quality checks"
+            result.error = f"{result.error}; {reason}" if result.error else reason
+    return results
+
+
 # ── LLM 分析 ──────────────────────────
 ANALYSIS_SYSTEM_PROMPT = """你是 AI 日报的编辑团队，采用 TradingAgents 多角色分析框架。基于今日原始数据，生成结构化的 AI 行业日报。
 
@@ -1254,6 +1273,7 @@ def _run_generation(args):
     results = registry.fetch_all(
         SourceContext(target_date=target_date, limit=12)
     )
+    results = filter_source_results(results, target_date)
     for source, result in results.items():
         detail = f"{len(result.items)} items"
         if result.error:
