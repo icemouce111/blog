@@ -61,9 +61,25 @@ class AtomicRunLock:
     def __init__(self, repo_root: Path, stale_after: int = 6 * 60 * 60):
         self.repo_root = Path(repo_root).resolve()
         self.stale_after = stale_after
-        digest = hashlib.sha256(str(self.repo_root).encode()).hexdigest()[:16]
+        identity = self._repository_identity()
+        digest = hashlib.sha256(str(identity).encode()).hexdigest()[:16]
         self.path = Path(tempfile.gettempdir()) / f"ai-daily-{digest}.lock"
         self._owned = False
+
+    def _repository_identity(self) -> Path:
+        result = _run(
+            self.repo_root,
+            "git",
+            "rev-parse",
+            "--git-common-dir",
+            check=False,
+        )
+        if result.returncode != 0 or not result.stdout.strip():
+            return self.repo_root
+        common = Path(result.stdout.strip())
+        if not common.is_absolute():
+            common = self.repo_root / common
+        return common.resolve()
 
     def __enter__(self) -> "AtomicRunLock":
         self._acquire()

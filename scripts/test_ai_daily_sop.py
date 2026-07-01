@@ -50,6 +50,31 @@ class AtomicRunLockTest(unittest.TestCase):
 
             self.assertFalse(lock.path.exists())
 
+    def test_linked_worktrees_share_one_repository_lock(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repo = root / "repo"
+            linked = root / "linked"
+            repo.mkdir()
+            run_git(repo, "init")
+            run_git(repo, "config", "user.name", "AI Daily Test")
+            run_git(repo, "config", "user.email", "ai-daily@example.com")
+            (repo / "README.md").write_text("seed\n", encoding="utf-8")
+            run_git(repo, "add", "README.md")
+            run_git(repo, "commit", "-m", "seed")
+            run_git(repo, "worktree", "add", "-b", "linked", str(linked))
+
+            first = AtomicRunLock(repo)
+            second = AtomicRunLock(linked)
+
+            self.assertEqual(first.path, second.path)
+            with first:
+                with self.assertRaises(PublishError):
+                    with second:
+                        pass
+
+            run_git(repo, "worktree", "remove", "--force", str(linked))
+
 
 class ArtifactContractTest(unittest.TestCase):
     def test_allowed_artifacts_include_report_rss_and_trends_only(self):
