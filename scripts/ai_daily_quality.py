@@ -9,11 +9,14 @@ from enum import Enum
 from typing import Callable, Iterable, Mapping
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-from scripts.ai_daily_sources import (
-    SourceItem,
-    SourceResult,
-    SourceTier,
-)
+try:
+    from scripts.ai_daily_sources import (
+        SourceItem,
+        SourceResult,
+        SourceTier,
+    )
+except ModuleNotFoundError:
+    from ai_daily_sources import SourceItem, SourceResult, SourceTier
 
 
 URL_PATTERN = re.compile(r"https?://[^\s<>\])]+")
