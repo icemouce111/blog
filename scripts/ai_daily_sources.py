@@ -85,6 +85,21 @@ class SourceResult:
             item_metadata = dict(raw.get("metadata") or {})
             if metadata:
                 item_metadata.update(metadata)
+            engagement = dict(raw.get("engagement") or {})
+            for key in (
+                "score",
+                "comments",
+                "replies",
+                "likes",
+                "retweets",
+                "reposts",
+                "stars",
+                "upvotes",
+                "views",
+                "favorites",
+            ):
+                if key in raw and raw.get(key) is not None:
+                    engagement[key] = raw.get(key)
             normalized.append(
                 SourceItem(
                     source=source,
@@ -107,7 +122,7 @@ class SourceResult:
                         if raw.get("author") is not None
                         else None
                     ),
-                    engagement=dict(raw.get("engagement") or {}),
+                    engagement=engagement,
                     source_tier=tier,
                     metadata=item_metadata,
                 )

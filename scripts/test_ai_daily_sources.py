@@ -3,6 +3,7 @@ from datetime import date
 
 from scripts.ai_daily_sources import (
     AnthropicNewsSource,
+    CallableSource,
     LinuxDoSource,
     OpenAINewsSource,
     RedditSource,
@@ -217,6 +218,23 @@ class CommunitySourceTest(unittest.TestCase):
 
 
 class RegistryTest(unittest.TestCase):
+    def test_callable_source_preserves_legacy_engagement_fields(self):
+        result = CallableSource(
+            "Legacy",
+            SourceTier.COMMUNITY,
+            lambda: [{
+                "title": "Legacy item",
+                "url": "https://example.com/legacy",
+                "score": 20,
+                "comments": 4,
+            }],
+        ).fetch(context())
+
+        self.assertEqual(
+            result.items[0].engagement,
+            {"score": 20, "comments": 4},
+        )
+
     def test_registry_deduplicates_urls_and_preserves_source_status(self):
         duplicate_url = "https://example.com/item?utm_source=test"
 

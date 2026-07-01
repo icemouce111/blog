@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "test": "npm run test:ts && npm run test:py",
     "test:ts": "node --test --experimental-strip-types tests/*.test.ts",
-    "test:py": "python3 -m unittest scripts/test_generate_ai_daily.py scripts/test_ai_trends.py",
+    "test:py": "python3 -m unittest scripts/test_generate_ai_daily.py scripts/test_ai_daily_sources.py scripts/test_ai_daily_quality.py scripts/test_ai_daily_sop.py scripts/test_ai_trends.py",
     "preview": "vite preview"
   },
   "dependencies": {
