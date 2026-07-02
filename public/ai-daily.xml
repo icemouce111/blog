@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 01 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月02日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-02</link>
+        <description><![CDATA[# AI 日报 - 2026年07月02日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1. **[高置信度] OpenAI 预览 GPT-5.6 Sol，Anthropic 发布 Claude Sonnet 5**
+   OpenAI 发布 GPT-5.6 Sol 预览，强调在编程、科学和网络安全方面的能力提升，并配套安全栈。同时，Anthropic 推出 Claude Sonnet 5，定位在编码、Agent 和专业工作场景的规模级性能。
+   https://openai.com/index/previewing-gpt-5-6-sol
+   https://www.anthropic.com/news/claude-sonnet-5
+
+2. **[高置信度] Anthropic 联合多巨头推出“越狱严重性]]></description>
+        <pubDate>Thu, 02 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-02</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月01日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-01</link>

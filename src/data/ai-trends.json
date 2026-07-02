@@ -2,72 +2,72 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-25",
-      "rangeEnd": "2026-07-01",
-      "updatedAt": "2026-07-01T23:03:45+08:00",
+      "rangeStart": "2026-06-26",
+      "rangeEnd": "2026-07-02",
+      "updatedAt": "2026-07-02T21:53:08+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent 可观测性与上下文管理工具需求爆发",
-          "summary": "本周多个产品（如 Polygraph、Foglamp）聚焦 AI Agent 的跨仓库记忆与运行透明度，同时 MCP 协议教程在 YouTube 播放量超 260 万次，显示开发者对 Agent 调试、记忆持久化及标准化连接的需求急剧上升，推动工具链从“能跑”向“可观测、可管理”演进。",
+          "title": "AI Agent 工具链与基础设施加速成熟",
+          "summary": "本周 MCP 协议成为 Agent 开发事实标准，YouTube 教程播放量超 260 万次。同时涌现出跨仓库记忆（Polygraph）、可观测性（Foglamp）和身份命名空间（DMV）等工具，解决 Agent 在复杂任务中的上下文丢失与信任问题，推动 Agent 从实验走向企业级部署。",
           "sources": [
             {
-              "title": "Polygraph - Let AI agents see cross repo and maintain session memory",
+              "title": "Polygraph - Product Hunt",
               "url": "https://www.producthunt.com/products/polygraph",
-              "publishedAt": "2026-07-01"
+              "publishedAt": "2026-07-02"
             },
             {
-              "title": "Foglamp - Ship AI agents you can actually see",
+              "title": "Foglamp - Product Hunt",
               "url": "https://www.producthunt.com/products/foglamp",
               "publishedAt": "2026-06-28"
             },
             {
-              "title": "What is MCP? Integrate AI Agents with Databases & APIs",
-              "url": "https://www.youtube.com/watch?v=eur8dUO9mvE",
+              "title": "MCP 教程 - YouTube",
+              "url": "https://www.youtube.com/watch?v=GuTcle5edjk",
               "publishedAt": "2026-06-29"
             }
           ]
         },
         {
-          "title": "开源与闭源模型竞争加剧，用户信任与监管成焦点",
-          "summary": "Anthropic 因使用限制引发用户抗议，同时 GPT-5.6 Sol 预览版引入政府用户审查，而 GLM-5.2 在安全基准测试中超越 Claude。社区对闭源模型的成本与限制不满，转向开源替代品，但监管风险同步上升，模型选择从纯性能比拼转向信任与合规权衡。",
+          "title": "前沿模型竞争加剧，安全与监管成焦点",
+          "summary": "OpenAI 预览 GPT-5.6 Sol，Anthropic 发布 Claude Sonnet 5，两大模型同日发布引发社区热议。同时，美国政府介入审查 GPT-5.6 用户资格，Anthropic 提出越狱严重性评分框架，表明模型能力提升伴随安全与地缘政治风险升级，企业选型需兼顾合规。",
           "sources": [
             {
-              "title": "This is a message for Anthropic: bring back the...",
-              "url": "https://www.reddit.com/r/ClaudeCode/comments/1uim4jb/this_is_a_message_for_anthropic_bring_back_the/",
-              "publishedAt": "2026-06-29"
-            },
-            {
-              "title": "Previewing GPT-5.6 Sol: a next-generation model",
+              "title": "OpenAI 预览 GPT-5.6 Sol",
               "url": "https://openai.com/index/previewing-gpt-5-6-sol",
-              "publishedAt": "2026-07-01"
+              "publishedAt": "2026-07-02"
             },
             {
-              "title": "We have Mythos at home: GLM-5.2 beats Claude in our cyber benchmarks",
-              "url": "https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/",
-              "publishedAt": "2026-06-29"
+              "title": "Anthropic 发布 Claude Sonnet 5",
+              "url": "https://www.anthropic.com/news/claude-sonnet-5",
+              "publishedAt": "2026-07-02"
+            },
+            {
+              "title": "美国政府审查 GPT-5.6 用户资格",
+              "url": "https://www.washingtonpost.com/technology/2026/06/26/openai-says-us-government-will-vet-users-its-latest-ai-model/",
+              "publishedAt": "2026-06-27"
             }
           ]
         },
         {
-          "title": "AI 推理效率与本地部署成为开发者核心关注点",
-          "summary": "DeepSeek 发布 DSpark 推测解码论文以加速推理，同时社区围绕本地推理硬件（如改装显卡）展开激烈讨论，Bilibili 上“不要买显卡”视频获高赞。推理成本与隐私需求推动混合推理模式兴起，开发者寻求在云端算力与本地数据主权间取得平衡。",
+          "title": "AI 深入垂直行业：科学、金融与安全",
+          "summary": "Anthropic 推出面向科学家的 Claude Science 工作台，OpenAI 发布基因组学基准 GeneBench-Pro，AI 在科研领域应用标准化。同时，开源项目 ai-berkshire 将多 Agent 用于价值投资研究，Strix 实现自动化渗透测试，表明 AI 正从通用工具向行业专用解决方案演进。",
           "sources": [
             {
-              "title": "DSpark paper",
-              "url": "https://github.com/deepseek-ai/DeepSpec/blob/main/DSpark_paper.pdf",
-              "publishedAt": "2026-06-28"
+              "title": "Claude Science - Anthropic",
+              "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
+              "publishedAt": "2026-07-02"
             },
             {
-              "title": "96GB 4090s and 5090 are literally a scam, I mods...",
-              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1uh1lc7/96gb_4090s_and_5090_are_literally_a_scam_i_mods/",
-              "publishedAt": "2026-06-28"
+              "title": "GeneBench-Pro - OpenAI",
+              "url": "https://openai.com/index/introducing-genebench-pro",
+              "publishedAt": "2026-07-02"
             },
             {
-              "title": "不要购买显卡用于本地 AI 推理",
-              "url": "https://www.bilibili.com/video/BV1KKE96CELt",
-              "publishedAt": "2026-06-27"
+              "title": "ai-berkshire - GitHub",
+              "url": "https://github.com/xbtlin/ai-berkshire",
+              "publishedAt": "2026-06-28"
             }
           ]
         }
