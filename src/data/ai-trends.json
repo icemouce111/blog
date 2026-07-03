@@ -2,72 +2,67 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-26",
-      "rangeEnd": "2026-07-02",
-      "updatedAt": "2026-07-02T21:53:08+08:00",
+      "rangeStart": "2026-06-27",
+      "rangeEnd": "2026-07-03",
+      "updatedAt": "2026-07-03T08:54:00+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent 工具链与基础设施加速成熟",
-          "summary": "本周 MCP 协议成为 Agent 开发事实标准，YouTube 教程播放量超 260 万次。同时涌现出跨仓库记忆（Polygraph）、可观测性（Foglamp）和身份命名空间（DMV）等工具，解决 Agent 在复杂任务中的上下文丢失与信任问题，推动 Agent 从实验走向企业级部署。",
+          "title": "AI Agent 生态从模型竞争转向工具链与基础设施构建",
+          "summary": "本周 OpenAI 与 Anthropic 同日发布旗舰模型，但行业焦点已从模型本身转向 Agent 应用。Chrome DevTools MCP、Polygraph 等工具涌现，MCP 协议成为开发者必修课，社区对 Agent 记忆、可观测性等基础设施需求强烈。",
           "sources": [
             {
-              "title": "Polygraph - Product Hunt",
+              "title": "OpenAI 发布 Agent 研究报告",
+              "url": "https://openai.com/index/how-agents-are-transforming-work",
+              "publishedAt": "2026-07-03"
+            },
+            {
+              "title": "Chrome DevTools MCP 项目",
+              "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+              "publishedAt": "2026-07-03"
+            },
+            {
+              "title": "Polygraph 跨仓库记忆工具",
               "url": "https://www.producthunt.com/products/polygraph",
-              "publishedAt": "2026-07-02"
-            },
-            {
-              "title": "Foglamp - Product Hunt",
-              "url": "https://www.producthunt.com/products/foglamp",
-              "publishedAt": "2026-06-28"
-            },
-            {
-              "title": "MCP 教程 - YouTube",
-              "url": "https://www.youtube.com/watch?v=GuTcle5edjk",
-              "publishedAt": "2026-06-29"
+              "publishedAt": "2026-07-03"
             }
           ]
         },
         {
-          "title": "前沿模型竞争加剧，安全与监管成焦点",
-          "summary": "OpenAI 预览 GPT-5.6 Sol，Anthropic 发布 Claude Sonnet 5，两大模型同日发布引发社区热议。同时，美国政府介入审查 GPT-5.6 用户资格，Anthropic 提出越狱严重性评分框架，表明模型能力提升伴随安全与地缘政治风险升级，企业选型需兼顾合规。",
+          "title": "企业级 AI 部署加速，垂直行业定制化产品涌现",
+          "summary": "HP 与 OpenAI 达成战略合作，Anthropic 与 TCS 合作将 Claude 引入受监管行业，并推出面向科学家的 Claude Science 工作台。AI 公司正从通用模型转向为金融、医疗、科研等垂直领域打造定制化解决方案。",
           "sources": [
             {
-              "title": "OpenAI 预览 GPT-5.6 Sol",
-              "url": "https://openai.com/index/previewing-gpt-5-6-sol",
+              "title": "HP 与 OpenAI 战略合作",
+              "url": "https://openai.com/index/hp-frontier-partnership",
+              "publishedAt": "2026-07-03"
+            },
+            {
+              "title": "Anthropic 与 TCS 合作",
+              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
               "publishedAt": "2026-07-02"
             },
             {
-              "title": "Anthropic 发布 Claude Sonnet 5",
-              "url": "https://www.anthropic.com/news/claude-sonnet-5",
-              "publishedAt": "2026-07-02"
-            },
-            {
-              "title": "美国政府审查 GPT-5.6 用户资格",
-              "url": "https://www.washingtonpost.com/technology/2026/06/26/openai-says-us-government-will-vet-users-its-latest-ai-model/",
-              "publishedAt": "2026-06-27"
-            }
-          ]
-        },
-        {
-          "title": "AI 深入垂直行业：科学、金融与安全",
-          "summary": "Anthropic 推出面向科学家的 Claude Science 工作台，OpenAI 发布基因组学基准 GeneBench-Pro，AI 在科研领域应用标准化。同时，开源项目 ai-berkshire 将多 Agent 用于价值投资研究，Strix 实现自动化渗透测试，表明 AI 正从通用工具向行业专用解决方案演进。",
-          "sources": [
-            {
-              "title": "Claude Science - Anthropic",
+              "title": "Claude Science 工作台",
               "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
-              "publishedAt": "2026-07-02"
+              "publishedAt": "2026-07-03"
+            }
+          ]
+        },
+        {
+          "title": "AI 安全与评估进入框架化阶段，基准测试可靠性受质疑",
+          "summary": "Anthropic 联合多家巨头提出行业统一的越狱严重性评分框架，同时多项研究指出编码 Agent 基准测试存在设计缺陷，Agent 仅“应试”而非解决真实问题。行业正从单一安全补丁转向系统化评估标准。",
+          "sources": [
+            {
+              "title": "越狱严重性评分框架",
+              "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
+              "publishedAt": "2026-07-03"
             },
             {
-              "title": "GeneBench-Pro - OpenAI",
-              "url": "https://openai.com/index/introducing-genebench-pro",
-              "publishedAt": "2026-07-02"
-            },
-            {
-              "title": "ai-berkshire - GitHub",
-              "url": "https://github.com/xbtlin/ai-berkshire",
-              "publishedAt": "2026-06-28"
+              "title": "基准测试可靠性研究",
+              "url": "https://huggingface.co/papers/2606.28430",
+              "publishedAt": "2026-07-03"
             }
           ]
         }

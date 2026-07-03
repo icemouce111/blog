@@ -6,7 +6,27 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Thu, 02 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月03日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-03</link>
+        <description><![CDATA[# AI 日报 - 2026年07月03日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1.  **Anthropic 与 OpenAI 同日发布新一代旗舰模型**
+    *   **信号**: Anthropic 发布 Claude Sonnet 5，在编码、Agent 和专业工作方面达到前沿性能。OpenAI 则预览了 GPT-5.6 Sol，强调其在编码、科学和网络安全方面的能力。两大巨头在同一天更新旗舰模型。
+    *   **来源**: [Anthropic](https://www.anthropic.com/news/claude-sonnet-5), [OpenAI](https://openai.com/index/previewing-gpt-5-6-sol)
+
+2.  **AI Agent 成为两大]]></description>
+        <pubDate>Fri, 03 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-03</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月02日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-02</link>
