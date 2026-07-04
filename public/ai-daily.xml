@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 03 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月04日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-04</link>
+        <description><![CDATA[# AI 日报 - 2026年07月04日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+3.  **阿里内部因后门风险全面禁用 Claude Code，引发社区对Agent安全性的热议**
+    据V2EX社区讨论，有用户指出阿里巴巴内部因担心植入后门风险，已全面禁用Claude Code。该消息迅速引发开发者对使用第三方AI编码Agent的安全性与可控性的焦虑。来源：https://www.v2ex.com/t/1224766
+
+## 02 🔥 热门项目
+
+1.  **OpenAI Codex Plugin for Claude Code** 允许用户在Claude Code环境中直接调用OpenAI的Codex进行代码审查或任务委派。来源：https://github.com/openai/codex-plugin-c]]></description>
+        <pubDate>Sat, 04 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-04</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月03日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-03</link>
