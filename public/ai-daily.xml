@@ -6,7 +6,25 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 04 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月05日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-05</link>
+        <description><![CDATA[# AI 日报 - 2026年07月05日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📡 原始信号归档
+
+### Hacker News
+- **Scientists reverse brain aging, with a nasal spray** [来源](https://stories.tamu.edu/news/2026/04/14/scientists-reverse-brain-aging-with-a-nasal-spray/)
+- **Command and Conquer Generals natively ported to macOS, iPhone, iPad using Fable** [来源](https://github.com/ammaarreshi/Generals-Mac-iOS-iPad/tree/m]]></description>
+        <pubDate>Sun, 05 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-05</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月04日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-04</link>
