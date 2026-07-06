@@ -2,41 +2,41 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-27",
-      "rangeEnd": "2026-07-03",
-      "updatedAt": "2026-07-03T08:54:00+08:00",
+      "rangeStart": "2026-06-30",
+      "rangeEnd": "2026-07-06",
+      "updatedAt": "2026-07-06T10:46:03+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent 生态从模型竞争转向工具链与基础设施构建",
-          "summary": "本周 OpenAI 与 Anthropic 同日发布旗舰模型，但行业焦点已从模型本身转向 Agent 应用。Chrome DevTools MCP、Polygraph 等工具涌现，MCP 协议成为开发者必修课，社区对 Agent 记忆、可观测性等基础设施需求强烈。",
+          "title": "AI编码Agent生态加速分化与安全焦虑",
+          "summary": "OpenAI与Anthropic同日发布GPT-5.6 Sol和Claude Sonnet 5，均强调编码和Agent能力。同时，阿里因后门风险禁用Claude Code，社区对Agent安全性和依赖闭源工具的焦虑加剧，推动开源替代和本地化方案需求。",
           "sources": [
             {
-              "title": "OpenAI 发布 Agent 研究报告",
-              "url": "https://openai.com/index/how-agents-are-transforming-work",
-              "publishedAt": "2026-07-03"
+              "title": "OpenAI 预览 GPT-5.6 Sol",
+              "url": "https://openai.com/index/previewing-gpt-5-6-sol",
+              "publishedAt": "2026-07-06"
             },
             {
-              "title": "Chrome DevTools MCP 项目",
-              "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
-              "publishedAt": "2026-07-03"
+              "title": "Anthropic 发布 Claude Sonnet 5",
+              "url": "https://www.anthropic.com/news/claude-sonnet-5",
+              "publishedAt": "2026-07-06"
             },
             {
-              "title": "Polygraph 跨仓库记忆工具",
-              "url": "https://www.producthunt.com/products/polygraph",
-              "publishedAt": "2026-07-03"
+              "title": "阿里内部因后门风险全面禁用 Claude Code",
+              "url": "https://www.v2ex.com/t/1224766",
+              "publishedAt": "2026-07-04"
             }
           ]
         },
         {
-          "title": "企业级 AI 部署加速，垂直行业定制化产品涌现",
-          "summary": "HP 与 OpenAI 达成战略合作，Anthropic 与 TCS 合作将 Claude 引入受监管行业，并推出面向科学家的 Claude Science 工作台。AI 公司正从通用模型转向为金融、医疗、科研等垂直领域打造定制化解决方案。",
+          "title": "企业级AI部署从试点走向规模化落地",
+          "summary": "HP与OpenAI达成Frontier战略合作，将AI部署到客户体验、软件开发和运营中。Anthropic与TCS合作将Claude引入受监管行业，并在首尔设立办公室。这表明大型企业正加速将AI融入核心业务流程，推动AI从工具向企业基础设施转变。",
           "sources": [
             {
-              "title": "HP 与 OpenAI 战略合作",
+              "title": "HP Inc. launches Frontier strategic partnership with OpenAI",
               "url": "https://openai.com/index/hp-frontier-partnership",
-              "publishedAt": "2026-07-03"
+              "publishedAt": "2026-07-06"
             },
             {
               "title": "Anthropic 与 TCS 合作",
@@ -44,25 +44,25 @@
               "publishedAt": "2026-07-02"
             },
             {
-              "title": "Claude Science 工作台",
-              "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
-              "publishedAt": "2026-07-03"
+              "title": "Anthropic 在首尔设立办公室",
+              "url": "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem",
+              "publishedAt": "2026-07-06"
             }
           ]
         },
         {
-          "title": "AI 安全与评估进入框架化阶段，基准测试可靠性受质疑",
-          "summary": "Anthropic 联合多家巨头提出行业统一的越狱严重性评分框架，同时多项研究指出编码 Agent 基准测试存在设计缺陷，Agent 仅“应试”而非解决真实问题。行业正从单一安全补丁转向系统化评估标准。",
+          "title": "AI安全评估进入框架化与标准化阶段",
+          "summary": "Anthropic联合多家科技巨头提出越狱严重性评分行业框架，同时GitHub出现系统提示词泄露事件，引发安全讨论。行业正从被动修补转向建立通用、可量化的安全评估标准，以应对模型越狱和供应链风险。",
           "sources": [
             {
-              "title": "越狱严重性评分框架",
+              "title": "Anthropic 提出越狱严重性评分框架",
               "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
-              "publishedAt": "2026-07-03"
+              "publishedAt": "2026-07-06"
             },
             {
-              "title": "基准测试可靠性研究",
-              "url": "https://huggingface.co/papers/2606.28430",
-              "publishedAt": "2026-07-03"
+              "title": "系统提示词泄露仓库",
+              "url": "https://github.com/asgeirtj/system_prompts_leaks",
+              "publishedAt": "2026-07-06"
             }
           ]
         }
@@ -70,56 +70,71 @@
     },
     {
       "window": "month",
-      "rangeStart": "2026-05-01",
-      "rangeEnd": "2026-06-29",
-      "updatedAt": "2026-06-29T12:00:00+08:00",
-      "coverageCount": 0,
-      "mode": "curated",
+      "rangeStart": "2026-06-21",
+      "rangeEnd": "2026-07-06",
+      "updatedAt": "2026-07-06T10:46:03+08:00",
+      "coverageCount": 16,
+      "mode": "generated",
       "insights": [
         {
-          "title": "个人 AI 从问答工具变成持续服务",
-          "summary": "主动摘要、日程准备和跨应用执行，把 AI 从被动会话推向“理解上下文并提前行动”。入口仍是助手，但产品价值越来越依赖连续性与个性化。",
+          "title": "AI Agent 从概念走向工程化实践",
+          "summary": "MCP协议成为连接Agent与外部数据源的标准，YouTube相关教程累计观看超260万次。字节跳动开源DeerFlow等长时程Agent框架涌现，同时Foglamp等可观测性工具上线，标志Agent开发正从实验转向工程化部署。",
           "sources": [
             {
-              "title": "The next evolution of the Gemini app",
-              "url": "https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app/",
-              "publishedAt": "2026-05-19"
+              "title": "What is MCP? Integrate AI Agents with Databases & APIs",
+              "url": "https://www.youtube.com/watch?v=eur8dUO9mvE",
+              "publishedAt": "2026-06-29"
             },
             {
-              "title": "Gemini intelligence on Android",
-              "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence/",
-              "publishedAt": "2026-05-19"
+              "title": "bytedance/deer-flow",
+              "url": "https://github.com/bytedance/deer-flow",
+              "publishedAt": "2026-06-24"
+            },
+            {
+              "title": "Foglamp",
+              "url": "https://www.producthunt.com/products/foglamp",
+              "publishedAt": "2026-06-28"
             }
           ]
         },
         {
-          "title": "托管式智能体基础设施成为新产品层",
-          "summary": "沙箱、技能、数据连接与运行时托管被打包成平台能力，开发者开始从“拼接模型调用”转向定义任务、权限和结果。智能体的可运营性正在产品化。",
+          "title": "企业级AI部署加速，安全与合规成焦点",
+          "summary": "HP与OpenAI达成Frontier战略合作，将AI部署到客户体验和企业运营。Anthropic联合多家巨头提出越狱严重性评分框架，同时阿里因后门风险禁用Claude Code，显示企业采用AI时对安全性和合规性的要求急剧提升。",
           "sources": [
             {
-              "title": "Build with Managed Agents in the Gemini API",
-              "url": "https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/",
-              "publishedAt": "2026-05-19"
+              "title": "HP Inc. launches Frontier strategic partnership with OpenAI",
+              "url": "https://openai.com/index/hp-frontier-partnership",
+              "publishedAt": "2026-07-06"
             },
             {
-              "title": "The next phase of enterprise AI",
-              "url": "https://openai.com/index/next-phase-of-enterprise-ai/",
-              "publishedAt": "2026-04-08"
+              "title": "Anthropic联合多巨头推出越狱严重性评分框架",
+              "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
+              "publishedAt": "2026-07-06"
+            },
+            {
+              "title": "阿里内部因后门风险全面禁用Claude Code",
+              "url": "https://www.v2ex.com/t/1224766",
+              "publishedAt": "2026-07-04"
             }
           ]
         },
         {
-          "title": "组织设计成为 AI 回报的主要瓶颈",
-          "summary": "领先组织把智能体与工作流程、管理机制和质量控制一起重构。员工会不会用只是第一步，能否建立可复用的组织方法决定最终收益。",
+          "title": "AI在垂直行业的专用工具加速落地",
+          "summary": "Anthropic发布面向科学家的Claude Science工作台，OpenAI推出基因组学基准GeneBench-Pro。同时金融投研Agent（如ai-berkshire）和视频生成工具（如Sora 2）涌现，AI正从通用模型向行业专用工具快速演进。",
           "sources": [
             {
-              "title": "2026 Work Trend Index",
-              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
-              "publishedAt": "2026-05-05"
+              "title": "Anthropic推出Claude Science，专为科学家打造的AI工作台",
+              "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
+              "publishedAt": "2026-07-06"
             },
             {
-              "title": "HP and OpenAI announce frontier enterprise partnership",
-              "url": "https://openai.com/index/hp-frontier-partnership/",
+              "title": "Introducing GeneBench-Pro",
+              "url": "https://openai.com/index/introducing-genebench-pro",
+              "publishedAt": "2026-07-06"
+            },
+            {
+              "title": "ai-berkshire",
+              "url": "https://github.com/xbtlin/ai-berkshire",
               "publishedAt": "2026-06-28"
             }
           ]
