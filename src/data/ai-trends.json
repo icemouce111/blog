@@ -2,67 +2,77 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-06-30",
-      "rangeEnd": "2026-07-06",
-      "updatedAt": "2026-07-06T10:46:03+08:00",
+      "rangeStart": "2026-07-01",
+      "rangeEnd": "2026-07-07",
+      "updatedAt": "2026-07-07T10:03:05+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI编码Agent生态加速分化与安全焦虑",
-          "summary": "OpenAI与Anthropic同日发布GPT-5.6 Sol和Claude Sonnet 5，均强调编码和Agent能力。同时，阿里因后门风险禁用Claude Code，社区对Agent安全性和依赖闭源工具的焦虑加剧，推动开源替代和本地化方案需求。",
+          "title": "AI编码智能体生态加速成型",
+          "summary": "本周，OpenAI与Anthropic同日发布GPT-5.6 Sol和Claude Sonnet 5，均强调编码与Agent能力。同时，GitHub上涌现大量智能体技能库（如agent-skills、claude-skills）和跨平台协作工具（如Codex Plugin for Claude Code），表明开发者正围绕编码智能体构建标准化工具生态，推动AI从辅助编码向自主编程演进。",
           "sources": [
             {
-              "title": "OpenAI 预览 GPT-5.6 Sol",
+              "title": "OpenAI预览GPT-5.6 Sol",
               "url": "https://openai.com/index/previewing-gpt-5-6-sol",
-              "publishedAt": "2026-07-06"
+              "publishedAt": "2026-07-07"
             },
             {
-              "title": "Anthropic 发布 Claude Sonnet 5",
+              "title": "Anthropic发布Claude Sonnet 5",
               "url": "https://www.anthropic.com/news/claude-sonnet-5",
-              "publishedAt": "2026-07-06"
+              "publishedAt": "2026-07-07"
             },
             {
-              "title": "阿里内部因后门风险全面禁用 Claude Code",
-              "url": "https://www.v2ex.com/t/1224766",
-              "publishedAt": "2026-07-04"
+              "title": "agent-skills项目",
+              "url": "https://github.com/addyosmani/agent-skills",
+              "publishedAt": "2026-07-07"
+            },
+            {
+              "title": "claude-skills项目",
+              "url": "https://github.com/alirezarezvani/claude-skills",
+              "publishedAt": "2026-07-07"
+            },
+            {
+              "title": "Codex Plugin for Claude Code",
+              "url": "https://github.com/openai/codex-plugin-cc",
+              "publishedAt": "2026-07-07"
             }
           ]
         },
         {
-          "title": "企业级AI部署从试点走向规模化落地",
-          "summary": "HP与OpenAI达成Frontier战略合作，将AI部署到客户体验、软件开发和运营中。Anthropic与TCS合作将Claude引入受监管行业，并在首尔设立办公室。这表明大型企业正加速将AI融入核心业务流程，推动AI从工具向企业基础设施转变。",
+          "title": "企业级AI部署从试点走向规模化",
+          "summary": "OpenAI与HP达成Frontier战略合作，将AI部署到客户体验、软件开发和企业运营中。同时，Anthropic与TCS合作将Claude引入受监管行业，并开设首尔办事处拓展亚洲市场。这些动向显示，AI巨头正加速与传统企业巨头合作，推动AI从工具向企业基础设施转型，垂直行业落地进入快车道。",
           "sources": [
             {
-              "title": "HP Inc. launches Frontier strategic partnership with OpenAI",
+              "title": "HP与OpenAI战略合作",
               "url": "https://openai.com/index/hp-frontier-partnership",
-              "publishedAt": "2026-07-06"
+              "publishedAt": "2026-07-07"
             },
             {
-              "title": "Anthropic 与 TCS 合作",
+              "title": "Anthropic与TCS合作",
               "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
               "publishedAt": "2026-07-02"
             },
             {
-              "title": "Anthropic 在首尔设立办公室",
+              "title": "Anthropic开设首尔办事处",
               "url": "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem",
-              "publishedAt": "2026-07-06"
+              "publishedAt": "2026-07-07"
             }
           ]
         },
         {
-          "title": "AI安全评估进入框架化与标准化阶段",
-          "summary": "Anthropic联合多家科技巨头提出越狱严重性评分行业框架，同时GitHub出现系统提示词泄露事件，引发安全讨论。行业正从被动修补转向建立通用、可量化的安全评估标准，以应对模型越狱和供应链风险。",
+          "title": "AI安全治理进入框架化与透明化阶段",
+          "summary": "Anthropic联合亚马逊、微软、谷歌等提出行业统一的越狱严重性评分框架，同时GitHub上出现系统提示词泄露项目，暴露了多家前沿模型的内部配置。这标志着AI安全从单一补丁转向建立可量化的评估标准，而提示词泄露事件则推动了模型透明度的讨论，安全与透明成为行业焦点。",
           "sources": [
             {
-              "title": "Anthropic 提出越狱严重性评分框架",
+              "title": "Anthropic越狱严重性评分框架",
               "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
               "publishedAt": "2026-07-06"
             },
             {
-              "title": "系统提示词泄露仓库",
+              "title": "系统提示词泄露项目",
               "url": "https://github.com/asgeirtj/system_prompts_leaks",
-              "publishedAt": "2026-07-06"
+              "publishedAt": "2026-07-07"
             }
           ]
         }
