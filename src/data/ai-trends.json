@@ -2,30 +2,41 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-07-01",
-      "rangeEnd": "2026-07-07",
-      "updatedAt": "2026-07-07T10:03:05+08:00",
+      "rangeStart": "2026-07-02",
+      "rangeEnd": "2026-07-08",
+      "updatedAt": "2026-07-08T15:32:38+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI编码智能体生态加速成型",
-          "summary": "本周，OpenAI与Anthropic同日发布GPT-5.6 Sol和Claude Sonnet 5，均强调编码与Agent能力。同时，GitHub上涌现大量智能体技能库（如agent-skills、claude-skills）和跨平台协作工具（如Codex Plugin for Claude Code），表明开发者正围绕编码智能体构建标准化工具生态，推动AI从辅助编码向自主编程演进。",
+          "title": "AI编码Agent安全与信任危机凸显",
+          "summary": "本周多起事件暴露AI编码Agent的安全隐患：GitHub AI Agent被曝可泄露私有仓库，阿里巴巴因后门风险禁用Claude Code，系统提示词泄露项目公开前沿模型内部配置。企业采用AI编码工具时，安全审查与权限管控成为核心挑战。",
           "sources": [
             {
-              "title": "OpenAI预览GPT-5.6 Sol",
-              "url": "https://openai.com/index/previewing-gpt-5-6-sol",
-              "publishedAt": "2026-07-07"
+              "title": "GitLost攻击方法披露",
+              "url": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/",
+              "publishedAt": "2026-07-08"
             },
             {
-              "title": "Anthropic发布Claude Sonnet 5",
-              "url": "https://www.anthropic.com/news/claude-sonnet-5",
-              "publishedAt": "2026-07-07"
+              "title": "阿里内部禁用Claude Code讨论",
+              "url": "https://www.v2ex.com/t/1224766",
+              "publishedAt": "2026-07-04"
             },
+            {
+              "title": "系统提示词泄露项目",
+              "url": "https://github.com/asgeirtj/system_prompts_leaks",
+              "publishedAt": "2026-07-08"
+            }
+          ]
+        },
+        {
+          "title": "AI Agent技能生态与协作平台加速成型",
+          "summary": "开发者社区涌现大量Agent技能库（如agent-skills、claude-skills），覆盖编码、求职、会议等场景。同时，跨平台协作工具（如Codex Plugin for Claude Code）和Agent记忆管理产品（如Polygraph）出现，推动Agent从单体工具向多智能体协作网络演进。",
+          "sources": [
             {
               "title": "agent-skills项目",
               "url": "https://github.com/addyosmani/agent-skills",
-              "publishedAt": "2026-07-07"
+              "publishedAt": "2026-07-08"
             },
             {
               "title": "claude-skills项目",
@@ -36,43 +47,37 @@
               "title": "Codex Plugin for Claude Code",
               "url": "https://github.com/openai/codex-plugin-cc",
               "publishedAt": "2026-07-07"
+            },
+            {
+              "title": "Polygraph产品",
+              "url": "https://www.producthunt.com/products/polygraph",
+              "publishedAt": "2026-07-05"
             }
           ]
         },
         {
-          "title": "企业级AI部署从试点走向规模化",
-          "summary": "OpenAI与HP达成Frontier战略合作，将AI部署到客户体验、软件开发和企业运营中。同时，Anthropic与TCS合作将Claude引入受监管行业，并开设首尔办事处拓展亚洲市场。这些动向显示，AI巨头正加速与传统企业巨头合作，推动AI从工具向企业基础设施转型，垂直行业落地进入快车道。",
+          "title": "AI向垂直科研领域深度渗透",
+          "summary": "OpenAI推出GeneBench-Pro基因组学基准，Anthropic发布面向科学家的Claude Science工作台，两大巨头同日押注“AI for Science”。同时，本地化、隐私优先的AI工具（如Meetily会议助手）和开源模型（如GLM 5.2）的崛起，表明AI应用正从通用走向专业化和场景化。",
           "sources": [
             {
-              "title": "HP与OpenAI战略合作",
-              "url": "https://openai.com/index/hp-frontier-partnership",
-              "publishedAt": "2026-07-07"
+              "title": "GeneBench-Pro发布",
+              "url": "https://openai.com/index/introducing-genebench-pro",
+              "publishedAt": "2026-07-08"
             },
             {
-              "title": "Anthropic与TCS合作",
-              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
-              "publishedAt": "2026-07-02"
+              "title": "Claude Science工作台",
+              "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
+              "publishedAt": "2026-07-08"
             },
             {
-              "title": "Anthropic开设首尔办事处",
-              "url": "https://www.anthropic.com/news/seoul-office-partnerships-korean-ai-ecosystem",
-              "publishedAt": "2026-07-07"
-            }
-          ]
-        },
-        {
-          "title": "AI安全治理进入框架化与透明化阶段",
-          "summary": "Anthropic联合亚马逊、微软、谷歌等提出行业统一的越狱严重性评分框架，同时GitHub上出现系统提示词泄露项目，暴露了多家前沿模型的内部配置。这标志着AI安全从单一补丁转向建立可量化的评估标准，而提示词泄露事件则推动了模型透明度的讨论，安全与透明成为行业焦点。",
-          "sources": [
-            {
-              "title": "Anthropic越狱严重性评分框架",
-              "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
-              "publishedAt": "2026-07-06"
+              "title": "Meetily项目",
+              "url": "https://github.com/Zackriya-Solutions/meetily",
+              "publishedAt": "2026-07-08"
             },
             {
-              "title": "系统提示词泄露项目",
-              "url": "https://github.com/asgeirtj/system_prompts_leaks",
-              "publishedAt": "2026-07-07"
+              "title": "GLM 5.2在AMD上的表现",
+              "url": "https://www.wafer.ai/blog/glm52-amd",
+              "publishedAt": "2026-07-04"
             }
           ]
         }
