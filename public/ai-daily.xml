@@ -6,7 +6,26 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 30 Jun 2026 08:19:30 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 16:43:50 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月01日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-01</link>
+        <description><![CDATA[# AI 日报 - 2026年07月01日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1. **Anthropic 连发三弹：Claude Sonnet 5、Claude Science 与出口管制解禁** **[高置信度]**
+    Anthropic 今日密集发布 Claude Sonnet 5 模型、面向科研的 Claude Science 产品，同时美国商务部解除了对 Claude Fable 5 和 Mythos 5 的出口管制。这标志着 Anthropic 在模型能力、垂直应用和全球化布局上三线并进，AI 竞赛进入“产品矩阵”阶段。来源：HackerNews（score 1102/478/652）、Twitter/AnthropicAI
+
+2. **Claude Code 被发现使用隐写术标记请求，引发隐私争]]></description>
+        <pubDate>Wed, 01 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-01</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年06月30日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-06-30</link>
