@@ -234,6 +234,14 @@ class SourceRegistryContractTest(unittest.TestCase):
         )
 
 
+class AnalysisPromptContractTest(unittest.TestCase):
+    def test_forbids_reusing_the_same_event_across_sections(self):
+        self.assertIn(
+            "同一事件只能出现在一个板块",
+            MODULE.ANALYSIS_SYSTEM_PROMPT,
+        )
+
+
 class MarkdownDateTest(unittest.TestCase):
     def test_historical_generation_uses_requested_date(self):
         generated = datetime(2026, 7, 2, 1, 30, tzinfo=timezone.utc)

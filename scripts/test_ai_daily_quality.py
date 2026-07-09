@@ -129,6 +129,37 @@ class ReportValidationTest(unittest.TestCase):
         self.assertFalse(validation.valid)
         self.assertTrue(any("has no source URL" in issue for issue in validation.issues))
 
+    def test_rejects_source_urls_reused_across_numbered_items(self):
+        report = """## 01 📌 今日头条
+
+1. **OpenAI 发布新模型**
+   官方发布了新模型。来源：https://openai.com/index/new-model
+
+## 02 🏗️ 技术趋势
+
+1. **新模型带来技术趋势**
+   同一发布再次被写成技术趋势。来源：https://openai.com/index/new-model
+"""
+
+        validation = validate_report(report, [official_item()])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(
+            any("reused across numbered items" in issue for issue in validation.issues)
+        )
+
+    def test_allows_a_source_url_repeated_within_one_numbered_item(self):
+        report = """## 01 📌 今日头条
+
+1. **OpenAI 发布新模型**
+   官方发布了新模型：https://openai.com/index/new-model
+   详情仍见：https://openai.com/index/new-model
+"""
+
+        validation = validate_report(report, [official_item()])
+
+        self.assertTrue(validation.valid)
+
     def test_rejects_metrics_not_present_in_evidence(self):
         unsupported = """## 01 📌 今日头条
 
@@ -172,6 +203,34 @@ class ReportValidationTest(unittest.TestCase):
 
 
 class RepairFallbackTest(unittest.TestCase):
+    def test_duplicate_repair_prompt_requires_cross_item_deduplication(self):
+        duplicate = """## 01 📌 今日头条
+
+1. **OpenAI 发布新模型**
+   官方发布了新模型。来源：https://openai.com/index/new-model
+
+## 02 🏗️ 技术趋势
+
+1. **新模型带来技术趋势**
+   同一发布再次被写成技术趋势。来源：https://openai.com/index/new-model
+"""
+        repaired = """## 01 📌 今日头条
+
+1. **OpenAI 发布新模型**
+   官方发布了新模型。来源：https://openai.com/index/new-model
+"""
+        prompts = []
+
+        result = validate_repair_or_fallback(
+            duplicate,
+            result_for(official_item()),
+            target_date=date(2026, 7, 1),
+            repair=lambda prompt: prompts.append(prompt) or repaired,
+        )
+
+        self.assertEqual(result.mode, QualityMode.REPAIRED)
+        self.assertIn("同一来源 URL", prompts[0])
+
     def test_accepts_one_valid_repair(self):
         invalid = """## 01 📌 今日头条
 

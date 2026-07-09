@@ -120,9 +120,24 @@ def validate_report(
         if key not in allowed:
             issues.append(f"report URL is not in collected evidence: {url}")
 
+    seen_item_urls = {}
     for index, block in enumerate(ORDERED_ITEM_PATTERN.findall(content), 1):
-        if not _extract_urls(block):
+        block_urls = _extract_urls(block)
+        if not block_urls:
             issues.append(f"numbered item {index} has no source URL")
+        unique_block_urls = {
+            _canonical_url(url): url
+            for url in block_urls
+        }
+        for key, url in unique_block_urls.items():
+            previous_index = seen_item_urls.get(key)
+            if previous_index is not None:
+                issues.append(
+                    "report URL reused across numbered items "
+                    f"{previous_index} and {index}: {url}"
+                )
+            else:
+                seen_item_urls[key] = index
 
     for block in re.split(r"\n\s*\n", content):
         community_urls = [
@@ -269,6 +284,7 @@ def _repair_prompt(
 - 不得引用本次证据清单中不存在或抓取失败的数据源。
 - 单一调查不得扩写成“所有请求”，不得把推测目的写成既定事实。
 - 每个编号条目至少保留一个证据清单中的来源 URL。
+- 同一来源 URL 只能保留在一个编号条目；合并互补信息并删除后续重复项，不保留空板块。
 - 删除证据清单中没有出现的百分比、倍数、金额和数量。
 - 不得添加证据清单之外的 URL。
 - 只输出修复后的 Markdown 正文。
