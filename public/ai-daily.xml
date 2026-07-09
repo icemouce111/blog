@@ -6,7 +6,29 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 08 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月09日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-09</link>
+        <description><![CDATA[# AI 日报 - 2026年07月09日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1.  **Anthropic 发布重磅更新：Claude Sonnet 5 与 Fable 5 重新部署**
+    据 Anthropic 官方消息，Sonnet 5 模型正式发布，主打编码、代理和规模化专业工作的前沿性能。同时，此前因安全原因下线的 Fable 5 将于 7 月 1 日重新上线，并伴随一个行业通用的“越狱严重性评分框架”。
+    https://www.anthropic.com/news/claude-sonnet-5
+    https://www.anthropic.com/news/redeploying-fable-5
+
+2.  **OpenAI 推出 GPT-Live，新一代语音模型**
+    Ope]]></description>
+        <pubDate>Thu, 09 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-09</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月08日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-08</link>
