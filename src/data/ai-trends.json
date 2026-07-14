@@ -2,72 +2,82 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-07-03",
-      "rangeEnd": "2026-07-09",
-      "updatedAt": "2026-07-09T10:34:58+08:00",
-      "coverageCount": 7,
+      "rangeStart": "2026-07-08",
+      "rangeEnd": "2026-07-11",
+      "updatedAt": "2026-07-14T14:06:43+08:00",
+      "coverageCount": 4,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent安全与信任危机加剧",
-          "summary": "本周多起事件凸显AI Agent安全风险：GitHub AI Agent被曝可泄露私有仓库，阿里因后门风险禁用Claude Code，系统提示词泄露项目引发越狱担忧。企业采用AI Agent时，安全审查与权限管控成为关键瓶颈。",
+          "title": "前沿模型驱动企业级AI应用深化",
+          "summary": "OpenAI的GPT-5.6成为Microsoft 365 Copilot首选模型，Anthropic发布Claude Sonnet 5，两大模型同日更新，推动AI在编码、办公和专业工作场景的规模化采用。Deutsche Telekom与OpenAI合作转型AI原生电信公司，HP建立Frontier战略合作，显示大型传统企业正加速与前沿AI公司深度绑定。",
           "sources": [
             {
-              "title": "GitLost攻击方法披露",
+              "title": "GPT-5.6 is now the preferred model in Microsoft 365 Copilot",
+              "url": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot",
+              "publishedAt": "2026-07-11"
+            },
+            {
+              "title": "Introducing Claude Sonnet 5",
+              "url": "https://www.anthropic.com/news/claude-sonnet-5",
+              "publishedAt": "2026-07-11"
+            },
+            {
+              "title": "How Deutsche Telekom is rewiring telecommunications with AI",
+              "url": "https://openai.com/index/deutsche-telekom",
+              "publishedAt": "2026-07-11"
+            },
+            {
+              "title": "HP Frontier Partnership",
+              "url": "https://openai.com/index/hp-frontier-partnership",
+              "publishedAt": "2026-07-08"
+            }
+          ]
+        },
+        {
+          "title": "AI Agent安全与治理成为行业焦点",
+          "summary": "GitHub AI Agent被曝存在泄漏私有仓库漏洞，安全社区高度关注。Anthropic联合Amazon、Microsoft、Google提出行业级越狱严重性评分框架，并重新部署Fable 5。OpenAI发布政府与国家安全合作原则，Anthropic任命前美联储主席Ben Bernanke加入长期利益信托，AI治理引入宏观经济学视角。",
+          "sources": [
+            {
+              "title": "GitLost: How we tricked GitHub's AI agent into leaking private repos",
               "url": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/",
               "publishedAt": "2026-07-08"
             },
             {
-              "title": "阿里内部禁用Claude Code讨论",
-              "url": "https://www.v2ex.com/t/1224766",
-              "publishedAt": "2026-07-04"
+              "title": "Redeploying Fable 5",
+              "url": "https://www.anthropic.com/news/redeploying-fable-5",
+              "publishedAt": "2026-07-11"
             },
             {
-              "title": "系统提示词泄露项目",
-              "url": "https://github.com/asgeirtj/system_prompts_leaks",
-              "publishedAt": "2026-07-09"
+              "title": "Our approach to government and national security partnerships",
+              "url": "https://openai.com/index/government-national-security-partnerships",
+              "publishedAt": "2026-07-11"
+            },
+            {
+              "title": "Ben Bernanke appointed to Anthropic's Long-Term Benefit Trust",
+              "url": "https://www.anthropic.com/news/ben-bernanke",
+              "publishedAt": "2026-07-11"
             }
           ]
         },
         {
-          "title": "AI Agent工具链与技能生态爆发",
-          "summary": "开发者正加速构建Agent基础设施：OfficeCLI让AI读写办公文档，agent-skills和claude-skills提供标准化技能库，TencentDB-Agent-Memory解决长期记忆。同时，Chrome DevTools MCP和Codex插件实现跨平台协作，Agent多路复用架构兴起。",
+          "title": "AI工具向垂直科研与行业场景渗透",
+          "summary": "Anthropic推出Claude Science科学家工作台，整合常用科研工具，支持可审计工件生成。OpenAI推出GeneBench-Pro基因组学基准测试，并报告ChatGPT全球采用率持续扩大。Coasty等计算机使用Agent能像人类一样运行遗留软件，AI正从通用对话转向科研、教育、金融等垂直领域的专用工具。",
           "sources": [
             {
-              "title": "OfficeCLI项目",
-              "url": "https://github.com/iOfficeAI/OfficeCLI",
-              "publishedAt": "2026-07-09"
-            },
-            {
-              "title": "agent-skills项目",
-              "url": "https://github.com/addyosmani/agent-skills",
-              "publishedAt": "2026-07-09"
-            },
-            {
-              "title": "TencentDB-Agent-Memory项目",
-              "url": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
-              "publishedAt": "2026-07-09"
-            }
-          ]
-        },
-        {
-          "title": "AI巨头加速垂直行业与科研渗透",
-          "summary": "OpenAI与HP达成战略合作，部署AI至企业运营；Anthropic推出Claude Science科学家工作台，OpenAI发布GeneBench-Pro基因组学基准。两大厂商同日发力科研AI，并发布欧洲AI劳动力影响报告，标志AI从通用对话向垂直行业工具深化。",
-          "sources": [
-            {
-              "title": "HP与OpenAI战略合作",
-              "url": "https://openai.com/index/hp-frontier-partnership",
-              "publishedAt": "2026-07-08"
-            },
-            {
-              "title": "Claude Science发布",
+              "title": "Claude Science, an AI workbench for scientists, is now available",
               "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
-              "publishedAt": "2026-07-09"
+              "publishedAt": "2026-07-11"
             },
             {
-              "title": "GeneBench-Pro发布",
+              "title": "Introducing GeneBench-Pro",
               "url": "https://openai.com/index/introducing-genebench-pro",
               "publishedAt": "2026-07-09"
+            },
+            {
+              "title": "Coasty",
+              "url": "https://www.producthunt.com/products/coasty",
+              "publishedAt": "2026-07-11"
             }
           ]
         }
