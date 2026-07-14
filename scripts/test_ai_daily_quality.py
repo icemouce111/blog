@@ -77,6 +77,29 @@ class ItemFilterTest(unittest.TestCase):
 
         self.assertEqual([item.title for item in usable], ["OpenAI 发布新模型"])
 
+    def test_historical_mode_requires_a_verified_item_from_the_target_date(self):
+        items = [
+            official_item(published_at="2026-07-01"),
+            official_item(
+                title="前一天消息",
+                url="https://openai.com/index/previous-day",
+                published_at="2026-06-30",
+            ),
+            official_item(
+                title="没有日期",
+                url="https://openai.com/index/no-date",
+                published_at=None,
+            ),
+        ]
+
+        usable = filter_usable_items(
+            items,
+            date(2026, 7, 1),
+            require_exact_date=True,
+        )
+
+        self.assertEqual([item.title for item in usable], ["OpenAI 发布新模型"])
+
 
 class ReportValidationTest(unittest.TestCase):
     def test_rejects_urls_not_present_in_collected_evidence(self):

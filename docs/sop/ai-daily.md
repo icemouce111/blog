@@ -57,6 +57,10 @@ python3 scripts/generate-ai-daily.py --dry-run
 python3 scripts/generate-ai-daily.py --date 2026-07-01 --force
 ```
 
+指定过去日期时，生成器启用历史模式：只接受发布日期可验证且等于目标日期的证据。
+Hacker News、GitHub 和 Hugging Face Papers 使用按日查询；没有可回溯查询的实时
+排行榜和社区来源会被明确跳过，绝不会把当天的榜单换上历史日期发布。
+
 `--dry-run` 不发布；`--generate-only` 不发布；默认模式不在当前 checkout
 中生成内容，而是在临时 `origin/main` worktree 中调用 `--generate-only`。
 

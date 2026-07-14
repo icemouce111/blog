@@ -36,6 +36,7 @@ class SourceContext:
     target_date: date
     limit: int = 12
     env: Mapping[str, str] = field(default_factory=lambda: os.environ)
+    historical: bool = False
 
 
 @dataclass
@@ -193,18 +194,27 @@ class CallableSource:
         self,
         name: str,
         tier: SourceTier,
-        fetcher: Callable[[], list[Mapping[str, Any]]],
+        fetcher: Callable[[SourceContext], list[Mapping[str, Any]]],
+        *,
+        supports_historical: bool = True,
     ):
         self.name = name
         self.tier = tier
         self.fetcher = fetcher
+        self.supports_historical = supports_historical
 
     def fetch(self, context: SourceContext) -> SourceResult:
+        if context.historical and not self.supports_historical:
+            return SourceResult(
+                self.name,
+                SourceStatus.SKIPPED,
+                error="historical retrieval is unavailable for this source",
+            )
         try:
             return SourceResult.from_dicts(
                 self.name,
                 self.tier,
-                self.fetcher()[: context.limit],
+                self.fetcher(context)[: context.limit],
             )
         except Exception as error:
             return SourceResult(
@@ -281,6 +291,7 @@ class AnthropicNewsSource:
 
 class LinuxDoSource:
     name = "Linux.do"
+    supports_historical = False
     url = "https://linux.do/latest.rss"
 
     def __init__(
@@ -316,6 +327,7 @@ class LinuxDoSource:
 
 class RedditSource:
     name = "Reddit"
+    supports_historical = False
 
     def __init__(
         self,
@@ -383,6 +395,7 @@ class RedditSource:
 
 class XSource:
     name = "X/Twitter"
+    supports_historical = False
     endpoint = "https://api.x.com/2/tweets/search/recent"
 
     def __init__(
@@ -466,6 +479,7 @@ class XSource:
 
 class XiaohongshuSource:
     name = "Xiaohongshu"
+    supports_historical = False
 
     def __init__(
         self,
@@ -570,7 +584,21 @@ class SourceRegistry:
             futures = {
                 executor.submit(adapter.fetch, context): adapter
                 for adapter in self.adapters
+                if not (
+                    context.historical
+                    and not getattr(adapter, "supports_historical", True)
+                )
             }
+            for adapter in self.adapters:
+                if (
+                    context.historical
+                    and not getattr(adapter, "supports_historical", True)
+                ):
+                    fetched[adapter.name] = SourceResult(
+                        adapter.name,
+                        SourceStatus.SKIPPED,
+                        error="historical retrieval is unavailable for this source",
+                    )
             for future in as_completed(futures):
                 adapter = futures[future]
                 try:

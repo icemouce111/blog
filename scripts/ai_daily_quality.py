@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 from enum import Enum
 from typing import Callable, Iterable, Mapping
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from zoneinfo import ZoneInfo
 
 try:
     from scripts.ai_daily_sources import (
@@ -65,6 +66,7 @@ METRIC_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:%|倍|万|亿|元)")
 ORDERED_ITEM_PATTERN = re.compile(
     r"(?ms)^\d+\.\s+.*?(?=^\d+\.\s+|^##\s+|\Z)"
 )
+CST = ZoneInfo("Asia/Shanghai")
 
 
 class QualityMode(str, Enum):
@@ -91,6 +93,7 @@ def filter_usable_items(
     target_date: date,
     *,
     max_age_days: int = 45,
+    require_exact_date: bool = False,
 ) -> list[SourceItem]:
     usable = []
     earliest = target_date - timedelta(days=max_age_days)
@@ -99,7 +102,10 @@ def filter_usable_items(
         if not item.title.strip() or not _valid_http_url(item.url):
             continue
         published = _date_part(item.published_at)
-        if published and not earliest <= published <= latest:
+        if require_exact_date:
+            if published != target_date:
+                continue
+        elif published and not earliest <= published <= latest:
             continue
         usable.append(item)
     return usable
@@ -187,8 +193,13 @@ def validate_repair_or_fallback(
     *,
     target_date: date,
     repair: Callable[[str], str | None] | None,
+    require_exact_date: bool = False,
 ) -> QualityResult:
-    items = _usable_from_results(results, target_date)
+    items = _usable_from_results(
+        results,
+        target_date,
+        require_exact_date=require_exact_date,
+    )
     initial = validate_report(content, items)
     if initial.valid:
         return QualityResult(content, QualityMode.ORIGINAL, ())
@@ -216,7 +227,11 @@ def validate_repair_or_fallback(
                 f"repair: {issue}" for issue in repaired_validation.issues
             )
 
-    fallback = build_signal_fallback(results, target_date=target_date)
+    fallback = build_signal_fallback(
+        results,
+        target_date=target_date,
+        require_exact_date=require_exact_date,
+    )
     return QualityResult(
         fallback,
         QualityMode.FALLBACK,
@@ -228,10 +243,15 @@ def build_signal_fallback(
     results: Mapping[str, SourceResult],
     *,
     target_date: date,
+    require_exact_date: bool = False,
 ) -> str:
     parts = ["## 01 📡 原始信号归档", ""]
     for source, result in results.items():
-        items = filter_usable_items(result.items, target_date)
+        items = filter_usable_items(
+            result.items,
+            target_date,
+            require_exact_date=require_exact_date,
+        )
         if not items:
             continue
         parts.append(f"### {source}")
@@ -257,11 +277,17 @@ def build_signal_fallback(
 def _usable_from_results(
     results: Mapping[str, SourceResult],
     target_date: date,
+    *,
+    require_exact_date: bool = False,
 ) -> list[SourceItem]:
     return [
         item
         for result in results.values()
-        for item in filter_usable_items(result.items, target_date)
+        for item in filter_usable_items(
+            result.items,
+            target_date,
+            require_exact_date=require_exact_date,
+        )
     ]
 
 
@@ -357,7 +383,10 @@ def _date_part(value: str | None) -> date | None:
     if not value:
         return None
     try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if parsed.tzinfo is not None:
+            parsed = parsed.astimezone(CST)
+        return parsed.date()
     except ValueError:
         return None
 

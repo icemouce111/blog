@@ -3,6 +3,7 @@ import pathlib
 import tempfile
 import unittest
 from datetime import date, datetime, timezone
+from unittest.mock import patch
 
 from scripts.ai_daily_sources import (
     SourceItem,
@@ -232,6 +233,88 @@ class SourceRegistryContractTest(unittest.TestCase):
             [item.title for item in filtered["OpenAI"].items],
             ["Current"],
         )
+
+    def test_historical_filter_drops_undated_and_nonmatching_evidence(self):
+        results = {
+            "Hacker News": SourceResult(
+                "Hacker News",
+                SourceStatus.ACTIVE,
+                [
+                    SourceItem(
+                        source="Hacker News",
+                        title="Target day",
+                        url="https://example.com/target",
+                        published_at="2026-07-01T08:00:00+08:00",
+                    ),
+                    SourceItem(
+                        source="Hacker News",
+                        title="Undated",
+                        url="https://example.com/undated",
+                    ),
+                    SourceItem(
+                        source="Hacker News",
+                        title="Next day",
+                        url="https://example.com/next-day",
+                        published_at="2026-07-02T08:00:00+08:00",
+                    ),
+                ],
+            )
+        }
+
+        filtered = MODULE.filter_source_results(
+            results,
+            date(2026, 7, 1),
+            require_exact_date=True,
+        )
+
+        self.assertEqual(
+            [item.title for item in filtered["Hacker News"].items],
+            ["Target day"],
+        )
+
+
+class HistoricalFetcherTest(unittest.TestCase):
+    def test_hacker_news_uses_a_date_bounded_archive_query(self):
+        with patch.object(MODULE, "_fetch_json") as fetch_json:
+            fetch_json.return_value = {
+                "hits": [{
+                    "objectID": "42",
+                    "title": "Historical HN story",
+                    "url": "https://example.com/story",
+                    "points": 10,
+                    "author": "alice",
+                    "created_at": "2026-07-01T00:30:00Z",
+                }]
+            }
+
+            items = MODULE.fetch_hackernews(
+                n=2,
+                target_date=date(2026, 7, 1),
+            )
+
+        self.assertIn("search_by_date", fetch_json.call_args.args[0])
+        self.assertIn("numericFilters", fetch_json.call_args.args[0])
+        self.assertEqual(items[0]["published_at"], "2026-07-01T00:30:00Z")
+
+    def test_github_historical_search_uses_the_requested_date(self):
+        with patch.object(MODULE, "_fetch_json") as fetch_json:
+            fetch_json.return_value = {
+                "items": [{
+                    "full_name": "example/history",
+                    "description": "Historical repository",
+                    "stargazers_count": 12,
+                    "html_url": "https://github.com/example/history",
+                    "created_at": "2026-07-01T03:00:00Z",
+                    "language": "Python",
+                }]
+            }
+
+            items = MODULE.fetch_github_trending(
+                target_date=date(2026, 7, 1),
+            )
+
+        self.assertIn("created%3A2026-07-01", fetch_json.call_args.args[0])
+        self.assertEqual(items[0]["published_at"], "2026-07-01T03:00:00Z")
 
 
 class AnalysisPromptContractTest(unittest.TestCase):

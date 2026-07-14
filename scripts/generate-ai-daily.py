@@ -30,6 +30,7 @@ import ssl
 import re
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from xml.etree import ElementTree
@@ -262,9 +263,39 @@ def _is_tech_related(title, description=""):
     return bool(_TECH_KEYWORDS.search(text))
 
 # ── 数据源抓取 ────────────────────────
-def fetch_hackernews(n=12):
+def fetch_hackernews(n=12, *, target_date=None):
     """Hacker News Top Stories (Firebase API)"""
     print("  Fetching Hacker News...")
+    if target_date:
+        start = datetime.combine(target_date, datetime.min.time(), tzinfo=CST)
+        end = start + timedelta(days=1)
+        query = urlencode({
+            "tags": "story",
+            "numericFilters": (
+                f"created_at_i>={int(start.timestamp())},"
+                f"created_at_i<{int(end.timestamp())}"
+            ),
+            "hitsPerPage": n,
+        })
+        data = _fetch_json(
+            f"https://hn.algolia.com/api/v1/search_by_date?{query}"
+        )
+        stories = []
+        for item in (data or {}).get("hits", []):
+            title = item.get("title") or item.get("story_title")
+            if not title:
+                continue
+            story_id = item.get("objectID")
+            stories.append({
+                "title": title,
+                "url": item.get("url")
+                or f"https://news.ycombinator.com/item?id={story_id}",
+                "score": item.get("points", 0),
+                "by": item.get("author", ""),
+                "published_at": item.get("created_at"),
+            })
+        return stories
+
     ids = _fetch_json("https://hacker-news.firebaseio.com/v0/topstories.json")
     if not ids:
         return []
@@ -277,6 +308,11 @@ def fetch_hackernews(n=12):
                 "url": item.get("url", f"https://news.ycombinator.com/item?id={sid}"),
                 "score": item.get("score", 0),
                 "by": item.get("by", ""),
+                "published_at": (
+                    datetime.fromtimestamp(item["time"], timezone.utc).isoformat()
+                    if item.get("time")
+                    else None
+                ),
             })
     return stories
 
@@ -357,9 +393,38 @@ def _parse_github_trending_html(text):
                 repos.append(repo)
     return repos
 
-def fetch_github_trending():
+def fetch_github_trending(*, target_date=None):
     """GitHub Trending: HTML trending page first, API fallback with spam filter"""
     print("  Fetching GitHub Trending...")
+    if target_date:
+        token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+        headers = {"Accept": "application/vnd.github+json"}
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+        query = urlencode({
+            "q": f"created:{target_date.isoformat()} stars:>0",
+            "sort": "stars",
+            "order": "desc",
+            "per_page": 10,
+        })
+        data = _fetch_json(
+            f"https://api.github.com/search/repositories?{query}",
+            headers,
+        )
+        repos = []
+        for repo_data in (data or {}).get("items", []):
+            repo = {
+                "name": repo_data["full_name"],
+                "description": repo_data.get("description") or "",
+                "stars": repo_data.get("stargazers_count", 0),
+                "url": repo_data["html_url"],
+                "language": repo_data.get("language") or "",
+                "published_at": repo_data.get("created_at"),
+            }
+            if not _is_github_spam(repo["name"], repo["description"]):
+                repos.append(repo)
+        return repos[:10]
+
     # Strategy 1: HTML trending page (best signal quality)
     html = _fetch("https://github.com/trending")
     if html:
@@ -387,6 +452,7 @@ def fetch_github_trending():
                 "stars": r.get("stargazers_count", 0),
                 "url": r["html_url"],
                 "language": r.get("language") or "",
+                "published_at": r.get("created_at"),
             }
             if not _is_github_spam(repo["name"], repo["description"]):
                 repos.append(repo)
@@ -419,10 +485,13 @@ def fetch_v2ex():
     return results
 
 
-def fetch_huggingface():
+def fetch_huggingface(*, target_date=None):
     """HuggingFace Daily Papers"""
     print("  Fetching HuggingFace Papers...")
-    data = _fetch_json("https://huggingface.co/api/daily_papers")
+    endpoint = "https://huggingface.co/api/daily_papers"
+    if target_date:
+        endpoint += f"?date={target_date.isoformat()}"
+    data = _fetch_json(endpoint)
     if not data:
         return []
     results = []
@@ -440,6 +509,18 @@ def fetch_huggingface():
             "url": url,
             "upvotes": p.get("upvotes", 0),
             "summary": (paper_obj.get("summary") or p.get("summary") or "")[:200],
+            # The endpoint itself is a day-specific curation archive. Its
+            # paper publication timestamp can predate the daily selection.
+            "published_at": (
+                target_date.isoformat()
+                if target_date
+                else p.get("publishedAt") or paper_obj.get("publishedAt")
+            ),
+            "metadata": (
+                {"daily_papers_date": target_date.isoformat()}
+                if target_date
+                else {}
+            ),
         })
     return results
 
@@ -803,23 +884,36 @@ def build_source_registry():
         CallableSource(
             "Hacker News",
             SourceTier.AGGREGATOR,
-            fetch_hackernews,
+            lambda context: fetch_hackernews(
+                n=context.limit,
+                target_date=context.target_date if context.historical else None,
+            ),
         ),
         CallableSource(
             "GitHub Trending",
             SourceTier.AGGREGATOR,
-            fetch_github_trending,
+            lambda context: fetch_github_trending(
+                target_date=context.target_date if context.historical else None,
+            ),
         ),
-        CallableSource("V2EX", SourceTier.COMMUNITY, fetch_v2ex),
+        CallableSource(
+            "V2EX",
+            SourceTier.COMMUNITY,
+            lambda _context: fetch_v2ex(),
+            supports_historical=False,
+        ),
         CallableSource(
             "HuggingFace Papers",
             SourceTier.AGGREGATOR,
-            fetch_huggingface,
+            lambda context: fetch_huggingface(
+                target_date=context.target_date if context.historical else None,
+            ),
         ),
         CallableSource(
             "Product Hunt",
             SourceTier.AGGREGATOR,
-            fetch_producthunt,
+            lambda _context: fetch_producthunt(),
+            supports_historical=False,
         ),
         OpenAINewsSource(),
         AnthropicNewsSource(),
@@ -829,14 +923,30 @@ def build_source_registry():
             query="AI OR LLM OR \"Claude Code\" OR \"MCP protocol\"",
             fallback=fetch_x_twitter,
         ),
-        CallableSource("YouTube", SourceTier.COMMUNITY, fetch_youtube),
-        CallableSource("Bilibili", SourceTier.COMMUNITY, fetch_bilibili),
-        CallableSource("Zhihu", SourceTier.COMMUNITY, fetch_zhihu),
+        CallableSource(
+            "YouTube",
+            SourceTier.COMMUNITY,
+            lambda _context: fetch_youtube(),
+            supports_historical=False,
+        ),
+        CallableSource(
+            "Bilibili",
+            SourceTier.COMMUNITY,
+            lambda _context: fetch_bilibili(),
+            supports_historical=False,
+        ),
+        CallableSource(
+            "Zhihu",
+            SourceTier.COMMUNITY,
+            lambda _context: fetch_zhihu(),
+            supports_historical=False,
+        ),
         XiaohongshuSource(fallback=fetch_xiaohongshu),
         CallableSource(
             "Google Trends",
             SourceTier.AGGREGATOR,
-            fetch_googletrends,
+            lambda _context: fetch_googletrends(),
+            supports_historical=False,
         ),
     ])
 
@@ -865,11 +975,15 @@ def source_results_to_legacy(results):
     return converted
 
 
-def filter_source_results(results, target_date):
+def filter_source_results(results, target_date, *, require_exact_date=False):
     """Remove unusable evidence before it reaches prompts or core quorum checks."""
     for result in results.values():
         before = len(result.items)
-        result.items = filter_usable_items(result.items, target_date)
+        result.items = filter_usable_items(
+            result.items,
+            target_date,
+            require_exact_date=require_exact_date,
+        )
         if before and not result.items:
             result.status = SourceStatus.SKIPPED
             reason = "all items failed URL/date quality checks"
@@ -1253,12 +1367,15 @@ def _refresh_derived_artifacts():
 def _run_generation(args):
     date_str = args.date or datetime.now(CST).strftime("%Y-%m-%d")
     target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    historical = target_date < datetime.now(CST).date()
 
     print("\n" + "=" * 50)
     print("  AI Daily Report Generator")
     print("=" * 50)
     print(f"\n  Date: {date_str} (CST)")
     print(f"  LLM: {LLM_MODEL} @ {LLM_BASE_URL.split('//')[1]}")
+    if historical:
+        print("  Mode: historical archive with exact-date evidence only")
 
     if (
         not args.dry_run
@@ -1272,9 +1389,17 @@ def _run_generation(args):
     print("\n[1/3] Fetching registered data sources...")
     registry = build_source_registry()
     results = registry.fetch_all(
-        SourceContext(target_date=target_date, limit=12)
+        SourceContext(
+            target_date=target_date,
+            limit=12,
+            historical=historical,
+        )
     )
-    results = filter_source_results(results, target_date)
+    results = filter_source_results(
+        results,
+        target_date,
+        require_exact_date=historical,
+    )
     for source, result in results.items():
         detail = f"{len(result.items)} items"
         if result.error:
@@ -1302,6 +1427,7 @@ def _run_generation(args):
         results,
         target_date=target_date,
         repair=call_quality_repair if report else None,
+        require_exact_date=historical,
     )
     print(f"  [ok] Quality mode: {quality.mode.value}")
     if quality.issues:

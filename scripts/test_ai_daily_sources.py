@@ -46,11 +46,12 @@ class FakeTransport:
         return value
 
 
-def context(**env):
+def context(*, historical=False, **env):
     return SourceContext(
         target_date=date(2026, 7, 1),
         limit=10,
         env=env,
+        historical=historical,
     )
 
 
@@ -223,11 +224,41 @@ class CommunitySourceTest(unittest.TestCase):
 
 
 class RegistryTest(unittest.TestCase):
+    def test_callable_source_receives_the_target_date_context(self):
+        received = []
+        source = CallableSource(
+            "Legacy",
+            SourceTier.COMMUNITY,
+            lambda source_context: received.append(source_context) or [{
+                "title": "Legacy item",
+                "url": "https://example.com/legacy",
+                "published_at": source_context.target_date.isoformat(),
+            }],
+        )
+
+        result = source.fetch(context())
+
+        self.assertEqual(received[0].target_date, date(2026, 7, 1))
+        self.assertEqual(result.items[0].published_at, "2026-07-01")
+
+    def test_historical_mode_skips_sources_without_an_archive(self):
+        source = CallableSource(
+            "Live ranking",
+            SourceTier.AGGREGATOR,
+            lambda _context: self.fail("live source must not be fetched"),
+            supports_historical=False,
+        )
+
+        result = source.fetch(context(historical=True))
+
+        self.assertEqual(result.status, SourceStatus.SKIPPED)
+        self.assertIn("historical", result.error)
+
     def test_callable_source_preserves_legacy_engagement_fields(self):
         result = CallableSource(
             "Legacy",
             SourceTier.COMMUNITY,
-            lambda: [{
+            lambda _context: [{
                 "title": "Legacy item",
                 "url": "https://example.com/legacy",
                 "score": 20,
