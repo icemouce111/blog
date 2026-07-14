@@ -141,8 +141,8 @@ class CliContractTest(unittest.TestCase):
             def __init__(self, repo_root):
                 events.append(("init", repo_root))
 
-            def publish(self, date):
-                events.append(("publish", date))
+            def publish(self, date, *, force=False):
+                events.append(("publish", date, force))
                 return type(
                     "Result",
                     (),
@@ -158,7 +158,30 @@ class CliContractTest(unittest.TestCase):
         )
 
         self.assertEqual(code, 0)
-        self.assertEqual(events[-1], ("publish", "2026-07-01"))
+        self.assertEqual(events[-1], ("publish", "2026-07-01", False))
+
+    def test_force_is_forwarded_to_the_isolated_publisher(self):
+        calls = []
+
+        class FakePublisher:
+            def __init__(self, _repo_root):
+                pass
+
+            def publish(self, date, *, force=False):
+                calls.append((date, force))
+                return type(
+                    "Result",
+                    (),
+                    {"status": "published", "commit_sha": "abc123"},
+                )()
+
+        code = MODULE.main(
+            ["--date", "2026-07-01", "--force"],
+            publisher_factory=FakePublisher,
+        )
+
+        self.assertEqual(code, 0)
+        self.assertEqual(calls, [("2026-07-01", True)])
 
     def test_generate_only_runs_generation_without_publisher(self):
         calls = []

@@ -1459,7 +1459,7 @@ def main(argv=None, *, publisher_factory=Publisher, generation_runner=None):
         return runner(args)
 
     print("\n[AI Daily SOP] Publishing from an isolated origin/main worktree...")
-    result = publisher_factory(BLOG_DIR).publish(date_str)
+    result = publisher_factory(BLOG_DIR).publish(date_str, force=args.force)
     print(
         f"  [ok] {result.status}: {result.commit_sha} "
         "(remote SHA and live RSS verified)"

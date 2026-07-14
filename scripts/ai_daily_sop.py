@@ -146,12 +146,13 @@ class Publisher:
         self,
         date: str,
         *,
+        force: bool = False,
         generate: Callable[[Path, str], None] | None = None,
     ) -> PublishResult:
         with AtomicRunLock(self.repo_root):
             for attempt in range(2):
                 try:
-                    return self._publish_attempt(date, generate)
+                    return self._publish_attempt(date, generate, force)
                 except PublishError as error:
                     if attempt == 0 and self._is_non_fast_forward(error):
                         continue
@@ -170,6 +171,7 @@ class Publisher:
         self,
         date: str,
         generate: Callable[[Path, str], None] | None,
+        force: bool,
     ) -> PublishResult:
         _run(
             self.repo_root,
@@ -194,7 +196,7 @@ class Publisher:
             )
             worktree_added = True
             if generate is None:
-                self._run_generator(workspace, date)
+                self._run_generator(workspace, date, force=force)
             else:
                 generate(workspace, date)
 
@@ -270,14 +272,25 @@ class Publisher:
                 )
             shutil.rmtree(workspace, ignore_errors=True)
 
-    def _run_generator(self, worktree: Path, date: str) -> None:
-        result = _run(
-            worktree,
+    def _run_generator(
+        self,
+        worktree: Path,
+        date: str,
+        *,
+        force: bool = False,
+    ) -> None:
+        command = [
             sys.executable,
             str(worktree / "scripts" / "generate-ai-daily.py"),
             "--generate-only",
             "--date",
             date,
+        ]
+        if force:
+            command.append("--force")
+        result = _run(
+            worktree,
+            *command,
             timeout=15 * 60,
             check=False,
         )
@@ -354,5 +367,5 @@ class Publisher:
             return False
 
 
-def publish(repo_root: Path, date: str) -> PublishResult:
-    return Publisher(repo_root).publish(date)
+def publish(repo_root: Path, date: str, *, force: bool = False) -> PublishResult:
+    return Publisher(repo_root).publish(date, force=force)
