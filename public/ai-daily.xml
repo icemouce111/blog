@@ -6,7 +6,25 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 14 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年07月25日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-07-25</link>
+        <description><![CDATA[# AI 日报 - 2026年07月25日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📡 原始信号归档
+
+### GitHub Trending
+- **block/buzz**：A hive mind communication platform [来源](https://github.com/block/buzz)
+- **alibaba/open-code-review**：Open-source & free — Battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments,… [来源](https://github.co]]></description>
+        <pubDate>Sat, 25 Jul 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-07-25</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月14日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-14</link>
