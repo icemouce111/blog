@@ -6,7 +6,27 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年08月13日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-08-13</link>
+        <description><![CDATA[# AI 日报 - 2026年08月13日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📌 今日头条
+
+1. **[高置信度]** DeepSeek V4 Pro 0813 登顶 Hacker News 热榜，同时 Qwen3.8-2.4T 混合专家模型（A95B）同步亮相。两大开源模型同日引发社区高度关注。
+   https://openrouter.ai/deepseek/deepseek-v4-pro-0813
+   https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B
+
+2. **[高置信度]** Anthropic 正式发布 Claude Opus 5 与 Claude Sonnet 5，定位"长时运行代理"与"大规模专业工作"，同时宣布 Fable 5 回归并联合 Amazon、Micros]]></description>
+        <pubDate>Thu, 13 Aug 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-08-13</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年07月26日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-07-26</link>
