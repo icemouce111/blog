@@ -6,7 +6,27 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 29 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年08月30日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-08-30</link>
+        <description><![CDATA[# AI 日报 - 2026年08月30日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📡 原始信号归档
+
+### Hacker News
+- **Hy4 preview** [来源](https://www.tencent.com/tencent-releases-and-open-sources-tencent-hy4-preview/)
+- **Bug Blindness** [来源](https://danluu.com/bug-blind/)
+- **Tether: iMessage, SMS, etc. on Linux** [来源](https://zackbartel.com/blog/2026/08/tether/)
+- **Highest-ever ocean temperature measured as powerf]]></description>
+        <pubDate>Sun, 30 Aug 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-08-30</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年08月29日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-08-29</link>
@@ -572,24 +592,6 @@
     V2EX 上关于“进入 AI 时代后，大家用 AI 做的项目都实实在在挣到钱了吗”的帖子获得45条回复，讨]]></description>
         <pubDate>Mon, 22 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-22</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月21日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-21</link>
-        <description><![CDATA[# AI 日报 - 2026年06月21日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-1. **MCP（Model Context Protocol）成为AI Agent开发核心议题** [高置信度]
-    YouTube 上多个视频（包括“What is MCP?” 61万次观看、“you need to learn MCP RIGHT NOW!!” 155万次观看）集中爆发，Reddit 和 Product Hunt 上 MCP 2000 工具也受关注。Google Trends 显示“MCP protocol”搜索平稳但基数低，说明该概念正在从开发者圈层向大众扩散，成为AI Agent集成数据库与API的标准协议。
-    https://www.youtube.com/watch?v=eur8dUO9mvE]]></description>
-        <pubDate>Sun, 21 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-21</guid>
     </item>
 </channel>
 </rss>
