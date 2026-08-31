@@ -9,6 +9,8 @@ import { ResourcesPage } from '@/pages/ResourcesPage'
 import { AboutPage } from '@/pages/AboutPage'
 import { AiDailyPage } from '@/pages/AiDailyPage'
 import { AiDailyPostPage } from '@/pages/AiDailyPostPage'
+import { GithubPage } from '@/pages/GithubPage'
+import { GithubPostPage } from '@/pages/GithubPostPage'
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="about" element={<AboutPage />} />
             <Route path="ai-daily" element={<AiDailyPage />} />
             <Route path="ai-daily/:slug" element={<AiDailyPostPage />} />
+            <Route path="github" element={<GithubPage />} />
+            <Route path="github/:slug" element={<GithubPostPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

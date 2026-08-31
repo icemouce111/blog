@@ -7,6 +7,7 @@ const footerLinks = [
   { href: '/projects', label: '作品集' },
   { href: '/resources', label: '资源导航' },
   { href: '/ai-daily', label: 'AI日报' },
+  { href: '/github', label: 'GitHub榜' },
   { href: '/about', label: '关于' },
 ] as const
 

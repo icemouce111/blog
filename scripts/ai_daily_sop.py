@@ -134,13 +134,25 @@ class Publisher:
         live_check: Callable[[str], bool] | None = None,
         verify_timeout: int = 600,
         poll_interval: int = 10,
+        artifacts: Callable[[str], set[str]] | None = None,
+        commit_message: Callable[[str], str] | None = None,
+        remote_artifact: Callable[[str], str] | None = None,
+        live_url: str | None = LIVE_RSS_URL,
     ):
         self.repo_root = Path(repo_root).resolve()
         self.remote = remote
         self.branch = branch
-        self.live_check = live_check or self._default_live_check
+        self.live_url = live_url
+        self.live_check = live_check or self._build_live_check(live_url)
         self.verify_timeout = verify_timeout
         self.poll_interval = poll_interval
+        self.artifacts = artifacts or allowed_artifact_paths
+        self.commit_message = commit_message or (
+            lambda date: f"chore: add AI daily report for {date}"
+        )
+        self.remote_artifact = remote_artifact or (
+            lambda date: f"src/content/ai-daily/{date}.md"
+        )
 
     def publish(
         self,
@@ -201,7 +213,8 @@ class Publisher:
                 generate(workspace, date)
 
             changed = self._changed_paths(workspace)
-            unexpected = changed - allowed_artifact_paths(date)
+            allowed = self.artifacts(date)
+            unexpected = changed - allowed
             if unexpected:
                 raise PublishError(
                     "generator changed unexpected files: "
@@ -210,11 +223,11 @@ class Publisher:
 
             if not changed:
                 remote_sha = self._remote_sha()
-                self._require_remote_report(date)
+                self._require_remote_artifact(date)
                 self._verify_live(date)
                 return PublishResult("already-published", remote_sha)
 
-            artifact_paths = sorted(allowed_artifact_paths(date))
+            artifact_paths = sorted(allowed)
             _run(workspace, "git", "add", "--", *artifact_paths)
             staged = set(
                 filter(
@@ -230,10 +243,10 @@ class Publisher:
             )
             if not staged:
                 raise PublishError("generator produced no stageable artifacts")
-            if staged - allowed_artifact_paths(date):
+            if staged - allowed:
                 raise PublishError(
                     "staged unexpected files: "
-                    + ", ".join(sorted(staged - allowed_artifact_paths(date)))
+                    + ", ".join(sorted(staged - allowed))
                 )
 
             _run(
@@ -241,7 +254,7 @@ class Publisher:
                 "git",
                 "commit",
                 "-m",
-                f"chore: add AI daily report for {date}",
+                self.commit_message(date),
             )
             commit_sha = _run(workspace, "git", "rev-parse", "HEAD").stdout.strip()
             _run(
@@ -330,17 +343,18 @@ class Publisher:
             raise PublishError(f"remote branch {self.branch} does not exist")
         return line.split()[0]
 
-    def _require_remote_report(self, date: str) -> None:
+    def _require_remote_artifact(self, date: str) -> None:
+        artifact = self.remote_artifact(date)
         result = _run(
             self.repo_root,
             "git",
             "show",
-            f"{self.remote}/{self.branch}:src/content/ai-daily/{date}.md",
+            f"{self.remote}/{self.branch}:{artifact}",
             check=False,
         )
         if result.returncode != 0:
             raise PublishError(
-                f"report {date} is not present on remote {self.branch}"
+                f"artifact {artifact} is not present on remote {self.branch}"
             )
 
     def _verify_live(self, date: str) -> None:
@@ -355,16 +369,22 @@ class Publisher:
             time.sleep(self.poll_interval)
 
     @staticmethod
-    def _default_live_check(date: str) -> bool:
-        try:
-            request = urllib.request.Request(
-                LIVE_RSS_URL,
-                headers={"User-Agent": "ai-daily-sop/1.0"},
-            )
-            with urllib.request.urlopen(request, timeout=20) as response:
-                return date in response.read().decode("utf-8", errors="replace")
-        except Exception:
-            return False
+    def _build_live_check(live_url: str | None) -> Callable[[str], bool]:
+        if live_url is None:
+            return lambda _date: True
+
+        def check(date: str) -> bool:
+            try:
+                request = urllib.request.Request(
+                    live_url,
+                    headers={"User-Agent": "ai-daily-sop/1.0"},
+                )
+                with urllib.request.urlopen(request, timeout=20) as response:
+                    return date in response.read().decode("utf-8", errors="replace")
+            except Exception:
+                return False
+
+        return check
 
 
 def publish(repo_root: Path, date: str, *, force: bool = False) -> PublishResult:
