@@ -1,0 +1,233 @@
+{
+  "date": "2026-08-31",
+  "generatedAt": "2026-08-31 15:20",
+  "mode": "analyzed",
+  "intro": "今日榜单AI Agent技能扎堆爆发——从科研、架构图到SEO，Agent正渗透各行各业。网页爬虫、MCP服务器等基础设施项目持续走热，AI工具链生态正在快速成熟。",
+  "repos": [
+    {
+      "rank": 1,
+      "fullName": "THU-MAIC/OpenMAIC",
+      "url": "https://github.com/THU-MAIC/OpenMAIC",
+      "description": "Open Multi-Agent Interactive Classroom — Get an immersive, multi-agent learning experience in just one click",
+      "language": "TypeScript",
+      "stars": 25024,
+      "starsToday": 1370,
+      "forks": 4578,
+      "topics": [],
+      "what": "清华团队做的多智能体互动课堂，一键点击就能获得沉浸式AI学习体验。",
+      "help": "可以当作你学习AI的辅助工具，同时能体验多智能体协作的实际应用场景，对理解Agent架构有直观帮助。"
+    },
+    {
+      "rank": 2,
+      "fullName": "K-Dense-AI/scientific-agent-skills",
+      "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+      "description": "Turn any AI agent into an AI Scientist. The #1 Agent Skills library for science, used by 190,000+ scientists worldwide. 165 ready-to-use validated skills plus 100+ scientific databases covering biology, chemistry, medicine, and drug discovery. Compatible with Cursor, Claude Code, Codex, Pi, Antigravity, and the open Agent Skills standard.",
+      "language": "Python",
+      "stars": 39890,
+      "starsToday": 1114,
+      "forks": 3711,
+      "topics": [],
+      "what": "一套给AI智能体加上科研能力的技能库，涵盖生物、化学、医学等165个现成技能。",
+      "help": "与你的目标关系不大，可以跳过。这是面向科研人员的专业工具，你目前的学习路径不需要深入科学领域。"
+    },
+    {
+      "rank": 3,
+      "fullName": "Lakr233/vphone-cli",
+      "url": "https://github.com/Lakr233/vphone-cli",
+      "description": "",
+      "language": "Swift",
+      "stars": 9836,
+      "starsToday": 361,
+      "forks": 1296,
+      "topics": [],
+      "what": "一个用Swift写的命令行工具，从名字看可能是虚拟手机相关的CLI工具，无官方简介。",
+      "help": "与你的目标关系不大，可以跳过。Swift是iOS开发语言，不在你当前AI+全栈的学习范围内。"
+    },
+    {
+      "rank": 4,
+      "fullName": "tt-a1i/archify",
+      "url": "https://github.com/tt-a1i/archify",
+      "description": "Agent skill for beautiful, verifiable architecture, workflow, sequence, data-flow, and lifecycle diagrams—self-contained HTML with motion and crisp export.",
+      "language": "JavaScript",
+      "stars": 36023,
+      "starsToday": 3722,
+      "forks": 2312,
+      "topics": [],
+      "what": "一个AI智能体技能，能自动生成漂亮的架构图、流程图、时序图等，导出为独立HTML文件。",
+      "help": "非常实用！你做项目时需要画架构图和流程图，这个工具能帮你快速生成专业图表，副业接单也能用。"
+    },
+    {
+      "rank": 5,
+      "fullName": "p-e-w/heretic",
+      "url": "https://github.com/p-e-w/heretic",
+      "description": "Fully automatic censorship removal for language models",
+      "language": "Python",
+      "stars": 29329,
+      "starsToday": 369,
+      "forks": 3216,
+      "topics": [],
+      "what": "自动移除语言模型审查限制的工具，让AI模型回答更自由不受限。",
+      "help": "与你的目标关系不大，可以跳过。这类工具涉及合规风险，不适合初学者在副业中使用。"
+    },
+    {
+      "rank": 6,
+      "fullName": "unclecode/crawl4ai",
+      "url": "https://github.com/unclecode/crawl4ai",
+      "description": "🚀🤖 Crawl4AI: Open-source LLM Friendly Web Crawler & Scraper. Don't be shy, join here: https://discord.gg/jP8KfhDhyN",
+      "language": "Python",
+      "stars": 80423,
+      "starsToday": 221,
+      "forks": 8323,
+      "topics": [],
+      "what": "开源的、对大语言模型友好的网页爬虫和数据抓取工具，能把网页内容整理成AI能直接用的格式。",
+      "help": "强烈推荐！数据采集是AI开发的核心技能，这个工具能帮你抓取网页数据喂给AI模型，学习和副业都能用。"
+    },
+    {
+      "rank": 7,
+      "fullName": "mvanhorn/last30days-skill",
+      "url": "https://github.com/mvanhorn/last30days-skill",
+      "description": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
+      "language": "Python",
+      "stars": 60660,
+      "starsToday": 230,
+      "forks": 5304,
+      "topics": [],
+      "what": "一个AI智能体技能，能跨Reddit、X、YouTube等平台研究任何话题，然后生成综合摘要。",
+      "help": "可以学习它的思路，了解如何让AI做多平台信息聚合，对你做信息类副业项目有参考价值。"
+    },
+    {
+      "rank": 8,
+      "fullName": "majd/ipatool",
+      "url": "https://github.com/majd/ipatool",
+      "description": "Command-line tool that allows searching and downloading app packages (known as ipa files) for iOS, iPadOS, tvOS, and visionOS from the App Store.",
+      "language": "Go",
+      "stars": 10333,
+      "starsToday": 58,
+      "forks": 887,
+      "topics": [],
+      "what": "命令行工具，用于从App Store搜索和下载iOS应用安装包（ipa文件）。",
+      "help": "与你的目标关系不大，可以跳过。这是iOS逆向/分析相关工具，不在你当前学习路径上。"
+    },
+    {
+      "rank": 9,
+      "fullName": "punkpeye/awesome-mcp-servers",
+      "url": "https://github.com/punkpeye/awesome-mcp-servers",
+      "description": "A collection of MCP servers.",
+      "language": "",
+      "stars": 93483,
+      "starsToday": 96,
+      "forks": 15330,
+      "topics": [],
+      "what": "一个MCP服务器合集清单，MCP是让AI模型连接外部工具和数据源的标准协议。",
+      "help": "值得收藏！MCP是当前AI领域的热门方向，了解这些服务器能帮你理解AI如何与外部工具对接。"
+    },
+    {
+      "rank": 10,
+      "fullName": "checkstyle/checkstyle",
+      "url": "https://github.com/checkstyle/checkstyle",
+      "description": "Checkstyle is a development tool to help programmers write Java code that adheres to a coding standard. By default it supports the Google Java Style Guide and Sun Code Conventions, but is highly configurable. It can be invoked with an ANT task and a command line program.",
+      "language": "Java",
+      "stars": 9260,
+      "starsToday": 115,
+      "forks": 4199,
+      "topics": [],
+      "what": "Java代码规范检查工具，帮助程序员写出符合编码标准的Java代码。",
+      "help": "与你的目标关系不大，可以跳过。这是Java生态的工具，你学全栈更可能用JavaScript/TypeScript。"
+    },
+    {
+      "rank": 11,
+      "fullName": "NationalSecurityAgency/ghidra",
+      "url": "https://github.com/NationalSecurityAgency/ghidra",
+      "description": "Ghidra is a software reverse engineering (SRE) framework",
+      "language": "Java",
+      "stars": 74043,
+      "starsToday": 198,
+      "forks": 8074,
+      "topics": [],
+      "what": "美国国安局开源的软件逆向工程框架，用于分析编译后的程序内部结构。",
+      "help": "与你的目标关系不大，可以跳过。逆向工程是安全研究领域，与你当前学习方向不符。"
+    },
+    {
+      "rank": 12,
+      "fullName": "pollen-robotics/microduck_rl",
+      "url": "https://github.com/pollen-robotics/microduck_rl",
+      "description": "RL training environments for Microduck (mjlab)",
+      "language": "Python",
+      "stars": 918,
+      "starsToday": 168,
+      "forks": 157,
+      "topics": [],
+      "what": "为Microduck机器人提供强化学习训练环境的代码库。",
+      "help": "与你的目标关系不大，可以跳过。这是机器人强化学习的专业项目，离你当前的学习路径较远。"
+    },
+    {
+      "rank": 13,
+      "fullName": "handsomestWei/patent-disclosure-skill",
+      "url": "https://github.com/handsomestWei/patent-disclosure-skill",
+      "description": "中国专利.skill：专利点挖掘与交底书（发明/实用/外观）编写，通俗解读专利，嗅探政策动向，辅助审查答复。",
+      "language": "Python",
+      "stars": 5931,
+      "starsToday": 62,
+      "forks": 712,
+      "topics": [],
+      "what": "中国专利相关的AI技能，能挖掘专利点、编写交底书、解读专利、辅助审查答复。",
+      "help": "如果你未来想做知识产权相关的副业，这个工具很有价值；否则可以先了解概念，暂不深入。"
+    },
+    {
+      "rank": 14,
+      "fullName": "corsairdev/corsair",
+      "url": "https://github.com/corsairdev/corsair",
+      "description": "Connect your users to their apps",
+      "language": "TypeScript",
+      "stars": 11057,
+      "starsToday": 126,
+      "forks": 529,
+      "topics": [],
+      "what": "一个让用户连接到他们各种应用的平台，用TypeScript编写。",
+      "help": "可以关注它的架构设计，了解全栈应用如何做应用集成和用户连接，对学习有参考价值。"
+    },
+    {
+      "rank": 15,
+      "fullName": "every-app/open-seo",
+      "url": "https://github.com/every-app/open-seo",
+      "description": "Open source alternative to Semrush and Ahrefs",
+      "language": "TypeScript",
+      "stars": 15359,
+      "starsToday": 469,
+      "forks": 1837,
+      "topics": [],
+      "what": "Semrush和Ahrefs的开源替代品，用于SEO分析和网站优化，TypeScript编写。",
+      "help": "非常推荐！SEO是副业变现的重要技能，这个开源工具能帮你免费做关键词分析和网站优化。"
+    }
+  ],
+  "highlights": [
+    {
+      "repo": "unclecode/crawl4ai",
+      "title": "AI时代的数据采集利器，爬虫就该这么用",
+      "why": "数据是AI应用的燃料，这个项目把网页爬取和大语言模型直接打通，是目前最火的AI友好爬虫工具。",
+      "value": "掌握它你就能为任何AI应用采集训练数据或实时信息，做知识库、智能问答、舆情分析等副业项目都离不开数据采集。",
+      "how": "先用pip安装，然后照着README跑一个简单示例爬取一个网页，看看输出的结构化数据长什么样。"
+    },
+    {
+      "repo": "every-app/open-seo",
+      "title": "省掉每年上万元订阅费的开源SEO工具箱",
+      "why": "Semrush和Ahrefs是SEO行业标配但收费昂贵，这个开源替代品用TypeStack全栈技术栈实现，和你的学习方向完美匹配。",
+      "value": "一方面可以直接拿来用做自己的网站SEO优化和副业接单，另一方面可以读源码学习一个完整全栈项目是怎么组织的。",
+      "how": "先clone下来本地跑起来体验功能，然后重点看它的项目结构和路由设计，作为你未来做全栈项目的参考模板。"
+    },
+    {
+      "repo": "tt-a1i/archify",
+      "title": "一句话生成专业架构图，告别手动画图",
+      "why": "无论做项目还是写文档，架构图、流程图都是刚需，这个Agent技能能自动生成带动画效果的专业图表。",
+      "value": "学习阶段能帮你快速理解项目架构，副业阶段能帮你给客户交付专业文档，省去大量画图时间。",
+      "how": "先看README了解它支持的图表类型，然后试着用自然语言描述一个你熟悉的系统，让它生成架构图。"
+    },
+    {
+      "repo": "punkpeye/awesome-mcp-servers",
+      "title": "AI连接万物的桥梁——MCP服务器大全",
+      "why": "MCP是让AI模型连接外部工具和数据的标准协议，正在成为AI生态的基础设施，这个仓库是目前最全的MCP服务器索引。",
+      "value": "帮你快速了解AI Agent能连接哪些外部能力（数据库、文件系统、API等），为你未来搭建自己的AI应用选型提供参考。",
+      "how": "当清单浏览，挑2-3个感兴趣的MCP服务器点进去看介绍，理解它们分别让AI获得了什么新能力。"
+    }
+  ]
+}
