@@ -1,0 +1,240 @@
+{
+  "date": "2026-09-02",
+  "generatedAt": "2026-09-02 21:31",
+  "mode": "analyzed",
+  "intro": "今日榜单 Agent 生态全面爆发：MCP 工具、Claude Code 技能包、Agent 基础设施占据大半席位，实用技能与开发工具并存，是积累 Agent 工程能力的黄金窗口。",
+  "repos": [
+    {
+      "rank": 1,
+      "fullName": "fmtlib/fmt",
+      "url": "https://github.com/fmtlib/fmt",
+      "description": "A modern formatting library",
+      "language": "C++",
+      "stars": 23857,
+      "starsToday": 3,
+      "forks": 2968,
+      "topics": [],
+      "what": "C++ 的现代化字符串格式化库，语法类似 Python 的 format。",
+      "help": "适合 C++ 开发者，想让日志和输出代码更简洁安全。"
+    },
+    {
+      "rank": 2,
+      "fullName": "google-research/timesfm",
+      "url": "https://github.com/google-research/timesfm",
+      "description": "TimesFM (Time Series Foundation Model) is a pretrained time-series foundation model developed by Google Research for time-series forecasting.",
+      "language": "Python",
+      "stars": 29061,
+      "starsToday": 326,
+      "forks": 2826,
+      "topics": [],
+      "what": "谷歌开源的时间序列预测基础模型，用少量数据就能做销量、流量等预测。",
+      "help": "适合做数据分析、量化或需要预测能力的开发者直接调用。"
+    },
+    {
+      "rank": 3,
+      "fullName": "DietrichGebert/ponytail",
+      "url": "https://github.com/DietrichGebert/ponytail",
+      "description": "Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.",
+      "language": "JavaScript",
+      "stars": 120751,
+      "starsToday": 1364,
+      "forks": 6533,
+      "topics": [],
+      "what": "一个让 AI 编码助手像老练工程师一样少写代码、避免过度工程的提示/技能方案。",
+      "help": "适合重度使用 AI 编码的人，想让 Agent 产出更克制、更可维护的代码。"
+    },
+    {
+      "rank": 4,
+      "fullName": "sngyai/Sequoia-X",
+      "url": "https://github.com/sngyai/Sequoia-X",
+      "description": "A股自动选股系统 — 多种技术形态自动扫描，收盘后自动运行并推送飞书",
+      "language": "Python",
+      "stars": 5931,
+      "starsToday": 195,
+      "forks": 1236,
+      "topics": [],
+      "what": "A 股自动选股系统，收盘后自动扫描多种技术形态并推送到飞书。",
+      "help": "适合炒股的程序员，想要自动化选股流程或学习定时任务+消息推送的实践。"
+    },
+    {
+      "rank": 5,
+      "fullName": "ChromeDevTools/chrome-devtools-mcp",
+      "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "description": "Chrome DevTools for coding agents",
+      "language": "TypeScript",
+      "stars": 50516,
+      "starsToday": 140,
+      "forks": 3551,
+      "topics": [],
+      "what": "官方把 Chrome DevTools 封装成 MCP 服务器，让编码 Agent 能检查页面、看网络请求、调试前端。",
+      "help": "适合做 AI 全栈和前端调试自动化的开发者，是 Agent 操控浏览器的标配工具。"
+    },
+    {
+      "rank": 6,
+      "fullName": "NousResearch/hermes-agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "description": "The agent that grows with you",
+      "language": "Python",
+      "stars": 239827,
+      "starsToday": 529,
+      "forks": 49046,
+      "topics": [],
+      "what": "一个可持续成长、可扩展能力的开源 AI Agent 框架。",
+      "help": "适合想系统学习 Agent 架构并自建长期演进助手的开发者。"
+    },
+    {
+      "rank": 7,
+      "fullName": "superlinked/sie",
+      "url": "https://github.com/superlinked/sie",
+      "description": "Open-source inference server and production cluster for all the models your agent needs.",
+      "language": "Python",
+      "stars": 2974,
+      "starsToday": 61,
+      "forks": 297,
+      "topics": [],
+      "what": "开源推理服务器，把 Agent 需要的各类模型统一部署到一个生产集群。",
+      "help": "适合需要自托管模型服务、搭建 Agent 后端基础设施的工程师。"
+    },
+    {
+      "rank": 8,
+      "fullName": "pacifio/atlas",
+      "url": "https://github.com/pacifio/atlas",
+      "description": "Source control for agents. Use multiple coding agents, track their changes and query them in one place",
+      "language": "Rust",
+      "stars": 2667,
+      "starsToday": 895,
+      "forks": 181,
+      "topics": [],
+      "what": "面向多 Agent 的源码管理工具，统一追踪和查询多个编码 Agent 的改动。",
+      "help": "适合同时用多个编码 Agent 干活的人，解决改动混乱难回溯的痛点。"
+    },
+    {
+      "rank": 9,
+      "fullName": "zyronon/TypeWords",
+      "url": "https://github.com/zyronon/TypeWords",
+      "description": "Practice English, one strike, one step forward; 练习英语，一次敲击，一点进步；",
+      "language": "Vue",
+      "stars": 9214,
+      "starsToday": 68,
+      "forks": 1121,
+      "topics": [],
+      "what": "边打字边练英语的网页应用，一次敲击一点进步。",
+      "help": "适合想练英语的开发者，也可作为 Vue 交互项目的学习范例。"
+    },
+    {
+      "rank": 10,
+      "fullName": "Imbad0202/academic-research-skills",
+      "url": "https://github.com/Imbad0202/academic-research-skills",
+      "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
+      "language": "Python",
+      "stars": 45384,
+      "starsToday": 801,
+      "forks": 3573,
+      "topics": [],
+      "what": "给 Claude Code 的学术研究技能包，覆盖检索、写作、评审、修改到定稿全流程。",
+      "help": "适合写论文或想学习如何组织多阶段 Claude Skills 工作流的人。"
+    },
+    {
+      "rank": 11,
+      "fullName": "affaan-m/ECC",
+      "url": "https://github.com/affaan-m/ECC",
+      "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
+      "language": "JavaScript",
+      "stars": 246036,
+      "starsToday": 516,
+      "forks": 37111,
+      "topics": [],
+      "what": "Agent 外挂性能优化系统，为 Claude Code、Cursor 等提供技能、记忆、安全和研究式开发配置。",
+      "help": "适合想把 AI 编码工具调教到生产级效率的开发者，一份配置适配多个工具。"
+    },
+    {
+      "rank": 12,
+      "fullName": "protocolbuffers/protobuf",
+      "url": "https://github.com/protocolbuffers/protobuf",
+      "description": "Protocol Buffers - Google's data interchange format",
+      "language": "C++",
+      "stars": 71885,
+      "starsToday": 16,
+      "forks": 16271,
+      "topics": [],
+      "what": "谷歌的结构化数据序列化格式，服务间通信的事实标准。",
+      "help": "适合做后端和分布式系统的工程师，处理跨语言数据交换。"
+    },
+    {
+      "rank": 13,
+      "fullName": "vercel-labs/portless",
+      "url": "https://github.com/vercel-labs/portless",
+      "description": "Replace port numbers with stable, named local URLs. For humans and agents.",
+      "language": "TypeScript",
+      "stars": 11528,
+      "starsToday": 69,
+      "forks": 379,
+      "topics": [],
+      "what": "用稳定的命名本地 URL 替代端口号，让人类和 Agent 都不用记 localhost:3001。",
+      "help": "适合本地跑多项目和使用 Agent 操作本地服务的开发者，改善协作体验。"
+    },
+    {
+      "rank": 14,
+      "fullName": "blader/humanizer",
+      "url": "https://github.com/blader/humanizer",
+      "description": "Agent skill that removes signs of AI-generated writing from text",
+      "language": "Python",
+      "stars": 39906,
+      "starsToday": 366,
+      "forks": 3478,
+      "topics": [],
+      "what": "一个 Agent 技能，去除文本中的 AI 味儿，让写作更像人写的。",
+      "help": "适合做内容创作、教程输出的人，也适合学习单技能的编写方式。"
+    },
+    {
+      "rank": 15,
+      "fullName": "JuliusBrussee/caveman",
+      "url": "https://github.com/JuliusBrussee/caveman",
+      "description": "🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman",
+      "language": "Go",
+      "stars": 102401,
+      "starsToday": 234,
+      "forks": 5963,
+      "topics": [],
+      "what": "让 Claude Code 用原始人语法说话的技能，号称砍掉 65% 的 token 消耗。",
+      "help": "适合想降低 API 成本的 Claude Code 用户，也展示了技能玩法的花活。"
+    }
+  ],
+  "highlights": [
+    {
+      "repo": "ChromeDevTools/chrome-devtools-mcp",
+      "title": "官方 MCP 调试前端，Agent 全栈闭环的关键一环",
+      "why": "谷歌官方维护、TypeScript 编写，让 Agent 真正能看页面、查网络、定位 bug，是 AI 辅助全栈工作流里最实用的一块拼图。",
+      "value": "补齐 Agent 操控和调试 Web 前端的能力，可写一篇『让 AI 自己调 Bug』的小白教程，含金量和传播度都高。",
+      "how": "今天 clone 仓库，npx 启动 MCP 服务器，接入 Claude Code 或 Cursor，让它自动检查一个本地页面并截图报告。"
+    },
+    {
+      "repo": "Imbad0202/academic-research-skills",
+      "title": "多阶段 Claude Skills 的教科书案例",
+      "why": "把『检索→写作→评审→修改→定稿』拆成技能流水线，是学习 Skills 组织方式的现成范本。",
+      "value": "既可直接用于写作产出，又能借鉴其结构改造自己的工作流技能包，教程素材现成。",
+      "how": "今天读一遍它的 skills 目录结构和各阶段提示词，抄一套流程改造成自己的『写作→校对』双技能并实测一次。"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "title": "一份配置调教所有 AI 编码工具",
+      "why": "统一封装技能、记忆、安全策略，覆盖 Claude Code、Codex、Cursor 等主流工具，是 Agent 工程化的完整参考实现。",
+      "value": "直接提升日常开发效率，同时其配置分层思路是可复用的基础设施经验。",
+      "how": "今天按 README 安装到你的 Claude Code，跑一个小任务对比启用前后的差异，记录三个最明显的改进点。"
+    },
+    {
+      "repo": "pacifio/atlas",
+      "title": "多 Agent 协作的源码版本管理",
+      "why": "多 Agent 并行干活后改动难追踪是新痛点，这个 Rust 项目提供统一追踪和查询方案，方向很前沿。",
+      "value": "如果你在同时跑多个编码 Agent，它能救回失控的代码库；也适合研究 Agent 工作流基础设施设计。",
+      "how": "今天安装后在一个测试项目里让两个 Agent 各改一处，用 atlas 查询和对比改动，评估是否纳入日常流程。"
+    },
+    {
+      "repo": "vercel-labs/portless",
+      "title": "消灭端口号，本地开发体验升级",
+      "why": "Vercel 官方出品的 TypeScript 小工具，思路简单但直击痛点，人和 Agent 都受益。",
+      "value": "改善本地多项目开发体验，代码量小、源码可读，适合作为『一个工具从想法到落地』的教程案例。",
+      "how": "今天 npm 安装并替换你一个常用项目的访问方式，顺手读一下它拦截请求的核心源码。"
+    }
+  ]
+}
