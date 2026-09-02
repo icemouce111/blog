@@ -6,7 +6,25 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 31 Aug 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 日报 - 2026年09月01日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-01</link>
+        <description><![CDATA[# AI 日报 - 2026年09月01日
+
+> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
+> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+
+---
+
+## 01 📡 原始信号归档
+
+### Hacker News
+- **Wacksy: a Rust library for writing WACZ collections** [来源](https://blogs.bodleian.ox.ac.uk/archivesandmanuscripts/2025/12/17/introducing-wacksy-a-library-for-writing-wacz-collections/)
+- **A High Performance Neural Network for Energy-Efficient Copyright Violation [pdf]** [来源](https://raw.githubuserco]]></description>
+        <pubDate>Tue, 01 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-01</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年08月31日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-08-31</link>
@@ -566,30 +584,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
    来源：https://www.youtube.com/watch?v=eur8dUO9mvE, https://www.reddit.com/r/LocalLLaMA/comments/1uaebfe/best_loca]]></description>
         <pubDate>Wed, 24 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-24</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月23日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-23</link>
-        <description><![CDATA[# AI 日报 - 2026年06月23日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-
-### Hacker News
-  1. Steam Machine launches today [score=1059]
-     https://store.steampowered.com/news/group/45479024/view/685257114654870245
-
-  2. Nearly Half of LG Smart TV Apps Contain Residential Proxy SDKs [score=153]
-     https://spur.us/blog/smart-tv-apps-residential-proxy-sdks
-
-  3. Unsloth GLM-5.2 –]]></description>
-        <pubDate>Tue, 23 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-23</guid>
     </item>
 </channel>
 </rss>

@@ -3,14 +3,14 @@
     {
       "window": "week",
       "rangeStart": "2026-08-27",
-      "rangeEnd": "2026-08-31",
-      "updatedAt": "2026-08-31T15:44:05+08:00",
-      "coverageCount": 4,
+      "rangeEnd": "2026-09-01",
+      "updatedAt": "2026-09-02T09:38:59+08:00",
+      "coverageCount": 5,
       "mode": "generated",
       "insights": [
         {
-          "title": "代理技能库成为代理工程化新抽象层",
-          "summary": "本周多个高热度项目（scientific-agent-skills、archify、claude-plugins-official）均围绕可复用、可验证、可组合的模块化技能包展开，标志代理开发正从单一提示词或工具调用走向标准化技能层，推动代理工程化与跨场景复用。",
+          "title": "代理技能库成为工程化新抽象层",
+          "summary": "本周多个高热度项目围绕可复用、可验证的代理技能库展开，如科学智能体技能库、架构图生成技能及官方插件目录。技能从单一提示词演变为模块化能力包，标志代理工程化进入新阶段，推动代理从实验走向规模化生产部署。",
           "sources": [
             {
               "title": "scientific-agent-skills",
@@ -30,39 +30,44 @@
           ]
         },
         {
-          "title": "代理从数字走向物理与专用基础设施",
-          "summary": "Anthropic 开放模型硬件标准研究预览，为代理安全操作物理设备提供规范；Product Hunt 出现代理专用计算机与共享工作空间。代理正从云端软件层向物理设备与专用硬件层延伸，催生新的标准化与基础设施需求。",
+          "title": "AI深入垂直行业工作流与组织治理",
+          "summary": "OpenAI将ChatGPT接入医疗电子病历，并展示律所通过治理框架规模化部署AI；Anthropic发布模型硬件标准研究预览，推动代理安全操作物理设备。AI正从通用工具嵌入行业核心流程，组织级采用与治理成为落地关键。",
           "sources": [
             {
-              "title": "Model Hardware Standard",
+              "title": "Healthcare organizations can now connect EHR and additional industry data to ChatGPT",
+              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
+              "publishedAt": "2026-09-01"
+            },
+            {
+              "title": "How law firm Gilbert + Tobin governs and scales AI with OpenAI",
+              "url": "https://openai.com/index/gilbert-tobin",
+              "publishedAt": "2026-09-01"
+            },
+            {
+              "title": "Previewing the Model Hardware Standard",
               "url": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
               "publishedAt": "2026-08-31"
-            },
-            {
-              "title": "Maritime",
-              "url": "https://www.producthunt.com/products/maritime",
-              "publishedAt": "2026-08-31"
-            },
-            {
-              "title": "Offloop",
-              "url": "https://www.producthunt.com/products/offloop",
-              "publishedAt": "2026-08-30"
             }
           ]
         },
         {
-          "title": "科学场景代理化从概念走向规模落地",
-          "summary": "scientific-agent-skills 宣称服务超 19 万科学家，Anthropic 同步发布扩大对科学家支持公告。实验设计、文献分析、数据管道等科研环节的代理化工具链正快速成熟，科学研究的 AI 代理应用进入规模化采用阶段。",
+          "title": "AI供应链波动催生替代与自托管方案",
+          "summary": "OpenAI终止向被收购的Cursor供应模型，引发开发者对单一供应商依赖的反思；社区涌现免费Claude Code替代、自建中转站及开源代理工具。供应链不确定性正推动应用层向多模型、开源与自托管方向分散风险。",
           "sources": [
             {
-              "title": "scientific-agent-skills",
-              "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+              "title": "Our decision on Cursor following its acquisition by SpaceX",
+              "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex",
               "publishedAt": "2026-08-31"
             },
             {
-              "title": "Expanding support for scientists",
-              "url": "https://www.anthropic.com/news/expanding-support-for-scientists",
-              "publishedAt": "2026-08-30"
+              "title": "free-claude-code",
+              "url": "https://github.com/Alishahryar1/free-claude-code",
+              "publishedAt": "2026-08-27"
+            },
+            {
+              "title": "Token 用不完 — 中转站模式兴起",
+              "url": "https://www.v2ex.com/t/1238174",
+              "publishedAt": "2026-08-31"
             }
           ]
         }
