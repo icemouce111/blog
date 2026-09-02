@@ -53,6 +53,9 @@ KNOWN_SOURCE_NAMES = (
     "Product Hunt",
     "OpenAI",
     "Anthropic",
+    "GitHub Changelog",
+    "Cloudflare Blog",
+    "LangChain Blog",
     "Linux.do",
     "Reddit",
     "X/Twitter",
@@ -61,6 +64,23 @@ KNOWN_SOURCE_NAMES = (
     "Zhihu",
     "Xiaohongshu",
     "Google Trends",
+    "AI Creator Opportunities",
+)
+ALWAYS_RELEVANT_FALLBACK_SOURCES = {
+    "OpenAI",
+    "Anthropic",
+    "GitHub Changelog",
+    "Cloudflare Blog",
+    "LangChain Blog",
+    "HuggingFace Papers",
+    "Google Trends",
+    "AI Creator Opportunities",
+}
+AI_RELEVANCE_PATTERN = re.compile(
+    r"(?i)(?:\bAI\b|\bLLM\b|\bMCP\b|\bRAG\b|agent|chatgpt|claude|"
+    r"openai|anthropic|qwen|doubao|kimi|deepseek|neural|machine learning|"
+    r"artificial intelligence|prompt|multimodal|diffusion|人工智能|大模型|"
+    r"语言模型|智能体|多模态|提示词|生成式|机器学习|神经网络|豆包|千问)"
 )
 METRIC_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:%|倍|万|亿|元)")
 ORDERED_ITEM_PATTERN = re.compile(
@@ -245,17 +265,19 @@ def build_signal_fallback(
     target_date: date,
     require_exact_date: bool = False,
 ) -> str:
-    parts = ["## 01 📡 原始信号归档", ""]
+    parts = ["## 01 📡 今日来源速览", ""]
     for source, result in results.items():
         items = filter_usable_items(
             result.items,
             target_date,
             require_exact_date=require_exact_date,
         )
+        if source not in ALWAYS_RELEVANT_FALLBACK_SOURCES:
+            items = [item for item in items if _is_ai_relevant(item)]
         if not items:
             continue
         parts.append(f"### {source}")
-        for item in items[:8]:
+        for item in items[:5]:
             if item.source_tier == SourceTier.COMMUNITY:
                 lead = f"据 {source} 社区：{item.title}"
             else:
@@ -396,3 +418,7 @@ def _compact(value: str, limit: int) -> str:
     if len(normalized) <= limit:
         return normalized
     return normalized[: limit - 1].rstrip() + "…"
+
+
+def _is_ai_relevant(item: SourceItem) -> bool:
+    return bool(AI_RELEVANCE_PATTERN.search(f"{item.title}\n{item.summary}"))

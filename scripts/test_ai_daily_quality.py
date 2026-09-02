@@ -3,6 +3,7 @@ from datetime import date
 
 from scripts.ai_daily_quality import (
     QualityMode,
+    build_signal_fallback,
     filter_usable_items,
     validate_report,
     validate_repair_or_fallback,
@@ -226,6 +227,37 @@ class ReportValidationTest(unittest.TestCase):
 
 
 class RepairFallbackTest(unittest.TestCase):
+    def test_fallback_drops_off_topic_aggregator_items(self):
+        relevant = SourceItem(
+            source="Hacker News",
+            title="Show HN: An AI agent for office work",
+            url="https://example.com/ai-agent",
+            published_at="2026-07-01",
+            source_tier=SourceTier.AGGREGATOR,
+        )
+        off_topic = SourceItem(
+            source="Hacker News",
+            title="A new electric toothbrush",
+            url="https://example.com/toothbrush",
+            published_at="2026-07-01",
+            source_tier=SourceTier.AGGREGATOR,
+        )
+        results = {
+            "Hacker News": SourceResult(
+                "Hacker News",
+                SourceStatus.ACTIVE,
+                [relevant, off_topic],
+            )
+        }
+
+        fallback = build_signal_fallback(
+            results,
+            target_date=date(2026, 7, 1),
+        )
+
+        self.assertIn("AI agent", fallback)
+        self.assertNotIn("toothbrush", fallback)
+
     def test_duplicate_repair_prompt_requires_cross_item_deduplication(self):
         duplicate = """## 01 📌 今日头条
 
@@ -289,7 +321,7 @@ class RepairFallbackTest(unittest.TestCase):
         )
 
         self.assertEqual(result.mode, QualityMode.FALLBACK)
-        self.assertTrue(result.content.startswith("## 01 📡 原始信号归档"))
+        self.assertTrue(result.content.startswith("## 01 📡 今日来源速览"))
         self.assertIn("https://openai.com/index/new-model", result.content)
         self.assertIn("https://linux.do/t/topic/123", result.content)
         self.assertNotIn("invented.example", result.content)

@@ -239,6 +239,43 @@ class OpenAINewsSource:
             return _failed(self.name, error)
 
 
+class OfficialRssSource:
+    """Read an official RSS/Atom feed with optional topic filtering."""
+
+    def __init__(
+        self,
+        name: str,
+        url: str,
+        *,
+        keywords: Iterable[str] = (),
+        transport: HttpTransport | None = None,
+    ):
+        self.name = name
+        self.url = url
+        self.keywords = tuple(keyword.casefold() for keyword in keywords)
+        self.transport = transport or RequestsTransport()
+
+    def fetch(self, context: SourceContext) -> SourceResult:
+        try:
+            items = _parse_rss(self.transport.get_text(self.url))
+            if self.keywords:
+                items = [
+                    item
+                    for item in items
+                    if any(
+                        keyword in f"{item.get('title', '')} {item.get('summary', '')}".casefold()
+                        for keyword in self.keywords
+                    )
+                ]
+            return SourceResult.from_dicts(
+                self.name,
+                SourceTier.OFFICIAL,
+                items[: context.limit],
+            )
+        except Exception as error:
+            return _failed(self.name, error)
+
+
 class AnthropicNewsSource:
     name = "Anthropic"
     sitemap_url = "https://www.anthropic.com/sitemap.xml"

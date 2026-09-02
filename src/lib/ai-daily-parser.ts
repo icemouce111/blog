@@ -28,7 +28,7 @@ interface FirstListItem {
   remainingMarkdown: string
 }
 
-const listItemPattern = /^\s{0,3}(?:\d+\.|[-*+])\s+/
+const listItemPattern = /^\s{0,3}(?:(?:\d+\.|[-*+])\s+|\*\*\d+\.\s*)/
 const urlPattern = /https?:\/\/[^\s)>\]]+/g
 
 function unquoteYamlScalar(value: string) {
@@ -132,7 +132,9 @@ function extractFirstListItem(markdown: string): FirstListItem | null {
 
 function parseLeadStory(raw: string): AiDailyLeadStory {
   const firstLine = raw.split('\n')[0].replace(listItemPattern, '').trim()
-  const title = raw.match(/\*\*(.+?)\*\*/)?.[1]?.trim() || firstLine
+  const title = (
+    raw.match(/\*\*(.+?)\*\*/)?.[1]?.trim() || firstLine
+  ).replace(/^\d+\.\s*/, '')
   const confidenceMatch = raw.match(/\*\*\[([^\]]+)\]\*\*|\[([^\]]*置信度|单源信号)\]/)
   const confidence = confidenceMatch?.[1] || confidenceMatch?.[2] || ''
   const sourceUrl = raw.match(urlPattern)?.[0] || ''
@@ -171,7 +173,7 @@ function extractSections(content: string) {
 }
 
 export function parseAiDailyContent(content: string): ParsedAiDailyContent {
-  const footer = content.match(/^\*本日报[\s\S]*?\*$/m)?.[0] || ''
+  const footer = content.match(/^\*本(?:日报|情报)[\s\S]*?\*$/m)?.[0] || ''
   const editorialContent = footer
     ? content
         .slice(0, content.indexOf(footer))
@@ -180,7 +182,13 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     : content
   const sections = extractSections(editorialContent)
   const originalSectionMarkdown = sections.map((section) => section.markdown)
-  const firstItem = sections[0] ? extractFirstListItem(sections[0].markdown) : null
+  const isSignalArchive = Boolean(
+    sections[0]?.title.includes('原始信号归档')
+    || sections[0]?.title.includes('今日来源速览'),
+  )
+  const firstItem = sections[0] && !isSignalArchive
+    ? extractFirstListItem(sections[0].markdown)
+    : null
   const leadStory = firstItem ? parseLeadStory(firstItem.raw) : null
 
   if (sections[0] && firstItem) {
@@ -205,7 +213,7 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     storyCount,
     sourceCount: new Set(urls).size,
     readingMinutes: Math.max(1, Math.ceil(readableUnits / 500)),
-    isSignalArchive: sections[0]?.title.includes('原始信号归档') || false,
+    isSignalArchive,
     footer,
     fallbackMarkdown: sections.length ? '' : editorialContent.trim(),
   }

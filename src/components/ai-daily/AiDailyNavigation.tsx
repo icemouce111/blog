@@ -1,23 +1,24 @@
 import { Link } from 'react-router-dom'
 import type { AiDailyPost } from '@/lib/ai-daily'
-import type { ParsedAiDailyContent } from '@/lib/ai-daily-parser'
+import type { AiDailySection } from '@/lib/ai-daily-parser'
 
 interface MobileNavigationProps {
-  parsed: ParsedAiDailyContent
+  sections: AiDailySection[]
 }
 
 interface DesktopNavigationProps {
   post: AiDailyPost
   activeSection: string
   onSectionClick: (id: string) => void
+  sections: AiDailySection[]
 }
 
-export function AiDailyMobileNavigation({ parsed }: MobileNavigationProps) {
-  if (!parsed.sections.length) return null
+export function AiDailyMobileNavigation({ sections }: MobileNavigationProps) {
+  if (!sections.length) return null
 
   return (
     <nav className="ai-daily-mobile-nav" aria-label="本期章节">
-      {parsed.sections.map((section) => (
+      {sections.map((section) => (
         <a key={section.id} href={`#${section.id}`}>
           <span>{section.number}</span>
           {section.title}
@@ -31,15 +32,16 @@ export function AiDailyDesktopNavigation({
   post,
   activeSection,
   onSectionClick,
+  sections,
 }: DesktopNavigationProps) {
   return (
     <aside className="ai-daily-desktop-nav">
       <div className="ai-daily-nav-sticky">
-        {post.parsed.sections.length > 0 && (
+        {sections.length > 0 && (
           <nav aria-label="本期目录">
             <p className="ai-daily-eyebrow">本期目录</p>
             <ol>
-              {post.parsed.sections.map((section) => (
+              {sections.map((section) => (
                 <li key={section.id}>
                   <a
                     aria-current={activeSection === section.id ? 'location' : undefined}

@@ -47,6 +47,7 @@ try:
         CallableSource,
         LinuxDoSource,
         OpenAINewsSource,
+        OfficialRssSource,
         RedditSource,
         SourceContext,
         SourceRegistry,
@@ -67,6 +68,7 @@ except ModuleNotFoundError:
         CallableSource,
         LinuxDoSource,
         OpenAINewsSource,
+        OfficialRssSource,
         RedditSource,
         SourceContext,
         SourceRegistry,
@@ -262,6 +264,21 @@ def _is_tech_related(title, description=""):
     text = f"{title or ''} {description or ''}"
     return bool(_TECH_KEYWORDS.search(text))
 
+
+_PERSONAL_INTEREST_KEYWORDS = re.compile(
+    r'(agent|agentic|skill|MCP|RAG|context|memory|eval|workflow|automation|'
+    r'Claude Code|Codex|AI coding|coding agent|developer tool|TypeScript|React|'
+    r'Cloudflare|enterprise AI|AI office|productivity|document|spreadsheet|'
+    r'knowledge base|customer support|creator|tutorial|education|'
+    r'智能体|工作流|上下文|记忆|评测|编程|开发工具|企业 AI|办公|'
+    r'文档|表格|知识库|客服|创作者|教程|教学|小白|豆包|千问|Kimi)',
+    flags=re.IGNORECASE,
+)
+
+
+def _is_personal_interest_related(title, description=""):
+    return bool(_PERSONAL_INTEREST_KEYWORDS.search(f"{title or ''} {description or ''}"))
+
 # ── 数据源抓取 ────────────────────────
 def fetch_hackernews(n=12, *, target_date=None):
     """Hacker News Top Stories (Firebase API)"""
@@ -286,23 +303,25 @@ def fetch_hackernews(n=12, *, target_date=None):
             if not title:
                 continue
             story_id = item.get("objectID")
-            stories.append({
+            story = {
                 "title": title,
                 "url": item.get("url")
                 or f"https://news.ycombinator.com/item?id={story_id}",
                 "score": item.get("points", 0),
                 "by": item.get("author", ""),
                 "published_at": item.get("created_at"),
-            })
-        return stories
+            }
+            if _is_personal_interest_related(title):
+                stories.append(story)
+        return stories[:n]
 
     ids = _fetch_json("https://hacker-news.firebaseio.com/v0/topstories.json")
     if not ids:
         return []
     stories = []
-    for sid in ids[:n]:
+    for sid in ids[: n * 4]:
         item = _fetch_json(f"https://hacker-news.firebaseio.com/v0/item/{sid}.json")
-        if item and item.get("title"):
+        if item and item.get("title") and _is_personal_interest_related(item["title"]):
             stories.append({
                 "title": item["title"],
                 "url": item.get("url", f"https://news.ycombinator.com/item?id={sid}"),
@@ -314,6 +333,8 @@ def fetch_hackernews(n=12, *, target_date=None):
                     else None
                 ),
             })
+        if len(stories) >= n:
+            break
     return stories
 
 
@@ -495,7 +516,8 @@ def fetch_huggingface(*, target_date=None):
     if not data:
         return []
     results = []
-    for p in data[:10]:
+    candidates = []
+    for p in data[:20]:
         # Paper ID is nested under "paper" key in HF API response
         paper_obj = p.get("paper") or {}
         paper_id = paper_obj.get("id") or p.get("id", "")
@@ -504,7 +526,7 @@ def fetch_huggingface(*, target_date=None):
             if paper_url:
                 paper_id = paper_url.rstrip("/").rsplit("/", 1)[-1] if "/" in paper_url else ""
         url = f"https://huggingface.co/papers/{paper_id}" if paper_id else (paper_obj.get("url") or p.get("url", ""))
-        results.append({
+        record = {
             "title": paper_obj.get("title") or p.get("title", ""),
             "url": url,
             "upvotes": p.get("upvotes", 0),
@@ -521,8 +543,11 @@ def fetch_huggingface(*, target_date=None):
                 if target_date
                 else {}
             ),
-        })
-    return results
+        }
+        if _is_personal_interest_related(record["title"], record["summary"]):
+            results.append(record)
+        candidates.append(record)
+    return (results or candidates[:3])[:10]
 
 
 def fetch_producthunt():
@@ -546,12 +571,14 @@ def fetch_producthunt():
                 content_el = entry.find("atom:content", ns)
                 if content_el is not None and content_el.text:
                     summary = re.sub(r"<[^>]+>", "", content_el.text)[:200]
-            items.append({
+            item = {
                 "title": title_el.text if title_el is not None else "",
                 "url": link_el.get("href") if link_el is not None else "",
                 "description": summary,
-            })
-        return items[:10]
+            }
+            if _is_personal_interest_related(item["title"], item["description"]):
+                items.append(item)
+        return items[:8]
     except Exception:
         return []
 
@@ -597,7 +624,11 @@ def fetch_x_twitter():
     """X/Twitter AI 社区动态 (通过 bb-browser)"""
     print("  Fetching X/Twitter...")
     results = []
-    queries = ["AI agents", "open source AI tools", "MCP protocol"]
+    queries = [
+        "AI agent skills MCP workflow",
+        "Claude Code Codex AI coding",
+        "AI office 豆包 Qwen Kimi creator",
+    ]
     for query in queries:
         try:
             r = subprocess.run(
@@ -639,7 +670,12 @@ def fetch_youtube():
     """YouTube AI 相关视频搜索"""
     print("  Fetching YouTube...")
     results = []
-    queries = ["AI agents 2026", "MCP protocol", "open source AI tools", "AI coding tools 2026"]
+    queries = [
+        "AI agent workflow tutorial",
+        "Claude Code Codex real project",
+        "AI office automation beginner tutorial",
+        "Doubao Qwen Kimi tutorial",
+    ]
     for query in queries:
         try:
             r = subprocess.run(
@@ -679,7 +715,7 @@ def fetch_bilibili():
     """B站 AI 热门视频（通过 bb-browser）"""
     print("  Fetching Bilibili...")
     results = []
-    queries = ["人工智能 大模型", "AI 开发 工具", "开源 AI 项目"]
+    queries = ["AI 办公 小白教程", "Agent Skill MCP 实战", "AI 编程 真实项目", "豆包 千问 Kimi 教程"]
     for query in queries:
         try:
             r = subprocess.run(
@@ -722,7 +758,7 @@ def fetch_zhihu():
     print("  Fetching Zhihu...")
     try:
         r = subprocess.run(
-            ["bb-browser", "site", "zhihu/search", "AI 人工智能 大模型 2026", "10", "--json"],
+            ["bb-browser", "site", "zhihu/search", "AI 办公 Agent 工作流 小白教程", "10", "--json"],
             capture_output=True, text=True, timeout=20
         )
         if r.returncode == 0 and r.stdout.strip():
@@ -757,7 +793,7 @@ def fetch_xiaohongshu():
     print("  Fetching Xiaohongshu...")
     try:
         r = subprocess.run(
-            ["bb-browser", "site", "xiaohongshu/search", "AI 人工智能", "--json"],
+            ["bb-browser", "site", "xiaohongshu/search", "AI 办公 教程 智能体", "--json"],
             capture_output=True, text=True, timeout=20
         )
         if r.returncode == 0 and r.stdout.strip():
@@ -834,7 +870,7 @@ def fetch_googletrends():
         print("    [skip] pytrends not installed (pip install pytrends)")
         return []
 
-    keywords = ["AI agents", "Claude Code", "MCP protocol", "Cursor AI", "open source LLM"]
+    keywords = ["AI Agent", "Claude Code", "MCP", "豆包", "AI 办公"]
     try:
         pytrends = TrendReq(hl="zh-CN")
         pytrends.build_payload(keywords, timeframe="now 7-d")
@@ -878,6 +914,48 @@ def fetch_googletrends():
         return []
 
 
+def fetch_creator_opportunities(*, target_date=None):
+    """Load still-open, curated creator programs from the checked-in radar."""
+    path = BLOG_DIR / "src" / "data" / "ai-opportunities.json"
+    if not path.exists():
+        return []
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"    [skip] Creator opportunities: {error}")
+        return []
+
+    reference = target_date or datetime.now(CST).date()
+    items = []
+    for opportunity in payload.get("opportunities", []):
+        deadline = opportunity.get("deadline")
+        if deadline:
+            try:
+                if datetime.strptime(deadline, "%Y-%m-%d").date() < reference:
+                    continue
+            except ValueError:
+                continue
+        title = str(opportunity.get("title") or "").strip()
+        url = str(opportunity.get("url") or "").strip()
+        if not title or not url:
+            continue
+        timing = f"截止 {deadline}" if deadline else "长期开放"
+        summary_parts = [
+            str(opportunity.get("type") or "创作者计划"),
+            timing,
+            str(opportunity.get("reward") or "").strip(),
+            str(opportunity.get("fit") or "").strip(),
+        ]
+        if opportunity.get("verification") != "official":
+            continue
+        items.append({
+            "title": f"{opportunity.get('organizer', '')}：{title}".strip("："),
+            "description": "；".join(part for part in summary_parts if part),
+            "url": url,
+        })
+    return items
+
+
 def build_source_registry():
     """Build the complete source set with portable primary/fallback ordering."""
     return SourceRegistry([
@@ -917,10 +995,28 @@ def build_source_registry():
         ),
         OpenAINewsSource(),
         AnthropicNewsSource(),
+        OfficialRssSource(
+            "GitHub Changelog",
+            "https://github.blog/changelog/feed/",
+            keywords=("copilot", "agent", "model", "MCP", "coding"),
+        ),
+        OfficialRssSource(
+            "Cloudflare Blog",
+            "https://blog.cloudflare.com/rss/",
+            keywords=("AI", "Workers", "Agents", "developer", "model"),
+        ),
+        OfficialRssSource(
+            "LangChain Blog",
+            "https://blog.langchain.com/rss/",
+            keywords=("agent", "LangGraph", "eval", "context", "memory"),
+        ),
         LinuxDoSource(fallback=fetch_linuxdo),
         RedditSource(fallback=fetch_reddit),
         XSource(
-            query="AI OR LLM OR \"Claude Code\" OR \"MCP protocol\"",
+            query=(
+                "\"Agent Skills\" OR MCP OR RAG OR \"Claude Code\" OR Codex "
+                "OR \"AI办公\" OR 豆包 OR Qwen OR Kimi OR \"AI创作者\""
+            ),
             fallback=fetch_x_twitter,
         ),
         CallableSource(
@@ -946,6 +1042,14 @@ def build_source_registry():
             "Google Trends",
             SourceTier.AGGREGATOR,
             lambda _context: fetch_googletrends(),
+            supports_historical=False,
+        ),
+        CallableSource(
+            "AI Creator Opportunities",
+            SourceTier.OFFICIAL,
+            lambda context: fetch_creator_opportunities(
+                target_date=context.target_date,
+            ),
             supports_historical=False,
         ),
     ])
@@ -992,63 +1096,49 @@ def filter_source_results(results, target_date, *, require_exact_date=False):
 
 
 # ── LLM 分析 ──────────────────────────
-ANALYSIS_SYSTEM_PROMPT = """你是 AI 日报的编辑团队，采用 TradingAgents 多角色分析框架。基于今日原始数据，生成结构化的 AI 行业日报。
+ANALYSIS_SYSTEM_PROMPT = """你是“AI 行动情报站”的主编。你服务的读者正在积累三类长期资产：Agent 工程与可靠工作流、面向普通人的 AI 办公教学、能交付和商业化的 AI 产品。你的任务不是覆盖整个行业，而是从原始数据中挑出能帮助读者学习、动手、产出作品或发现真实需求的信号。
 
 今日数据来自以下来源：
-- 官方类：OpenAI News、Anthropic Newsroom
+- 官方类：OpenAI、Anthropic、GitHub Changelog、Cloudflare Blog、LangChain Blog
 - 项目类：GitHub Trending、HackerNews、Product Hunt、HuggingFace Papers
 - 社区类：Reddit、V2EX、Linux.do、X/Twitter、Zhihu、Xiaohongshu
 - 视频类：YouTube、Bilibili
 - 趋势类：Google Trends（7 日搜索量数据）
-当多个来源指向同一信号时优先采用，并交叉验证。
-优先使用最近 48 小时内的内容（检查发布时间字段）。
-
-每个分析师角色各负责一个板块，板块顺序固定，内容独立产出。
+- 行动类：AI Creator Opportunities（仍可报名的官方创作者计划、征文和共建招募）
+优先使用最近 48 小时的官方来源；社区内容只作为需求、情绪和案例线索。多个来源指向同一变化时合并报道，不以热度代替价值。
 
 输出必须严格遵循以下格式（板块按顺序出现）：
 
-## 01 📌 今日头条
-由主编汇总今日最重要的 3 条信号。每条标注**信号置信度**：高置信度（≥2源交叉验证）/ 中等置信度（单源+数据支撑）/ 单源信号。按置信度降序排列。
+## 01 今天真正重要的变化
+只选 2-3 条会改变普通人使用 AI、团队交付 AI 或创作者生产内容方式的变化。每条写清：发生了什么、为什么重要、今天可以采取的一个小动作。
 
-输出 3 条。
+## 02 Agent 工程与工作流
+优先 Skills、MCP、RAG、上下文、记忆、评测、可观测性和自动化。只选能提升可靠性、复用性或交付质量的内容，输出 2-4 条。
 
-## 02 🔥 热门项目
-**基础信号分析师** — 基于 GitHub Trending、HackerNews、Product Hunt、YouTube、Bilibili 等，识别今日最热门的项目和产品。每条用第一人称：我判断/我发现。
-输出 4-6 条。
+## 03 企业 AI 与办公落地
+关注文档、表格、知识库、客服、培训、招投标和日常协作场景。把产品发布翻译成“小白或基层员工能完成什么工作”，输出 2-4 条。
 
-## 03 🗣️ 社区热议
-**社区情绪分析师** — 基于 Reddit、V2EX、X/Twitter、Zhihu、Xiaohongshu 等社区讨论，捕捉今日开发者/用户在吵什么、焦虑什么、期待什么。每条包含：话题 + 情绪方向（兴奋/焦虑/质疑）+ 关键观点 + 来源链接。
-输出 3-5 条。
+## 04 AI 编程与开源实践
+优先 Agent 工具链、TypeScript/React/Cloudflare 生态和可用于真实项目的开源项目。每条写：它是什么、适合谁、第一步怎么试。输出 3-5 条，不复述完整榜单。
 
-## 04 💼 行业动态
-**行业动态分析师** — 融资、收购、政策变化、市场格局调整。每条包含：事件 + 影响分析 + 来源链接。
-输出 3-5 条。
+## 05 产品、职业与内容机会
+关注真实客户需求、可验证的产品方向、讲师与内容创作机会。只有官方活动数据可以作为可报名计划；社区收益截图只能表述为需求线索，不能写成已证实收益。输出 2-4 条。
 
-## 05 🏗️ 技术趋势
-**技术趋势分析师** — 架构变化、框架发布、重要模型的发布/更新、技术栈迁移信号。每条用第一人称：我发现/我推荐。
-输出 3-5 条。
-
-## 06 🎯 机会方向
-**机会挖掘师** — 基于今日信号（含 Google Trends 的趋势数据），识别值得关注的方向：哪些关键词搜索量在涨、未被满足的需求、新兴场景、工具链空白。明确区分事实与编辑判断，不使用“蓝海”“必然”等无证据结论。
-输出 3-5 条。
-
-## 07 ⚠️ 风险提示
-**风险提示师** — 争议事件、安全隐患、被淘汰的技术/工具、创始人/公司负面动态。
-输出 2-4 条。
+## 06 值得持续关注
+只有当证据足够但影响尚未完全展开时才输出，写清后续观察指标；否则跳过整个板块。
 
 ---
 
 格式要求：
 - 全部用中文
 - 板块标题带编号前缀（01 02 03...）
-- 今日头条以外的板块可用第一人称（我发现/我判断/我推荐）
-- 今日头条每条标注 **[高置信度]** / **[中等置信度]** / **[单源信号]** 标签
-- 每条目控制在 80-150 字，信息密度优先（去废话，留信号）
+- 每条目控制在 90-180 字，优先解释对读者的影响与下一步
 - 每个观点必须附带来源 URL
 - 只能使用原始数据中提供的 URL，不得补写、猜测或改造 URL
 - 同一事件只能出现在一个板块；同一来源 URL 不得出现在多个编号条目，头条已使用的事件不在其他板块重复
 - 社区来源必须明确写成“据社区讨论”或“有用户/开发者指出”
 - 不得使用证据不支持的“最快”“第一”“唯一”“明确蓝海”等绝对表述
+- 不在公开正文中出现“待核验”“规则待复核”“内部审核”等工作流标签；证据不足就删除，不把核验工作交给读者
 - 如果某个板块今天没有值得输出的内容，跳过整个板块（标题也不保留）
 """
 
@@ -1251,15 +1341,15 @@ def generate_markdown(report_content, date_str, generated_at=None):
     date_display = issue_date.strftime("%Y年%m月%d日")
 
     frontmatter = f"""---
-title: "AI 日报 - {date_display}"
+title: "AI 行动情报站 - {date_display}"
 date: {date_str}
-description: 自动生成的每日 AI 行业动态汇总
+description: 面向 Agent 工程、AI 办公教学与产品实践的每日行动情报
 ---
 
-# AI 日报 - {date_display}
+# AI 行动情报站 - {date_display}
 
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
 
 ---
 
@@ -1268,7 +1358,7 @@ description: 自动生成的每日 AI 行业动态汇总
 
 ---
 
-*本日报由自动化系统于 {generated.strftime('%Y-%m-%d %H:%M')} 自动生成*"""
+*本情报由自动化系统于 {generated.strftime('%Y-%m-%d %H:%M')} 自动生成*"""
     return frontmatter + report_content.strip() + footer
 
 
@@ -1281,6 +1371,7 @@ def save_report(md_content, date_str, force=False):
             "## Raw Data Summary",
             "## \U0001f4ca",
             "## 01 \U0001f4e1 \u539f\u59cb\u4fe1\u53f7\u5f52\u6863",
+            "## 01 \U0001f4e1 \u4eca\u65e5\u6765\u6e90\u901f\u89c8",
         )
         if any(marker in existing for marker in fallback_markers):
             filepath.write_text(md_content, encoding="utf-8")
@@ -1295,7 +1386,7 @@ def save_report(md_content, date_str, force=False):
 
 def _generate_fallback(sources_data):
     """Return a parseable signal archive when LLM analysis is unavailable."""
-    parts = ["## 01 \U0001f4e1 \u539f\u59cb\u4fe1\u53f7\u5f52\u6863", ""]
+    parts = ["## 01 \U0001f4e1 \u4eca\u65e5\u6765\u6e90\u901f\u89c8", ""]
     for source_name, items in sources_data.items():
         valid_items = [
             item for item in items[:8]
@@ -1341,6 +1432,7 @@ def _existing_report_is_final(date_str):
         "## Raw Data Summary",
         "## 📊",
         "## 01 📡 原始信号归档",
+        "## 01 📡 今日来源速览",
     )
     return not any(marker in content for marker in fallback_markers)
 

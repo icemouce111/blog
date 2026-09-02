@@ -30,7 +30,7 @@ class GenerateFallbackTest(unittest.TestCase):
             }]
         })
 
-        self.assertTrue(output.startswith("## 01 📡 原始信号归档"))
+        self.assertTrue(output.startswith("## 01 📡 今日来源速览"))
         self.assertIn("### Hacker News", output)
         self.assertNotIn("## 📊 Hacker News", output)
         self.assertIn("[链接](https://example.com/signal)", output)
@@ -38,7 +38,7 @@ class GenerateFallbackTest(unittest.TestCase):
     def test_empty_fallback_keeps_the_archive_contract(self):
         output = MODULE._generate_fallback({})
 
-        self.assertTrue(output.startswith("## 01 📡 原始信号归档"))
+        self.assertTrue(output.startswith("## 01 📡 今日来源速览"))
         self.assertIn("### 系统状态", output)
 
 
@@ -215,6 +215,9 @@ class SourceRegistryContractTest(unittest.TestCase):
                 "Product Hunt",
                 "OpenAI",
                 "Anthropic",
+                "GitHub Changelog",
+                "Cloudflare Blog",
+                "LangChain Blog",
                 "Linux.do",
                 "Reddit",
                 "X/Twitter",
@@ -223,8 +226,18 @@ class SourceRegistryContractTest(unittest.TestCase):
                 "Zhihu",
                 "Xiaohongshu",
                 "Google Trends",
+                "AI Creator Opportunities",
             },
         )
+
+    def test_creator_opportunities_exclude_expired_items(self):
+        items = MODULE.fetch_creator_opportunities(
+            target_date=date(2026, 9, 20),
+        )
+
+        titles = {item["title"] for item in items}
+        self.assertFalse(any("Qwen3.8-27B" in title for title in titles))
+        self.assertTrue(any("Kimi Ambassador" in title for title in titles))
 
     def test_filters_registered_results_before_llm_analysis(self):
         results = {
@@ -302,7 +315,7 @@ class HistoricalFetcherTest(unittest.TestCase):
             fetch_json.return_value = {
                 "hits": [{
                     "objectID": "42",
-                    "title": "Historical HN story",
+                    "title": "Historical AI agent story",
                     "url": "https://example.com/story",
                     "points": 10,
                     "author": "alice",
@@ -358,7 +371,7 @@ class MarkdownDateTest(unittest.TestCase):
             generated_at=generated,
         )
 
-        self.assertIn('title: "AI 日报 - 2026年07月01日"', markdown)
+        self.assertIn('title: "AI 行动情报站 - 2026年07月01日"', markdown)
         self.assertIn("date: 2026-07-01", markdown)
 
 

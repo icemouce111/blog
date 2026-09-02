@@ -1,0 +1,111 @@
+{
+  "lastVerified": "2026-09-02",
+  "opportunities": [
+    {
+      "id": "modelscope-qwen38-practice",
+      "priority": 2,
+      "title": "分享 Qwen3.8-27B 实践经验",
+      "organizer": "魔搭 ModelScope",
+      "type": "实践征文",
+      "deadline": "2026-09-15",
+      "reward": "10,000 元现金奖池",
+      "fit": "适合把一次真实使用过程写成可复现教程",
+      "url": "https://modelscope.cn/events",
+      "verification": "official"
+    },
+    {
+      "id": "modelscope-ai-film-02",
+      "priority": 7,
+      "title": "AI+∞ 开发者创作大赛 · 第二期",
+      "organizer": "魔搭 ModelScope × Qoder",
+      "type": "AI 短片",
+      "deadline": "2026-09-14",
+      "reward": "20,000 元奖金及创作资源",
+      "fit": "适合尝试 AI 视频，但与办公教学主线关联较弱",
+      "url": "https://modelscope.cn/events",
+      "verification": "official"
+    },
+    {
+      "id": "modelscope-cloud-workstation",
+      "priority": 3,
+      "title": "我的云端 AI 工作站",
+      "organizer": "魔搭 ModelScope",
+      "type": "教程征集",
+      "deadline": "2026-09-19",
+      "reward": "社区积分与创作资源",
+      "fit": "适合写部署、配置和踩坑复盘",
+      "url": "https://www.modelscope.cn/learn/435841",
+      "verification": "official"
+    },
+    {
+      "id": "kimi-ambassador",
+      "priority": 1,
+      "title": "Kimi Ambassador",
+      "organizer": "Kimi",
+      "type": "长期招募",
+      "deadline": null,
+      "reward": "模型/API 资源、官方曝光与合作机会",
+      "fit": "适合持续产出教程和真实案例的创作者",
+      "url": "https://www.kimi.com/zh-cn/lp/kimi-ambassador",
+      "verification": "official"
+    },
+    {
+      "id": "tencent-cloud-original-sharing",
+      "priority": 3,
+      "title": "腾讯云原创分享计划",
+      "organizer": "腾讯云开发者社区",
+      "type": "长期技术创作",
+      "deadline": null,
+      "reward": "月度内容激励、流量曝光与社区权益",
+      "fit": "适合把 Agent、AI 办公和项目交付复盘沉淀成系列文章",
+      "url": "https://cloud.tencent.com/developer/original-sharing",
+      "verification": "official"
+    },
+    {
+      "id": "modelscope-cobuilder",
+      "priority": 6,
+      "title": "魔搭社区共建者计划",
+      "organizer": "魔搭 ModelScope",
+      "type": "长期招募",
+      "deadline": null,
+      "reward": "算力、API、传播与活动支持",
+      "fit": "适合沉淀教程并逐步尝试分享或工作坊",
+      "url": "https://modelscope.cn/active/cobuilder",
+      "verification": "official"
+    },
+    {
+      "id": "amd-modelscope-2026",
+      "priority": 8,
+      "title": "AMD × 魔搭开发者激励计划",
+      "organizer": "AMD × 魔搭 ModelScope",
+      "type": "技术实践",
+      "deadline": "2026-12-31",
+      "reward": "最高 1000 小时以上 GPU 算力",
+      "fit": "偏技术，适合后续做模型部署或 Skill Agent",
+      "url": "https://modelscope.cn/events/247",
+      "verification": "official"
+    }
+  ],
+  "watchSources": [
+    {
+      "name": "Datawhale AI+X 活动日历",
+      "url": "https://aixevents.datawhale.cn/"
+    },
+    {
+      "name": "魔搭活动中心",
+      "url": "https://modelscope.cn/events"
+    },
+    {
+      "name": "阿里云开发者任务中心",
+      "url": "https://developer.aliyun.com/mission"
+    },
+    {
+      "name": "火山引擎开发者社区",
+      "url": "https://developer.volcengine.com/"
+    },
+    {
+      "name": "腾讯云原创分享计划",
+      "url": "https://cloud.tencent.com/developer/original-sharing"
+    }
+  ]
+}

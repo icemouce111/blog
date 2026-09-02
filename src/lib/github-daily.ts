@@ -84,6 +84,10 @@ export function getGithubDailyPost(slug: string): GithubDailyPost | null {
   return posts.find((post) => post.slug === slug) ?? null
 }
 
+export function getGithubDailyForDate(dateISO: string): GithubDailyPost | null {
+  return posts.find((post) => post.slug <= dateISO) ?? null
+}
+
 export function formatStars(stars: number | null): string {
   if (stars === null) return '—'
   if (stars >= 1000) return `${(stars / 1000).toFixed(1)}k`

@@ -57,9 +57,28 @@ test('recognizes a numbered signal archive and indented source items', () => {
 
   assert.equal(result.isSignalArchive, true)
   assert.equal(result.sections[0].title, '原始信号归档')
-  assert.equal(result.leadStory?.title, 'A raw signal')
+  assert.equal(result.leadStory, null)
   assert.equal(result.storyCount, 2)
   assert.match(result.sections[0].markdown, /### Hacker News/)
+  assert.match(result.sections[0].markdown, /A raw signal/)
+})
+
+test('recognizes bold numbered editorial items from generated reports', () => {
+  const result = parseAiDailyContent(`
+## 01 📌 今日头条
+
+**1. Anthropic 发布新模型** **[高置信度]**
+这是第一条摘要。
+来源：https://example.com/one
+
+**2. OpenAI 更新产品** **[中等置信度]**
+这是第二条摘要。
+来源：https://example.com/two
+`)
+
+  assert.equal(result.storyCount, 2)
+  assert.equal(result.leadStory?.title, 'Anthropic 发布新模型')
+  assert.match(result.sections[0].markdown, /OpenAI 更新产品/)
 })
 
 test('falls back to the original markdown when numbered sections are absent', () => {

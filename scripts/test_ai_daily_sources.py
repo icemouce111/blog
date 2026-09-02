@@ -6,6 +6,7 @@ from scripts.ai_daily_sources import (
     CallableSource,
     LinuxDoSource,
     OpenAINewsSource,
+    OfficialRssSource,
     RedditSource,
     SourceContext,
     SourceRegistry,
@@ -56,6 +57,26 @@ def context(*, historical=False, **env):
 
 
 class OfficialSourceTest(unittest.TestCase):
+    def test_official_rss_filters_to_selected_topics(self):
+        transport = FakeTransport()
+        feed_url = "https://example.com/feed.xml"
+        transport.text[feed_url] = """<?xml version="1.0"?>
+        <rss><channel>
+          <item><title>Agent memory patterns</title><link>https://example.com/agent</link></item>
+          <item><title>Office renovation</title><link>https://example.com/office</link></item>
+        </channel></rss>"""
+
+        result = OfficialRssSource(
+            "Example Official",
+            feed_url,
+            keywords=("agent",),
+            transport=transport,
+        ).fetch(context())
+
+        self.assertEqual(result.status, SourceStatus.ACTIVE)
+        self.assertEqual([item.title for item in result.items], ["Agent memory patterns"])
+        self.assertEqual(result.items[0].source_tier, SourceTier.OFFICIAL)
+
     def test_openai_rss_produces_official_items(self):
         transport = FakeTransport()
         transport.text["https://openai.com/news/rss.xml"] = """<?xml version="1.0"?>

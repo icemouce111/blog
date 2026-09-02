@@ -6,14 +6,13 @@ const footerLinks = [
   { href: '/blog', label: '博客' },
   { href: '/projects', label: '作品集' },
   { href: '/resources', label: '资源导航' },
-  { href: '/ai-daily', label: 'AI日报' },
-  { href: '/github', label: 'GitHub榜' },
+  { href: '/ai-daily', label: 'AI情报' },
   { href: '/about', label: '关于' },
 ] as const
 
 export function Footer() {
   return (
-    <footer className="border-t mt-auto">
+    <footer className="site-footer border-t mt-auto">
       <div className={cn(siteContainerClass, 'py-10')}>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6">
           <div className="space-y-2">
@@ -21,7 +20,7 @@ export function Footer() {
               icemouce
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              全栈开发者，热爱开源与技术分享
+              Agent 工程、AI 应用与真实业务实践
             </p>
           </div>
 

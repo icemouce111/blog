@@ -11,8 +11,7 @@ const navItems = [
   { href: '/blog', label: '博客' },
   { href: '/projects', label: '作品集' },
   { href: '/resources', label: '资源导航' },
-  { href: '/ai-daily', label: 'AI日报' },
-  { href: '/github', label: 'GitHub榜' },
+  { href: '/ai-daily', label: 'AI情报' },
   { href: '/about', label: '关于' },
 ] as const
 
@@ -21,10 +20,11 @@ export function Navbar() {
   const location = useLocation()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="site-navbar sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className={cn(siteContainerClass, 'flex h-16 items-center gap-6')}>
         <Button
           variant="link"
+          nativeButton={false}
           className="flex items-center gap-2.5 font-bold text-lg p-0 shrink-0"
           render={<Link to="/" />}
         >
@@ -40,6 +40,7 @@ export function Navbar() {
             <Button
               key={item.href}
               variant="ghost"
+              nativeButton={false}
               className={cn(
                 'text-sm',
                 location.pathname.startsWith(item.href) && 'bg-accent text-accent-foreground'
@@ -81,6 +82,7 @@ export function Navbar() {
                   <Button
                     key={item.href}
                     variant="ghost"
+                    nativeButton={false}
                     className={cn(
                       'justify-start text-base',
                       location.pathname.startsWith(item.href) && 'bg-accent text-accent-foreground'

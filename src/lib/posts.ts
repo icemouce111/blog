@@ -34,7 +34,7 @@ function parseFrontmatter(raw: string): { data: Record<string, unknown>; content
       currentArray = []
     }
 
-    const keyValue = line.match(/^(\w[\w-]*)\s*:\s*(.+)/)
+    const keyValue = line.match(/^(\w[\w-]*)\s*:\s*(.*)$/)
     if (keyValue) {
       currentKey = keyValue[1]
       const value = keyValue[2].trim()

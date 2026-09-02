@@ -38,7 +38,7 @@ export function AiTrendInsights() {
     <aside className="ai-trends" aria-labelledby={`${tabsId}-heading`}>
       <header>
         <p className="ai-daily-eyebrow">GLOBAL SIGNALS</p>
-        <h2 id={`${tabsId}-heading`} className="ai-daily-serif">全球 AI 应用趋势洞察</h2>
+        <h2 id={`${tabsId}-heading`} className="ai-daily-serif">AI 应用趋势洞察</h2>
       </header>
 
       <div className="ai-trend-tabs" role="tablist" aria-label="趋势时间范围">
