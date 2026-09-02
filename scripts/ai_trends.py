@@ -10,6 +10,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable
 
+NEWLINE = "\n\n"
+
 
 WINDOWS = {
     "week": {"days": 7, "minimum": 4, "cadence_days": 1},
@@ -92,7 +94,7 @@ def build_prompt(window, issues, allowed_urls):
 {json.dumps(sorted(allowed_urls), ensure_ascii=False)}
 
 日报材料：
-{"\n\n".join(excerpts)}
+{NEWLINE.join(excerpts)}
 """
 
 
