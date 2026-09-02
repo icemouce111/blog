@@ -51,7 +51,7 @@ export function HomePage() {
               <img src="/avatar.jpg" alt="" />
               ICEMOUCE · BUILD IN PUBLIC
             </div>
-            <h1 id="home-heading">把 AI 变成能交付、能复用、能积累的工作系统</h1>
+            <h1 id="home-heading">你好！我是学山，希望你有收获！</h1>
             <p className="site-home-hero-copy">
               我在这里记录 Agent 工程、AI 办公、全栈产品和真实业务实践，也把复杂工具翻译成普通人可以开始的第一步。
             </p>
