@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 01 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月02日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-02</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月02日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 今天真正重要的变化
+
+**Anthropic 发布 Claude Opus 5，长时运行 Agent 成为重点**
+Opus 5 在编码和专业工作上显著提升，专为长时运行 Agent 设计，属于 Opus 层级的一次阶跃式改进。对团队的意义在于：更复杂的多步骤自动化任务现在有更可靠的模型底座，交付 Agent 项目时可以少做任务拆解妥协。今天可以做的：在 GitHub Copilot 中切换到 Claude Fable 5.1（同属 Mythos 类模型）跑一个你手头最长的自动化任务，感受长上下文稳定性。
+https://www.anthropic.com/news/claude-opus-5
+
+**ChatGPT/Codex 应用内置完整 LibreOffice 副本**
+据开发]]></description>
+        <pubDate>Wed, 02 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-02</guid>
+    </item>
     <item>
         <title><![CDATA[AI 日报 - 2026年09月01日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-01</link>
@@ -566,24 +587,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **Qualcomm to Acquire Modular** [链接](https://w]]></description>
         <pubDate>Thu, 25 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-25</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月24日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-24</link>
-        <description><![CDATA[# AI 日报 - 2026年06月24日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-1. **MCP（Model Context Protocol）成为AI Agent开发核心基础设施** [高置信度]
-   多来源交叉验证显示MCP热度极高：YouTube上“What is MCP?”视频获61.7万次观看，另一讲解视频达155.7万次观看，Reddit社区频繁讨论“Best Local Agents”。MCP正从概念普及走向开发者大规模采用，成为连接AI Agent与数据库/API的事实标准。
-   来源：https://www.youtube.com/watch?v=eur8dUO9mvE, https://www.reddit.com/r/LocalLLaMA/comments/1uaebfe/best_loca]]></description>
-        <pubDate>Wed, 24 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-24</guid>
     </item>
 </channel>
 </rss>
