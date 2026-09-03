@@ -2,72 +2,72 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-08-27",
-      "rangeEnd": "2026-09-01",
-      "updatedAt": "2026-09-02T09:38:59+08:00",
-      "coverageCount": 5,
+      "rangeStart": "2026-08-29",
+      "rangeEnd": "2026-09-03",
+      "updatedAt": "2026-09-03T21:49:25+08:00",
+      "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "代理技能库成为工程化新抽象层",
-          "summary": "本周多个高热度项目围绕可复用、可验证的代理技能库展开，如科学智能体技能库、架构图生成技能及官方插件目录。技能从单一提示词演变为模块化能力包，标志代理工程化进入新阶段，推动代理从实验走向规模化生产部署。",
+          "title": "AI Agent 从工具走向可治理的运营基础设施",
+          "summary": "企业开始将 AI Agent 纳入正式工作流与治理框架：律所、医疗、旅游等垂直行业引入企业级 ChatGPT 与 Codex，并配套 CEO 主导的治理与人工问责机制；GitHub Copilot 新增代码审查批准与内容排除策略，Cloudflare 推出机器人偏好同步与自适应情报，标志 Agent 流量治理成为网站运营常态。",
           "sources": [
             {
-              "title": "scientific-agent-skills",
+              "title": "How law firm Gilbert + Tobin governs and scales AI with OpenAI",
+              "url": "https://openai.com/index/gilbert-tobin",
+              "publishedAt": "2026-09-03"
+            },
+            {
+              "title": "Copilot code review can now approve pull requests",
+              "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests",
+              "publishedAt": "2026-09-03"
+            },
+            {
+              "title": "Introducing Adaptive Intelligence: Undermining the economics of every bot attack",
+              "url": "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+              "publishedAt": "2026-09-03"
+            }
+          ]
+        },
+        {
+          "title": "Agent 技能库与专用基础设施加速科学及专业场景落地",
+          "summary": "开源社区涌现面向科学、架构可视化等垂直领域的 Agent 技能库，将可复用、可验证的能力模块化；同时出现面向 Agent 的专用推理服务器、源代码管理与低至 1 美元/月的专用计算机，推动 Agent 从通用对话走向可组合、可交付的专业任务执行。",
+          "sources": [
+            {
+              "title": "scientific-agent-skills — 科学智能体技能库",
               "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
               "publishedAt": "2026-08-31"
             },
             {
-              "title": "archify",
+              "title": "archify — 代理生成架构图技能",
               "url": "https://github.com/tt-a1i/archify",
               "publishedAt": "2026-08-31"
             },
             {
-              "title": "claude-plugins-official",
-              "url": "https://github.com/anthropics/claude-plugins-official",
-              "publishedAt": "2026-08-29"
+              "title": "Maritime — 面向 AI 代理的专用计算机",
+              "url": "https://www.producthunt.com/products/maritime",
+              "publishedAt": "2026-09-03"
             }
           ]
         },
         {
-          "title": "AI深入垂直行业工作流与组织治理",
-          "summary": "OpenAI将ChatGPT接入医疗电子病历，并展示律所通过治理框架规模化部署AI；Anthropic发布模型硬件标准研究预览，推动代理安全操作物理设备。AI正从通用工具嵌入行业核心流程，组织级采用与治理成为落地关键。",
-          "sources": [
-            {
-              "title": "Healthcare organizations can now connect EHR and additional industry data to ChatGPT",
-              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
-              "publishedAt": "2026-09-01"
-            },
-            {
-              "title": "How law firm Gilbert + Tobin governs and scales AI with OpenAI",
-              "url": "https://openai.com/index/gilbert-tobin",
-              "publishedAt": "2026-09-01"
-            },
-            {
-              "title": "Previewing the Model Hardware Standard",
-              "url": "https://www.anthropic.com/news/model-hardware-standard-research-preview",
-              "publishedAt": "2026-08-31"
-            }
-          ]
-        },
-        {
-          "title": "AI供应链波动催生替代与自托管方案",
-          "summary": "OpenAI终止向被收购的Cursor供应模型，引发开发者对单一供应商依赖的反思；社区涌现免费Claude Code替代、自建中转站及开源代理工具。供应链不确定性正推动应用层向多模型、开源与自托管方向分散风险。",
+          "title": "模型供应格局生变，开发者工作流面临重构",
+          "summary": "OpenAI 因 Cursor 被收购而终止模型供应，直接冲击依赖 Cursor 的开发者；同时 Anthropic 发布面向长时运行 Agent 的 Opus 5 并进入 GitHub Copilot，GitHub 更新多组织模型访问规则。模型厂商与应用层绑定关系松动，促使团队重新评估模型供应商依赖与备选工作流。",
           "sources": [
             {
               "title": "Our decision on Cursor following its acquisition by SpaceX",
               "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex",
-              "publishedAt": "2026-08-31"
+              "publishedAt": "2026-09-02"
             },
             {
-              "title": "free-claude-code",
-              "url": "https://github.com/Alishahryar1/free-claude-code",
-              "publishedAt": "2026-08-27"
+              "title": "Introducing Claude Opus 5",
+              "url": "https://www.anthropic.com/news/claude-opus-5",
+              "publishedAt": "2026-09-03"
             },
             {
-              "title": "Token 用不完 — 中转站模式兴起",
-              "url": "https://www.v2ex.com/t/1238174",
-              "publishedAt": "2026-08-31"
+              "title": "Copilot model access update for GitHub Team plans",
+              "url": "https://github.blog/changelog/2026-08-31-copilot-model-access-update-for-github-team-plans",
+              "publishedAt": "2026-09-03"
             }
           ]
         }

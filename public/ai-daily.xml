@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 02 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月03日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-03</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月03日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Claude for Commerce Agents** [来源](https://claude.com/blog/claude-for-commerce-agents)
+
+### GitHub Trending
+- **mattpocock/skills**：Skills for Real Engineers. Straight from my .agents directory. [来源](https://github.com/mattpocock/skills)
+- **NousResearch/hermes-agent**：The agent that grows with you [来源](https://github.co]]></description>
+        <pubDate>Thu, 03 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-03</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月02日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-02</link>
@@ -568,25 +589,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **Un-0: Generating Images with Coupled Oscill]]></description>
         <pubDate>Fri, 26 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-26</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月25日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-25</link>
-        <description><![CDATA[# AI 日报 - 2026年06月25日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### Hacker News
-- **OpenAI unveils its first custom chip, built by Broadcom** [链接](https://techcrunch.com/2026/06/24/openai-unveils-its-first-custom-chip-built-by-broadcom/)
-- **PostgreSQL Is Enough** [链接](https://gist.github.com/cpursley/c8fb81fe8a7e5df038158bdfe0f06dbb)
-- **Qualcomm to Acquire Modular** [链接](https://w]]></description>
-        <pubDate>Thu, 25 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-25</guid>
     </item>
 </channel>
 </rss>
