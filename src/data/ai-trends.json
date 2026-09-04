@@ -3,71 +3,56 @@
     {
       "window": "week",
       "rangeStart": "2026-08-29",
-      "rangeEnd": "2026-09-03",
-      "updatedAt": "2026-09-03T21:49:25+08:00",
-      "coverageCount": 6,
+      "rangeEnd": "2026-09-04",
+      "updatedAt": "2026-09-04T21:50:15+08:00",
+      "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "AI Agent 从工具走向可治理的运营基础设施",
-          "summary": "企业开始将 AI Agent 纳入正式工作流与治理框架：律所、医疗、旅游等垂直行业引入企业级 ChatGPT 与 Codex，并配套 CEO 主导的治理与人工问责机制；GitHub Copilot 新增代码审查批准与内容排除策略，Cloudflare 推出机器人偏好同步与自适应情报，标志 Agent 流量治理成为网站运营常态。",
+          "title": "长时运行Agent成主流，模型底座升级",
+          "summary": "Anthropic发布Claude Opus 5与Sonnet 5，专为长时运行Agent设计，提升多步骤自动化任务可靠性；OpenAI推出GPT-6 Astra，在长文档审查等实际工作流中表现突出。模型能力升级正推动Agent从演示走向复杂生产任务。",
           "sources": [
-            {
-              "title": "How law firm Gilbert + Tobin governs and scales AI with OpenAI",
-              "url": "https://openai.com/index/gilbert-tobin",
-              "publishedAt": "2026-09-03"
-            },
-            {
-              "title": "Copilot code review can now approve pull requests",
-              "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests",
-              "publishedAt": "2026-09-03"
-            },
-            {
-              "title": "Introducing Adaptive Intelligence: Undermining the economics of every bot attack",
-              "url": "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
-              "publishedAt": "2026-09-03"
-            }
-          ]
-        },
-        {
-          "title": "Agent 技能库与专用基础设施加速科学及专业场景落地",
-          "summary": "开源社区涌现面向科学、架构可视化等垂直领域的 Agent 技能库，将可复用、可验证的能力模块化；同时出现面向 Agent 的专用推理服务器、源代码管理与低至 1 美元/月的专用计算机，推动 Agent 从通用对话走向可组合、可交付的专业任务执行。",
-          "sources": [
-            {
-              "title": "scientific-agent-skills — 科学智能体技能库",
-              "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
-              "publishedAt": "2026-08-31"
-            },
-            {
-              "title": "archify — 代理生成架构图技能",
-              "url": "https://github.com/tt-a1i/archify",
-              "publishedAt": "2026-08-31"
-            },
-            {
-              "title": "Maritime — 面向 AI 代理的专用计算机",
-              "url": "https://www.producthunt.com/products/maritime",
-              "publishedAt": "2026-09-03"
-            }
-          ]
-        },
-        {
-          "title": "模型供应格局生变，开发者工作流面临重构",
-          "summary": "OpenAI 因 Cursor 被收购而终止模型供应，直接冲击依赖 Cursor 的开发者；同时 Anthropic 发布面向长时运行 Agent 的 Opus 5 并进入 GitHub Copilot，GitHub 更新多组织模型访问规则。模型厂商与应用层绑定关系松动，促使团队重新评估模型供应商依赖与备选工作流。",
-          "sources": [
-            {
-              "title": "Our decision on Cursor following its acquisition by SpaceX",
-              "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex",
-              "publishedAt": "2026-09-02"
-            },
             {
               "title": "Introducing Claude Opus 5",
               "url": "https://www.anthropic.com/news/claude-opus-5",
-              "publishedAt": "2026-09-03"
+              "publishedAt": "2026-09-04"
             },
             {
-              "title": "Copilot model access update for GitHub Team plans",
-              "url": "https://github.blog/changelog/2026-08-31-copilot-model-access-update-for-github-team-plans",
+              "title": "Path to Astra: critical capabilities and frontier safeguards",
+              "url": "https://openai.com/index/path-to-astra",
               "publishedAt": "2026-09-03"
+            }
+          ]
+        },
+        {
+          "title": "Agent Skills生态成型，成为工程新抽象层",
+          "summary": "Anthropic开放官方Skills仓库，开发者亦开源个人技能库，GitHub趋势显示科学、架构图等垂直技能包涌现。可复用、可验证的模块化技能正取代单一Prompt，成为Agent工程化的标准构件，推动团队沉淀与共享能力。",
+          "sources": [
+            {
+              "title": "anthropics/skills",
+              "url": "https://github.com/anthropics/skills",
+              "publishedAt": "2026-09-04"
+            },
+            {
+              "title": "scientific-agent-skills",
+              "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+              "publishedAt": "2026-08-31"
+            }
+          ]
+        },
+        {
+          "title": "AI办公深入垂直行业，数据连接成关键",
+          "summary": "ChatGPT接入医疗EHR数据，助临床医生获取患者上下文；OpenAI展示AI原生公司用Agent重构入职、客户管理等流程。AI办公正从通用文档处理转向行业垂直场景，与受信任数据源的连接成为落地核心。",
+          "sources": [
+            {
+              "title": "Healthcare organizations can now connect EHR and additional industry data to ChatGPT",
+              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
+              "publishedAt": "2026-09-04"
+            },
+            {
+              "title": "How AI-native companies turn workflows into operating capability",
+              "url": "https://openai.com/index/ai-native-company-workflows",
+              "publishedAt": "2026-09-04"
             }
           ]
         }
