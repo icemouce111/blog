@@ -3,8 +3,7 @@ import test from 'node:test'
 
 import {
   getGithubDigestLabel,
-  getGithubDigestPicks,
-  hasAnalyzedGithubDigest,
+  getGithubDailyStarRanking,
 } from '../src/lib/github-daily-digest.ts'
 
 const repo = {
@@ -19,42 +18,45 @@ const repo = {
   topics: [],
   what: 'A modern formatting library',
   help: '',
+  how: '',
 }
 
-test('fallback GitHub digest renders repository introductions without synthetic steps', () => {
+test('GitHub leaderboard ranks by daily Star growth instead of source order', () => {
   const post = {
-    mode: 'fallback' as const,
-    repos: [repo],
-    highlights: [],
+    repos: [
+      repo,
+      {
+        ...repo,
+        rank: 2,
+        fullName: 'owner/fast-growing',
+        starsToday: 2138,
+      },
+      {
+        ...repo,
+        rank: 3,
+        fullName: 'owner/no-daily-data',
+        starsToday: null,
+      },
+    ],
   }
 
-  assert.equal(hasAnalyzedGithubDigest(post), false)
-  assert.equal(getGithubDigestLabel(post), '热门项目')
-  assert.deepEqual(getGithubDigestPicks(post), [{
-    repo: 'fmtlib/fmt',
-    value: 'A modern formatting library',
-  }])
+  assert.equal(getGithubDigestLabel(post), '每日新增 Star 排行')
+  assert.deepEqual(
+    getGithubDailyStarRanking(post).map((item) => item.fullName),
+    ['owner/fast-growing', 'fmtlib/fmt', 'owner/no-daily-data'],
+  )
 })
 
-test('analyzed GitHub digest retains curated titles and first steps', () => {
+test('daily Star leaderboard breaks equal-growth ties by repository name', () => {
   const post = {
-    mode: 'analyzed' as const,
-    repos: [repo],
-    highlights: [{
-      repo: 'fmtlib/fmt',
-      title: '更清晰的 C++ 格式化',
-      why: '成熟稳定',
-      value: '让输出代码更简洁。',
-      how: '从 README 的基础用法开始。',
-    }],
+    repos: [
+      { ...repo, fullName: 'zeta/tool', starsToday: 100 },
+      { ...repo, fullName: 'alpha/tool', starsToday: 100 },
+    ],
   }
 
-  assert.equal(hasAnalyzedGithubDigest(post), true)
-  assert.equal(getGithubDigestLabel(post), '开源精选')
-  assert.deepEqual(getGithubDigestPicks(post), [{
-    repo: 'fmtlib/fmt',
-    title: '更清晰的 C++ 格式化',
-    value: '让输出代码更简洁。',
-    how: '从 README 的基础用法开始。',
-  }])
+  assert.deepEqual(
+    getGithubDailyStarRanking(post).map((item) => item.fullName),
+    ['alpha/tool', 'zeta/tool'],
+  )
 })

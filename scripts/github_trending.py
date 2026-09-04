@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Any
 
 import requests
@@ -155,6 +155,19 @@ def parse_trending_html(html: str, *, limit: int = 15) -> list[TrendingRepo]:
     return repos
 
 
+def rank_repos_by_daily_stars(repos: list[TrendingRepo]) -> list[TrendingRepo]:
+    """Return the Trending candidates ranked by their reported daily Star gain."""
+    ranked = sorted(
+        repos,
+        key=lambda repo: (
+            repo.stars_today is None,
+            -(repo.stars_today or 0),
+            repo.full_name.lower(),
+        ),
+    )
+    return [replace(repo, rank=index) for index, repo in enumerate(ranked, start=1)]
+
+
 def fetch_trending(
     *,
     limit: int = 15,
@@ -183,7 +196,7 @@ def fetch_trending(
             "parsed zero repositories from trending page "
             "(markup may have changed)"
         )
-    return repos
+    return rank_repos_by_daily_stars(repos)
 
 
 def repo_to_payload(repo: TrendingRepo) -> dict[str, Any]:

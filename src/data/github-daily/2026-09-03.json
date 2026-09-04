@@ -56,8 +56,9 @@
       "starsToday": 2138,
       "forks": 6640,
       "topics": [],
-      "what": "Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote.",
-      "help": ""
+      "what": "一套给 AI 编程助手的“少做、复用、优先原生能力”规则与技能，像一位克制的资深工程师审视方案。",
+      "help": "帮助 Codex、Claude Code 等 Agent 避免不必要的依赖和过度实现，同时保留验证、安全与无障碍等必要工作。",
+      "how": "在终端运行 codex plugin marketplace add DietrichGebert/ponytail，再运行 codex plugin add ponytail@ponytail；审核并启用它的 hooks 后开一个新任务试用。"
     },
     {
       "rank": 5,
@@ -121,8 +122,9 @@
       "starsToday": 1626,
       "forks": 2915,
       "topics": [],
-      "what": "TimesFM (Time Series Foundation Model) is a pretrained time-series foundation model developed by Google Research for tim…",
-      "help": ""
+      "what": "Google Research 开源的预训练时间序列基础模型，用于预测销量、流量、传感器读数等随时间变化的数据。",
+      "help": "可对单变量或多变量数据做预测，并支持协变量；适合先用预训练模型验证业务预测效果，再决定是否微调。",
+      "how": "先安装 pip install timesfm[torch]，再按 README 的示例加载模型，用一小段历史序列跑一次预测。"
     },
     {
       "rank": 10,

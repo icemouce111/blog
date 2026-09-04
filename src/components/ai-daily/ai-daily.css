@@ -292,10 +292,8 @@
 .ai-opportunity-list p { margin: .28rem 0 0; color: var(--daily-muted); font-size: .75rem; line-height: 1.6; }
 .ai-opportunity-list .ai-opportunity-reward { color: var(--daily-ink); font-weight: 650; }
 .ai-opportunity-sources,
-.ai-github-board,
 .ai-trend-panel details { margin-top: .8rem; color: var(--daily-faint); font-size: .7rem; }
 .ai-opportunity-sources summary,
-.ai-github-board summary,
 .ai-trend-panel summary { min-height: 2.75rem; cursor: pointer; line-height: 2.75rem; }
 .ai-opportunity-sources ul,
 .ai-trend-panel details ul { margin: 0; padding: 0 0 .5rem; list-style: none; }
@@ -306,7 +304,10 @@
 
 .ai-github-digest > header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 .ai-github-digest > header time { color: var(--daily-faint); font-size: .7rem; font-variant-numeric: tabular-nums; }
-.ai-github-picks > li,
+.ai-github-picks > li {
+  margin: 0;
+  border-bottom: 1px solid var(--daily-rule);
+}
 .ai-trend-panel > ol > li {
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr);
@@ -315,6 +316,19 @@
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--daily-rule);
 }
+.ai-github-project-card {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: .95rem;
+  margin: 0 -.45rem;
+  padding: 1.25rem .45rem;
+  border-radius: .75rem;
+  color: inherit;
+  text-decoration: none;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.ai-github-project-card:hover { background: var(--daily-surface-soft); box-shadow: inset 0 0 0 1px var(--daily-rule); }
+.ai-github-project-card:focus-visible { outline: 2px solid var(--daily-cyan); outline-offset: 2px; }
 .ai-github-rank,
 .ai-trend-index {
   padding-top: .15rem;
@@ -332,7 +346,8 @@
   color: var(--daily-faint);
   font-size: .66rem;
 }
-.ai-github-repo-meta a { color: var(--daily-cyan); font-family: var(--font-mono); text-decoration: none; }
+.ai-github-repo-name { color: var(--daily-cyan); font-family: var(--font-mono); }
+.ai-github-external-icon { width: .85rem; height: .85rem; margin-left: auto; color: var(--daily-faint); }
 .ai-github-picks h3,
 .ai-trend-panel h3 { margin: 0 0 .45rem; font-size: 1.06rem; font-weight: 700; line-height: 1.4; }
 .ai-github-picks > li p:not(.ai-github-repo-meta),
@@ -340,57 +355,7 @@
 .ai-github-scan-list { display: grid; gap: .55rem; margin: .65rem 0 0; }
 .ai-github-scan-list > div { display: grid; grid-template-columns: 3.7rem minmax(0, 1fr); gap: .7rem; align-items: start; }
 .ai-github-scan-list dt { color: var(--daily-violet); font-size: .78rem; font-weight: 750; line-height: 1.65; }
-.ai-github-scan-list dd { margin: 0; color: var(--daily-muted); font-size: .9rem; line-height: 1.65; }
-.ai-github-picks .ai-github-first-step {
-  margin-top: .45rem;
-  border-left: 2px solid rgb(102 87 255 / 35%);
-  padding-left: .65rem;
-  color: var(--daily-ink);
-}
-.ai-github-quick-view {
-  display: inline-flex;
-  align-items: center;
-  gap: .35rem;
-  margin-top: .7rem;
-  padding: .35rem .65rem;
-  border: 1px solid var(--daily-rule);
-  border-radius: .45rem;
-  background: var(--daily-surface-soft);
-  color: var(--daily-cyan);
-  cursor: pointer;
-  font: inherit;
-  font-size: .78rem;
-  font-weight: 650;
-}
-.ai-github-quick-view:hover { border-color: var(--daily-cyan); color: var(--daily-ink); }
-.ai-github-quick-view:focus-visible { outline: 2px solid var(--daily-cyan); outline-offset: 2px; }
-.ai-github-quick-view svg { width: .95rem; height: .95rem; }
-.ai-github-sheet {
-  width: min(100%, 28rem);
-  gap: 0;
-  overflow-y: auto;
-  border-color: var(--daily-rule);
-  background: var(--daily-surface);
-  color: var(--daily-ink);
-}
-.ai-github-sheet-header { gap: .45rem; padding: 2.5rem 1.5rem 1.25rem; border-bottom: 1px solid var(--daily-rule); }
-.ai-github-sheet-header [data-slot="sheet-title"] { padding-right: 2rem; color: var(--daily-ink); font-family: var(--font-mono); font-size: 1rem; overflow-wrap: anywhere; }
-.ai-github-sheet-header [data-slot="sheet-description"] { color: var(--daily-muted); font-size: .85rem; }
-.ai-github-sheet-kicker { margin: 0; color: var(--daily-violet); font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; }
-.ai-github-sheet-body { display: grid; gap: 1.25rem; padding: 1.5rem; }
-.ai-github-sheet-body section { display: grid; gap: .4rem; }
-.ai-github-sheet-body h3 { margin: 0; color: var(--daily-ink); font-size: .82rem; font-weight: 750; }
-.ai-github-sheet-body p { margin: 0; color: var(--daily-muted); font-size: 1rem; line-height: 1.7; }
-.ai-github-sheet-source-note { padding: .85rem 1rem; border-left: 2px solid rgb(102 87 255 / 35%); background: var(--daily-surface-soft); }
-.ai-github-sheet-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin: 0; }
-.ai-github-sheet-stats div { padding: .8rem; border: 1px solid var(--daily-rule); border-radius: .5rem; }
-.ai-github-sheet-stats dt { display: flex; align-items: center; gap: .25rem; color: var(--daily-faint); font-size: .75rem; }
-.ai-github-sheet-stats dt svg { width: .85rem; height: .85rem; }
-.ai-github-sheet-stats dd { margin: .35rem 0 0; color: var(--daily-ink); font-family: var(--font-mono); font-size: .95rem; }
-.ai-github-sheet-footer { padding: 1.25rem 1.5rem 1.5rem; border-top: 1px solid var(--daily-rule); }
-.ai-github-sheet-footer a { display: inline-flex; align-items: center; gap: .4rem; color: var(--daily-cyan); font-size: .9rem; font-weight: 700; text-decoration: none; }
-.ai-github-sheet-footer a:hover { text-decoration: underline; text-underline-offset: .2em; }
-.ai-github-sheet-footer svg { width: .95rem; height: .95rem; }
+.ai-github-scan-list dd { margin: 0; color: var(--daily-muted); font-size: 1rem; line-height: 1.65; }
 .ai-trend-tabs {
   display: inline-flex;
   margin-top: .4rem;
@@ -599,26 +564,12 @@
 .ai-daily-supplement .ai-opportunity-list,
 .ai-daily-supplement .ai-opportunity-sources,
 .ai-daily-supplement .ai-github-intro,
-.ai-daily-supplement .ai-github-picks,
-.ai-daily-supplement .ai-github-board { margin-left: 3.9rem; }
+.ai-daily-supplement .ai-github-picks { margin-left: 3.9rem; }
 .ai-daily-supplement .ai-opportunity-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 1.5rem;
 }
-.ai-github-board { border-top: 1px solid var(--daily-rule); }
-.ai-github-board summary { color: var(--daily-violet); font-weight: 750; }
-.ai-github-board > ol { margin: 0; padding: 0; list-style: none; }
-.ai-github-board > ol > li {
-  display: grid;
-  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
-  gap: .75rem;
-  margin: 0;
-  padding: .85rem 0;
-  border-bottom: 1px solid var(--daily-rule);
-}
-.ai-github-board a { color: var(--daily-ink); font-family: var(--font-mono); font-weight: 650; text-underline-offset: .2em; }
-.ai-github-board p { margin: .25rem 0 0; color: var(--daily-muted); line-height: 1.55; }
 .ai-daily-issue-footer { padding: 2rem 0 .5rem; color: var(--daily-faint); font-size: .7rem; }
 
 .ai-daily-desktop-nav { min-width: 0; padding-top: 4.2rem; }
@@ -774,8 +725,7 @@
   .ai-daily-supplement .ai-opportunity-list,
   .ai-daily-supplement .ai-opportunity-sources,
   .ai-daily-supplement .ai-github-intro,
-  .ai-daily-supplement .ai-github-picks,
-  .ai-daily-supplement .ai-github-board { margin-left: 0; }
+  .ai-daily-supplement .ai-github-picks { margin-left: 0; }
   .ai-daily-supplement .ai-opportunity-list { display: block; }
   .ai-daily-archive-list a { grid-template-columns: 3.2rem minmax(0, 1fr) auto; }
 }

@@ -1,48 +1,23 @@
-import type { GithubDailyHighlight, GithubDailyRecord, GithubDailyRepo } from './github-daily'
+import type { GithubDailyRecord, GithubDailyRepo } from './github-daily'
 
-export interface GithubDigestPick {
-  repo: string
-  title?: string
-  value: string
-  how?: string
+type GithubDailyRankingRecord = Pick<GithubDailyRecord, 'repos'>
+
+/**
+ * GitHub Trending supplies a daily star delta for each repository. Its source
+ * order is not guaranteed to be a strict delta ranking, so rank it ourselves.
+ */
+export function getGithubDailyStarRanking(
+  post: GithubDailyRankingRecord,
+): GithubDailyRepo[] {
+  return [...post.repos].sort((left, right) => {
+    const leftStars = left.starsToday ?? -1
+    const rightStars = right.starsToday ?? -1
+
+    if (rightStars !== leftStars) return rightStars - leftStars
+    return left.fullName.localeCompare(right.fullName)
+  })
 }
 
-type GithubDigestRecord = Pick<GithubDailyRecord, 'mode' | 'highlights' | 'repos'>
-
-function hasCompleteHighlights(highlights: GithubDailyHighlight[]) {
-  return highlights.length > 0 && highlights.every((highlight) => (
-    Boolean(highlight.repo && highlight.title && highlight.value && highlight.how)
-  ))
-}
-
-export function hasAnalyzedGithubDigest(post: GithubDigestRecord): boolean {
-  return post.mode === 'analyzed' && hasCompleteHighlights(post.highlights)
-}
-
-export function getGithubDigestLabel(post: GithubDigestRecord): string {
-  return hasAnalyzedGithubDigest(post) ? '开源精选' : '热门项目'
-}
-
-function toHighlightPick(highlight: GithubDailyHighlight): GithubDigestPick {
-  return {
-    repo: highlight.repo,
-    title: highlight.title,
-    value: highlight.value,
-    how: highlight.how,
-  }
-}
-
-function toFallbackPick(repo: GithubDailyRepo): GithubDigestPick {
-  return {
-    repo: repo.fullName,
-    value: repo.what || repo.description || '项目暂未提供介绍。',
-  }
-}
-
-export function getGithubDigestPicks(post: GithubDigestRecord): GithubDigestPick[] {
-  if (hasAnalyzedGithubDigest(post)) {
-    return post.highlights.slice(0, 3).map(toHighlightPick)
-  }
-
-  return post.repos.slice(0, 3).map(toFallbackPick)
+export function getGithubDigestLabel(_post: GithubDailyRankingRecord): string {
+  return '每日新增 Star 排行'
 }

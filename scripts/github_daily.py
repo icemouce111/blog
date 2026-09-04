@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GitHub Daily generator — trending board + AI digest, published branch-safely.
+"""GitHub Daily generator — daily Star-growth board + AI digest, published branch-safely.
 
 使用方式:
   python3 scripts/github_daily.py                # 抓取→解读→发布推送
@@ -60,7 +60,7 @@ READER_PROFILE = (
 
 SYSTEM_PROMPT = f"""你是开源项目解读编辑，服务一位特定读者：{READER_PROFILE}
 
-输入是今日 GitHub Trending 热门榜数据。你的任务：
+输入是按今日新增 Star 排序的 GitHub Trending 榜单数据。你的任务：
 1. 为榜单上的**每一个**仓库写三句话：「what」= 它是干啥的（一句话说人话，不堆术语）；「help」= 能解决什么问题、适合谁；「how」= 一个具体、可执行的开始方式。低相关项目客观说明适用人群，不对读者进行说教。
 2. 从榜单中挑出 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个最值得实践的项目作为「精选榜单」。优先级依次是：Agent/Skills/MCP/RAG/评测与工作流、TypeScript/React/Cloudflare 开发工具、企业 AI 与办公自动化、能转成小白教程的产品。每个写：title、why、value、how（给出今天就能完成的第一步）。
 3. 写一段 intro 今日榜单综述（80 字以内），概括今天榜单的整体风向。
@@ -108,7 +108,7 @@ def _llm_settings() -> tuple[str | None, str, str]:
 
 
 def build_user_prompt(repos: list[TrendingRepo]) -> str:
-    lines = ["今日 GitHub Trending 热门榜（daily）："]
+    lines = ["今日 GitHub Trending 每日新增 Star 排行："]
     for repo in repos:
         stars = f"{repo.stars} total stars" if repo.stars is not None else "stars 未知"
         today = (
@@ -311,7 +311,7 @@ def run_generation(args: argparse.Namespace) -> int:
         f"{base_url.split('//')[-1] if base_url else '-'}"
     )
 
-    print(f"\n[1/3] Fetching GitHub Trending (top {TRENDING_LIMIT})...")
+    print(f"\n[1/3] Fetching GitHub Trending daily Star growth (top {TRENDING_LIMIT})...")
     try:
         repos = fetch_trending(limit=TRENDING_LIMIT)
     except TrendingFetchError as error:

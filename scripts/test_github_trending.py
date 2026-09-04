@@ -11,7 +11,12 @@ from scripts.github_daily import (
     publisher_remote_artifact,
     validate_payload,
 )
-from scripts.github_trending import TrendingRepo, parse_count, parse_trending_html
+from scripts.github_trending import (
+    TrendingRepo,
+    parse_count,
+    parse_trending_html,
+    rank_repos_by_daily_stars,
+)
 
 FIXTURE_HTML = """<html><body><main>
 <article class="Box-row">
@@ -132,6 +137,20 @@ class ParseTrendingHtmlTest(unittest.TestCase):
     def test_skips_non_repo_rows(self):
         repos = parse_trending_html(FIXTURE_HTML, limit=15)
         self.assertNotIn("topics/not-a-repo", [r.full_name for r in repos])
+
+
+class DailyStarRankingTest(unittest.TestCase):
+    def test_ranks_repositories_by_daily_star_growth(self):
+        ranked = rank_repos_by_daily_stars([
+            TrendingRepo(rank=1, full_name="owner/low", url="https://github.com/owner/low", stars_today=12),
+            TrendingRepo(rank=2, full_name="owner/unknown", url="https://github.com/owner/unknown"),
+            TrendingRepo(rank=3, full_name="owner/high", url="https://github.com/owner/high", stars_today=98),
+        ])
+
+        self.assertEqual(
+            [(repo.rank, repo.full_name, repo.stars_today) for repo in ranked],
+            [(1, "owner/high", 98), (2, "owner/low", 12), (3, "owner/unknown", None)],
+        )
 
 
 class ValidatePayloadTest(unittest.TestCase):
