@@ -1,16 +1,102 @@
 import type { GithubDailyPost } from '@/lib/github-daily'
 import { formatStars } from '@/lib/github-daily'
 import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
+import {
   getGithubDigestLabel,
   getGithubDigestPicks,
   hasAnalyzedGithubDigest,
 } from '@/lib/github-daily-digest'
+import { ExternalLink, Info, Star } from 'lucide-react'
 
 interface GithubDailyDigestProps {
   post: GithubDailyPost
   variant?: 'index' | 'issue'
   id?: string
   number?: string
+}
+
+function GithubRepoQuickView({
+  post,
+  repo,
+  value,
+  how,
+}: {
+  post: GithubDailyPost
+  repo: GithubDailyPost['repos'][number]
+  value: string
+  how?: string
+}) {
+  const isAnalyzedDigest = hasAnalyzedGithubDigest(post)
+  const introduction = repo.what || repo.description || value
+
+  return (
+    <Sheet>
+      <SheetTrigger className="ai-github-quick-view">
+        <Info aria-hidden="true" /> 项目速览
+      </SheetTrigger>
+      <SheetContent className="ai-github-sheet" side="right">
+        <SheetHeader className="ai-github-sheet-header">
+          <p className="ai-github-sheet-kicker">GITHUB PROJECT</p>
+          <SheetTitle>{repo.fullName}</SheetTitle>
+          <SheetDescription>
+            {repo.language || '未标注语言'} · 今日 +{repo.starsToday ?? '—'}
+          </SheetDescription>
+        </SheetHeader>
+
+        <div className="ai-github-sheet-body">
+          <section>
+            <h3>项目介绍</h3>
+            <p>{introduction}</p>
+          </section>
+
+          {repo.help && (
+            <section>
+              <h3>适合谁</h3>
+              <p>{repo.help}</p>
+            </section>
+          )}
+
+          {isAnalyzedDigest && how && (
+            <section>
+              <h3>建议从这里开始</h3>
+              <p>{how}</p>
+            </section>
+          )}
+
+          {!isAnalyzedDigest && (
+            <section className="ai-github-sheet-source-note">
+              <h3>资料状态</h3>
+              <p>本期 AI 解读暂缺，项目介绍来自 GitHub 仓库原始说明。</p>
+            </section>
+          )}
+
+          <dl className="ai-github-sheet-stats">
+            <div>
+              <dt><Star aria-hidden="true" /> Stars</dt>
+              <dd>{formatStars(repo.stars)}</dd>
+            </div>
+            <div>
+              <dt>Forks</dt>
+              <dd>{formatStars(repo.forks)}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="ai-github-sheet-footer">
+          <a href={repo.url} target="_blank" rel="noreferrer">
+            在 GitHub 查看项目 <ExternalLink aria-hidden="true" />
+          </a>
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
 }
 
 function DigestBody({ post, showBoard }: { post: GithubDailyPost; showBoard: boolean }) {
@@ -36,8 +122,16 @@ function DigestBody({ post, showBoard }: { post: GithubDailyPost; showBoard: boo
                   )}
                 </p>
                 {pick.title && <h3 className="ai-daily-serif">{pick.title}</h3>}
-                <p>{pick.value}</p>
+                <p className="ai-github-pick-intro">{pick.value}</p>
                 {pick.how && <p className="ai-github-first-step">第一步：{pick.how}</p>}
+                {repo && (
+                  <GithubRepoQuickView
+                    post={post}
+                    repo={repo}
+                    value={pick.value}
+                    how={pick.how}
+                  />
+                )}
               </div>
             </li>
           )

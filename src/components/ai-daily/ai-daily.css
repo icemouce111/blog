@@ -343,6 +343,50 @@
   padding-left: .65rem;
   color: var(--daily-ink);
 }
+.ai-github-quick-view {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: .7rem;
+  padding: .35rem .65rem;
+  border: 1px solid var(--daily-rule);
+  border-radius: .45rem;
+  background: var(--daily-surface-soft);
+  color: var(--daily-cyan);
+  cursor: pointer;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 650;
+}
+.ai-github-quick-view:hover { border-color: var(--daily-cyan); color: var(--daily-ink); }
+.ai-github-quick-view:focus-visible { outline: 2px solid var(--daily-cyan); outline-offset: 2px; }
+.ai-github-quick-view svg { width: .95rem; height: .95rem; }
+.ai-github-sheet {
+  width: min(100%, 28rem);
+  gap: 0;
+  overflow-y: auto;
+  border-color: var(--daily-rule);
+  background: var(--daily-surface);
+  color: var(--daily-ink);
+}
+.ai-github-sheet-header { gap: .45rem; padding: 2.5rem 1.5rem 1.25rem; border-bottom: 1px solid var(--daily-rule); }
+.ai-github-sheet-header [data-slot="sheet-title"] { padding-right: 2rem; color: var(--daily-ink); font-family: var(--font-mono); font-size: 1rem; overflow-wrap: anywhere; }
+.ai-github-sheet-header [data-slot="sheet-description"] { color: var(--daily-muted); font-size: .85rem; }
+.ai-github-sheet-kicker { margin: 0; color: var(--daily-violet); font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; }
+.ai-github-sheet-body { display: grid; gap: 1.25rem; padding: 1.5rem; }
+.ai-github-sheet-body section { display: grid; gap: .4rem; }
+.ai-github-sheet-body h3 { margin: 0; color: var(--daily-ink); font-size: .82rem; font-weight: 750; }
+.ai-github-sheet-body p { margin: 0; color: var(--daily-muted); font-size: 1rem; line-height: 1.7; }
+.ai-github-sheet-source-note { padding: .85rem 1rem; border-left: 2px solid rgb(102 87 255 / 35%); background: var(--daily-surface-soft); }
+.ai-github-sheet-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin: 0; }
+.ai-github-sheet-stats div { padding: .8rem; border: 1px solid var(--daily-rule); border-radius: .5rem; }
+.ai-github-sheet-stats dt { display: flex; align-items: center; gap: .25rem; color: var(--daily-faint); font-size: .75rem; }
+.ai-github-sheet-stats dt svg { width: .85rem; height: .85rem; }
+.ai-github-sheet-stats dd { margin: .35rem 0 0; color: var(--daily-ink); font-family: var(--font-mono); font-size: .95rem; }
+.ai-github-sheet-footer { padding: 1.25rem 1.5rem 1.5rem; border-top: 1px solid var(--daily-rule); }
+.ai-github-sheet-footer a { display: inline-flex; align-items: center; gap: .4rem; color: var(--daily-cyan); font-size: .9rem; font-weight: 700; text-decoration: none; }
+.ai-github-sheet-footer a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.ai-github-sheet-footer svg { width: .95rem; height: .95rem; }
 .ai-trend-tabs {
   display: inline-flex;
   margin-top: .4rem;
