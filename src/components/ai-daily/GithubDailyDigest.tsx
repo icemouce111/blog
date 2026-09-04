@@ -35,6 +35,7 @@ function GithubRepoQuickView({
 }) {
   const isAnalyzedDigest = hasAnalyzedGithubDigest(post)
   const introduction = repo.what || repo.description || value
+  const gettingStarted = repo.how || how
 
   return (
     <Sheet>
@@ -58,22 +59,26 @@ function GithubRepoQuickView({
 
           {repo.help && (
             <section>
-              <h3>适合谁</h3>
+              <h3>能干嘛</h3>
               <p>{repo.help}</p>
             </section>
           )}
 
-          {isAnalyzedDigest && how && (
+          {gettingStarted && (
             <section>
-              <h3>建议从这里开始</h3>
-              <p>{how}</p>
+              <h3>怎么用</h3>
+              <p>{gettingStarted}</p>
             </section>
           )}
 
           {!isAnalyzedDigest && (
             <section className="ai-github-sheet-source-note">
               <h3>资料状态</h3>
-              <p>本期 AI 解读暂缺，项目介绍来自 GitHub 仓库原始说明。</p>
+              <p>
+                {repo.help && gettingStarted
+                  ? '本期完整 AI 精选暂缺；以上为编辑补充与 GitHub 仓库原始说明。'
+                  : '本期 AI 解读暂缺，项目介绍来自 GitHub 仓库原始说明。'}
+              </p>
             </section>
           )}
 
@@ -121,9 +126,24 @@ function DigestBody({ post, showBoard }: { post: GithubDailyPost; showBoard: boo
                     <span>今日 +{repo.starsToday}</span>
                   )}
                 </p>
-                {pick.title && <h3 className="ai-daily-serif">{pick.title}</h3>}
-                <p className="ai-github-pick-intro">{pick.value}</p>
-                {pick.how && <p className="ai-github-first-step">第一步：{pick.how}</p>}
+                <dl className="ai-github-scan-list">
+                  <div>
+                    <dt>是什么</dt>
+                    <dd>{repo?.what || repo?.description || pick.value}</dd>
+                  </div>
+                  {(repo?.help || (hasAnalyzedGithubDigest(post) && pick.value)) && (
+                    <div>
+                      <dt>能干嘛</dt>
+                      <dd>{repo?.help || pick.value}</dd>
+                    </div>
+                  )}
+                  {(repo?.how || pick.how) && (
+                    <div>
+                      <dt>怎么用</dt>
+                      <dd>{repo?.how || pick.how}</dd>
+                    </div>
+                  )}
+                </dl>
                 {repo && (
                   <GithubRepoQuickView
                     post={post}

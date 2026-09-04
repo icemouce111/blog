@@ -64,8 +64,8 @@ def make_payload() -> dict:
     return {
         "intro": "今日榜单风向：AI 工具链继续升温。",
         "repos": [
-            {"repo": "owner/alpha", "what": "一个做 X 的工具。", "help": "适合你练手。"},
-            {"repo": "beta/beta-tool", "what": "一个做 Y 的库。", "help": "可跳过。"},
+            {"repo": "owner/alpha", "what": "一个做 X 的工具。", "help": "适合你练手。", "how": "先跑示例。"},
+            {"repo": "beta/beta-tool", "what": "一个做 Y 的库。", "help": "可跳过。", "how": "收藏即可。"},
         ],
         "highlights": [
             {
@@ -164,6 +164,12 @@ class ValidatePayloadTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "highlights must contain"):
             validate_payload(payload, make_repos())
 
+    def test_rejects_repo_without_how_to_start(self):
+        payload = make_payload()
+        del payload["repos"][0]["how"]
+        with self.assertRaisesRegex(ValueError, "what/help/how missing"):
+            validate_payload(payload, make_repos())
+
     def test_rejects_highlight_with_unknown_repo(self):
         payload = make_payload()
         payload["highlights"][0]["repo"] = "ghost/unknown"
@@ -191,6 +197,7 @@ class BuildRecordTest(unittest.TestCase):
         alpha = record["repos"][0]
         self.assertEqual(alpha["what"], "一个做 X 的工具。")
         self.assertEqual(alpha["help"], "适合你练手。")
+        self.assertEqual(alpha["how"], "先跑示例。")
 
     def test_fallback_mode_keeps_raw_board(self):
         record = build_record("2026-08-31", make_repos(), None, "2026-08-31 09:20")

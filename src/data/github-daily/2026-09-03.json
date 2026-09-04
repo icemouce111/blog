@@ -14,8 +14,9 @@
       "starsToday": 955,
       "forks": 3001,
       "topics": [],
-      "what": "A modern formatting library",
-      "help": ""
+      "what": "一个快速、类型安全的 C++ 字符串格式化库，提供类似 Python format 的 API。",
+      "help": "可替代 printf 和 iostream，用于日志、报错信息、日期或数字等文本输出，并兼容 C++20 的 std::format。",
+      "how": "在 CMake 项目中引入 fmt 后，先用 fmt::print() 输出一行文本，再用 fmt::format() 把变量拼进字符串。"
     },
     {
       "rank": 2,
@@ -27,8 +28,9 @@
       "starsToday": 1576,
       "forks": 20905,
       "topics": [],
-      "what": "Skills for Real Engineers. Straight from my .agents directory.",
-      "help": ""
+      "what": "Matt Pocock 日常使用的一组可组合 AI 编程技能，来自他的 .agents 工作目录。",
+      "help": "帮助 Claude Code、Codex 等编码 Agent 做需求澄清、任务拆解和反馈闭环，减少“做偏了”或过度复杂的代码。",
+      "how": "运行 npx skills@latest add mattpocock/skills，挑选需要的技能安装到你的 Agent，再按说明运行 setup-matt-pocock-skills。"
     },
     {
       "rank": 3,
@@ -40,8 +42,9 @@
       "starsToday": 778,
       "forks": 49245,
       "topics": [],
-      "what": "The agent that grows with you",
-      "help": ""
+      "what": "Nous Research 的自我改进型 AI Agent，能从任务经验中创建技能、积累记忆，并跨多个会话持续工作。",
+      "help": "可搭建运行在本机或云端的长期助手，连接终端和 Telegram、Slack 等渠道，处理定时任务、研究和多步骤自动化。",
+      "how": "按 README 的 Quick Install 完成安装，运行 hermes setup 配置模型和工具，再从一次简单的 CLI 对话开始。"
     },
     {
       "rank": 4,

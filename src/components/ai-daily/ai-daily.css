@@ -337,6 +337,10 @@
 .ai-trend-panel h3 { margin: 0 0 .45rem; font-size: 1.06rem; font-weight: 700; line-height: 1.4; }
 .ai-github-picks > li p:not(.ai-github-repo-meta),
 .ai-trend-panel p { margin: 0; color: var(--daily-muted); font-size: .79rem; line-height: 1.65; }
+.ai-github-scan-list { display: grid; gap: .55rem; margin: .65rem 0 0; }
+.ai-github-scan-list > div { display: grid; grid-template-columns: 3.7rem minmax(0, 1fr); gap: .7rem; align-items: start; }
+.ai-github-scan-list dt { color: var(--daily-violet); font-size: .78rem; font-weight: 750; line-height: 1.65; }
+.ai-github-scan-list dd { margin: 0; color: var(--daily-muted); font-size: .9rem; line-height: 1.65; }
 .ai-github-picks .ai-github-first-step {
   margin-top: .45rem;
   border-left: 2px solid rgb(102 87 255 / 35%);

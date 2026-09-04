@@ -10,6 +10,7 @@ export interface GithubDailyRepo {
   topics: string[]
   what: string
   help: string
+  how: string
 }
 
 export interface GithubDailyHighlight {

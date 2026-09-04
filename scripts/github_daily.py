@@ -61,16 +61,17 @@ READER_PROFILE = (
 SYSTEM_PROMPT = f"""你是开源项目解读编辑，服务一位特定读者：{READER_PROFILE}
 
 输入是今日 GitHub Trending 热门榜数据。你的任务：
-1. 为榜单上的**每一个**仓库写两句话：「what」= 它是干啥的（一句话说人话，不堆术语）；「help」= 适合谁、能解决什么问题。低相关项目客观说明适用人群，不对读者进行说教。
+1. 为榜单上的**每一个**仓库写三句话：「what」= 它是干啥的（一句话说人话，不堆术语）；「help」= 能解决什么问题、适合谁；「how」= 一个具体、可执行的开始方式。低相关项目客观说明适用人群，不对读者进行说教。
 2. 从榜单中挑出 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个最值得实践的项目作为「精选榜单」。优先级依次是：Agent/Skills/MCP/RAG/评测与工作流、TypeScript/React/Cloudflare 开发工具、企业 AI 与办公自动化、能转成小白教程的产品。每个写：title、why、value、how（给出今天就能完成的第一步）。
 3. 写一段 intro 今日榜单综述（80 字以内），概括今天榜单的整体风向。
 
 严格只输出一个 JSON 对象，不要输出任何其他文字、解释或 markdown 代码块围栏，格式：
-{{"intro": "...", "repos": [{{"repo": "owner/name", "what": "...", "help": "..."}}], "highlights": [{{"repo": "owner/name", "title": "...", "why": "...", "value": "...", "how": "..."}}]}}
+{{"intro": "...", "repos": [{{"repo": "owner/name", "what": "...", "help": "...", "how": "..."}}], "highlights": [{{"repo": "owner/name", "title": "...", "why": "...", "value": "...", "how": "..."}}]}}
 
 硬性约束：
 - repos 数组必须覆盖输入榜单的每一个仓库，各出现一次，顺序与榜单一致
 - repo 字段必须与输入中的仓库全名完全一致（区分大小写）
+- 每个 repos 条目的 what、help、how 都必须非空
 - highlights 的 repo 必须来自输入榜单
 - 所有文案使用简体中文"""
 
@@ -123,7 +124,7 @@ def build_user_prompt(repos: list[TrendingRepo]) -> str:
             f"   地址: {repo.url}"
         )
     lines.append(
-        f"\n请输出 JSON：repos 覆盖以上全部 {len(repos)} 个仓库；"
+        f"\n请输出 JSON：repos 覆盖以上全部 {len(repos)} 个仓库，且每项都有 what、help、how；"
         f"highlights 挑 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个；附 intro 综述。"
     )
     return "\n".join(lines)
@@ -199,9 +200,10 @@ def validate_payload(payload: Any, repos: list[TrendingRepo]) -> dict[str, Any]:
             raise ValueError(f"duplicate repo: {repo}")
         what = str(entry.get("what") or "").strip()
         help_text = str(entry.get("help") or "").strip()
-        if not what or not help_text:
-            raise ValueError(f"what/help missing for {repo}")
-        projects[canonical] = {"what": what, "help": help_text}
+        how = str(entry.get("how") or "").strip()
+        if not what or not help_text or not how:
+            raise ValueError(f"what/help/how missing for {repo}")
+        projects[canonical] = {"what": what, "help": help_text, "how": how}
     missing = sorted(set(names.values()) - set(projects))
     if missing:
         raise ValueError(f"repos not fully covered, missing: {', '.join(missing)}")
@@ -252,6 +254,7 @@ def build_record(
                 **repo_to_payload(repo),
                 "what": what,
                 "help": project.get("help", ""),
+                "how": project.get("how", ""),
             }
         )
     return {
