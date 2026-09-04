@@ -58,7 +58,7 @@ function createRecord(filePath: string, raw: string): AiDailyRecord | null {
   const dateISO = (data.date as string) || slug
   const parsed = parseAiDailyContent(content)
   const archiveLeadTitle = `今天值得知道的 ${parsed.storyCount} 个 AI 信号`
-  const archiveLeadSummary = '今天先为你整理可追溯的来源速览；开源精选和可参与的官方机会已单独提炼。'
+  const archiveLeadSummary = '今天先为你整理可追溯的来源速览；开源项目和可参与的官方机会已单独整理。'
 
   return {
     slug,

@@ -11,6 +11,7 @@ interface AiDailyContentProps {
   beforeSections?: ReactNode
   afterSections?: ReactNode
   openSourceCount?: number
+  openSourceLabel?: string
   opportunityCount?: number
 }
 
@@ -37,6 +38,7 @@ export function AiDailyContent({
   beforeSections,
   afterSections,
   openSourceCount = 0,
+  openSourceLabel,
   opportunityCount = 0,
 }: AiDailyContentProps) {
   const { parsed } = post
@@ -73,6 +75,7 @@ export function AiDailyContent({
       <AiDailySignalStats
         signals={post.storyCount}
         openSource={openSourceCount}
+        openSourceLabel={openSourceLabel}
         opportunities={opportunityCount}
       />
 

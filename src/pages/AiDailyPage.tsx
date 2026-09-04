@@ -10,6 +10,7 @@ import '@/components/ai-daily/ai-daily.css'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { getAiDailyPosts } from '@/lib/ai-daily'
 import { getGithubDailyPosts } from '@/lib/github-daily'
+import { getGithubDigestLabel } from '@/lib/github-daily-digest'
 import { getActiveAiOpportunities } from '@/lib/ai-opportunities'
 
 export function AiDailyPage() {
@@ -17,6 +18,7 @@ export function AiDailyPage() {
   const githubPost = getGithubDailyPosts()[0]
   const opportunityCount = getActiveAiOpportunities().length
   const openSourceCount = Math.min(3, githubPost?.highlights.length || githubPost?.repos.length || 0)
+  const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
 
   return (
     <div className="ai-daily-shell">
@@ -27,6 +29,7 @@ export function AiDailyPage() {
             <AiDailyLatestIssue
               latest={posts[0]}
               openSourceCount={openSourceCount}
+              openSourceLabel={openSourceLabel}
               opportunityCount={opportunityCount}
             />
             <AiOpportunityRadar />

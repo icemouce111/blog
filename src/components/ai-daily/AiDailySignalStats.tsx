@@ -1,12 +1,14 @@
 interface AiDailySignalStatsProps {
   signals: number
   openSource: number
+  openSourceLabel?: string
   opportunities: number
 }
 
 export function AiDailySignalStats({
   signals,
   openSource,
+  openSourceLabel = '开源精选',
   opportunities,
 }: AiDailySignalStatsProps) {
   return (
@@ -16,7 +18,7 @@ export function AiDailySignalStats({
         <dd><strong>{signals}</strong><span>条</span></dd>
       </div>
       <div>
-        <dt>开源精选</dt>
+        <dt>{openSourceLabel}</dt>
         <dd><strong>{openSource}</strong><span>个</span></dd>
       </div>
       <div>

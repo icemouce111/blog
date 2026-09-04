@@ -13,6 +13,7 @@ import { PageContainer } from '@/components/layout/PageContainer'
 import { getAiDailyPost, getAiDailyPosts } from '@/lib/ai-daily'
 import type { AiDailySection } from '@/lib/ai-daily-parser'
 import { getGithubDailyForDate } from '@/lib/github-daily'
+import { getGithubDigestLabel } from '@/lib/github-daily-digest'
 import { getActiveAiOpportunities } from '@/lib/ai-opportunities'
 
 function getNextSectionNumber(sections: AiDailySection[]) {
@@ -27,6 +28,7 @@ export function AiDailyPostPage() {
   const githubPost = post ? getGithubDailyForDate(post.dateISO) : null
   const showOpportunities = Boolean(post && getAiDailyPosts()[0]?.slug === post.slug)
   const openSourceCount = Math.min(3, githubPost?.highlights.length || githubPost?.repos.length || 0)
+  const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
   const opportunityCount = showOpportunities ? getActiveAiOpportunities(post?.dateISO).length : 0
   const prioritizeSupplements = Boolean(
     post?.isSignalArchive && (githubPost || showOpportunities)
@@ -51,7 +53,12 @@ export function AiDailyPostPage() {
       : getNextSectionNumber(contentSections)
     const githubNumber = githubPost ? nextNumber : ''
     if (githubPost) {
-      sections.push({ number: nextNumber, title: 'GitHub 开源精选', id: 'github-picks', markdown: '' })
+      sections.push({
+        number: nextNumber,
+        title: `GitHub ${getGithubDigestLabel(githubPost)}`,
+        id: 'github-picks',
+        markdown: '',
+      })
       nextNumber = String(Number(nextNumber) + 1).padStart(2, '0')
     }
     const opportunityNumber = showOpportunities ? nextNumber : ''
@@ -145,6 +152,7 @@ export function AiDailyPostPage() {
               post={post}
               sections={contentSections}
               openSourceCount={openSourceCount}
+              openSourceLabel={openSourceLabel}
               opportunityCount={opportunityCount}
             />
           </article>

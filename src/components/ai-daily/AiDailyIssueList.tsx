@@ -7,6 +7,7 @@ import { AiDailySignalStats } from './AiDailySignalStats'
 interface AiDailyLatestIssueProps {
   latest: AiDailyMeta
   openSourceCount: number
+  openSourceLabel?: string
   opportunityCount: number
 }
 
@@ -17,6 +18,7 @@ interface AiDailyArchiveListProps {
 export function AiDailyLatestIssue({
   latest,
   openSourceCount,
+  openSourceLabel,
   opportunityCount,
 }: AiDailyLatestIssueProps) {
   return (
@@ -43,6 +45,7 @@ export function AiDailyLatestIssue({
       <AiDailySignalStats
         signals={latest.storyCount}
         openSource={openSourceCount}
+        openSourceLabel={openSourceLabel}
         opportunities={opportunityCount}
       />
     </section>

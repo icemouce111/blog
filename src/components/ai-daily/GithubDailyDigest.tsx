@@ -1,5 +1,10 @@
-import type { GithubDailyHighlight, GithubDailyPost } from '@/lib/github-daily'
+import type { GithubDailyPost } from '@/lib/github-daily'
 import { formatStars } from '@/lib/github-daily'
+import {
+  getGithubDigestLabel,
+  getGithubDigestPicks,
+  hasAnalyzedGithubDigest,
+} from '@/lib/github-daily-digest'
 
 interface GithubDailyDigestProps {
   post: GithubDailyPost
@@ -8,35 +13,8 @@ interface GithubDailyDigestProps {
   number?: string
 }
 
-interface DigestPick {
-  repo: string
-  title: string
-  value: string
-  how: string
-}
-
-function toPick(highlight: GithubDailyHighlight): DigestPick {
-  return {
-    repo: highlight.repo,
-    title: highlight.title,
-    value: highlight.value,
-    how: highlight.how,
-  }
-}
-
-function getPicks(post: GithubDailyPost) {
-  if (post.highlights.length) return post.highlights.slice(0, 3).map(toPick)
-
-  return post.repos.slice(0, 3).map((repo) => ({
-    repo: repo.fullName,
-    title: repo.what || repo.description || repo.fullName,
-    value: repo.help || '先看项目说明和演示，再判断是否值得投入时间。',
-    how: '从 README 和在线演示开始，不必先读完整源码。',
-  }))
-}
-
 function DigestBody({ post, showBoard }: { post: GithubDailyPost; showBoard: boolean }) {
-  const picks = getPicks(post)
+  const picks = getGithubDigestPicks(post)
 
   return (
     <>
@@ -57,9 +35,9 @@ function DigestBody({ post, showBoard }: { post: GithubDailyPost; showBoard: boo
                     <span>今日 +{repo.starsToday}</span>
                   )}
                 </p>
-                <h3 className="ai-daily-serif">{pick.title}</h3>
+                {pick.title && <h3 className="ai-daily-serif">{pick.title}</h3>}
                 <p>{pick.value}</p>
-                <p className="ai-github-first-step">第一步：{pick.how}</p>
+                {pick.how && <p className="ai-github-first-step">第一步：{pick.how}</p>}
               </div>
             </li>
           )
@@ -93,6 +71,9 @@ export function GithubDailyDigest({
   id = 'github-picks',
   number = '08',
 }: GithubDailyDigestProps) {
+  const isAnalyzedDigest = hasAnalyzedGithubDigest(post)
+  const digestLabel = getGithubDigestLabel(post)
+
   if (variant === 'issue') {
     return (
       <section
@@ -102,10 +83,14 @@ export function GithubDailyDigest({
       >
         <div className="ai-daily-content-heading">
           <span>{number}</span>
-          <h2 id={`${id}-heading`} className="ai-daily-serif">GitHub 开源精选</h2>
+          <h2 id={`${id}-heading`} className="ai-daily-serif">
+            GitHub {digestLabel}
+          </h2>
         </div>
         <p className="ai-daily-section-intro">
-          {post.dateDisplay} · 不复述整张热榜，优先挑 Agent 工程、真实项目和教程创作能用上的工具。
+          {isAnalyzedDigest
+            ? `${post.dateDisplay} · 不复述整张热榜，优先挑 Agent 工程、真实项目和教程创作能用上的工具。`
+            : `${post.dateDisplay} · AI 解读暂缺，展示今日榜单前三个项目。`}
         </p>
         <DigestBody post={post} showBoard />
       </section>
@@ -117,7 +102,9 @@ export function GithubDailyDigest({
       <header>
         <div>
           <p className="ai-daily-eyebrow">OPEN SOURCE PICKS</p>
-          <h2 id={`${id}-heading`} className="ai-daily-serif">今天值得看的 3 个开源项目</h2>
+          <h2 id={`${id}-heading`} className="ai-daily-serif">
+            {isAnalyzedDigest ? '今天值得看的 3 个开源项目' : '今日热门开源项目'}
+          </h2>
         </div>
         <time dateTime={post.date}>{post.date.slice(5).replace('-', '.')}</time>
       </header>
