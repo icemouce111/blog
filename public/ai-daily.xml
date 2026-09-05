@@ -6,7 +6,25 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 04 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 05 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月05日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-05</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月05日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 今天真正重要的变化
+
+**GPT-6 Astra 正式发布，达到“关键”网络安全能力等级**
+OpenAI 推出新一代模型 GPT-6 Astra，官方称其为迄今最智能、最对齐的模型，在计算机使用、编程、网络安全和科学领域均达到新水准，并首次在 Preparedness Framework 下达到“关键”网络安全能力等级。同日，GitHub Copilot 宣布 GPT-6 Astra 全面可用，面向长时自主编程与 Agent 任务。对普通用户意味着：编程与办公自动化能力将再次上台阶；对团队意味着：交付复杂 Agent 任务有了更强的底层模型。小动作：在 GitHub Copilot 中切换 GPT-6 Astra，用你手头最难的代码任务做一次对比测试。
+https://openai.com/]]></description>
+        <pubDate>Sat, 05 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-05</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月04日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-04</link>
@@ -573,24 +591,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 2. **匿名 GitHub 账号批量释放未公开 0-day 漏洞，引发安全恐慌** **[高置信度]**]]></description>
         <pubDate>Sun, 28 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-28</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月27日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-27</link>
-        <description><![CDATA[# AI 日报 - 2026年06月27日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-1. **GPT-5.6 Sol 预览版发布，美国政府将审查用户资格**：OpenAI 发布下一代模型 GPT-5.6 Sol，性能被社区认为超越 Mythos 5。同时，美国政府将介入审查该模型的使用权限，引发对 AI 治理和访问限制的广泛讨论。**[高置信度]**（来源：HackerNews 1、3；Reddit 3、7；Washington Post）
-
-2. **MCP 协议成为 AI Agent 开发核心趋势，搜索量激增**：YouTube 上 MCP（Model Context Protocol）相关教程视频播放量超 150 万，多个教程频道集中发布 AI Agents 和 MCP 内容。Google Trends 显示“AI]]></description>
-        <pubDate>Sat, 27 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-27</guid>
     </item>
 </channel>
 </rss>
