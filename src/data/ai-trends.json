@@ -2,57 +2,57 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-08-30",
-      "rangeEnd": "2026-09-05",
-      "updatedAt": "2026-09-05T21:49:21+08:00",
+      "rangeStart": "2026-08-31",
+      "rangeEnd": "2026-09-06",
+      "updatedAt": "2026-09-06T21:49:40+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
           "title": "长时运行Agent成模型竞争焦点",
-          "summary": "Anthropic发布Claude Opus 5与Sonnet 5，专为长时运行Agent设计；OpenAI推出GPT-6 Astra并集成至GitHub Copilot。模型厂商围绕Agent长任务稳定性与上下文保持能力展开竞争，推动多步骤自动化工作流落地。",
+          "summary": "Anthropic发布Claude Opus 5，专为长时运行Agent设计；OpenAI推出GPT-6 Astra并进入GitHub Copilot，面向长时自主编码。两大模型厂商同期发力，表明多步骤、跨系统的复杂自动化任务已成为应用层核心需求，推动企业从单步辅助转向端到端Agent交付。",
           "sources": [
             {
               "title": "Introducing Claude Opus 5",
               "url": "https://www.anthropic.com/news/claude-opus-5",
-              "publishedAt": "2026-09-05"
+              "publishedAt": "2026-09-06"
             },
             {
               "title": "GPT-6 Astra is generally available in GitHub Copilot",
               "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
-              "publishedAt": "2026-09-05"
+              "publishedAt": "2026-09-06"
             }
           ]
         },
         {
-          "title": "Agent Skills成工程化标准复用单元",
-          "summary": "Anthropic官方及开发者社区同步开源Agent Skills仓库，Skills作为轻量级能力封装单元，正取代单一Prompt或工具调用，成为Agent工程的标准构件，推动Agent行为定义与复用的规范化。",
+          "title": "Agent技能库成工程化新抽象层",
+          "summary": "Anthropic开放Skills公共仓库，开发者mattpocock开源个人.agents目录技能集，多个相关项目登上GitHub Trending。技能从单一prompt演变为可复用、可版本化、可共享的模块化能力包，团队可沉淀内部流程为标准化技能，降低重复构建成本，推动Agent工程走向资产化管理。",
           "sources": [
             {
               "title": "anthropics/skills",
               "url": "https://github.com/anthropics/skills",
-              "publishedAt": "2026-09-05"
+              "publishedAt": "2026-09-06"
             },
             {
               "title": "mattpocock/skills",
               "url": "https://github.com/mattpocock/skills",
-              "publishedAt": "2026-09-05"
+              "publishedAt": "2026-09-06"
             }
           ]
         },
         {
-          "title": "AI Agent访问网站走向规范化治理",
-          "summary": "Cloudflare推出Bot Preference Sync与BotBase for Operators，自动同步robots.txt与AI Bot策略，并为Bot运营者提供管理入口。AI Agent流量正从灰色地带转向可配置、可管理的规范化运营，网站主获得更精细的控制权。",
+          "title": "AI Agent访问治理走向规范化",
+          "summary": "Cloudflare推出Bot Preference Sync自动对齐robots.txt与AI爬虫策略，并发布BotBase for Operators供Agent运营方提交管理。网站主可用声明式方式管理AI访问权限，Agent运营方获得合规身份入口，AI流量从灰色地带转向可治理的标准化管理，影响内容生态与Agent基础设施。",
           "sources": [
             {
               "title": "Bot Preference Sync",
-              "url": "https://blog.cloudflare.com/bot-preference-sync/",
-              "publishedAt": "2026-09-05"
+              "url": "https://blog.cloudflare.com/bot-preference-sync",
+              "publishedAt": "2026-09-06"
             },
             {
               "title": "BotBase for Operators",
-              "url": "https://blog.cloudflare.com/botbase-for-operators/",
-              "publishedAt": "2026-09-04"
+              "url": "https://blog.cloudflare.com/botbase-for-operators",
+              "publishedAt": "2026-09-06"
             }
           ]
         }
