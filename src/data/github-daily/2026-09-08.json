@@ -1,8 +1,8 @@
 {
   "date": "2026-09-08",
-  "generatedAt": "2026-09-08 21:31",
-  "mode": "fallback",
-  "intro": "今日 AI 解读暂缺，以下为 GitHub 原始榜单。",
+  "generatedAt": "2026-09-08 21:35",
+  "mode": "analyzed",
+  "intro": "今日榜单几乎被 Agent 生态承包：Skills 框架、上下文优化、隐身浏览器和自动化交易扎堆上榜，微软 MarkItDown 稳居工具类头部，整体风向是给 Agent 装'手脚'和'记忆'。",
   "repos": [
     {
       "rank": 1,
@@ -10,13 +10,13 @@
       "url": "https://github.com/heygen-com/hyperframes",
       "description": "Write HTML. Render video. Built for agents.",
       "language": "TypeScript",
-      "stars": 47386,
+      "stars": 47389,
       "starsToday": 2628,
       "forks": 4375,
       "topics": [],
-      "what": "Write HTML. Render video. Built for agents.",
-      "help": "",
-      "how": ""
+      "what": "用写 HTML 的方式生成视频，HeyGen 出品，专为 Agent 设计。",
+      "help": "适合想低成本做自动化视频内容或视频教程产品的开发者和创作者。",
+      "how": "克隆仓库跑一个示例 HTML 模板，渲染一段 10 秒视频，理解'代码即视频'的流程。"
     },
     {
       "rank": 2,
@@ -24,13 +24,13 @@
       "url": "https://github.com/microsoft/markitdown",
       "description": "Python tool for converting files and office documents to Markdown.",
       "language": "Python",
-      "stars": 181325,
+      "stars": 181326,
       "starsToday": 2045,
       "forks": 13314,
       "topics": [],
-      "what": "Python tool for converting files and office documents to Markdown.",
-      "help": "",
-      "how": ""
+      "what": "微软官方工具，把 Word、PDF、Excel、PPT 等文件批量转成 Markdown。",
+      "help": "做 RAG 知识库、文档处理管道或企业数据接入时的必备预处理工具。",
+      "how": "pip install markitdown，拿一份本地 PDF 试转，把输出接入你的 RAG 流程。"
     },
     {
       "rank": 3,
@@ -38,13 +38,13 @@
       "url": "https://github.com/affaan-m/ECC",
       "description": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Opencode, Cursor and beyond.",
       "language": "JavaScript",
-      "stars": 253740,
+      "stars": 253746,
       "starsToday": 1426,
-      "forks": 38054,
+      "forks": 38055,
       "topics": [],
-      "what": "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development f…",
-      "help": "",
-      "how": ""
+      "what": "一套 Agent 性能优化'马具'，为 Claude Code、Codex、Cursor 等注入技能、记忆和安全的开发方法论。",
+      "help": "适合想把编码 Agent 调教得更可靠、更有章法的重度用户。",
+      "how": "读它的 README 安装到 Claude Code，观察一轮任务中的行为差异并记录。"
     },
     {
       "rank": 4,
@@ -52,13 +52,13 @@
       "url": "https://github.com/cathrynlavery/diagram-design",
       "description": "38 editorial diagram types for Claude Code, Codex, and Pi. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
       "language": "HTML",
-      "stars": 33879,
+      "stars": 33885,
       "starsToday": 1070,
-      "forks": 2160,
+      "forks": 2162,
       "topics": [],
-      "what": "38 editorial diagram types for Claude Code, Codex, and Pi. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
-      "help": "",
-      "how": ""
+      "what": "38 种编辑级图表模板，纯 HTML+SVG，供 Claude Code 等直接生成专业图表。",
+      "help": "适合写技术文章、做教程需要高质量配图的人，告别 Mermaid 的粗糙画风。",
+      "how": "挑一个 diagram 类型，让 Claude Code 按模板生成一张架构图并嵌入你的教程。"
     },
     {
       "rank": 5,
@@ -66,13 +66,13 @@
       "url": "https://github.com/jo-inc/camofox-browser",
       "description": "Stealth headless browser for AI agents — bypass Cloudflare, bot detection, and anti-scraping. Drop-in Puppeteer/Playwright replacement.",
       "language": "JavaScript",
-      "stars": 10216,
+      "stars": 10220,
       "starsToday": 872,
       "forks": 1040,
       "topics": [],
-      "what": "Stealth headless browser for AI agents — bypass Cloudflare, bot detection, and anti-scraping. Drop-in Puppeteer/Playwrig…",
-      "help": "",
-      "how": ""
+      "what": "面向 AI Agent 的隐身无头浏览器，可绕过 Cloudflare 和反爬检测，直接替换 Puppeteer/Playwright。",
+      "help": "适合做数据采集、Agent 上网自动化时被反爬拦截的开发者。",
+      "how": "用它替换现有 Playwright 脚本里的浏览器启动部分，跑通一个目标站点。"
     },
     {
       "rank": 6,
@@ -80,13 +80,13 @@
       "url": "https://github.com/coreyhaines31/marketingskills",
       "description": "Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.",
       "language": "JavaScript",
-      "stars": 48521,
+      "stars": 48524,
       "starsToday": 666,
       "forks": 7473,
       "topics": [],
-      "what": "Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.",
-      "help": "",
-      "how": ""
+      "what": "给 Claude Code 和 AI Agent 用的营销技能包：文案、SEO、转化率优化、增长工程。",
+      "help": "适合要给自己产品或个人品牌做营销推广的独立开发者。",
+      "how": "安装其中一个 CRO 技能，让它分析你的落地页并给出改进建议。"
     },
     {
       "rank": 7,
@@ -94,13 +94,13 @@
       "url": "https://github.com/mksglu/context-mode",
       "description": "Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and enforces routing across 17 platforms via MCP + hooks.",
       "language": "TypeScript",
-      "stars": 21212,
+      "stars": 21215,
       "starsToday": 652,
       "forks": 1536,
       "topics": [],
-      "what": "Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and en…",
-      "help": "",
-      "how": ""
+      "what": "AI 编码 Agent 的上下文窗口优化工具，沙箱化工具输出、持久化会话记忆，可减少 98% 上下文占用。",
+      "help": "适合被长会话上下文爆仓、Agent 变笨困扰的开发者。",
+      "how": "通过 MCP 接入你常用的 Agent 平台，对比开启前后的 token 消耗。"
     },
     {
       "rank": 8,
@@ -112,9 +112,9 @@
       "starsToday": 505,
       "forks": 9035,
       "topics": [],
-      "what": "本项目采用 CC BY-NC-SA 协议，禁止任何商业化行为，任何衍生项目必须保留本项目地址并以相同协议开源",
-      "help": "",
-      "how": ""
+      "what": "开源影视聚合播放前端项目，注意采用 CC BY-NC-SA 协议，禁止任何商业化使用。",
+      "help": "适合想学习流媒体前端架构或自建观影工具的技术爱好者，不可商用。",
+      "how": "本地 docker 部署跑起来，重点看它的多源聚合和播放器实现。"
     },
     {
       "rank": 9,
@@ -122,13 +122,13 @@
       "url": "https://github.com/The-Swarm-Corporation/AutoHedge",
       "description": "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automate market analysis, risk management, and trade execution.",
       "language": "Python",
-      "stars": 5512,
+      "stars": 5517,
       "starsToday": 494,
       "forks": 831,
       "topics": [],
-      "what": "Build your autonomous hedge fund in minutes. AutoHedge harnesses the power of swarm intelligence and AI agents to automa…",
-      "help": "",
-      "how": ""
+      "what": "几分钟搭一个'自主对冲基金'：用群体智能和 AI Agent 自动做市场分析、风控和交易执行。",
+      "help": "适合想学习多 Agent 协作架构在金融场景落地的开发者，实盘需谨慎。",
+      "how": "克隆后跑通 paper trading 模式，拆解它的 swarm 任务分工设计。"
     },
     {
       "rank": 10,
@@ -136,13 +136,13 @@
       "url": "https://github.com/openai/skills",
       "description": "Skills Catalog for Codex",
       "language": "Python",
-      "stars": 26316,
+      "stars": 26318,
       "starsToday": 490,
       "forks": 1764,
       "topics": [],
-      "what": "Skills Catalog for Codex",
-      "help": "",
-      "how": ""
+      "what": "OpenAI 官方的 Codex 技能目录，一堆可复用技能集合。",
+      "help": "适合研究官方'技能'规范怎么写的人，是做 Skills 工程的一手参考。",
+      "how": "浏览目录挑 2-3 个技能，对照其 SKILL.md 结构学习官方写法。"
     },
     {
       "rank": 11,
@@ -150,13 +150,13 @@
       "url": "https://github.com/obra/superpowers",
       "description": "An agentic skills framework & software development methodology that works.",
       "language": "Shell",
-      "stars": 283110,
+      "stars": 283113,
       "starsToday": 446,
-      "forks": 25370,
+      "forks": 25371,
       "topics": [],
-      "what": "An agentic skills framework & software development methodology that works.",
-      "help": "",
-      "how": ""
+      "what": "一套经过实战验证的 Agent 技能框架和软件开发方法论，28 万 Star 的明星项目。",
+      "help": "适合想把'靠谱开发流程'沉淀成 Agent 可执行技能的工程团队和个人。",
+      "how": "安装后让它带你按方法论走完一个小 feature 的完整开发循环。"
     },
     {
       "rank": 12,
@@ -164,13 +164,13 @@
       "url": "https://github.com/ayghri/i-have-adhd",
       "description": "A skill to stop your coding agent from burying the answer. ADHD-friendly output.",
       "language": "Python",
-      "stars": 28385,
+      "stars": 28393,
       "starsToday": 422,
       "forks": 1773,
       "topics": [],
-      "what": "A skill to stop your coding agent from burying the answer. ADHD-friendly output.",
-      "help": "",
-      "how": ""
+      "what": "一个让编码 Agent 别把答案埋在长篇大论里的技能，输出对 ADHD 用户更友好。",
+      "help": "适合被 Agent 啰嗦输出折磨、想要简洁直接回答的人。",
+      "how": "把它的规则加进 Claude Code 配置，看输出风格是否明显收敛。"
     },
     {
       "rank": 13,
@@ -178,13 +178,13 @@
       "url": "https://github.com/browser-use/browser-use",
       "description": "🌐 Make websites accessible for AI agents. Automate tasks online with ease.",
       "language": "Python",
-      "stars": 113119,
+      "stars": 113124,
       "starsToday": 330,
       "forks": 12474,
       "topics": [],
-      "what": "🌐 Make websites accessible for AI agents. Automate tasks online with ease.",
-      "help": "",
-      "how": ""
+      "what": "让 AI Agent 能操作网页完成任务的明星库，把网站变成 Agent 可调用的工具。",
+      "help": "适合做浏览器自动化、网页工作流 Agent 的开发者，是 RPA+AI 的标准方案之一。",
+      "how": "pip 安装后写一个'打开某网站并提取信息'的最小示例。"
     },
     {
       "rank": 14,
@@ -192,13 +192,13 @@
       "url": "https://github.com/multica-ai/andrej-karpathy-skills",
       "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
       "language": "",
-      "stars": 211137,
+      "stars": 211139,
       "starsToday": 325,
       "forks": 21446,
       "topics": [],
-      "what": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfa…",
-      "help": "",
-      "how": ""
+      "what": "一个基于 Karpathy 对 LLM 编码陷阱观察总结的单文件 CLAUDE.md，改善 Claude Code 行为。",
+      "help": "适合想花最小成本提升 Agent 代码质量的人，也适合学习 prompt 规则写法。",
+      "how": "把这份 CLAUDE.md 放进你的项目根目录，对比前后 Agent 表现。"
     },
     {
       "rank": 15,
@@ -206,14 +206,50 @@
       "url": "https://github.com/viarotel-org/escrcpy",
       "description": "📱 Display and control your Android device graphically with scrcpy.",
       "language": "JavaScript",
-      "stars": 11215,
+      "stars": 11218,
       "starsToday": 173,
       "forks": 791,
       "topics": [],
-      "what": "📱 Display and control your Android device graphically with scrcpy.",
-      "help": "",
-      "how": ""
+      "what": "带图形界面的 scrcpy，可以方便地在电脑上显示和操控安卓设备。",
+      "help": "适合需要投屏演示、安卓调试或移动端测试自动化的开发者和普通用户。",
+      "how": "下载安装后用 USB 连接手机，体验一下无线投屏控制。"
     }
   ],
-  "highlights": []
+  "highlights": [
+    {
+      "repo": "affaan-m/ECC",
+      "title": "Agent 工程方法论全家桶",
+      "why": "Skills、记忆、安全、性能优化一应俱全，是当前 Agent 工程化最热门的实践合集。",
+      "value": "可以系统学到如何把零散的 Agent 使用经验沉淀成可复用的工作流和规范。",
+      "how": "今天就把它装进 Claude Code，用它跑一个小任务，记录行为差异写成一篇实践笔记。"
+    },
+    {
+      "repo": "obra/superpowers",
+      "title": "实战验证的技能框架",
+      "why": "28 万 Star 背后是大量真实开发流程的沉淀，是做 Skills 工程的标杆项目。",
+      "value": "直接抄它的技能组织方式和开发方法论，能少走很多弯路。",
+      "how": "读一个技能的完整定义文件，模仿结构为你自己的常用流程写一个 skill。"
+    },
+    {
+      "repo": "microsoft/markitdown",
+      "title": "RAG 数据预处理标配",
+      "why": "文档转 Markdown 是 RAG 和企业 AI 落地的第一公里，微软官方出品稳定可靠。",
+      "value": "可作为教程素材：'三行代码把办公文档变成知识库'，非常适合小白向内容。",
+      "how": "今天写一个批量转换脚本，把 10 份本地文档转成 Markdown 存入一个文件夹。"
+    },
+    {
+      "repo": "mksglu/context-mode",
+      "title": "上下文优化实战样本",
+      "why": "上下文管理是 Agent 可靠性的核心痛点，这个项目给出了可量化的解法（98% 削减）。",
+      "value": "既能直接提升日常 Agent 使用体验，又是研究 MCP + hooks 架构的好案例。",
+      "how": "通过 MCP 接入你的编码 Agent，跑一个长会话任务并对比 token 消耗数据。"
+    },
+    {
+      "repo": "heygen-com/hyperframes",
+      "title": "HTML 变视频：教程产品新思路",
+      "why": "技术门槛低、演示效果炸裂，Agent 原生设计代表内容生成的新方向。",
+      "value": "极适合做成'让 AI 帮你写视频'的小白教程，也是可交付产品的候选方向。",
+      "how": "今天用纯 HTML 写一页 10 秒的动画卡片，渲染成视频并发布到社交平台。"
+    }
+  ]
 }
