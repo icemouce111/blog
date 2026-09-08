@@ -2,57 +2,72 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-08-31",
-      "rangeEnd": "2026-09-06",
-      "updatedAt": "2026-09-06T21:49:40+08:00",
-      "coverageCount": 7,
+      "rangeStart": "2026-09-02",
+      "rangeEnd": "2026-09-08",
+      "updatedAt": "2026-09-08T21:48:27+08:00",
+      "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "长时运行Agent成模型竞争焦点",
-          "summary": "Anthropic发布Claude Opus 5，专为长时运行Agent设计；OpenAI推出GPT-6 Astra并进入GitHub Copilot，面向长时自主编码。两大模型厂商同期发力，表明多步骤、跨系统的复杂自动化任务已成为应用层核心需求，推动企业从单步辅助转向端到端Agent交付。",
+          "title": "长时运行Agent成主流，模型与工具链同步升级",
+          "summary": "Anthropic发布Claude Opus 5专为长时运行Agent设计，OpenAI推出GPT-6 Astra并进入GitHub Copilot，同时Skills公共仓库与跨框架优化系统涌现，标志Agent从短任务走向长链路自主执行，企业可复用技能资产并减少任务拆解妥协。",
           "sources": [
             {
               "title": "Introducing Claude Opus 5",
               "url": "https://www.anthropic.com/news/claude-opus-5",
-              "publishedAt": "2026-09-06"
+              "publishedAt": "2026-09-08"
             },
             {
               "title": "GPT-6 Astra is generally available in GitHub Copilot",
               "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
-              "publishedAt": "2026-09-06"
-            }
-          ]
-        },
-        {
-          "title": "Agent技能库成工程化新抽象层",
-          "summary": "Anthropic开放Skills公共仓库，开发者mattpocock开源个人.agents目录技能集，多个相关项目登上GitHub Trending。技能从单一prompt演变为可复用、可版本化、可共享的模块化能力包，团队可沉淀内部流程为标准化技能，降低重复构建成本，推动Agent工程走向资产化管理。",
-          "sources": [
+              "publishedAt": "2026-09-08"
+            },
             {
               "title": "anthropics/skills",
               "url": "https://github.com/anthropics/skills",
               "publishedAt": "2026-09-06"
+            }
+          ]
+        },
+        {
+          "title": "AI办公从文本处理走向文档与行业数据操作",
+          "summary": "Codex捆绑LibreOffice使Agent能直接操作办公文件，ChatGPT连接医疗EHR数据进入垂直行业，ATV Big Air Tour用ChatGPT Work将3天工作压缩至3小时。AI办公正从辅助写作升级为可交付的文档处理与行业场景落地，基层员工可先用AI做初筛。",
+          "sources": [
+            {
+              "title": "Codex LibreOffice",
+              "url": "https://simonwillison.net/2026/Sep/1/codex-libreoffice/",
+              "publishedAt": "2026-09-02"
             },
             {
-              "title": "mattpocock/skills",
-              "url": "https://github.com/mattpocock/skills",
+              "title": "ChatGPT connects health records and healthcare sources",
+              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
+              "publishedAt": "2026-09-04"
+            },
+            {
+              "title": "ATV Big Air Tour",
+              "url": "https://openai.com/index/atv-big-air-tour",
               "publishedAt": "2026-09-06"
             }
           ]
         },
         {
-          "title": "AI Agent访问治理走向规范化",
-          "summary": "Cloudflare推出Bot Preference Sync自动对齐robots.txt与AI爬虫策略，并发布BotBase for Operators供Agent运营方提交管理。网站主可用声明式方式管理AI访问权限，Agent运营方获得合规身份入口，AI流量从灰色地带转向可治理的标准化管理，影响内容生态与Agent基础设施。",
+          "title": "Agent治理规范化：从爬虫策略到代码审查授权",
+          "summary": "Cloudflare推出Bot Preference Sync自动对齐robots.txt与AI策略，BotBase为Agent运营方提供管理入口；GitHub Copilot代码审查可批准PR，企业可设置默认模型。AI Agent流量与行为正从灰色地带走向声明式管理与自动化签批，网站运营与开发团队需建立治理框架。",
           "sources": [
             {
               "title": "Bot Preference Sync",
-              "url": "https://blog.cloudflare.com/bot-preference-sync",
-              "publishedAt": "2026-09-06"
+              "url": "https://blog.cloudflare.com/bot-preference-sync/",
+              "publishedAt": "2026-09-08"
             },
             {
               "title": "BotBase for Operators",
-              "url": "https://blog.cloudflare.com/botbase-for-operators",
-              "publishedAt": "2026-09-06"
+              "url": "https://blog.cloudflare.com/botbase-for-operators/",
+              "publishedAt": "2026-09-08"
+            },
+            {
+              "title": "Copilot code review can now approve pull requests",
+              "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests",
+              "publishedAt": "2026-09-03"
             }
           ]
         }

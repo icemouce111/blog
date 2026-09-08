@@ -6,7 +6,26 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 06 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月08日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-08</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月08日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **How well do agents use test/verification techniques?** [来源](https://danluu.com/agentic-testing/)
+- **Multi-Agents LLM Financial Trading Framework** [来源](https://github.com/TauricResearch/TradingAgents)
+- **The VMs Powering Mobile Agents (Instinct, Claude Code)** [来源](https://rohanadwankar.github.io/posts/platforms.html)]]></description>
+        <pubDate>Tue, 08 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-08</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月06日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-06</link>
@@ -570,26 +589,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 2.  **Anthropic CEO 言论引爆社区]]></description>
         <pubDate>Tue, 30 Jun 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-06-30</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年06月29日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-06-29</link>
-        <description><![CDATA[# AI 日报 - 2026年06月29日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-1. **GLM-5.2 在 Semgrep 的特定 IDOR 检测配置中超过 Claude Code** **[中等置信度]**
-
-   Semgrep 公布的结果显示，GLM-5.2 以裸提示方式取得 39% F1，高于 Claude Code 的对应成绩；但测试框架和模型配置并不完全相同，不能外推为通用能力排名。V2EX 同日出现国产模型 API 的高热讨论，说明开发者对其性价比兴趣升温。
-   * 来源: https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/
-   * 来源: https:/]]></description>
-        <pubDate>Mon, 29 Jun 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-06-29</guid>
     </item>
 </channel>
 </rss>
