@@ -2,15 +2,104 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-02",
-      "rangeEnd": "2026-09-08",
-      "updatedAt": "2026-09-08T21:48:27+08:00",
+      "rangeStart": "2026-09-03",
+      "rangeEnd": "2026-09-09",
+      "updatedAt": "2026-09-09T21:47:33+08:00",
       "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "长时运行Agent成主流，模型与工具链同步升级",
-          "summary": "Anthropic发布Claude Opus 5专为长时运行Agent设计，OpenAI推出GPT-6 Astra并进入GitHub Copilot，同时Skills公共仓库与跨框架优化系统涌现，标志Agent从短任务走向长链路自主执行，企业可复用技能资产并减少任务拆解妥协。",
+          "title": "Agent技能资产化成为工程实践新常态",
+          "summary": "Anthropic官方及开发者社区密集开源Agent Skills仓库，将可复用能力封装为标准化单元，配合跨框架优化系统ECC，使团队能共享、版本化管理Agent行为，而非每次从零构建，技能复用正从理念走向可落地的工程实践。",
+          "sources": [
+            {
+              "title": "anthropics/skills",
+              "url": "https://github.com/anthropics/skills",
+              "publishedAt": "2026-09-06"
+            },
+            {
+              "title": "mattpocock/skills",
+              "url": "https://github.com/mattpocock/skills",
+              "publishedAt": "2026-09-06"
+            },
+            {
+              "title": "ECC",
+              "url": "https://github.com/affaan-m/ECC",
+              "publishedAt": "2026-09-08"
+            }
+          ]
+        },
+        {
+          "title": "长时程自主Agent模型推动企业工作流重构",
+          "summary": "GPT-6 Astra与Claude Opus 5相继发布并进入主流编码工具，专为长时运行Agent设计，企业案例显示财务审阅、营销物料等任务从数天压缩至数小时。模型能力提升正推动企业将重复性、多步骤工作流重新设计为可交付结果的Agent自动化流程。",
+          "sources": [
+            {
+              "title": "GPT-6 Astra is generally available in GitHub Copilot",
+              "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
+              "publishedAt": "2026-09-09"
+            },
+            {
+              "title": "Introducing Claude Opus 5",
+              "url": "https://www.anthropic.com/news/claude-opus-5",
+              "publishedAt": "2026-09-08"
+            },
+            {
+              "title": "ATV Big Air Tour turned 3 days of work into 3 hours with ChatGPT",
+              "url": "https://openai.com/index/atv-big-air-tour",
+              "publishedAt": "2026-09-06"
+            }
+          ]
+        },
+        {
+          "title": "Agent访问治理从灰色地带走向规范化",
+          "summary": "Cloudflare推出Bot Preference Sync自动同步robots.txt与AI策略，并开放BotBase目录供运营者提交管理，同时提供Access for Workers一键保护内部AI应用。网站主与Agent运营方之间的访问规则正从混乱走向声明式、可审计的标准化管理。",
+          "sources": [
+            {
+              "title": "Say it once: Introducing Bot Preference Sync",
+              "url": "https://blog.cloudflare.com/bot-preference-sync/",
+              "publishedAt": "2026-09-08"
+            },
+            {
+              "title": "BotBase for Operators",
+              "url": "https://blog.cloudflare.com/botbase-for-operators/",
+              "publishedAt": "2026-09-09"
+            },
+            {
+              "title": "Workers protected by Access",
+              "url": "https://blog.cloudflare.com/workers-protected-by-access/",
+              "publishedAt": "2026-09-05"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "window": "month",
+      "rangeStart": "2026-08-13",
+      "rangeEnd": "2026-09-09",
+      "updatedAt": "2026-09-09T21:47:33+08:00",
+      "coverageCount": 14,
+      "mode": "generated",
+      "insights": [
+        {
+          "title": "Agent技能库成为工程化新抽象层",
+          "summary": "Anthropic官方及社区开发者密集开源Agent Skills仓库，将可复用技能从单一Prompt升级为模块化能力包。多项目登榜GitHub Trending，显示技能资产化正成为团队交付复杂Agent任务的标准实践，降低从零构建门槛。",
+          "sources": [
+            {
+              "title": "anthropics/skills",
+              "url": "https://github.com/anthropics/skills",
+              "publishedAt": "2026-09-06"
+            },
+            {
+              "title": "mattpocock/skills",
+              "url": "https://github.com/mattpocock/skills",
+              "publishedAt": "2026-09-06"
+            }
+          ]
+        },
+        {
+          "title": "长时运行Agent模型密集迭代",
+          "summary": "Anthropic发布Claude Opus 5与Sonnet 5，OpenAI推出GPT-6 Astra并进入GitHub Copilot，均主打长时程自主任务与编码能力。模型在长上下文稳定性上的提升，使多步骤自动化工作流（如文档审阅、代码重构）从演示走向可交付，企业采用门槛降低。",
           "sources": [
             {
               "title": "Introducing Claude Opus 5",
@@ -20,39 +109,13 @@
             {
               "title": "GPT-6 Astra is generally available in GitHub Copilot",
               "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
-              "publishedAt": "2026-09-08"
-            },
-            {
-              "title": "anthropics/skills",
-              "url": "https://github.com/anthropics/skills",
-              "publishedAt": "2026-09-06"
+              "publishedAt": "2026-09-09"
             }
           ]
         },
         {
-          "title": "AI办公从文本处理走向文档与行业数据操作",
-          "summary": "Codex捆绑LibreOffice使Agent能直接操作办公文件，ChatGPT连接医疗EHR数据进入垂直行业，ATV Big Air Tour用ChatGPT Work将3天工作压缩至3小时。AI办公正从辅助写作升级为可交付的文档处理与行业场景落地，基层员工可先用AI做初筛。",
-          "sources": [
-            {
-              "title": "Codex LibreOffice",
-              "url": "https://simonwillison.net/2026/Sep/1/codex-libreoffice/",
-              "publishedAt": "2026-09-02"
-            },
-            {
-              "title": "ChatGPT connects health records and healthcare sources",
-              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
-              "publishedAt": "2026-09-04"
-            },
-            {
-              "title": "ATV Big Air Tour",
-              "url": "https://openai.com/index/atv-big-air-tour",
-              "publishedAt": "2026-09-06"
-            }
-          ]
-        },
-        {
-          "title": "Agent治理规范化：从爬虫策略到代码审查授权",
-          "summary": "Cloudflare推出Bot Preference Sync自动对齐robots.txt与AI策略，BotBase为Agent运营方提供管理入口；GitHub Copilot代码审查可批准PR，企业可设置默认模型。AI Agent流量与行为正从灰色地带走向声明式管理与自动化签批，网站运营与开发团队需建立治理框架。",
+          "title": "AI Agent流量治理走向规范化",
+          "summary": "Cloudflare推出Bot Preference Sync与BotBase for Operators，自动同步robots.txt与AI爬虫策略，并为Agent运营方提供目录管理入口。AI Agent访问网站从灰色地带转向声明式管理，站点运营者与Agent开发者均需适应新的合规框架。",
           "sources": [
             {
               "title": "Bot Preference Sync",
@@ -62,85 +125,7 @@
             {
               "title": "BotBase for Operators",
               "url": "https://blog.cloudflare.com/botbase-for-operators/",
-              "publishedAt": "2026-09-08"
-            },
-            {
-              "title": "Copilot code review can now approve pull requests",
-              "url": "https://github.blog/changelog/2026-09-01-copilot-code-review-can-now-approve-pull-requests",
-              "publishedAt": "2026-09-03"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "window": "month",
-      "rangeStart": "2026-06-21",
-      "rangeEnd": "2026-07-10",
-      "updatedAt": "2026-07-14T14:01:56+08:00",
-      "coverageCount": 20,
-      "mode": "generated",
-      "insights": [
-        {
-          "title": "AI Agent 从概念走向工程化落地",
-          "summary": "MCP协议成为连接Agent与外部数据源的标准，YouTube相关教程累计观看超260万次。字节跳动开源长时程SuperAgent框架DeerFlow，GitHub上agent-skills等技能库涌现，标志Agent开发正从实验走向可复用的工程实践。",
-          "sources": [
-            {
-              "title": "DeerFlow开源项目",
-              "url": "https://github.com/bytedance/deer-flow",
-              "publishedAt": "2026-06-24"
-            },
-            {
-              "title": "MCP协议教程",
-              "url": "https://www.youtube.com/watch?v=GuTcle5edjk",
-              "publishedAt": "2026-06-29"
-            },
-            {
-              "title": "agent-skills项目",
-              "url": "https://github.com/addyosmani/agent-skills",
-              "publishedAt": "2026-07-09"
-            }
-          ]
-        },
-        {
-          "title": "企业级AI部署加速，安全与合规成焦点",
-          "summary": "OpenAI与HP、Deutsche Telekom等达成战略合作，Anthropic联合多家巨头提出越狱严重性评分框架。同时GitHub AI Agent被曝存在泄漏私有仓库漏洞，系统提示词泄露事件频发，推动行业建立更严格的安全评估标准。",
-          "sources": [
-            {
-              "title": "HP与OpenAI合作",
-              "url": "https://openai.com/index/hp-frontier-partnership",
-              "publishedAt": "2026-07-08"
-            },
-            {
-              "title": "越狱严重性评分框架",
-              "url": "https://www.anthropic.com/news/fable-safeguards-jailbreak-framework",
-              "publishedAt": "2026-07-10"
-            },
-            {
-              "title": "GitHub AI Agent漏洞",
-              "url": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos/",
-              "publishedAt": "2026-07-08"
-            }
-          ]
-        },
-        {
-          "title": "AI工具向垂直科研与教育领域深化",
-          "summary": "Anthropic推出面向科学家的AI工作台Claude Science，OpenAI发布GeneBench-Pro基因组学基准和K-12教育合作。两大巨头同日发力科研AI，预示AI正从通用对话转向生物、物理等垂直领域的专用工具。",
-          "sources": [
-            {
-              "title": "Claude Science发布",
-              "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
-              "publishedAt": "2026-07-10"
-            },
-            {
-              "title": "GeneBench-Pro基准",
-              "url": "https://openai.com/index/introducing-genebench-pro",
-              "publishedAt": "2026-07-09"
-            },
-            {
-              "title": "K-12教育合作",
-              "url": "https://openai.com/index/k-12-educators-practical-skills",
-              "publishedAt": "2026-07-09"
+              "publishedAt": "2026-09-09"
             }
           ]
         }
