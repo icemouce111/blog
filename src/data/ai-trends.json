@@ -2,15 +2,15 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-03",
-      "rangeEnd": "2026-09-09",
-      "updatedAt": "2026-09-09T21:47:33+08:00",
+      "rangeStart": "2026-09-04",
+      "rangeEnd": "2026-09-10",
+      "updatedAt": "2026-09-10T21:47:06+08:00",
       "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent技能资产化成为工程实践新常态",
-          "summary": "Anthropic官方及开发者社区密集开源Agent Skills仓库，将可复用能力封装为标准化单元，配合跨框架优化系统ECC，使团队能共享、版本化管理Agent行为，而非每次从零构建，技能复用正从理念走向可落地的工程实践。",
+          "title": "Agent 技能资产化成为团队工程实践",
+          "summary": "Anthropic 开放 Skills 公共仓库，开发者从真实 .agents 目录提炼技能集，ECC 等跨框架优化系统同步出现。Agent 能力正从一次性 prompt 转向可复用、可版本化的技能资产，团队开始像管理代码一样管理 Agent 技能，交付一致性提升。",
           "sources": [
             {
               "title": "anthropics/skills",
@@ -23,51 +23,41 @@
               "publishedAt": "2026-09-06"
             },
             {
-              "title": "ECC",
+              "title": "affaan-m/ECC",
               "url": "https://github.com/affaan-m/ECC",
               "publishedAt": "2026-09-08"
             }
           ]
         },
         {
-          "title": "长时程自主Agent模型推动企业工作流重构",
-          "summary": "GPT-6 Astra与Claude Opus 5相继发布并进入主流编码工具，专为长时运行Agent设计，企业案例显示财务审阅、营销物料等任务从数天压缩至数小时。模型能力提升正推动企业将重复性、多步骤工作流重新设计为可交付结果的Agent自动化流程。",
+          "title": "企业级 Agent 权限与安全管控落地",
+          "summary": "GitHub Copilot 上线企业级 Agent 操作权限管理，管理员可集中控制阻止、审批或直接执行；Cloudflare 推出 Access for Workers 一键保护内部 vibe-coding 应用。Agent 从个人工具变为可管控基础设施，企业采用门槛降低，安全与合规成为落地前提。",
           "sources": [
             {
-              "title": "GPT-6 Astra is generally available in GitHub Copilot",
-              "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
-              "publishedAt": "2026-09-09"
+              "title": "Enterprise-managed permissions for GitHub Copilot agent operations",
+              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
+              "publishedAt": "2026-09-10"
             },
             {
-              "title": "Introducing Claude Opus 5",
-              "url": "https://www.anthropic.com/news/claude-opus-5",
-              "publishedAt": "2026-09-08"
-            },
-            {
-              "title": "ATV Big Air Tour turned 3 days of work into 3 hours with ChatGPT",
-              "url": "https://openai.com/index/atv-big-air-tour",
-              "publishedAt": "2026-09-06"
+              "title": "Workers Protected by Access",
+              "url": "https://blog.cloudflare.com/workers-protected-by-access/",
+              "publishedAt": "2026-09-05"
             }
           ]
         },
         {
-          "title": "Agent访问治理从灰色地带走向规范化",
-          "summary": "Cloudflare推出Bot Preference Sync自动同步robots.txt与AI策略，并开放BotBase目录供运营者提交管理，同时提供Access for Workers一键保护内部AI应用。网站主与Agent运营方之间的访问规则正从混乱走向声明式、可审计的标准化管理。",
+          "title": "垂直行业文档审阅进入可交付阶段",
+          "summary": "Legora 用 GPT-6 Astra 数分钟审阅 41 份财务文档并找出全部预设错误，ChatGPT 开始连接医疗 EHR 数据源。AI 在财务、法务、医疗等垂直场景从辅助查找走向可交付结果，基层员工可先用于初筛，人工做最终判断，行业数据连接模式或向更多领域扩展。",
           "sources": [
             {
-              "title": "Say it once: Introducing Bot Preference Sync",
-              "url": "https://blog.cloudflare.com/bot-preference-sync/",
-              "publishedAt": "2026-09-08"
+              "title": "Legora financial statement review with Astra",
+              "url": "https://openai.com/index/legora-financial-statement-review-with-astra",
+              "publishedAt": "2026-09-06"
             },
             {
-              "title": "BotBase for Operators",
-              "url": "https://blog.cloudflare.com/botbase-for-operators/",
-              "publishedAt": "2026-09-09"
-            },
-            {
-              "title": "Workers protected by Access",
-              "url": "https://blog.cloudflare.com/workers-protected-by-access/",
-              "publishedAt": "2026-09-05"
+              "title": "ChatGPT connects health records and healthcare sources",
+              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
+              "publishedAt": "2026-09-04"
             }
           ]
         }
