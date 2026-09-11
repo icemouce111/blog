@@ -2,15 +2,15 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-04",
-      "rangeEnd": "2026-09-10",
-      "updatedAt": "2026-09-10T21:47:06+08:00",
+      "rangeStart": "2026-09-05",
+      "rangeEnd": "2026-09-11",
+      "updatedAt": "2026-09-11T22:32:49+08:00",
       "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent 技能资产化成为团队工程实践",
-          "summary": "Anthropic 开放 Skills 公共仓库，开发者从真实 .agents 目录提炼技能集，ECC 等跨框架优化系统同步出现。Agent 能力正从一次性 prompt 转向可复用、可版本化的技能资产，团队开始像管理代码一样管理 Agent 技能，交付一致性提升。",
+          "title": "Agent技能资产化成为团队工程实践",
+          "summary": "本周多个信号显示，Agent 能力正从一次性提示词转向可复用、可版本化的技能资产。Anthropic 开放 Skills 公共仓库，开发者从真实 .agents 目录提炼技能集，跨框架性能优化系统也开始出现。对交付团队而言，这意味着可以把内部流程封装成技能库并持续迭代，而非每次从零构建，Agent 工程开始具备可沉淀的工程方法论。",
           "sources": [
             {
               "title": "anthropics/skills",
@@ -23,31 +23,31 @@
               "publishedAt": "2026-09-06"
             },
             {
-              "title": "affaan-m/ECC",
+              "title": "ECC",
               "url": "https://github.com/affaan-m/ECC",
               "publishedAt": "2026-09-08"
             }
           ]
         },
         {
-          "title": "企业级 Agent 权限与安全管控落地",
-          "summary": "GitHub Copilot 上线企业级 Agent 操作权限管理，管理员可集中控制阻止、审批或直接执行；Cloudflare 推出 Access for Workers 一键保护内部 vibe-coding 应用。Agent 从个人工具变为可管控基础设施，企业采用门槛降低，安全与合规成为落地前提。",
+          "title": "企业级Agent权限与沙箱管控落地",
+          "summary": "企业采用 Agent 的关键瓶颈正从能力转向管控。GitHub Copilot 上线企业级 Agent 操作权限管理，管理员可集中控制哪些操作被阻止、需人工审批或可直接执行；JetBrains 端也引入企业托管沙箱策略。这表明 Agent 正从个人工具变为可审计、可管控的组织基础设施，企业推广路径开始清晰。",
           "sources": [
             {
-              "title": "Enterprise-managed permissions for GitHub Copilot agent operations",
+              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
               "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
-              "publishedAt": "2026-09-10"
+              "publishedAt": "2026-09-11"
             },
             {
-              "title": "Workers Protected by Access",
-              "url": "https://blog.cloudflare.com/workers-protected-by-access/",
-              "publishedAt": "2026-09-05"
+              "title": "Enterprise-managed sandbox in Copilot for JetBrains",
+              "url": "https://github.blog/changelog/2026-09-08-enterprise-managed-sandbox-in-copilot-for-jetbrains",
+              "publishedAt": "2026-09-09"
             }
           ]
         },
         {
-          "title": "垂直行业文档审阅进入可交付阶段",
-          "summary": "Legora 用 GPT-6 Astra 数分钟审阅 41 份财务文档并找出全部预设错误，ChatGPT 开始连接医疗 EHR 数据源。AI 在财务、法务、医疗等垂直场景从辅助查找走向可交付结果，基层员工可先用于初筛，人工做最终判断，行业数据连接模式或向更多领域扩展。",
+          "title": "文档审阅与营销工作流被Agent重构",
+          "summary": "垂直场景出现可交付结果的应用案例。Legora 用 GPT-6 Astra 在几分钟内审阅 41 份财务文档并找出全部预设错误，工作流性能提升近 40%；ATV Big Air Tour 用 ChatGPT Work 把 3 天营销与商品工作压缩到 3 小时。财务、法务、合规等重度文档岗位与中小团队营销运营，正从辅助查找进入可交付阶段。",
           "sources": [
             {
               "title": "Legora financial statement review with Astra",
@@ -55,9 +55,9 @@
               "publishedAt": "2026-09-06"
             },
             {
-              "title": "ChatGPT connects health records and healthcare sources",
-              "url": "https://openai.com/index/chatgpt-connects-health-records-and-healthcare-sources",
-              "publishedAt": "2026-09-04"
+              "title": "ATV Big Air Tour",
+              "url": "https://openai.com/index/atv-big-air-tour",
+              "publishedAt": "2026-09-06"
             }
           ]
         }
