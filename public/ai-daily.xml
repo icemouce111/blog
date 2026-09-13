@@ -6,7 +6,26 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 12 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 13 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月13日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-13</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月13日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 今天真正重要的变化
+
+**ChatGPT 上线 Data agent，非技术员工可以用自然语言接数据源做看板。** OpenAI 在 ChatGPT Work 中推出 Data agent，支持连接公司数据、用自然语言发现洞察并生成交互式仪表板。这意味着"取数—分析—出图"这条过去依赖数据团队的链路，开始被压缩成一次对话。今天可以做的：把自己手头最常被问的三个报表问题写下来，试着用一句话描述需求，看现有工具能否直接产出，并记录卡在哪一步。
+https://openai.com/index/put-data-to-work
+
+**GPT‑Live‑1 进入 API，全双工语音成为可开发能力。** OpenAI 把自然、可打断的双向语音对话开放到 API，并支持自定义音色与电话线路接入。对做客服、]]></description>
+        <pubDate>Sun, 13 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-13</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月12日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-12</link>
@@ -568,27 +587,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **Command and Conquer Generals natively ported to macOS, iPhone, iPad using Fable** [来源](https://github.com/ammaarreshi/Generals-Mac-iOS-iPad/tree/m]]></description>
         <pubDate>Sun, 05 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-05</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月04日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-04</link>
-        <description><![CDATA[# AI 日报 - 2026年07月04日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-3.  **阿里内部因后门风险全面禁用 Claude Code，引发社区对Agent安全性的热议**
-    据V2EX社区讨论，有用户指出阿里巴巴内部因担心植入后门风险，已全面禁用Claude Code。该消息迅速引发开发者对使用第三方AI编码Agent的安全性与可控性的焦虑。来源：https://www.v2ex.com/t/1224766
-
-## 02 🔥 热门项目
-
-1.  **OpenAI Codex Plugin for Claude Code** 允许用户在Claude Code环境中直接调用OpenAI的Codex进行代码审查或任务委派。来源：https://github.com/openai/codex-plugin-c]]></description>
-        <pubDate>Sat, 04 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-04</guid>
     </item>
 </channel>
 </rss>

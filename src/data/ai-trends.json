@@ -2,36 +2,36 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-05",
-      "rangeEnd": "2026-09-11",
-      "updatedAt": "2026-09-11T22:32:49+08:00",
+      "rangeStart": "2026-09-08",
+      "rangeEnd": "2026-09-13",
+      "updatedAt": "2026-09-13T22:32:27+08:00",
       "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent技能资产化成为团队工程实践",
-          "summary": "本周多个信号显示，Agent 能力正从一次性提示词转向可复用、可版本化的技能资产。Anthropic 开放 Skills 公共仓库，开发者从真实 .agents 目录提炼技能集，跨框架性能优化系统也开始出现。对交付团队而言，这意味着可以把内部流程封装成技能库并持续迭代，而非每次从零构建，Agent 工程开始具备可沉淀的工程方法论。",
+          "title": "Agent从对话走向可托管任务",
+          "summary": "本周多个产品把Agent从即时对话推向可托管的长任务：Murmell让任务在云端持续、用户可关掉笔记本，Maritime提供Agent专用计算机，Offloop则给出人与Agent共享的工作空间。变化在于Agent运行时与用户界面解耦，工作流从“守着跑”变成“布置后离开”，团队可把批处理、夜间检索等长流程交给Agent，人的角色转向审核与调度。",
           "sources": [
             {
-              "title": "anthropics/skills",
-              "url": "https://github.com/anthropics/skills",
-              "publishedAt": "2026-09-06"
+              "title": "Murmell",
+              "url": "https://www.producthunt.com/products/murmell",
+              "publishedAt": "2026-09-13"
             },
             {
-              "title": "mattpocock/skills",
-              "url": "https://github.com/mattpocock/skills",
-              "publishedAt": "2026-09-06"
+              "title": "Maritime",
+              "url": "https://www.producthunt.com/products/maritime",
+              "publishedAt": "2026-09-12"
             },
             {
-              "title": "ECC",
-              "url": "https://github.com/affaan-m/ECC",
-              "publishedAt": "2026-09-08"
+              "title": "Offloop",
+              "url": "https://www.producthunt.com/products/offloop/launches/offloop",
+              "publishedAt": "2026-09-10"
             }
           ]
         },
         {
-          "title": "企业级Agent权限与沙箱管控落地",
-          "summary": "企业采用 Agent 的关键瓶颈正从能力转向管控。GitHub Copilot 上线企业级 Agent 操作权限管理，管理员可集中控制哪些操作被阻止、需人工审批或可直接执行；JetBrains 端也引入企业托管沙箱策略。这表明 Agent 正从个人工具变为可审计、可管控的组织基础设施，企业推广路径开始清晰。",
+          "title": "企业开始给Agent上权限与审计",
+          "summary": "GitHub为Copilot Agent操作推出企业级权限管理，管理员可集中决定哪些操作被阻止、需人工审批或可直接执行；同时Copilot用量报表纳入VS Code Agents窗口活动，企业能衡量采用率。Cloudflare CASB也引入自动修复策略。组织采用Agent正从个人试用转向可管控基础设施，权限边界与用量度量成为落地前提。",
           "sources": [
             {
               "title": "Enterprise managed permissions for GitHub Copilot agent operations",
@@ -39,25 +39,30 @@
               "publishedAt": "2026-09-11"
             },
             {
-              "title": "Enterprise-managed sandbox in Copilot for JetBrains",
-              "url": "https://github.blog/changelog/2026-09-08-enterprise-managed-sandbox-in-copilot-for-jetbrains",
-              "publishedAt": "2026-09-09"
+              "title": "Add VS Code Agents to Copilot usage metrics",
+              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
+              "publishedAt": "2026-09-13"
+            },
+            {
+              "title": "Introducing automatic remediation policies with Cloudflare CASB",
+              "url": "https://blog.cloudflare.com/casb-policies/",
+              "publishedAt": "2026-09-12"
             }
           ]
         },
         {
-          "title": "文档审阅与营销工作流被Agent重构",
-          "summary": "垂直场景出现可交付结果的应用案例。Legora 用 GPT-6 Astra 在几分钟内审阅 41 份财务文档并找出全部预设错误，工作流性能提升近 40%；ATV Big Air Tour 用 ChatGPT Work 把 3 天营销与商品工作压缩到 3 小时。财务、法务、合规等重度文档岗位与中小团队营销运营，正从辅助查找进入可交付阶段。",
+          "title": "垂直行业Agent打包进业务场景",
+          "summary": "OpenAI推出ChatGPT for Financial Services，内置金融数据并配合GPT-6 Astra用于研究、建模与客户材料准备；DeskcommCRM把自托管CRM与原生Agent、WhatsApp接入结合，面向聊天成交的中小商家。行业Agent不再只是通用助手，而是把数据、渠道与业务流程打包，基层员工可在同一处完成取数、初稿与跟进，人工转向审核。",
           "sources": [
             {
-              "title": "Legora financial statement review with Astra",
-              "url": "https://openai.com/index/legora-financial-statement-review-with-astra",
-              "publishedAt": "2026-09-06"
+              "title": "Introducing ChatGPT for Financial Services",
+              "url": "https://openai.com/index/introducing-chatgpt-financial-services",
+              "publishedAt": "2026-09-13"
             },
             {
-              "title": "ATV Big Air Tour",
-              "url": "https://openai.com/index/atv-big-air-tour",
-              "publishedAt": "2026-09-06"
+              "title": "DeskcommCRM",
+              "url": "https://github.com/melgarafael/DeskcommCRM",
+              "publishedAt": "2026-09-13"
             }
           ]
         }
