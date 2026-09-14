@@ -3,35 +3,14 @@
     {
       "window": "week",
       "rangeStart": "2026-09-08",
-      "rangeEnd": "2026-09-13",
-      "updatedAt": "2026-09-13T22:32:27+08:00",
-      "coverageCount": 6,
+      "rangeEnd": "2026-09-14",
+      "updatedAt": "2026-09-14T22:04:01+08:00",
+      "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent从对话走向可托管任务",
-          "summary": "本周多个产品把Agent从即时对话推向可托管的长任务：Murmell让任务在云端持续、用户可关掉笔记本，Maritime提供Agent专用计算机，Offloop则给出人与Agent共享的工作空间。变化在于Agent运行时与用户界面解耦，工作流从“守着跑”变成“布置后离开”，团队可把批处理、夜间检索等长流程交给Agent，人的角色转向审核与调度。",
-          "sources": [
-            {
-              "title": "Murmell",
-              "url": "https://www.producthunt.com/products/murmell",
-              "publishedAt": "2026-09-13"
-            },
-            {
-              "title": "Maritime",
-              "url": "https://www.producthunt.com/products/maritime",
-              "publishedAt": "2026-09-12"
-            },
-            {
-              "title": "Offloop",
-              "url": "https://www.producthunt.com/products/offloop/launches/offloop",
-              "publishedAt": "2026-09-10"
-            }
-          ]
-        },
-        {
-          "title": "企业开始给Agent上权限与审计",
-          "summary": "GitHub为Copilot Agent操作推出企业级权限管理，管理员可集中决定哪些操作被阻止、需人工审批或可直接执行；同时Copilot用量报表纳入VS Code Agents窗口活动，企业能衡量采用率。Cloudflare CASB也引入自动修复策略。组织采用Agent正从个人试用转向可管控基础设施，权限边界与用量度量成为落地前提。",
+          "title": "Agent从对话走向可管控的企业基础设施",
+          "summary": "本周多条信号显示，Agent 正从个人对话工具转为可审计、可审批的企业资产：GitHub 为 Copilot 企业版加入集中式 Agent 操作权限与沙箱策略，Copilot 用量报表开始覆盖 VS Code Agents 窗口，OpenObserve 提供 OpenTelemetry 原生的 Agent 与 LLM 可观测性。影响是团队能回答“Agent 被允许做什么、有没有人用、出错在哪一步”，推广从凭感觉转向可度量。",
           "sources": [
             {
               "title": "Enterprise managed permissions for GitHub Copilot agent operations",
@@ -41,28 +20,44 @@
             {
               "title": "Add VS Code Agents to Copilot usage metrics",
               "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
-              "publishedAt": "2026-09-13"
+              "publishedAt": "2026-09-14"
             },
             {
-              "title": "Introducing automatic remediation policies with Cloudflare CASB",
-              "url": "https://blog.cloudflare.com/casb-policies/",
-              "publishedAt": "2026-09-12"
+              "title": "AI Observability by OpenObserve",
+              "url": "https://www.producthunt.com/products/openobserve",
+              "publishedAt": "2026-09-14"
             }
           ]
         },
         {
-          "title": "垂直行业Agent打包进业务场景",
-          "summary": "OpenAI推出ChatGPT for Financial Services，内置金融数据并配合GPT-6 Astra用于研究、建模与客户材料准备；DeskcommCRM把自托管CRM与原生Agent、WhatsApp接入结合，面向聊天成交的中小商家。行业Agent不再只是通用助手，而是把数据、渠道与业务流程打包，基层员工可在同一处完成取数、初稿与跟进，人工转向审核。",
+          "title": "办公与垂直行业被压缩成一次对话",
+          "summary": "OpenAI 在 ChatGPT Work 推出 Data agent，非技术员工可用自然语言连接公司数据、发现洞察并生成交互式看板；同时推出 ChatGPT for Financial Services，把内置金融数据与模型打包用于研究、建模和客户材料准备。取数、分析、出图与材料初稿这条原本依赖数据团队和跨终端拼表的链路，开始被压缩成一次对话，基层员工可先做初稿、人工只做审核。",
           "sources": [
+            {
+              "title": "Now everyone can put data to work",
+              "url": "https://openai.com/index/put-data-to-work",
+              "publishedAt": "2026-09-14"
+            },
             {
               "title": "Introducing ChatGPT for Financial Services",
               "url": "https://openai.com/index/introducing-chatgpt-financial-services",
               "publishedAt": "2026-09-13"
+            }
+          ]
+        },
+        {
+          "title": "Agent技能与运行时走向注册表化与异步化",
+          "summary": "团队开始把散落在个人本地的 Agent 能力沉淀为可校验、可复用的资产：agent-skills 定位为面向专业编码 Agent 的安全技能注册表，支持多种主流编码工具；Murmell 则把 Agent 运行时与用户界面解耦，任务在云端持续、人可以合上笔记本。前者解决“技能无法审计复用”，后者把 Agent 从对话式推向任务式，长流程不再需要人守着。",
+          "sources": [
+            {
+              "title": "tech-leads-club/agent-skills",
+              "url": "https://github.com/tech-leads-club/agent-skills",
+              "publishedAt": "2026-09-13"
             },
             {
-              "title": "DeskcommCRM",
-              "url": "https://github.com/melgarafael/DeskcommCRM",
-              "publishedAt": "2026-09-13"
+              "title": "Murmell",
+              "url": "https://www.producthunt.com/products/murmell",
+              "publishedAt": "2026-09-14"
             }
           ]
         }
