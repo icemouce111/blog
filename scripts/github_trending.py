@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import re
+import subprocess
 from dataclasses import dataclass, field, replace
 from typing import Any
+from urllib.parse import urlencode
 
 import requests
 from bs4 import BeautifulSoup, Tag
@@ -168,6 +170,36 @@ def rank_repos_by_daily_stars(repos: list[TrendingRepo]) -> list[TrendingRepo]:
     return [replace(repo, rank=index) for index, repo in enumerate(ranked, start=1)]
 
 
+def _curl_fetch_html(url: str) -> str:
+    """Fetch a URL via the curl binary.
+
+    curl has proven resilient when Python's HTTP stack (requests/urllib) is
+    blocked by GitHub's intermittent client-side throttling (read-timeout on
+    responses even though TCP/TLS handshakes succeed).
+    """
+    result = subprocess.run(
+        [
+            "curl",
+            "-sS",
+            "--fail",
+            "--max-time",
+            "45",
+            "-A",
+            USER_AGENT,
+            url,
+        ],
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    if result.returncode != 0:
+        raise TrendingFetchError(
+            f"curl fallback failed for {url}: "
+            f"exit={result.returncode} {result.stderr.strip()[:200]}"
+        )
+    return result.stdout
+
+
 def fetch_trending(
     *,
     limit: int = 15,
@@ -177,20 +209,22 @@ def fetch_trending(
     params: dict[str, str] = {"since": since}
     if language:
         params["language"] = language
+    url = f"{TRENDING_URL}?{urlencode(params)}"
+    html: str | None = None
     try:
         response = requests.get(
-            TRENDING_URL,
-            params=params,
+            url,
+            params=None,
             headers={"User-Agent": USER_AGENT},
             timeout=30,
         )
-    except requests.RequestException as error:
-        raise TrendingFetchError(f"failed to reach {TRENDING_URL}: {error}") from error
-    if response.status_code != 200:
-        raise TrendingFetchError(
-            f"{TRENDING_URL} returned HTTP {response.status_code}"
-        )
-    repos = parse_trending_html(response.text, limit=limit)
+        if response.status_code == 200:
+            html = response.text
+    except requests.RequestException:
+        pass  # fall through to curl fallback
+    if html is None:
+        html = _curl_fetch_html(url)
+    repos = parse_trending_html(html, limit=limit)
     if not repos:
         raise TrendingFetchError(
             "parsed zero repositories from trending page "
