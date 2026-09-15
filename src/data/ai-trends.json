@@ -2,15 +2,15 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-08",
-      "rangeEnd": "2026-09-14",
-      "updatedAt": "2026-09-14T22:04:01+08:00",
+      "rangeStart": "2026-09-09",
+      "rangeEnd": "2026-09-15",
+      "updatedAt": "2026-09-15T21:49:58+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent从对话走向可管控的企业基础设施",
-          "summary": "本周多条信号显示，Agent 正从个人对话工具转为可审计、可审批的企业资产：GitHub 为 Copilot 企业版加入集中式 Agent 操作权限与沙箱策略，Copilot 用量报表开始覆盖 VS Code Agents 窗口，OpenObserve 提供 OpenTelemetry 原生的 Agent 与 LLM 可观测性。影响是团队能回答“Agent 被允许做什么、有没有人用、出错在哪一步”，推广从凭感觉转向可度量。",
+          "title": "Agent从对话走向可管控基础设施",
+          "summary": "企业开始把编码Agent纳入正式治理：GitHub为Copilot Agent操作提供集中权限管理，可阻止、需人工审批或直接执行；Copilot用量指标覆盖VS Code Agents窗口，让采用率可衡量。同时Agent技能出现可校验注册表，团队可审计Agent被允许做什么。影响是Agent从个人工具变为可管控、可度量的组织基础设施。",
           "sources": [
             {
               "title": "Enterprise managed permissions for GitHub Copilot agent operations",
@@ -20,44 +20,54 @@
             {
               "title": "Add VS Code Agents to Copilot usage metrics",
               "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
-              "publishedAt": "2026-09-14"
+              "publishedAt": "2026-09-15"
+            },
+            {
+              "title": "agent-skills",
+              "url": "https://github.com/tech-leads-club/agent-skills",
+              "publishedAt": "2026-09-13"
+            }
+          ]
+        },
+        {
+          "title": "Agent任务与界面解耦走向异步",
+          "summary": "本周多个产品指向同一变化：Agent运行时与用户界面解耦。Murmell定位为Agent的共享文档空间，任务在云端持续、可合上笔记本；Maritime提供面向Agent的专用计算机；OpenObserve把可观测性做到Agent与LLM调用层。对团队意味着长流程任务从守着对话走向布置后异步执行，出错也能追踪调用链。",
+          "sources": [
+            {
+              "title": "Murmell",
+              "url": "https://www.producthunt.com/products/murmell/launches/murmell-2",
+              "publishedAt": "2026-09-15"
+            },
+            {
+              "title": "Maritime",
+              "url": "https://www.producthunt.com/products/maritime/launches/maritime-2",
+              "publishedAt": "2026-09-15"
             },
             {
               "title": "AI Observability by OpenObserve",
               "url": "https://www.producthunt.com/products/openobserve",
-              "publishedAt": "2026-09-14"
+              "publishedAt": "2026-09-15"
             }
           ]
         },
         {
-          "title": "办公与垂直行业被压缩成一次对话",
-          "summary": "OpenAI 在 ChatGPT Work 推出 Data agent，非技术员工可用自然语言连接公司数据、发现洞察并生成交互式看板；同时推出 ChatGPT for Financial Services，把内置金融数据与模型打包用于研究、建模和客户材料准备。取数、分析、出图与材料初稿这条原本依赖数据团队和跨终端拼表的链路，开始被压缩成一次对话，基层员工可先做初稿、人工只做审核。",
+          "title": "垂直行业Agent进入真实业务链路",
+          "summary": "Agent开始嵌入具体行业工作流：ChatGPT for Financial Services内置金融数据用于研究、建模与客户材料；DeskcommCRM把自托管CRM与AI Agent、WhatsApp接入结合，服务聊天成交的中小商家；Fyxer用模型整理收件箱并按用户语气起草邮件。影响是垂直场景的取数、跟进、沟通环节被压缩为可交付的Agent流程。",
           "sources": [
-            {
-              "title": "Now everyone can put data to work",
-              "url": "https://openai.com/index/put-data-to-work",
-              "publishedAt": "2026-09-14"
-            },
             {
               "title": "Introducing ChatGPT for Financial Services",
               "url": "https://openai.com/index/introducing-chatgpt-financial-services",
               "publishedAt": "2026-09-13"
-            }
-          ]
-        },
-        {
-          "title": "Agent技能与运行时走向注册表化与异步化",
-          "summary": "团队开始把散落在个人本地的 Agent 能力沉淀为可校验、可复用的资产：agent-skills 定位为面向专业编码 Agent 的安全技能注册表，支持多种主流编码工具；Murmell 则把 Agent 运行时与用户界面解耦，任务在云端持续、人可以合上笔记本。前者解决“技能无法审计复用”，后者把 Agent 从对话式推向任务式，长流程不再需要人守着。",
-          "sources": [
-            {
-              "title": "tech-leads-club/agent-skills",
-              "url": "https://github.com/tech-leads-club/agent-skills",
-              "publishedAt": "2026-09-13"
             },
             {
-              "title": "Murmell",
-              "url": "https://www.producthunt.com/products/murmell",
-              "publishedAt": "2026-09-14"
+              "title": "DeskcommCRM",
+              "url": "https://github.com/melgarafael/DeskcommCRM",
+              "publishedAt": "2026-09-15"
+            },
+            {
+              "title": "How Fyxer built an AI executive assistant people trust",
+              "url": "https://openai.com/index/fyxer",
+              "publishedAt": "2026-09-15"
             }
           ]
         }
