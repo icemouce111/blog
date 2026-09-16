@@ -2,15 +2,31 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-09",
-      "rangeEnd": "2026-09-15",
-      "updatedAt": "2026-09-15T21:49:58+08:00",
+      "rangeStart": "2026-09-10",
+      "rangeEnd": "2026-09-16",
+      "updatedAt": "2026-09-16T21:49:25+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent从对话走向可管控基础设施",
-          "summary": "企业开始把编码Agent纳入正式治理：GitHub为Copilot Agent操作提供集中权限管理，可阻止、需人工审批或直接执行；Copilot用量指标覆盖VS Code Agents窗口，让采用率可衡量。同时Agent技能出现可校验注册表，团队可审计Agent被允许做什么。影响是Agent从个人工具变为可管控、可度量的组织基础设施。",
+          "title": "办公数据与行业分析走向对话式自助",
+          "summary": "ChatGPT Work 的 Data agent 让非技术员工用自然语言连接企业数据、发现洞察并生成交互式仪表盘，取数分析出图链路被压缩成一次对话；ChatGPT for Financial Services 则把内置金融数据与模型打包，覆盖研究、建模与客户材料准备。影响是基层员工可自行完成原本依赖数据团队的报表与初稿，数据团队转向审核与口径治理。",
+          "sources": [
+            {
+              "title": "Now everyone can put data to work",
+              "url": "https://openai.com/index/put-data-to-work",
+              "publishedAt": "2026-09-14"
+            },
+            {
+              "title": "Introducing ChatGPT for Financial Services",
+              "url": "https://openai.com/index/introducing-chatgpt-financial-services",
+              "publishedAt": "2026-09-13"
+            }
+          ]
+        },
+        {
+          "title": "编码 Agent 进入可管控与可审计阶段",
+          "summary": "GitHub 为 Copilot Business 与 Enterprise 管理员提供集中控制 Agent 操作的权限，可阻止、要求人工审批或直接执行；Copilot 用量指标纳入 VS Code Agents 窗口，代码评审还会自动解决已处理评论并生成提交信息。影响是企业能把 Agent 从个人工具变成可度量、可审批的基础设施，推广效果有了采用率基线。",
           "sources": [
             {
               "title": "Enterprise managed permissions for GitHub Copilot agent operations",
@@ -23,24 +39,24 @@
               "publishedAt": "2026-09-15"
             },
             {
-              "title": "agent-skills",
-              "url": "https://github.com/tech-leads-club/agent-skills",
-              "publishedAt": "2026-09-13"
+              "title": "Auto-resolution and analysis updates in Copilot code review",
+              "url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review",
+              "publishedAt": "2026-09-15"
             }
           ]
         },
         {
-          "title": "Agent任务与界面解耦走向异步",
-          "summary": "本周多个产品指向同一变化：Agent运行时与用户界面解耦。Murmell定位为Agent的共享文档空间，任务在云端持续、可合上笔记本；Maritime提供面向Agent的专用计算机；OpenObserve把可观测性做到Agent与LLM调用层。对团队意味着长流程任务从守着对话走向布置后异步执行，出错也能追踪调用链。",
+          "title": "Agent 运行与技能走向注册表化治理",
+          "summary": "agent-skills 定位为面向编码 Agent 的安全可校验技能注册表，支持多种主流编码工具；Murmell 把 Agent 任务放到云端持续运行，用户可关闭笔记本；OpenObserve 提供 OpenTelemetry 原生的 Agent 与 LLM 可观测性。影响是团队开始把散落的技能、长任务与调用追踪纳入统一治理，Agent 从对话式走向任务式与可运维。",
           "sources": [
+            {
+              "title": "tech-leads-club/agent-skills",
+              "url": "https://github.com/tech-leads-club/agent-skills",
+              "publishedAt": "2026-09-13"
+            },
             {
               "title": "Murmell",
               "url": "https://www.producthunt.com/products/murmell/launches/murmell-2",
-              "publishedAt": "2026-09-15"
-            },
-            {
-              "title": "Maritime",
-              "url": "https://www.producthunt.com/products/maritime/launches/maritime-2",
               "publishedAt": "2026-09-15"
             },
             {
@@ -49,83 +65,77 @@
               "publishedAt": "2026-09-15"
             }
           ]
+        }
+      ]
+    },
+    {
+      "window": "month",
+      "rangeStart": "2026-08-27",
+      "rangeEnd": "2026-09-16",
+      "updatedAt": "2026-09-16T21:49:25+08:00",
+      "coverageCount": 19,
+      "mode": "generated",
+      "insights": [
+        {
+          "title": "Agent技能从个人配置走向团队资产化",
+          "summary": "Anthropic开放官方Skills仓库、开发者公开个人.agents目录，加上跨框架性能优化系统与技能注册表出现，Agent技能正从散落各人本地的提示词变成可复用、可审计、可版本化的团队资产。对组织而言，这意味着Agent行为第一次能被统一治理和交接，而非依赖个别成员的经验。",
+          "sources": [
+            {
+              "title": "anthropics/skills：官方 Agent Skills 仓库",
+              "url": "https://github.com/anthropics/skills",
+              "publishedAt": "2026-09-06"
+            },
+            {
+              "title": "mattpocock/skills：真实工程师的 Skills 集合",
+              "url": "https://github.com/mattpocock/skills",
+              "publishedAt": "2026-09-06"
+            },
+            {
+              "title": "ECC：跨 Agent 框架的性能优化系统",
+              "url": "https://github.com/affaan-m/ECC",
+              "publishedAt": "2026-09-08"
+            }
+          ]
         },
         {
-          "title": "垂直行业Agent进入真实业务链路",
-          "summary": "Agent开始嵌入具体行业工作流：ChatGPT for Financial Services内置金融数据用于研究、建模与客户材料；DeskcommCRM把自托管CRM与AI Agent、WhatsApp接入结合，服务聊天成交的中小商家；Fyxer用模型整理收件箱并按用户语气起草邮件。影响是垂直场景的取数、跟进、沟通环节被压缩为可交付的Agent流程。",
+          "title": "编码Agent进入企业权限与审计轨道",
+          "summary": "GitHub Copilot陆续推出企业级Agent操作权限、托管沙箱、内容排除与用量指标，Copilot代码审查还能自动解决评论并批准PR。企业采用编码Agent的瓶颈正从能力转向管控：管理员需要明确哪些操作被阻止、需人工审批或可直接执行，并能量化采用率。",
           "sources": [
+            {
+              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
+              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
+              "publishedAt": "2026-09-11"
+            },
+            {
+              "title": "Add VS Code Agents to Copilot usage metrics",
+              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
+              "publishedAt": "2026-09-15"
+            },
+            {
+              "title": "Auto-resolution and analysis updates in Copilot code review",
+              "url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review",
+              "publishedAt": "2026-09-15"
+            }
+          ]
+        },
+        {
+          "title": "办公数据与文档审阅被对话式压缩",
+          "summary": "ChatGPT Work的Data agent让非技术员工用自然语言接数据源生成仪表盘，金融、法务等垂直版本把行业数据与模型打包，Legora案例显示文档审阅可在数分钟内完成。办公场景的变化不是聊天，而是取数、审阅、出稿这类多步骤链路被压缩成一次对话，人工退到审核位。",
+          "sources": [
+            {
+              "title": "Now everyone can put data to work",
+              "url": "https://openai.com/index/put-data-to-work",
+              "publishedAt": "2026-09-14"
+            },
             {
               "title": "Introducing ChatGPT for Financial Services",
               "url": "https://openai.com/index/introducing-chatgpt-financial-services",
               "publishedAt": "2026-09-13"
             },
             {
-              "title": "DeskcommCRM",
-              "url": "https://github.com/melgarafael/DeskcommCRM",
-              "publishedAt": "2026-09-15"
-            },
-            {
-              "title": "How Fyxer built an AI executive assistant people trust",
-              "url": "https://openai.com/index/fyxer",
-              "publishedAt": "2026-09-15"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "window": "month",
-      "rangeStart": "2026-08-13",
-      "rangeEnd": "2026-09-09",
-      "updatedAt": "2026-09-09T21:47:33+08:00",
-      "coverageCount": 14,
-      "mode": "generated",
-      "insights": [
-        {
-          "title": "Agent技能库成为工程化新抽象层",
-          "summary": "Anthropic官方及社区开发者密集开源Agent Skills仓库，将可复用技能从单一Prompt升级为模块化能力包。多项目登榜GitHub Trending，显示技能资产化正成为团队交付复杂Agent任务的标准实践，降低从零构建门槛。",
-          "sources": [
-            {
-              "title": "anthropics/skills",
-              "url": "https://github.com/anthropics/skills",
+              "title": "Legora 用 GPT-6 Astra 审阅财务文档",
+              "url": "https://openai.com/index/legora-financial-statement-review-with-astra",
               "publishedAt": "2026-09-06"
-            },
-            {
-              "title": "mattpocock/skills",
-              "url": "https://github.com/mattpocock/skills",
-              "publishedAt": "2026-09-06"
-            }
-          ]
-        },
-        {
-          "title": "长时运行Agent模型密集迭代",
-          "summary": "Anthropic发布Claude Opus 5与Sonnet 5，OpenAI推出GPT-6 Astra并进入GitHub Copilot，均主打长时程自主任务与编码能力。模型在长上下文稳定性上的提升，使多步骤自动化工作流（如文档审阅、代码重构）从演示走向可交付，企业采用门槛降低。",
-          "sources": [
-            {
-              "title": "Introducing Claude Opus 5",
-              "url": "https://www.anthropic.com/news/claude-opus-5",
-              "publishedAt": "2026-09-08"
-            },
-            {
-              "title": "GPT-6 Astra is generally available in GitHub Copilot",
-              "url": "https://github.blog/changelog/2026-09-04-gpt-6-astra-is-generally-available-in-github-copilot",
-              "publishedAt": "2026-09-09"
-            }
-          ]
-        },
-        {
-          "title": "AI Agent流量治理走向规范化",
-          "summary": "Cloudflare推出Bot Preference Sync与BotBase for Operators，自动同步robots.txt与AI爬虫策略，并为Agent运营方提供目录管理入口。AI Agent访问网站从灰色地带转向声明式管理，站点运营者与Agent开发者均需适应新的合规框架。",
-          "sources": [
-            {
-              "title": "Bot Preference Sync",
-              "url": "https://blog.cloudflare.com/bot-preference-sync/",
-              "publishedAt": "2026-09-08"
-            },
-            {
-              "title": "BotBase for Operators",
-              "url": "https://blog.cloudflare.com/botbase-for-operators/",
-              "publishedAt": "2026-09-09"
             }
           ]
         }
