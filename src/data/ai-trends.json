@@ -2,15 +2,36 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-10",
-      "rangeEnd": "2026-09-16",
-      "updatedAt": "2026-09-16T21:49:25+08:00",
+      "rangeStart": "2026-09-11",
+      "rangeEnd": "2026-09-17",
+      "updatedAt": "2026-09-17T21:50:59+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "办公数据与行业分析走向对话式自助",
-          "summary": "ChatGPT Work 的 Data agent 让非技术员工用自然语言连接企业数据、发现洞察并生成交互式仪表盘，取数分析出图链路被压缩成一次对话；ChatGPT for Financial Services 则把内置金融数据与模型打包，覆盖研究、建模与客户材料准备。影响是基层员工可自行完成原本依赖数据团队的报表与初稿，数据团队转向审核与口径治理。",
+          "title": "编码 Agent 从个人工具走向企业治理",
+          "summary": "本周 GitHub 为 Copilot 推出企业级 Agent 操作权限管控，可集中决定哪些操作被阻止或需人工审批；用量指标开始覆盖 VS Code Agents 窗口，让企业能衡量采用率。同时社区出现面向编码 Agent 的可校验技能注册表，回应技能散落、无法审计的痛点。编码 Agent 正从个人效率工具变为需要权限、审计与用量度量的组织资产。",
+          "sources": [
+            {
+              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
+              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
+              "publishedAt": "2026-09-11"
+            },
+            {
+              "title": "Add VS Code Agents to Copilot usage metrics",
+              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
+              "publishedAt": "2026-09-17"
+            },
+            {
+              "title": "agent-skills",
+              "url": "https://github.com/tech-leads-club/agent-skills",
+              "publishedAt": "2026-09-13"
+            }
+          ]
+        },
+        {
+          "title": "办公数据与垂直行业被对话式 Agent 接管",
+          "summary": "OpenAI 在 ChatGPT Work 中上线 Data agent，非技术员工可用自然语言连接企业数据、发现洞察并生成交互式仪表盘；同时推出 ChatGPT for Financial Services，内置金融数据配合模型完成研究、建模与客户材料。取数与初稿环节被压缩为对话，基层员工可直接产出分析结果，数据团队与金融从业者的分工边界随之变化。",
           "sources": [
             {
               "title": "Now everyone can put data to work",
@@ -25,43 +46,22 @@
           ]
         },
         {
-          "title": "编码 Agent 进入可管控与可审计阶段",
-          "summary": "GitHub 为 Copilot Business 与 Enterprise 管理员提供集中控制 Agent 操作的权限，可阻止、要求人工审批或直接执行；Copilot 用量指标纳入 VS Code Agents 窗口，代码评审还会自动解决已处理评论并生成提交信息。影响是企业能把 Agent 从个人工具变成可度量、可审批的基础设施，推广效果有了采用率基线。",
+          "title": "Agent 运行与安全审计被拆成独立基础设施",
+          "summary": "本周产品侧出现把 Agent 运行时与用户界面解耦的尝试，任务可在云端持续、人不必守着；OpenTelemetry 原生的 Agent 与 LLM 可观测性产品让团队复用现有监控栈追踪调用链。Cloudflare 则把漏洞发现与修复接入同一条链路，并推出面向编码 Agent 的可验证安全审计流程。Agent 的托管、观测与安全正从应用内功能变成独立基础设施层。",
           "sources": [
-            {
-              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
-              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
-              "publishedAt": "2026-09-11"
-            },
-            {
-              "title": "Add VS Code Agents to Copilot usage metrics",
-              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
-              "publishedAt": "2026-09-15"
-            },
-            {
-              "title": "Auto-resolution and analysis updates in Copilot code review",
-              "url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review",
-              "publishedAt": "2026-09-15"
-            }
-          ]
-        },
-        {
-          "title": "Agent 运行与技能走向注册表化治理",
-          "summary": "agent-skills 定位为面向编码 Agent 的安全可校验技能注册表，支持多种主流编码工具；Murmell 把 Agent 任务放到云端持续运行，用户可关闭笔记本；OpenObserve 提供 OpenTelemetry 原生的 Agent 与 LLM 可观测性。影响是团队开始把散落的技能、长任务与调用追踪纳入统一治理，Agent 从对话式走向任务式与可运维。",
-          "sources": [
-            {
-              "title": "tech-leads-club/agent-skills",
-              "url": "https://github.com/tech-leads-club/agent-skills",
-              "publishedAt": "2026-09-13"
-            },
             {
               "title": "Murmell",
-              "url": "https://www.producthunt.com/products/murmell/launches/murmell-2",
-              "publishedAt": "2026-09-15"
+              "url": "https://www.producthunt.com/products/murmell",
+              "publishedAt": "2026-09-14"
             },
             {
               "title": "AI Observability by OpenObserve",
               "url": "https://www.producthunt.com/products/openobserve",
+              "publishedAt": "2026-09-17"
+            },
+            {
+              "title": "Introducing context-aware vulnerability discovery and remediation with Cloudflare Managed Defense and OpenAI Daybreak models",
+              "url": "https://blog.cloudflare.com/vulnerability-discovery-remediation/",
               "publishedAt": "2026-09-15"
             }
           ]

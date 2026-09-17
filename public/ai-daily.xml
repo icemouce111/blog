@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 16 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月17日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-17</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月17日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **HarnessTax: How Much Does the Harness Matter for Coding Agents?** [来源](https://harnesstax.github.io/)
+- **Jev Ultrafast: A browser agent with a dynamic, indexed action space** [来源](https://github.com/browser-use/jev-ultrafast)
+
+### GitHub Trending
+- **alibaba/open-code-review**：Fast, efficient, battle-tested at Alibaba']]></description>
+        <pubDate>Thu, 17 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-17</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月16日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-16</link>
@@ -574,23 +595,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
     Ope]]></description>
         <pubDate>Thu, 09 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-09</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月08日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-08</link>
-        <description><![CDATA[# AI 日报 - 2026年07月08日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📌 今日头条
-
-1. **Anthropic 发布 Claude Sonnet 5、Fable 5 重部署及 Claude Science 科学家工作台**
-   Anthropic 今日发布：Sonnet 5 模型在编程、Agent 和专业工作上达到前沿性能；Fable 5 将于 7 月 1 日全球重部署，并联合 Amazon、Microsoft、Google 提出行业级越狱严重性评分框架；同时推出面向科学家的 AI 工作台 Claude Science。来源：Anthropic Newsroom (https://www.anthropic.com/news/claude-sonnet-5, https://www.anthropic.com/new]]></description>
-        <pubDate>Wed, 08 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-08</guid>
     </item>
 </channel>
 </rss>
