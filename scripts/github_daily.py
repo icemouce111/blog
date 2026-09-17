@@ -33,6 +33,7 @@ try:
     from scripts.github_trending import (
         TrendingFetchError,
         TrendingRepo,
+        fetch_readme,
         fetch_trending,
         repo_to_payload,
     )
@@ -41,6 +42,7 @@ except ModuleNotFoundError:
     from github_trending import (
         TrendingFetchError,
         TrendingRepo,
+        fetch_readme,
         fetch_trending,
         repo_to_payload,
     )
@@ -60,9 +62,12 @@ READER_PROFILE = (
 
 SYSTEM_PROMPT = f"""你是开源项目解读编辑，服务一位特定读者：{READER_PROFILE}
 
-输入是按今日新增 Star 排序的 GitHub Trending 榜单数据。你的任务：
-1. 为榜单上的**每一个**仓库写三句话：「what」= 它是干啥的（一句话说人话，不堆术语）；「help」= 能解决什么问题、适合谁；「how」= 一个具体、可执行的开始方式。低相关项目客观说明适用人群，不对读者进行说教。
-2. 从榜单中挑出 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个最值得实践的项目作为「精选榜单」。优先级依次是：Agent/Skills/MCP/RAG/评测与工作流、TypeScript/React/Cloudflare 开发工具、企业 AI 与办公自动化、能转成小白教程的产品。每个写：title、why、value、how（给出今天就能完成的第一步）。
+输入是按今日新增 Star 排序的 GitHub Trending 榜单数据，**每个仓库附带了它的 README 内容**。你的任务：
+1. 为榜单上的**每一个**仓库写三句话，**必须基于 README 的真实内容与架构来写，不得只复述或翻译官方简介**：
+   - 「what」= 它是干啥的：说清核心功能、技术方案/架构要点（用什么实现的、有什么独到设计），全中文，不堆术语，出现英文专有名词时要顺带用中文解释它是什么
+   - 「help」= 能解决什么问题、适合谁：基于 README 里描述的真实能力，不夸大
+   - 「how」= 一个具体、可执行的开始方式：优先用 README 里写的安装/快速上手方式（如安装命令、CLI 用法），落到读者今天就能动手做的第一步
+2. 从榜单中挑出 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个最值得实践的项目作为「精选榜单」。优先级依次是：Agent/Skills/MCP/RAG/评测与工作流、TypeScript/React/Cloudflare 开发工具、企业 AI 与办公自动化、能转成小白教程的产品。每个写：title、why（为什么值得关注，结合 README 里的发展阶段/背景）、value、how（给出今天就能完成的第一步）。
 3. 写一段 intro 今日榜单综述（80 字以内），概括今天榜单的整体风向。
 
 严格只输出一个 JSON 对象，不要输出任何其他文字、解释或 markdown 代码块围栏，格式：
@@ -72,8 +77,18 @@ SYSTEM_PROMPT = f"""你是开源项目解读编辑，服务一位特定读者：
 - repos 数组必须覆盖输入榜单的每一个仓库，各出现一次，顺序与榜单一致
 - repo 字段必须与输入中的仓库全名完全一致（区分大小写）
 - 每个 repos 条目的 what、help、how 都必须非空
+- what 里禁止出现「官网介绍说」「简介称」这类转述腔——你就是读过 README 的编辑，直接陈述
+- README 缺失或为「（未取到 README）」的仓库：基于官方简介与语言生态写保守解读，并用中文
 - highlights 的 repo 必须来自输入榜单
 - 所有文案使用简体中文"""
+
+
+_CJK_PATTERN = re.compile(r"[\u4e00-\u9fff]")
+
+
+def _is_mostly_chinese(text: str, *, min_cjk: int = 4) -> bool:
+    """Reject English-only output (e.g. echoed GitHub descriptions)."""
+    return len(_CJK_PATTERN.findall(text)) >= min_cjk
 
 
 def load_env_file(path: Path) -> None:
@@ -107,7 +122,28 @@ def _llm_settings() -> tuple[str | None, str, str]:
     return api_key, base_url, model
 
 
-def build_user_prompt(repos: list[TrendingRepo]) -> str:
+def fetch_readmes(
+    repos: list[TrendingRepo], *, max_workers: int = 5
+) -> dict[str, str]:
+    """Fetch READMEs concurrently; failures degrade to '' per repo, never raise."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    results: dict[str, str] = {}
+
+    def worker(repo: TrendingRepo) -> tuple[str, str]:
+        try:
+            return repo.full_name, fetch_readme(repo.full_name)
+        except Exception:
+            return repo.full_name, ""
+
+    with ThreadPoolExecutor(max_workers=max_workers) as pool:
+        for full_name, readme in pool.map(worker, repos):
+            results[full_name] = readme
+    return results
+
+
+def build_user_prompt(repos: list[TrendingRepo], readmes: dict[str, str] | None = None) -> str:
+    readmes = readmes or {}
     lines = ["今日 GitHub Trending 每日新增 Star 排行："]
     for repo in repos:
         stars = f"{repo.stars} total stars" if repo.stars is not None else "stars 未知"
@@ -123,8 +159,16 @@ def build_user_prompt(repos: list[TrendingRepo]) -> str:
             f"   官方简介: {repo.description or '（无）'}\n"
             f"   地址: {repo.url}"
         )
+        readme = readmes.get(repo.full_name, "").strip()
+        if readme:
+            lines.append("   README 节选:")
+            for readme_line in readme.splitlines():
+                lines.append(f"     {readme_line}")
+        else:
+            lines.append("   README: （未取到 README，请基于官方简介保守解读）")
     lines.append(
         f"\n请输出 JSON：repos 覆盖以上全部 {len(repos)} 个仓库，且每项都有 what、help、how；"
+        f"what/help/how 必须基于 README 内容用简体中文撰写；"
         f"highlights 挑 {HIGHLIGHT_MIN}~{HIGHLIGHT_MAX} 个；附 intro 综述。"
     )
     return "\n".join(lines)
@@ -203,6 +247,10 @@ def validate_payload(payload: Any, repos: list[TrendingRepo]) -> dict[str, Any]:
         how = str(entry.get("how") or "").strip()
         if not what or not help_text or not how:
             raise ValueError(f"what/help/how missing for {repo}")
+        if not _is_mostly_chinese(what):
+            raise ValueError(f"what is not Chinese for {repo}: {what[:60]}")
+        if not _is_mostly_chinese(help_text):
+            raise ValueError(f"help is not Chinese for {repo}")
         projects[canonical] = {"what": what, "help": help_text, "how": how}
     missing = sorted(set(names.values()) - set(projects))
     if missing:
@@ -248,7 +296,9 @@ def build_record(
         project = (payload or {}).get("projects", {}).get(repo.full_name, {})
         what = project.get("what", "")
         if not what:
-            what = repo.description[:120] + ("…" if len(repo.description) > 120 else "")
+            # fallback: never echo the raw (usually English) GitHub blurb;
+            # leave what empty so the UI shows its own honest placeholder.
+            what = ""
         record_repos.append(
             {
                 **repo_to_payload(repo),
@@ -321,10 +371,15 @@ def run_generation(args: argparse.Namespace) -> int:
         today = f" +{repo.stars_today}" if repo.stars_today is not None else ""
         print(f"  {repo.rank:>2}. {repo.full_name} [{repo.language or '?'}]{today}")
 
-    print("\n[2/3] AI digest...")
+    print(f"\n[2/4] Fetching READMEs (so the AI reads the project, not just the blurb)...")
+    readmes = fetch_readmes(repos)
+    got = sum(1 for value in readmes.values() if value)
+    print(f"  [ok] READMEs: {got}/{len(repos)}")
+
+    print("\n[3/4] AI digest...")
     payload = None
     if api_key and base_url and model:
-        content = call_llm(build_user_prompt(repos), api_key, base_url, model)
+        content = call_llm(build_user_prompt(repos, readmes), api_key, base_url, model)
         if content:
             try:
                 payload = validate_payload(extract_json(content), repos)
@@ -342,14 +397,14 @@ def run_generation(args: argparse.Namespace) -> int:
         print("  [warn] Falling back to raw board mode")
 
     if args.dry_run:
-        print("\n[3/3] Dry run complete; no files were written.")
+        print("\n[4/4] Dry run complete; no files were written.")
         preview = build_record(
             date_str, repos, payload, datetime.now(CST).strftime("%Y-%m-%d %H:%M")
         )
         print(json.dumps(preview, ensure_ascii=False, indent=2)[:3000])
         return 0
 
-    print("\n[3/3] Writing record...")
+    print("\n[4/4] Writing record...")
     record = build_record(
         date_str, repos, payload, datetime.now(CST).strftime("%Y-%m-%d %H:%M")
     )

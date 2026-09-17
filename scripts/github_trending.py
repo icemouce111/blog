@@ -12,6 +12,9 @@ import requests
 from bs4 import BeautifulSoup, Tag
 
 TRENDING_URL = "https://github.com/trending"
+RAW_README_URL = "https://raw.githubusercontent.com/{full_name}/{branch}/README.md"
+README_BRANCHES = ("HEAD", "main", "master")
+README_MAX_CHARS = 6000
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
@@ -245,3 +248,45 @@ def repo_to_payload(repo: TrendingRepo) -> dict[str, Any]:
         "forks": repo.forks,
         "topics": repo.topics,
     }
+
+
+def _clean_readme(text: str) -> str:
+    """Strip badge noise and over-long markup so the LLM sees substance."""
+    lines = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        # badge shields / image-only lines / html comments / anchor jumps
+        if not stripped:
+            lines.append("")
+            continue
+        if stripped.startswith(("[![", "<!--", "<div", "</div", "<p ", "</p", "<img")):
+            continue
+        if stripped.startswith("[") and "](" in stripped and stripped.count("(") <= 3 and len(stripped) < 200 and "http" in stripped and stripped.rstrip().endswith(")"):
+            continue
+        lines.append(line)
+    cleaned = "\n".join(lines)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).strip()
+    return cleaned[:README_MAX_CHARS]
+
+
+def fetch_readme(full_name: str, *, timeout: int = 15) -> str:
+    """Fetch the repo README via raw.githubusercontent (no API rate limit).
+
+    Tries HEAD then main then master; returns '' when none resolve — the
+    caller treats empty as 'no readme', never as a fatal error.
+    """
+    headers = {"User-Agent": USER_AGENT}
+    for branch in README_BRANCHES:
+        url = RAW_README_URL.format(full_name=full_name, branch=branch)
+        try:
+            response = requests.get(url, headers=headers, timeout=timeout)
+        except requests.RequestException:
+            continue
+        if response.status_code == 200 and response.text.strip():
+            return _clean_readme(response.text)
+        if response.status_code == 404:
+            continue
+        # 4xx other than 404: don't hammer remaining branches
+        if 400 <= response.status_code < 500:
+            break
+    return ""

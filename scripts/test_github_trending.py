@@ -6,6 +6,7 @@ from scripts.github_daily import (
     build_record,
     build_user_prompt,
     extract_json,
+    fetch_readmes,
     publisher_artifacts,
     publisher_commit_message,
     publisher_remote_artifact,
@@ -13,6 +14,7 @@ from scripts.github_daily import (
 )
 from scripts.github_trending import (
     TrendingRepo,
+    _clean_readme,
     parse_count,
     parse_trending_html,
     rank_repos_by_daily_stars,
@@ -69,8 +71,8 @@ def make_payload() -> dict:
     return {
         "intro": "今日榜单风向：AI 工具链继续升温。",
         "repos": [
-            {"repo": "owner/alpha", "what": "一个做 X 的工具。", "help": "适合你练手。", "how": "先跑示例。"},
-            {"repo": "beta/beta-tool", "what": "一个做 Y 的库。", "help": "可跳过。", "how": "收藏即可。"},
+            {"repo": "owner/alpha", "what": "一个做 X 的工具。", "help": "适合初学者上手练习。", "how": "先跑示例。"},
+            {"repo": "beta/beta-tool", "what": "一个做 Y 的库。", "help": "场景有限可以跳过。", "how": "收藏即可。"},
         ],
         "highlights": [
             {
@@ -195,6 +197,29 @@ class ValidatePayloadTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown repo"):
             validate_payload(payload, make_repos())
 
+    def test_rejects_english_only_what(self):
+        payload = make_payload()
+        payload["repos"][0]["what"] = (
+            "Fast, efficient, battle-tested at Alibaba's scale. "
+            "Hybrid architecture code review tool."
+        )
+        with self.assertRaisesRegex(ValueError, "what is not Chinese"):
+            validate_payload(payload, make_repos())
+
+    def test_rejects_english_only_help(self):
+        payload = make_payload()
+        payload["repos"][0]["help"] = "Great for teams who want better reviews."
+        with self.assertRaisesRegex(ValueError, "help is not Chinese"):
+            validate_payload(payload, make_repos())
+
+    def test_accepts_chinese_with_english_terms(self):
+        payload = make_payload()
+        payload["repos"][0]["what"] = (
+            "阿里开源的代码评审工具，用确定性流水线加 LLM Agent 双管齐下。"
+        )
+        result = validate_payload(payload, make_repos())
+        self.assertIn("LLM", result["projects"]["owner/alpha"]["what"])
+
 
 class ExtractJsonTest(unittest.TestCase):
     def test_parses_plain_json(self):
@@ -215,14 +240,16 @@ class BuildRecordTest(unittest.TestCase):
         self.assertEqual(len(record["highlights"]), 3)
         alpha = record["repos"][0]
         self.assertEqual(alpha["what"], "一个做 X 的工具。")
-        self.assertEqual(alpha["help"], "适合你练手。")
+        self.assertEqual(alpha["help"], "适合初学者上手练习。")
         self.assertEqual(alpha["how"], "先跑示例。")
 
     def test_fallback_mode_keeps_raw_board(self):
         record = build_record("2026-08-31", make_repos(), None, "2026-08-31 09:20")
         self.assertEqual(record["mode"], "fallback")
         self.assertEqual(record["highlights"], [])
-        self.assertEqual(record["repos"][0]["what"], "Alpha does things well")
+        # fallback must NOT echo the raw English GitHub blurb into `what`
+        self.assertEqual(record["repos"][0]["what"], "")
+        self.assertEqual(record["repos"][0]["description"], "Alpha does things well")
         self.assertEqual(record["repos"][1]["what"], "")
 
 
@@ -232,6 +259,46 @@ class BuildUserPromptTest(unittest.TestCase):
         self.assertIn("owner/alpha", prompt)
         self.assertIn("beta/beta-tool", prompt)
         self.assertIn("+98", prompt)
+
+    def test_prompt_includes_readme_content(self):
+        prompt = build_user_prompt(
+            make_repos(),
+            {"owner/alpha": "# Alpha\npip install alpha\n安装后运行 alpha init"},
+        )
+        self.assertIn("README 节选", prompt)
+        self.assertIn("pip install alpha", prompt)
+        self.assertIn("alpha init", prompt)
+
+    def test_prompt_marks_missing_readme(self):
+        prompt = build_user_prompt(make_repos(), {})
+        self.assertIn("（未取到 README", prompt)
+
+
+class FetchReadmesTest(unittest.TestCase):
+    def test_degrades_to_empty_strings_without_raising(self):
+        # unreachable host branch of fetch_readme returns '' per repo
+        repos = make_repos()
+        results = fetch_readmes(repos, max_workers=2)
+        self.assertEqual(set(results), {repo.full_name for repo in repos})
+
+
+class CleanReadmeTest(unittest.TestCase):
+    def test_strips_badges_and_html_noise(self):
+        raw = (
+            "<div align=\"center\">\n<img src=\"logo.svg\" />\n</div>\n"
+            "[![Build](https://img.shields.io/badge/build-passing)](x)\n"
+            "# Alpha\n\n"
+            "Alpha does things well.\n\n- fast\n- safe\n"
+        )
+        cleaned = _clean_readme(raw)
+        self.assertIn("# Alpha", cleaned)
+        self.assertIn("Alpha does things well.", cleaned)
+        self.assertNotIn("shields.io", cleaned)
+        self.assertNotIn("<img", cleaned)
+
+    def test_truncates_to_budget(self):
+        cleaned = _clean_readme("# T\n" + ("line\n" * 20000))
+        self.assertLessEqual(len(cleaned), 6000)
 
 
 class PublisherContractTest(unittest.TestCase):

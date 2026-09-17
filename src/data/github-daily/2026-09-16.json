@@ -1,8 +1,8 @@
 {
   "date": "2026-09-16",
-  "generatedAt": "2026-09-16 21:31",
-  "mode": "fallback",
-  "intro": "今日 AI 解读暂缺，以下为 GitHub 原始榜单。",
+  "generatedAt": "2026-09-17 09:33",
+  "mode": "analyzed",
+  "intro": "今日榜单聚焦 AI 工程化：代码审查 Agent、安全审计 Skill、研究型 Agent 工作流扎堆上榜，本地推理引擎与开源工具链持续升温。",
   "repos": [
     {
       "rank": 1,
@@ -10,13 +10,13 @@
       "url": "https://github.com/alibaba/open-code-review",
       "description": "Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, built-in multi-language ruleset (NPE, thread-safety, XSS, SQL injection), OpenAI & Anthropic compatible.",
       "language": "Go",
-      "stars": 30546,
-      "starsToday": 3215,
-      "forks": 2177,
+      "stars": 31953,
+      "starsToday": 3231,
+      "forks": 2262,
       "topics": [],
-      "what": "Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM A…",
-      "help": "",
-      "how": ""
+      "what": "阿里巴巴开源的 AI 代码审查命令行工具，脱胎于内部两年、服务数万开发者的审查助手。核心设计是「确定性工程管线 + LLM Agent」混合架构：文件筛选、智能打包等关键步骤用工程逻辑硬约束，Agent 负责读全文件、搜代码库做深度审查，输出精确到行的结构化评论；还发布了基于 50 个开源仓库、200 个真实 PR 的 AACR-Bench 基准。",
+      "help": "解决通用 Agent（如 Claude Code）做代码审查时漏审文件、行号漂移、质量不稳定的问题。基准显示同等模型下精确度和 F1 更高、token 消耗仅约九分之一，适合想在 CI 或日常提交流程中引入高精度 AI 审查的团队和个人开发者。",
+      "how": "通过 npm 安装：`npm install -g @alibaba-group/open-code-review`，配置一个 OpenAI 或 Anthropic 兼容的模型端点，进入 Git 仓库运行 `ocr` 审查 diff，或用 `ocr scan` 全文件审查陌生代码库。"
     },
     {
       "rank": 2,
@@ -24,97 +24,97 @@
       "url": "https://github.com/JustVugg/colibri",
       "description": "Run frontier MoE models on hardware you already own — pure C, zero deps, experts streamed from disk. Tiny engine, immense model. 🐦",
       "language": "C",
-      "stars": 34624,
-      "starsToday": 1532,
-      "forks": 3630,
+      "stars": 35048,
+      "starsToday": 1546,
+      "forks": 3685,
       "topics": [],
-      "what": "Run frontier MoE models on hardware you already own — pure C, zero deps, experts streamed from disk. Tiny engine, immens…",
-      "help": "",
-      "how": ""
+      "what": "纯 C 编写、零依赖的 MoE（混合专家）大模型推理引擎，能把 744B 到 2.8T 参数的前沿模型跑到消费级硬件上。核心思路是把显存、内存、NVMe 存储当成一个多层级的内存体系，专家权重按需从磁盘流式加载，配合路由热度驱动的 JIT 权重管理、异构计算（CPU/CUDA/Metal）和推测解码。每个模型家族一个 C 文件，统一用 `coli chat/serve/web` 前端。",
+      "help": "适合没有顶级 GPU 也想在本地私有部署大模型（GLM、Kimi、DeepSeek Flash、Qwen 等）的研究者和爱好者，同时也是一个开放的研究平台，可以观察每个专家的实时路由行为。",
+      "how": "从 Releases 下载对应平台版本，解压后运行 `./coli chat` 即可开始对话（如 GLM-5.2 744B int4 模型）；也可用 `coli serve` 和 `coli web` 起服务。"
     },
     {
       "rank": 3,
-      "fullName": "cloudflare/security-audit-skill",
-      "url": "https://github.com/cloudflare/security-audit-skill",
-      "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
-      "language": "JavaScript",
-      "stars": 5743,
-      "starsToday": 1434,
-      "forks": 344,
-      "topics": [],
-      "what": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
-      "help": "",
-      "how": ""
-    },
-    {
-      "rank": 4,
       "fullName": "abue-ammar/tinycast",
       "url": "https://github.com/abue-ammar/tinycast",
       "description": "Tinycast — a tiny, fully native macOS launcher, hotkeys, and clipboard history.",
       "language": "Swift",
-      "stars": 5250,
-      "starsToday": 1076,
-      "forks": 246,
+      "stars": 5611,
+      "starsToday": 1179,
+      "forks": 267,
       "topics": [],
-      "what": "Tinycast — a tiny, fully native macOS launcher, hotkeys, and clipboard history.",
-      "help": "",
-      "how": ""
+      "what": "macOS 上完全原生的启动器工具，用 SwiftUI 和 AppKit 编写，零第三方依赖、无 Electron 无遥测，内存占用不到 100 MB。功能覆盖应用启动、全局热键、剪贴板历史（文本和图片）、文件搜索、内联计算器、Markdown 片段、窗口管理（34 种 Rectangle 式操作）、日历会议一键加入，甚至原生运行 Raycast 扩展和自带 AI 聊天（默认关闭）。",
+      "help": "适合想在 Mac 上用一个轻量免费开源工具替代 Raycast/Electron 启动器的用户，特别是重视隐私、不想被遥测和订阅制绑架的人。",
+      "how": "先执行 `brew tap abue-ammar/tinycast`，Apple Silicon 的 macOS 26 再执行 `brew install --cask tinycast` 安装，然后在 Settings → General 里设一个全局快捷键即可唤出面板开始使用。"
     },
     {
-      "rank": 5,
+      "rank": 4,
       "fullName": "NationalSecurityAgency/ghidra",
       "url": "https://github.com/NationalSecurityAgency/ghidra",
       "description": "Ghidra is a software reverse engineering (SRE) framework",
       "language": "Java",
-      "stars": 77366,
+      "stars": 77823,
       "starsToday": 1059,
-      "forks": 8549,
+      "forks": 8609,
       "topics": [],
-      "what": "Ghidra is a software reverse engineering (SRE) framework",
-      "help": "",
-      "how": ""
+      "what": "美国国家安全局（NSA）研究部门开源的软件逆向工程（SRE）框架，用 Java 编写。功能包括反汇编、反编译、汇编、控制流图和脚本化分析，支持大量处理器指令集和可执行格式，可交互或自动化运行，还能用 Java 或 Python 写扩展脚本，最初为解决大规模团队协同逆向分析而建。",
+      "help": "适合安全研究人员、逆向工程师和漏洞分析人员分析恶意代码、审计二进制漏洞，是安全行业事实上的标准免费工具之一（注意旧版本有已知安全漏洞，需查看安全公告）。",
+      "how": "安装 JDK 25，从 GitHub Releases 下载 `ghidra_<version>_<release>_<date>.zip` 多平台发行包，解压后运行 `./ghidraRun` 启动，或 `./support/pyghidraRun` 用 Python 版。"
     },
     {
-      "rank": 6,
+      "rank": 5,
       "fullName": "alphaXiv/OpenResearch",
       "url": "https://github.com/alphaXiv/OpenResearch",
       "description": "Turn your coding agents into research agents",
       "language": "Rust",
-      "stars": 3994,
-      "starsToday": 1036,
-      "forks": 256,
+      "stars": 4433,
+      "starsToday": 1017,
+      "forks": 273,
       "topics": [],
-      "what": "Turn your coding agents into research agents",
-      "help": "",
-      "how": ""
+      "what": "用 Rust 构建的本地优先科研 Agent 工作区，把 Claude Code、Codex、Cursor 等编程 Agent 变成研究 Agent。每个研究方向有独立的 Agent 会话和隔离的 git worktree（工作树），实验以 git 原生实验树追踪、每次运行生成不可变归档，还能全自动跑「提出想法→改代码→跑实验→看证据→决定下一步」的 autoresearch 循环，支持本地、SSH、Slurm、K8s 等多种算力。",
+      "help": "适合做 AI/ML 研究需要并行探索多个实验方向、并保证实验可复现和证据可追溯的研究者和工程师，全部数据留在本机，不强制发布代码。",
+      "how": "macOS/Linux 一行安装并启动：`curl -LsSf https://openresearch.sh/install.sh | sh` 然后 `orx up`，浏览器打开 `http://127.0.0.1:4791` 的本地面板；再用 `orx install-skills` 把技能装进你的编程 Agent。"
+    },
+    {
+      "rank": 6,
+      "fullName": "cloudflare/security-audit-skill",
+      "url": "https://github.com/cloudflare/security-audit-skill",
+      "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
+      "language": "JavaScript",
+      "stars": 7314,
+      "starsToday": 927,
+      "forks": 422,
+      "topics": [],
+      "what": "Cloudflare 开源的编码 Agent 技能（skill），把 Agent 变成安全审计员，也是 Cloudflare 漏洞挖掘 harness 的起点。它编排隔离的子 Agent 走六阶段流程：侦察、按覆盖账本分配猎手、候选验证（新 Agent 专门尝试推翻结论）、结构化输出 findings.json、独立记录核验、中立报告生成；附带针对 LLM 应用、Web 协议、内存安全、供应链等十几类攻击面的提示词文档和零依赖校验器。",
+      "help": "解决单次 LLM 提示做安全审计不可靠、缺乏证据链的问题。适合想让 Claude Code 等支持工具调用的 Agent 对自己代码库做系统化、可验证、可增量复跑安全审计的开发者。",
+      "how": "在装有 Node.js 的环境执行 `npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit`，然后在代码库里启动你的编码 Agent，输入 `security audit this codebase`，报告默认输出到 `~/security-audit-skill/<repo-name>/run-<N>`。"
     },
     {
       "rank": 7,
-      "fullName": "Lakr233/vphone-cli",
-      "url": "https://github.com/Lakr233/vphone-cli",
-      "description": "",
-      "language": "Swift",
-      "stars": 13170,
-      "starsToday": 907,
-      "forks": 1576,
-      "topics": [],
-      "what": "",
-      "help": "",
-      "how": ""
-    },
-    {
-      "rank": 8,
       "fullName": "ever-co/ever-gauzy",
       "url": "https://github.com/ever-co/ever-gauzy",
       "description": "Ever® Gauzy™ - Open Business Management Platform (ERP/CRM/HRM/ATS/PM) - https://gauzy.co",
       "language": "TypeScript",
-      "stars": 7094,
-      "starsToday": 771,
-      "forks": 1078,
+      "stars": 7322,
+      "starsToday": 778,
+      "forks": 1088,
       "topics": [],
-      "what": "Ever® Gauzy™ - Open Business Management Platform (ERP/CRM/HRM/ATS/PM) - https://gauzy.co",
-      "help": "",
-      "how": ""
+      "what": "用 TypeScript 构建的开源商业管理平台，一个系统整合 ERP（企业资源计划）、CRM（客户关系管理）、HRM（人力资源管理）、ATS（招聘跟踪）、项目管理以及员工时间追踪和效率监控，还包含会计、开票、库存、销售管道、目标 KPI 等完整功能，提供 headless API、多组织多币币种多语言支持。",
+      "help": "适合中小公司、自由职业团队、代理工作室想用一套开源自托管系统替代多个 SaaS 工具来管理业务全流程，也可直接用在线 SaaS 或 demo 体验。",
+      "how": "先访问 https://demo.gauzy.co 在线 demo 体验（账号 admin@ever.co，密码 admin），合适的话从 https://gauzy.co/downloads 下载平台或桌面应用自托管部署。"
+    },
+    {
+      "rank": 8,
+      "fullName": "Lakr233/vphone-cli",
+      "url": "https://github.com/Lakr233/vphone-cli",
+      "description": "",
+      "language": "Swift",
+      "stars": 13352,
+      "starsToday": 547,
+      "forks": 1588,
+      "topics": [],
+      "what": "用 Swift 编写的命令行工具，基于 Apple 的 Virtualization.framework 和 PCC 研究 VM 基础设施在 Apple Silicon Mac 上启动一台虚拟 iPhone。一条命令跑完下载固件、打补丁、DFU 恢复、定制固件安装到首次开机的全流程，提供从「基本不打补丁」到「完全越狱 + 反虚拟机检测研究」共五档固件变体，VM 支持 APFS 快速克隆、导入导出。",
+      "help": "适合 iOS 安全研究、越狱研究、自动化测试需要可复用可快照的 iPhone 环境的研究者；但需要放宽 SIP/AMFI 系统安全限制，门槛和风险都较高。",
+      "how": "在 macOS 15+ 的 Apple Silicon Mac 上先 `brew install zqxwce/tap/vphone-cli`，再按 README 的 Prerequisites 装 Xcode 和一系列依赖、做 SIP/AMFI 放宽，然后 `vphone-cli vm create myphone -V jb && vphone-cli vm launch myphone` 一键创建并启动。"
     },
     {
       "rank": 9,
@@ -122,13 +122,13 @@
       "url": "https://github.com/jamiepine/voicebox",
       "description": "The open-source AI voice studio. Clone, dictate, create.",
       "language": "TypeScript",
-      "stars": 54118,
-      "starsToday": 409,
-      "forks": 6772,
+      "stars": 54397,
+      "starsToday": 417,
+      "forks": 6790,
       "topics": [],
-      "what": "The open-source AI voice studio. Clone, dictate, create.",
-      "help": "",
-      "how": ""
+      "what": "开源的本地优先 AI 语音工作室，用 Tauri（Rust）构建而非 Electron，等于把 ElevenLabs（语音生成）和 WisprFlow（语音听写）合到一个本地应用里。内置 7 个 TTS 引擎（Qwen3-TTS、Chatterbox 等）、支持 23 种语言、零样本声音克隆、50+ 预设音色，配 Whisper 听写，还内置本地 LLM 做文本润色和声音人设，通过 MCP 服务器让 Claude Code 等 Agent 用 `voicebox.speak` 工具开口说话。",
+      "help": "适合想要完全本地、隐私可控的语音克隆、配音、播客制作和全局听写的创作者，以及想给自己的 AI Agent 加语音输出的开发者。",
+      "how": "从 voicebox.sh 下载对应平台的 DMG/MSI 安装（或 `docker compose up`），设置好全局听写热键和音色后，在 MCP 感知的 Agent 里接入即可让 Agent 说话。"
     },
     {
       "rank": 10,
@@ -136,13 +136,13 @@
       "url": "https://github.com/roboflow/supervision",
       "description": "We write your reusable computer vision tools. 💜",
       "language": "Python",
-      "stars": 50441,
-      "starsToday": 217,
-      "forks": 4804,
+      "stars": 50605,
+      "starsToday": 260,
+      "forks": 4812,
       "topics": [],
-      "what": "We write your reusable computer vision tools. 💜",
-      "help": "",
-      "how": ""
+      "what": "Python 计算机视觉工具库，做模型无关的检测/分割/分类后处理：为 Ultralytics、Transformers、MMDetection 等主流库提供连接器，把结果统一成 sv.Detections；内置高度可定制的可视化标注器、区域实时计数，以及数据集加载、切分、合并和 YOLO/COCO/VOC 格式互转工具。",
+      "help": "适合把目标检测模型落地成应用的计算机视觉开发者，省去自己写后处理、画框和格式转换的重复劳动。",
+      "how": "在 Python 3.10+ 环境执行 `pip install supervision`，几行代码即可接模型：`detections = model.predict(image, threshold=0.5)`，再用 `sv.BoxAnnotator().annotate(scene=image, detections=detections)` 画出标注框。"
     },
     {
       "rank": 11,
@@ -150,13 +150,13 @@
       "url": "https://github.com/anthropics/claude-code",
       "description": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows - all through natural language commands.",
       "language": "TypeScript",
-      "stars": 145281,
-      "starsToday": 155,
-      "forks": 23404,
+      "stars": 145520,
+      "starsToday": 165,
+      "forks": 23487,
       "topics": [],
-      "what": "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster …",
-      "help": "",
-      "how": ""
+      "what": "Anthropic 官方的终端智能体编程工具，用自然语言命令理解你的代码库，执行日常任务、解释复杂代码、处理 git 工作流，可在终端、IDE 或 GitHub 上 @claude 使用。仓库本体还包含多个官方插件扩展（自定义命令和子 Agent），通过 Skills 机制增强能力。",
+      "help": "适合想把 AI 编程深度融入终端工作流的开发者，也是承载各类社区 Skill 和插件生态（如安全审计 skill）的底座。",
+      "how": "macOS/Linux 执行 `curl -fsSL https://claude.ai/install.sh | bash` 安装（npm 方式已不推荐），进入项目目录运行 `claude` 即可开始。"
     },
     {
       "rank": 12,
@@ -164,13 +164,13 @@
       "url": "https://github.com/supabase/supabase",
       "description": "The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI applications.",
       "language": "TypeScript",
-      "stars": 109424,
-      "starsToday": 118,
-      "forks": 13977,
+      "stars": 109748,
+      "starsToday": 120,
+      "forks": 14045,
       "topics": [],
-      "what": "The Postgres development platform. Supabase gives you a dedicated Postgres database to build your web, mobile, and AI ap…",
-      "help": "",
-      "how": ""
+      "what": "开源的 Postgres 开发平台，用企业级开源工具组合出 Firebase 式开发体验：托管 Postgres 数据库、JWT 认证（GoTrue）、自动生成 REST/GraphQL API（PostgREST）、基于 websocket 的 Realtime 订阅、Edge Functions 边缘函数、文件存储和向量/嵌入 AI 工具包，支持云端、自托管和本地开发。",
+      "help": "适合全栈和 AI 应用开发者快速获得数据库、认证、实时和存储能力，尤其适合构建 RAG 应用（内置向量支持）和需要开源可控后端的团队。",
+      "how": "到 supabase.com/dashboard 注册即可零安装开用；本地开发则 `npx supabase init && npx supabase start` 用 Docker 起一套本地环境。"
     },
     {
       "rank": 13,
@@ -178,13 +178,13 @@
       "url": "https://github.com/anthropics/knowledge-work-plugins",
       "description": "Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork",
       "language": "Python",
-      "stars": 24161,
-      "starsToday": 96,
-      "forks": 2914,
+      "stars": 24299,
+      "starsToday": 110,
+      "forks": 2922,
       "topics": [],
-      "what": "Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork",
-      "help": "",
-      "how": ""
+      "what": "Anthropic 官方开源的知识工作者插件库，为 Claude Cowork 和 Claude Code 提供 11 个角色插件（销售、客服、产品、市场、法务、财务、数据、企业搜索、生物科研等）。每个插件按统一结构打包：plugin.json 清单、.mcp.json 工具连接、commands/ 斜杠命令和 skills/ 领域知识，全部是 Markdown 和 JSON 文件，无需写代码。",
+      "help": "适合想让 Claude 变成某个岗位专家、并按公司自己的流程定制（换连接器、加公司术语、改工作流）的团队，也是学习官方 Skill/插件结构的最佳范例。",
+      "how": "Claude Code 里执行 `claude plugin marketplace add anthropics/knowledge-work-plugins`，再 `claude plugin install sales@knowledge-work-plugins`，装好后斜杠命令（如 `/sales:call-prep`）自动可用。"
     },
     {
       "rank": 14,
@@ -192,13 +192,13 @@
       "url": "https://github.com/rlaope/oh-my-hermes",
       "description": "All in one plugin for Hermes Agent ⚚ the coding intelligence, a long-term memory system and model optimized workflow packages",
       "language": "Python",
-      "stars": 2424,
-      "starsToday": 74,
-      "forks": 177,
+      "stars": 2556,
+      "starsToday": 80,
+      "forks": 184,
       "topics": [],
-      "what": "All in one plugin for Hermes Agent ⚚ the coding intelligence, a long-term memory system and model optimized workflow pac…",
-      "help": "",
-      "how": ""
+      "what": "为 Hermes Agent 打造的一体化增强插件（类似 oh-my-zsh 之于 zsh）：在 Hermes 原生技能之上加一层「运营层」，负责框定问题、选择工作流和证据门控，把规划、研究、创作、编码交接、运维和项目长期记忆串起来，并强调证据边界和诚实的执行记录，还提供按工作类别挑选模型的 `omh model` 配置器。",
+      "help": "适合已在用 Nous Research 的 Hermes Agent、想要更强的规划和记忆系统以及模型分工工作流的用户；不熟悉 Hermes 的人参考价值有限。",
+      "how": "macOS/Linux 执行 `curl -fsSL https://raw.githubusercontent.com/rlaope/oh-my-hermes/main/install.sh | sh`，随后必须运行 `omh setup` 完成配置，用 `omh doctor` 验证，`omh update` 更新。"
     },
     {
       "rank": 15,
@@ -206,14 +206,50 @@
       "url": "https://github.com/ankitects/anki",
       "description": "Anki is a smart spaced repetition flashcard program",
       "language": "Rust",
-      "stars": 30651,
-      "starsToday": 50,
-      "forks": 3203,
+      "stars": 30873,
+      "starsToday": 58,
+      "forks": 3210,
       "topics": [],
-      "what": "Anki is a smart spaced repetition flashcard program",
-      "help": "",
-      "how": ""
+      "what": "经典开源间隔重复（spaced repetition）记忆卡片程序，Rust 后端加 Web 前端的桌面版源码仓库，通过科学的复习间隔算法帮用户高效长期记住知识。",
+      "help": "适合学生、语言学习者和任何需要长期记忆大量知识点（词汇、医学、法条等）的人日常使用，也欢迎开发者参与贡献。",
+      "how": "普通用户直接从 apps.ankiweb.net 下载安装版即可；想尝鲜开发版可到 betas.ankiweb.net 下载 beta，想参与开发则看仓库里的 docs/contributing.md 和 docs/development.md。"
     }
   ],
-  "highlights": []
+  "highlights": [
+    {
+      "repo": "cloudflare/security-audit-skill",
+      "title": "把 Agent 编排成安全审计流水线",
+      "why": "这是 Cloudflare 漏洞挖掘 harness 的开源起点，六阶段多 Agent 流程（侦察→猎手→验证→结构化→独立核验→报告）是「确定性管线 + LLM」思路在安全领域的标杆落地，README 里每份攻击面提示词文档都是学习素材。",
+      "value": "直接学到大厂级多 Agent 编排、覆盖账本、交叉验证和机器可读 findings 的完整设计，可复用到任何需要「可靠 Agent 工作流」的场景，也是绝佳的教程素材。",
+      "how": "今天执行 `npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit`，在一个小项目里跑一次 `security audit this codebase`，打开生成的 REPORT.md 和 findings.json 研究它的验证结构。"
+    },
+    {
+      "repo": "alibaba/open-code-review",
+      "title": "确定性工程 × Agent 的代码审查实践",
+      "why": "阿里内部两年、数万开发者、百万级缺陷验证后开源，附带真实 PR 构建的 AACR-Bench 基准和详尽的评测方法论，是「为什么纯提示词 Agent 不够、需要硬约束」的最佳案例。",
+      "value": "可直接接入 CI 做高质量低成本代码审查；其基准构建方法（多工程师交叉标注）也值得写进评测工作流教程。",
+      "how": "今天 `npm install -g @alibaba-group/open-code-review`，配置模型端点后在自己一个 PR 上跑 `ocr`，对比它与通用 Agent 的精确度和 token 消耗。"
+    },
+    {
+      "repo": "anthropics/knowledge-work-plugins",
+      "title": "官方插件结构范本：纯文件式 Skill 设计",
+      "why": "Anthropic 官方出品，11 个岗位插件全部用 Markdown + JSON 表达 skills、commands、MCP 连接器，零代码零构建，是理解 Claude 插件/Skill 生态最权威的参考实现。",
+      "value": "学完就能为自己或客户定制角色化 Agent 插件（如「教程写作助手」「代码审查专员」），非常适合转成小白教程和可交付产品。",
+      "how": "今天 `claude plugin marketplace add anthropics/knowledge-work-plugins` 后装一个 productivity 插件，打开它的 skills/ 和 commands/ 目录，照着结构写一个自己的最小插件。"
+    },
+    {
+      "repo": "alphaXiv/OpenResearch",
+      "title": "研究型 Agent 的可复现工作区",
+      "why": "Rust 编写、本地优先，把并行 Agent 会话、git worktree 隔离、实验树谱系和 autoresearch 全循环整合，代表了 Agent 工作流向科研场景延伸的最新形态。",
+      "value": "适合做 Agent 工程实验和评测对比：多方向并行探索 + 不可变运行归档，天然满足「可复现」要求；其编排设计也可借鉴到产品里。",
+      "how": "今天 `curl -LsSf https://openresearch.sh/install.sh | sh && orx up` 打开本地面板，建一个测试项目并 `orx install-skills` 接入 Claude Code 跑一次实验。"
+    },
+    {
+      "repo": "jamiepine/voicebox",
+      "title": "本地语音 I/O + MCP：给 Agent 加一张嘴",
+      "why": "5 万+ Star 的现象级项目，用 Tauri/Rust 做到完全本地，同时覆盖语音克隆、TTS、Whisper 听写和 MCP 服务端，把「语音输入输出」整条链路开源化。",
+      "value": "对做 AI 产品的人是现成的语音能力底座：REST API + MCP 让任何 Agent 一行工具调用就能说话，也可作为「本地 AI 应用」教程的明星案例。",
+      "how": "今天从 voicebox.sh 下载安装，克隆一个自己的音色，然后在支持 MCP 的 Agent 里测试 `voicebox.speak`，体验 Agent 用你的声音回复。"
+    }
+  ]
 }
