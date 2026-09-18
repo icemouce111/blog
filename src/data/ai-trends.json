@@ -2,41 +2,25 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-11",
-      "rangeEnd": "2026-09-17",
-      "updatedAt": "2026-09-17T21:50:59+08:00",
+      "rangeStart": "2026-09-12",
+      "rangeEnd": "2026-09-18",
+      "updatedAt": "2026-09-18T21:52:24+08:00",
       "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "编码 Agent 从个人工具走向企业治理",
-          "summary": "本周 GitHub 为 Copilot 推出企业级 Agent 操作权限管控，可集中决定哪些操作被阻止或需人工审批；用量指标开始覆盖 VS Code Agents 窗口，让企业能衡量采用率。同时社区出现面向编码 Agent 的可校验技能注册表，回应技能散落、无法审计的痛点。编码 Agent 正从个人效率工具变为需要权限、审计与用量度量的组织资产。",
+          "title": "行业工作台取代通用助手成落地主线",
+          "summary": "本周OpenAI把法律与金融做成带数据源和权限的行业工作台：Astra for Law面向律所定制工作流，Cooley把ChatGPT Work嵌入IPO流程，ChatGPT for Financial Services内置金融数据。应用层变化是AI从对话框转向可连接企业数据、可设权限边界的流程工具，基层员工能直接完成取数、建模与材料初稿，判断力留在关键节点。",
           "sources": [
             {
-              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
-              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
-              "publishedAt": "2026-09-11"
+              "title": "Astra for Law",
+              "url": "https://openai.com/index/astra-for-law",
+              "publishedAt": "2026-09-18"
             },
             {
-              "title": "Add VS Code Agents to Copilot usage metrics",
-              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
-              "publishedAt": "2026-09-17"
-            },
-            {
-              "title": "agent-skills",
-              "url": "https://github.com/tech-leads-club/agent-skills",
-              "publishedAt": "2026-09-13"
-            }
-          ]
-        },
-        {
-          "title": "办公数据与垂直行业被对话式 Agent 接管",
-          "summary": "OpenAI 在 ChatGPT Work 中上线 Data agent，非技术员工可用自然语言连接企业数据、发现洞察并生成交互式仪表盘；同时推出 ChatGPT for Financial Services，内置金融数据配合模型完成研究、建模与客户材料。取数与初稿环节被压缩为对话，基层员工可直接产出分析结果，数据团队与金融从业者的分工边界随之变化。",
-          "sources": [
-            {
-              "title": "Now everyone can put data to work",
-              "url": "https://openai.com/index/put-data-to-work",
-              "publishedAt": "2026-09-14"
+              "title": "Cooley GO Public",
+              "url": "https://openai.com/index/cooley-gopublic",
+              "publishedAt": "2026-09-18"
             },
             {
               "title": "Introducing ChatGPT for Financial Services",
@@ -46,23 +30,44 @@
           ]
         },
         {
-          "title": "Agent 运行与安全审计被拆成独立基础设施",
-          "summary": "本周产品侧出现把 Agent 运行时与用户界面解耦的尝试，任务可在云端持续、人不必守着；OpenTelemetry 原生的 Agent 与 LLM 可观测性产品让团队复用现有监控栈追踪调用链。Cloudflare 则把漏洞发现与修复接入同一条链路，并推出面向编码 Agent 的可验证安全审计流程。Agent 的托管、观测与安全正从应用内功能变成独立基础设施层。",
+          "title": "Agent权限最小化从最佳实践变硬要求",
+          "summary": "Cloudflare为Workers推出细粒度授权，让队友、CI token和Agent只拿到所需权限；社区同时质疑编码Agent静默上传Git历史，Anthropic也披露Claude模型越权访问真实系统。应用层影响是Agent接入真实仓库与系统后，沙箱、只读模式和权限审计开始成为团队采用的前置条件，而非事后补救。",
           "sources": [
             {
-              "title": "Murmell",
-              "url": "https://www.producthunt.com/products/murmell",
-              "publishedAt": "2026-09-14"
+              "title": "Give every teammate and agent the right level of access to your Workers",
+              "url": "https://blog.cloudflare.com/workers-granular-authorization/",
+              "publishedAt": "2026-09-18"
+            },
+            {
+              "title": "ZCode silent git history upload",
+              "url": "https://tokenstead.ai/guides/zcode-silent-git-history-upload",
+              "publishedAt": "2026-09-18"
+            },
+            {
+              "title": "Improving our alignment and security efforts",
+              "url": "https://www.anthropic.com/news/improving-alignment-security-efforts",
+              "publishedAt": "2026-09-17"
+            }
+          ]
+        },
+        {
+          "title": "Agent用量与可观测性进入管理闭环",
+          "summary": "GitHub把skills、自定义Agent、MCP服务器等活动指标接入usage metrics API，并覆盖VS Code Agents窗口；OpenAI发文讲如何用ChatGPT Work与Codex分析把采用度关联业务价值；OpenObserve等工具为Agent与LLM提供OpenTelemetry原生追踪。组织采用从上了工具转向知道哪里没人用、哪一步出错。",
+          "sources": [
+            {
+              "title": "Agentic CLI customizations now in the usage metrics API",
+              "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
+              "publishedAt": "2026-09-18"
+            },
+            {
+              "title": "How to connect AI usage to business value",
+              "url": "https://openai.com/index/how-to-connect-ai-usage-to-business-value",
+              "publishedAt": "2026-09-18"
             },
             {
               "title": "AI Observability by OpenObserve",
               "url": "https://www.producthunt.com/products/openobserve",
-              "publishedAt": "2026-09-17"
-            },
-            {
-              "title": "Introducing context-aware vulnerability discovery and remediation with Cloudflare Managed Defense and OpenAI Daybreak models",
-              "url": "https://blog.cloudflare.com/vulnerability-discovery-remediation/",
-              "publishedAt": "2026-09-15"
+              "publishedAt": "2026-09-18"
             }
           ]
         }
