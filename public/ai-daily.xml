@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Fri, 18 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月19日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-19</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月19日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Show HN: Cactus Needle 3: 8-29MB automation models can match DeepSeek V4 Flash** [来源](https://cactuscompute.com/needle)
+- **Claude Code now reads AGENTS.md if there is no Claude.md** [来源](https://code.claude.com/docs/en/changelog)
+
+### GitHub Trending
+- **Continuum-AI-Corp/OrcaBonsai-27B-Uncensored**：Runtime behavioral]]></description>
+        <pubDate>Sat, 19 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-19</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月18日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-18</link>
@@ -575,24 +596,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **Show HN: Free AI Visibility Audit Tool& Agent** [来源](https:/]]></description>
         <pubDate>Sat, 11 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-11</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月10日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-10</link>
-        <description><![CDATA[# AI 日报 - 2026年07月10日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### Hacker News
-- **QuadRF can spot drones and see WiFi through my wall** [来源](https://www.jeffgeerling.com/blog/2026/quadrf-can-spot-drones-and-see-wifi-through-my-wall/)
-- **A Metallurgist's Doubts About Self-Replicating Probes** [来源](https://www.centauri-dreams.org/2026/07/10/a-metallurgists-doubts-about-self-replica]]></description>
-        <pubDate>Fri, 10 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-10</guid>
     </item>
 </channel>
 </rss>
