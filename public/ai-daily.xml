@@ -6,7 +6,29 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sat, 19 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月21日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-21</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月21日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Show HN: Lossless-memory – a personal AI memory that never summarizes** [来源](https://github.com/aru-labs/lossless-memory)
+- **AX – Google’s Open Agentic Orchestrator** [来源](https://agentexecutor.io)
+- **MCP was always a bad idea?** [来源](https://maharship.com/blog/why-mcp-was-always-a-bad-idea/)
+
+### GitHub Trending
+- **]]></description>
+        <pubDate>Mon, 21 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-21</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月19日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-19</link>
@@ -577,25 +599,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **How Discord Creates Insights from Trillions of Data Points (202]]></description>
         <pubDate>Sun, 12 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-12</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月11日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-11</link>
-        <description><![CDATA[# AI 日报 - 2026年07月11日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### Hacker News
-- **Is There Any End to the Atlantic's "End-Ism" Fetish?** [来源](https://newrepublic.com/article/212923/the-atlantic-magazine-endism-fetish)
-- **SpaceX Flight 13 Starship** [来源](https://www.spacelaunchschedule.com/launch/starship-flight-13/)
-- **Show HN: Free AI Visibility Audit Tool& Agent** [来源](https:/]]></description>
-        <pubDate>Sat, 11 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-11</guid>
     </item>
 </channel>
 </rss>
