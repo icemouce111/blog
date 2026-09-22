@@ -6,7 +6,27 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 21 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月22日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-22</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月22日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **AI coding has made CI a bottleneck, so we reworked ours to keep up** [来源](https://linear.app/now/ci-bottleneck-reworked)
+
+### GitHub Trending
+- **Rizzo-AI-Academy/rizzo-flow**：The open, local take on Jev: typed decisions from an LLM, without generating a single token [来源](https://github.com/Rizzo-AI-Academy/rizzo-flow)]]></description>
+        <pubDate>Tue, 22 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-22</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月21日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-21</link>
@@ -580,25 +600,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **Show HN: Taepdf – Turn yo]]></description>
         <pubDate>Mon, 13 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-13</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月12日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-12</link>
-        <description><![CDATA[# AI 日报 - 2026年07月12日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### Hacker News
-- **Concerned about how companies will manage their cloud bill once agents dominate** [来源](https://news.ycombinator.com/item?id=48882148)
-- **TK, or the secret to effortless writing (2024)** [来源](https://atthis.link/blog/2024/49629.html)
-- **How Discord Creates Insights from Trillions of Data Points (202]]></description>
-        <pubDate>Sun, 12 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-12</guid>
     </item>
 </channel>
 </rss>
