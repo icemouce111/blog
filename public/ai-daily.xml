@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 28 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年09月29日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-09-29</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年09月29日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Nvidia wants to put a watchdog chip next to every AI agent** [来源](https://www.cnbc.com/2026/09/28/nvidia-releases.html)
+- **Cf: The Agentic CLI for the Cloudflare API** [来源](https://blog.cloudflare.com/cloudflare-cf-cli-launch/)
+
+### GitHub Trending
+- **firelex/jeff**：Fine-tunes of Qwen3.5 and Gemma 4 for zero-shot clas]]></description>
+        <pubDate>Tue, 29 Sep 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-09-29</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年09月28日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-09-28</link>
@@ -585,24 +606,6 @@ OpenAI 宣布在 Cursor 被 SpaceX 收购后，逐步终止向其提供 OpenAI �
 - **DeepSeek pause fundraise after comments on compute gap to US leaked (transcript) [pdf]** [来源](https://github.com/demo-zexuan/liang-wenfeng-investor-meeting-2026-7-22/blob/master/%E6%A2%81%E6%96%87%E9%94%8B%E6%8A%95%E8%B5%84%E8%80%85%E4%BA%A4%E6%B5%81%E4%BC%9A-%E6%96%87%E5%AD%97%E7%A8%BF_1_18_translat]]></description>
         <pubDate>Sun, 26 Jul 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-07-26</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年07月25日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-07-25</link>
-        <description><![CDATA[# AI 日报 - 2026年07月25日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### GitHub Trending
-- **block/buzz**：A hive mind communication platform [来源](https://github.com/block/buzz)
-- **alibaba/open-code-review**：Open-source & free — Battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments,… [来源](https://github.co]]></description>
-        <pubDate>Sat, 25 Jul 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-07-25</guid>
     </item>
 </channel>
 </rss>
