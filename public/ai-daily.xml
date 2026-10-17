@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 14 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 17 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月17日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-17</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月17日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **How the Claude Code team does code review** [来源](https://claude.dev/blog/solving-code-review-at-anthropic/)
+
+### GitHub Trending
+- **anthropics/claude-plugins-official**：Official, Anthropic-managed directory of high quality Claude Code Plugins. [来源](https://github.com/anthropics/claude-plugins-official)
+- **MadsLorentze]]></description>
+        <pubDate>Sat, 17 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-17</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月14日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-14</link>
@@ -594,24 +615,6 @@ https://www.anthropic.com/news/claude-opus-5
 据开发]]></description>
         <pubDate>Wed, 02 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-02</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 日报 - 2026年09月01日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-01</link>
-        <description><![CDATA[# AI 日报 - 2026年09月01日
-
-> 每日 AI 行业动态自动汇总。信息来源于 Hacker News、GitHub、V2EX、HuggingFace、Product Hunt 等公开来源。
-> 由 AI 分析师团队（基础信号/社区情绪/行业动态/技术趋势/机会挖掘/风险提示）多角色交叉分析生成。
-
----
-
-## 01 📡 原始信号归档
-
-### Hacker News
-- **Wacksy: a Rust library for writing WACZ collections** [来源](https://blogs.bodleian.ox.ac.uk/archivesandmanuscripts/2025/12/17/introducing-wacksy-a-library-for-writing-wacz-collections/)
-- **A High Performance Neural Network for Energy-Efficient Copyright Violation [pdf]** [来源](https://raw.githubuserco]]></description>
-        <pubDate>Tue, 01 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-01</guid>
     </item>
 </channel>
 </rss>
