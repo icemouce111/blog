@@ -6,6 +6,7 @@ import { BlogPage } from '@/pages/BlogPage'
 import { BlogPostPage } from '@/pages/BlogPostPage'
 import { ProjectsPage } from '@/pages/ProjectsPage'
 import { ResourcesPage } from '@/pages/ResourcesPage'
+import { ToolsPage } from '@/pages/ToolsPage'
 import { AboutPage } from '@/pages/AboutPage'
 import { AiDailyPage } from '@/pages/AiDailyPage'
 import { AiDailyPostPage } from '@/pages/AiDailyPostPage'
@@ -23,6 +24,7 @@ function App() {
             <Route path="blog/:slug" element={<BlogPostPage />} />
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="resources" element={<ResourcesPage />} />
+            <Route path="tools" element={<ToolsPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="ai-daily" element={<AiDailyPage />} />
             <Route path="ai-daily/:slug" element={<AiDailyPostPage />} />

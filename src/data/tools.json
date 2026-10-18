@@ -1,0 +1,11 @@
+{
+  "disclaimer": "仅用于开发测试、表单联调和演示数据；不要用于冒充真实身份、开户、支付或规避实名要求。",
+  "items": [
+    {
+      "name": "美国地址生成器（新罕布什尔州）",
+      "url": "https://www.meiguodizhi.com/usa-address/new-hampshire",
+      "description": "随机生成新罕布什尔州地址及测试资料",
+      "note": "仅限测试数据使用"
+    }
+  ]
+}

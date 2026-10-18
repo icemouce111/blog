@@ -11,6 +11,7 @@ const navItems = [
   { href: '/blog', label: '博客' },
   { href: '/projects', label: '作品集' },
   { href: '/resources', label: '资源导航' },
+  { href: '/tools', label: '工具集' },
   { href: '/ai-daily', label: 'AI情报' },
   { href: '/about', label: '关于' },
 ] as const

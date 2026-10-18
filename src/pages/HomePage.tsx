@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookOpen, FolderGit2, Link2, Sparkles } from 'lucide-react'
+import { ArrowRight, BookOpen, FolderGit2, Link2, Sparkles, Wrench } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getPosts } from '@/lib/posts'
 import { PageContainer } from '@/components/layout/PageContainer'
@@ -28,6 +28,14 @@ const sections = [
     icon: Link2,
     href: '/resources',
     tone: 'amber',
+  },
+  {
+    title: '工具集',
+    description: '可以直接试用和加入工作流的在线工具',
+    eyebrow: 'TOOLS',
+    icon: Wrench,
+    href: '/tools',
+    tone: 'cyan',
   },
   {
     title: 'AI 情报',
