@@ -21,7 +21,7 @@ export function ToolsPage() {
         <SectionHero
           eyebrow="TOOLS"
           title="工具集"
-          description="整理可以直接打开、试用和加入工作流的在线工具。先看用途与提示，再决定是否访问外部网站。"
+          description="整理可以直接打开、试用和加入工作流的在线工具与服务。先看用途与提示，再决定是否访问外部网站。"
           icon={Wrench}
           meta={`${items.length} 个工具`}
           tone="cyan"

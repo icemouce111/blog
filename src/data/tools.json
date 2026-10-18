@@ -1,11 +1,17 @@
 {
-  "disclaimer": "仅用于开发测试、表单联调和演示数据；不要用于冒充真实身份、开户、支付或规避实名要求。",
+  "disclaimer": "本站仅整理外部工具与服务入口，不构成推荐或担保；测试数据仅限开发、表单联调和演示，不要用于冒充真实身份、开户、支付或规避实名要求；涉及付费或账号服务时请先核验价格、授权和账号风险。",
   "items": [
     {
       "name": "美国地址生成器（新罕布什尔州）",
       "url": "https://www.meiguodizhi.com/usa-address/new-hampshire",
       "description": "随机生成新罕布什尔州地址及测试资料",
       "note": "仅限测试数据使用"
+    },
+    {
+      "name": "若水AI（16688店铺）",
+      "url": "https://www.16688.com.cn/shop/S306364",
+      "description": "ChatGPT、Claude 等 AI 订阅/代充服务入口",
+      "note": "第三方交易服务，访问或购买前请自行核验条款、授权和账号风险"
     }
   ]
 }
