@@ -6,7 +6,26 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Sun, 18 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月19日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-19</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月19日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Documents: Police officer gave her Flock login to her ICE agent husband** [来源](https://www.wjcl.com/article/savannah-police-officer-ice-agent-flock-access/74135816)
+- **Hybrid Reasoning Agents: LLM agents that think in latent space, act through text** [来源](https://arxiv.org/abs/2610.18861)
+- **Tmux and Claude Code: Sess]]></description>
+        <pubDate>Mon, 19 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-19</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月18日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-18</link>
@@ -591,27 +610,6 @@ https://www.anthropic.com/news/claude-opus-5
 GPT-6 Astra 是 OpenAI 首个达到 Preparedness Fr]]></description>
         <pubDate>Fri, 04 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-04</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月03日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-03</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月03日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 📡 今日来源速览
-
-### Hacker News
-- **Claude for Commerce Agents** [来源](https://claude.com/blog/claude-for-commerce-agents)
-
-### GitHub Trending
-- **mattpocock/skills**：Skills for Real Engineers. Straight from my .agents directory. [来源](https://github.com/mattpocock/skills)
-- **NousResearch/hermes-agent**：The agent that grows with you [来源](https://github.co]]></description>
-        <pubDate>Thu, 03 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-03</guid>
     </item>
 </channel>
 </rss>
