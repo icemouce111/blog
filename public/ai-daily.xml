@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月20日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-20</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月20日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **RuneScape Bench: MMOs for Agents [video]** [来源](https://www.youtube.com/watch?v=cNm4zyUtWj0)
+- **Agentic Monitoring** [来源](https://benjamincongdon.me/blog/2026/10/19/Agentic-Monitoring/)
+
+### GitHub Trending
+- **MadsLorentzen/ai-job-search**：The job search that runs on your machine. AI job application framework built on]]></description>
+        <pubDate>Tue, 20 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-20</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月19日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-19</link>
@@ -589,27 +610,6 @@ OpenAI 推出新一代模型 GPT-6 Astra，官方称其为迄今最智能、最�
 https://openai.com/]]></description>
         <pubDate>Sat, 05 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-05</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月04日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-04</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月04日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**1. Anthropic 发布 Claude Opus 5，主打长时运行 Agent**
-Opus 5 是针对 Opus 层级的一次阶跃式改进，专为长时间运行的 Agent 设计，同时在编码和专业工作上也有提升。对团队的意义在于：更复杂的多步骤自动化任务（如文档审阅、代码重构）现在有更可靠的模型底座。今天可以做的：在 Anthropic 控制台试用 Opus 5，用一个你之前因超时或上下文丢失而失败的长任务做基准测试。
-https://www.anthropic.com/news/claude-opus-5
-
-**2. OpenAI 发布 GPT-6 Astra，并公布安全评估细节**
-GPT-6 Astra 是 OpenAI 首个达到 Preparedness Fr]]></description>
-        <pubDate>Fri, 04 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-04</guid>
     </item>
 </channel>
 </rss>
