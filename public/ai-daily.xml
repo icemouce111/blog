@@ -6,7 +6,27 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 20 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月21日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-21</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月21日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **LayerFS: The filesystem for AI coding agents** [来源](https://layerfs.ai/)
+
+### GitHub Trending
+- **MadsLorentzen/ai-job-search**：The job search that runs on your machine. AI job application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interview… [来源](https://github.com/MadsLore]]></description>
+        <pubDate>Wed, 21 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-21</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月20日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-20</link>
@@ -592,24 +612,6 @@ https://openai.com/index/gpt-6-astra
 https://g]]></description>
         <pubDate>Sun, 06 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-06</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月05日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-05</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月05日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**GPT-6 Astra 正式发布，达到“关键”网络安全能力等级**
-OpenAI 推出新一代模型 GPT-6 Astra，官方称其为迄今最智能、最对齐的模型，在计算机使用、编程、网络安全和科学领域均达到新水准，并首次在 Preparedness Framework 下达到“关键”网络安全能力等级。同日，GitHub Copilot 宣布 GPT-6 Astra 全面可用，面向长时自主编程与 Agent 任务。对普通用户意味着：编程与办公自动化能力将再次上台阶；对团队意味着：交付复杂 Agent 任务有了更强的底层模型。小动作：在 GitHub Copilot 中切换 GPT-6 Astra，用你手头最难的代码任务做一次对比测试。
-https://openai.com/]]></description>
-        <pubDate>Sat, 05 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-05</guid>
     </item>
 </channel>
 </rss>
