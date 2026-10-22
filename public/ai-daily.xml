@@ -6,7 +6,26 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Wed, 21 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月22日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-22</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月22日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Show HN: Omnara – Open-source alternative to Claude Managed Agents** [来源](https://github.com/omnara-ai/omnara)
+- **Launch HN: Alter (YC S25) – Access control for multi-user agents** [来源](https://alterauth.com/)
+- **Patch the Planet: global response coordination as agents uncover vulnerabilities** [来源](https://openai.com]]></description>
+        <pubDate>Thu, 22 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-22</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月21日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-21</link>
@@ -593,25 +612,6 @@ GPT-6 Astra 是 OpenAI 迄今面向商业的最强模型，强调高级推理、
 - **The VMs Powering Mobile Agents (Instinct, Claude Code)** [来源](https://rohanadwankar.github.io/posts/platforms.html)]]></description>
         <pubDate>Tue, 08 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-08</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月06日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-06</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月06日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**GPT-6 Astra 正式发布，并进入 GitHub Copilot**
-OpenAI 发布 GPT-6 Astra，定位为最智能且对齐程度最高的模型，在计算机使用、编程、网络安全和科学领域达到新水平，并首次达到 Preparedness Framework 下的 Critical 网络安全能力级别。GitHub Copilot 同步宣布 Astra 全面可用，专为长时程自主编码和 Agent 任务设计。对普通用户的影响：Agent 可以更放心地执行多步骤、跨系统的长任务。今天可以做的：在 Copilot 设置中切换 GPT-6 Astra，用一个真实项目跑一遍端到端任务。
-https://openai.com/index/gpt-6-astra
-https://g]]></description>
-        <pubDate>Sun, 06 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-06</guid>
     </item>
 </channel>
 </rss>
