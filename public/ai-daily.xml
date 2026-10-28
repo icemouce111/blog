@@ -6,7 +6,28 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Tue, 27 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 28 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年10月28日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-10-28</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年10月28日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### Hacker News
+- **Here be monsters: What do you still need to know when agents do the work?** [来源](https://blog.adrq.dev/here-be-monsters-what-do-you-still-need-to-know-when-agents-do-the-work)
+
+### GitHub Trending
+- **elayadesign/ai-design-skills** [来源](https://github.com/elayadesign/ai-design-skills)
+- **obra/superpowers**：An agentic s]]></description>
+        <pubDate>Wed, 28 Oct 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-10-28</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月27日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-27</link>
@@ -594,25 +615,6 @@ Cloudflare 重建了 Workers 的模块注册表，Node.js 兼容性默认开启�
 - **alibaba/open-code-review**：Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise]]></description>
         <pubDate>Mon, 14 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-14</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月13日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-13</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月13日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**ChatGPT 上线 Data agent，非技术员工可以用自然语言接数据源做看板。** OpenAI 在 ChatGPT Work 中推出 Data agent，支持连接公司数据、用自然语言发现洞察并生成交互式仪表板。这意味着"取数—分析—出图"这条过去依赖数据团队的链路，开始被压缩成一次对话。今天可以做的：把自己手头最常被问的三个报表问题写下来，试着用一句话描述需求，看现有工具能否直接产出，并记录卡在哪一步。
-https://openai.com/index/put-data-to-work
-
-**GPT‑Live‑1 进入 API，全双工语音成为可开发能力。** OpenAI 把自然、可打断的双向语音对话开放到 API，并支持自定义音色与电话线路接入。对做客服、]]></description>
-        <pubDate>Sun, 13 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-13</guid>
     </item>
 </channel>
 </rss>
