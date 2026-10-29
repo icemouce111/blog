@@ -92,7 +92,22 @@ Hacker News、Product Hunt、X/Twitter、Follow Builders、YouTube、Bilibili、
 | AI Creator Opportunities | 本地官方机会清单 | opportunity | 无 |
 
 LLM 使用 `DEEPSEEK_API_KEY`，未设置时回退到 `OPENAI_API_KEY`。
+DeepSeek 使用官方端点 `https://api.deepseek.com/v1`，默认模型为
+`deepseek-flash`；可用 `DEEPSEEK_MODEL` 覆盖。日报请求显式关闭思考模式，
+保留既有最终正文的输出预算与超时。模型名及参数以
+[DeepSeek 官方文档](https://api-docs.deepseek.com/zh-cn/)为准。
 两个生成器都依次读取进程环境、`scripts/.env`、兼容文件 `scripts/dc-config.env`；已有值不会被覆盖。配置文件权限为 0600（POSIX），不得提交到 Git。安装及应急操作见 [安全 SOP](security.md)。
+
+本机接入时只编辑被忽略的 `scripts/.env`，不要在聊天、示例文件、前端变量或
+Cloudflare 构建中填写真实密钥：
+
+```dotenv
+DEEPSEEK_API_KEY=你的密钥
+DEEPSEEK_MODEL=deepseek-flash
+```
+
+首次验证可运行 `python3 scripts/generate-ai-daily.py --dry-run`；会产生模型调用费用，
+但不写文章或发布。正式运行仍使用上面的发布命令。
 
 小红书 MCP 默认不自动假设地址；只有设置 `XIAOHONGSHU_API_BASE` 后才启用。
 浏览器来源只作为 Linux.do、Reddit 等来源的降级路径；标记为 `skipped` 或 `degraded`，不能阻止官方来源生成日报。

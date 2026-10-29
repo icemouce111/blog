@@ -44,6 +44,7 @@ try:
     from scripts.ai_daily_sop import Publisher
     from scripts.security_config import load_private_config, protect_output, print_error
     from scripts.security_check import scan_files
+    from scripts.llm_config import completion_options, llm_settings
     from scripts.ai_daily_sources import (
         AnthropicNewsSource,
         CallableSource,
@@ -69,6 +70,7 @@ except ModuleNotFoundError:
     from ai_daily_sop import Publisher
     from security_config import load_private_config, protect_output, print_error
     from security_check import scan_files
+    from llm_config import completion_options, llm_settings
     from ai_daily_sources import (
         AnthropicNewsSource,
         CallableSource,
@@ -230,10 +232,7 @@ def _load_env():
 _load_env()
 
 # ── LLM 配置 ──────────────────────────
-LLM_API_KEY = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("OPENAI_API_KEY")
-_use_deepseek = bool(os.environ.get("DEEPSEEK_API_KEY"))
-LLM_BASE_URL = "https://api.deepseek.com/v1" if _use_deepseek else "https://api.openai.com/v1"
-LLM_MODEL = "deepseek-chat" if _use_deepseek else "gpt-4o"
+LLM_API_KEY, LLM_BASE_URL, LLM_MODEL = llm_settings()
 
 
 # ── 工具函数 ──────────────────────────
@@ -1411,6 +1410,7 @@ def call_llm(raw_data_text):
         ],
         "temperature": 0.7,
         "max_tokens": 4096,
+        **completion_options(LLM_BASE_URL),
     }).encode("utf-8")
 
     req = Request(
@@ -1448,6 +1448,7 @@ def call_quality_repair(prompt):
         ],
         "temperature": 0.1,
         "max_tokens": 4096,
+        **completion_options(LLM_BASE_URL),
     }).encode("utf-8")
     request = Request(
         f"{LLM_BASE_URL}/chat/completions",
@@ -1482,6 +1483,7 @@ def call_trend_llm(prompt):
         ],
         "temperature": 0.2,
         "max_tokens": 2400,
+        **completion_options(LLM_BASE_URL),
     }).encode("utf-8")
     req = Request(
         f"{LLM_BASE_URL}/chat/completions",
