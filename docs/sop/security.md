@@ -32,7 +32,7 @@ Gitleaks 固定为 8.30.1，安装时验证官方发布包 SHA-256。Windows 使
 
 1. 保留正式域名公开访问，将生产 `pages.dev` 域名 301 重定向至 `https://blog.icemouce.cc`，保持路径和查询；预览部署开启 Cloudflare Access，仅限维护者。注意预览 Access 不会自动保护生产 `pages.dev`。
 2. 创建仅匹配本站 hostname 的敏感路径阻断规则，覆盖 `.env`、`.env.*`、`*.env`、`.git` 及其子路径；不要拦截 `.well-known`、RSS、文章与资源。
-3. 文章路由 `/ai-daily`、`/github`、`/blog` 及详情初始按 IP 限制 100 次/10 秒，阻断 10 秒。排除 verified bots、XML 和静态资源。免费套餐表达式不能匹配 Host；若同 Zone 其他站点存在冲突或规则配额已用完，停止此项并记录缺口，不能扩大影响范围。
+3. 文章路由 `/ai-daily`、`/github`、`/blog` 及详情初始按 IP 限制 100 次/10 秒，阻断 10 秒。排除 verified bots、XML 和静态资源。本次账户控制台接受并保存了 `http.host eq "blog.icemouce.cc"` 条件，必须保留这个范围限制。若未来套餐校验拒绝此条件或规则配额已用完，停止此项并记录缺口，不能删除 Host 条件扩大到其他站点。
 4. 验证 `public/_headers` 上线，CSP 不阻止正常脚本、字体、图片或路由；验证预览需授权、正式站和 RSS 无需授权，生产默认域名不能绕开规则。
 5. 限流通过控制台规则状态及现有安全事件验证，不向生产站发起高频压力请求。没有命中证据时，只能记“已配置，效果待验证”。
 
