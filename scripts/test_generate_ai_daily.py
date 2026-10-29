@@ -208,27 +208,69 @@ class SourceRegistryContractTest(unittest.TestCase):
         self.assertEqual(
             names,
             {
-                "Hacker News",
                 "GitHub Trending",
-                "V2EX",
                 "HuggingFace Papers",
-                "Product Hunt",
                 "OpenAI",
                 "Anthropic",
                 "GitHub Changelog",
                 "Cloudflare Blog",
                 "LangChain Blog",
-                "Linux.do",
-                "Reddit",
-                "X/Twitter",
-                "YouTube",
-                "Bilibili",
-                "Zhihu",
-                "Xiaohongshu",
                 "Google Trends",
                 "AI Creator Opportunities",
+                "V2EX",
+                "Linux.do",
+                "Reddit",
+                "Stack Overflow",
+                "Medium AI",
+                "DEV Community",
+                "博客园",
             },
         )
+
+    def test_optional_sources_remain_implemented_but_are_not_in_default_registry(self):
+        names = {
+            adapter.name
+            for adapter in MODULE.build_source_registry().adapters
+        }
+
+        self.assertNotIn("Hacker News", names)
+        self.assertNotIn("X/Twitter", names)
+        self.assertNotIn("Follow Builders", names)
+
+    def test_registry_marks_non_story_sources_for_the_agent(self):
+        adapters = {
+            adapter.name: adapter
+            for adapter in MODULE.build_source_registry().adapters
+        }
+
+        self.assertEqual(adapters["Google Trends"].signal_type.value, "trend")
+        self.assertEqual(
+            adapters["AI Creator Opportunities"].signal_type.value,
+            "opportunity",
+        )
+
+    def test_source_policy_limits_agent_input(self):
+        results = {
+            "OpenAI": SourceResult(
+                "OpenAI",
+                SourceStatus.ACTIVE,
+                [
+                    SourceItem(
+                        source="OpenAI",
+                        title=f"Story {index}",
+                        url=f"https://openai.com/story-{index}",
+                        published_at="2026-07-01",
+                        source_tier=SourceTier.OFFICIAL,
+                    )
+                    for index in range(10)
+                ],
+            )
+        }
+
+        converted = MODULE.source_results_to_legacy(results)
+
+        self.assertEqual(len(converted["OpenAI"]), 8)
+        self.assertEqual(converted["OpenAI"][0]["signal_type"], "story")
 
     def test_creator_opportunities_exclude_expired_items(self):
         items = MODULE.fetch_creator_opportunities(
@@ -269,6 +311,36 @@ class SourceRegistryContractTest(unittest.TestCase):
             [item.title for item in filtered["OpenAI"].items],
             ["Current"],
         )
+
+    def test_story_sources_require_dates_but_trend_sources_can_be_undated(self):
+        results = {
+            "OpenAI": SourceResult(
+                "OpenAI",
+                SourceStatus.ACTIVE,
+                [SourceItem(
+                    source="OpenAI",
+                    title="Undated story",
+                    url="https://openai.com/undated",
+                    source_tier=SourceTier.OFFICIAL,
+                )],
+            ),
+            "Google Trends": SourceResult(
+                "Google Trends",
+                SourceStatus.ACTIVE,
+                [SourceItem(
+                    source="Google Trends",
+                    title="AI Agent trend",
+                    url="https://trends.google.com/trends/explore?q=AI+Agent",
+                    source_tier=SourceTier.AGGREGATOR,
+                    metadata={"signal_type": "trend"},
+                )],
+            ),
+        }
+
+        filtered = MODULE.filter_source_results(results, date(2026, 7, 1))
+
+        self.assertEqual(filtered["OpenAI"].items, [])
+        self.assertEqual(len(filtered["Google Trends"].items), 1)
 
     def test_historical_filter_drops_undated_and_nonmatching_evidence(self):
         results = {
@@ -359,6 +431,20 @@ class AnalysisPromptContractTest(unittest.TestCase):
             "同一事件只能出现在一个板块",
             MODULE.ANALYSIS_SYSTEM_PROMPT,
         )
+
+    def test_raw_data_exposes_fixed_signal_type_to_agent(self):
+        raw = MODULE.format_raw_data({
+            "Google Trends": [{
+                "title": "AI Agent 搜索热度",
+                "url": "https://trends.google.com/trends/explore?q=AI+Agent",
+                "description": "7 日趋势",
+                "source_tier": "aggregator",
+                "signal_type": "trend",
+                "date_basis": "rolling",
+            }],
+        })
+
+        self.assertIn("=== Google Trends [aggregator/trend/rolling] ===", raw)
 
 
 class MarkdownDateTest(unittest.TestCase):

@@ -5,12 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && python3 scripts/security_check.py dist",
     "lint": "eslint .",
     "test": "npm run test:ts && npm run test:py",
     "test:ts": "node --test --experimental-strip-types tests/*.test.ts",
-    "test:py": "python3 -m unittest scripts/test_generate_ai_daily.py scripts/test_ai_daily_sources.py scripts/test_ai_daily_quality.py scripts/test_ai_daily_sop.py scripts/test_ai_trends.py scripts/test_github_trending.py",
-    "preview": "vite preview"
+    "test:py": "python3 -m unittest discover -s scripts -p \"test_*.py\"",
+    "preview": "vite preview",
+    "security": "python3 scripts/security_check.py worktree",
+    "security:history": "python3 scripts/security_check.py history",
+    "security:staged": "python3 scripts/security_check.py staged",
+    "security:install": "python3 scripts/install_gitleaks.py",
+    "prebuild": "python3 scripts/install_gitleaks.py",
+    "security:setup": "python3 scripts/setup_security.py"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

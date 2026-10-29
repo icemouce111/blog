@@ -11,7 +11,7 @@
   DEEPSEEK_API_KEY
   OPENAI_API_KEY
 缺少 key 时自动尝试加载 scripts/dc-config.env。无任何 key 时降级为
-fallback 模式（榜单照发，AI 解读留空）。
+fallback 模式（榜单照发，项目说明使用中文兜底文案）。
 """
 
 from __future__ import annotations
@@ -30,6 +30,8 @@ from urllib.request import Request, urlopen
 
 try:
     from scripts.ai_daily_sop import PublishError, Publisher
+    from scripts.security_config import load_env_file, load_private_config, protect_output, print_error
+    from scripts.security_check import scan_files
     from scripts.github_trending import (
         TrendingFetchError,
         TrendingRepo,
@@ -39,6 +41,8 @@ try:
     )
 except ModuleNotFoundError:
     from ai_daily_sop import PublishError, Publisher
+    from security_config import load_env_file, load_private_config, protect_output, print_error
+    from security_check import scan_files
     from github_trending import (
         TrendingFetchError,
         TrendingRepo,
@@ -89,21 +93,6 @@ _CJK_PATTERN = re.compile(r"[\u4e00-\u9fff]")
 def _is_mostly_chinese(text: str, *, min_cjk: int = 4) -> bool:
     """Reject English-only output (e.g. echoed GitHub descriptions)."""
     return len(_CJK_PATTERN.findall(text)) >= min_cjk
-
-
-def load_env_file(path: Path) -> None:
-    """Load KEY=VALUE pairs into os.environ without overriding existing vars."""
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, _, value = line.partition("=")
-        key = key.strip()
-        value = value.strip().strip('"').strip("'")
-        if key and key not in os.environ:
-            os.environ[key] = value
 
 
 def _llm_settings() -> tuple[str | None, str, str]:
@@ -219,6 +208,16 @@ def extract_json(content: str) -> Any:
         raise
 
 
+def fallback_project_copy(repo: TrendingRepo) -> dict[str, str]:
+    """Keep fallback records readable for Chinese customers without inventing facts."""
+    language = repo.language or "未知语言"
+    return {
+        "what": f"一个使用 {language} 的开源项目，当前暂未生成基于 README 的中文解读。",
+        "help": "适合想快速了解 GitHub 热门项目、并愿意先阅读 README 的开发者。",
+        "how": "打开项目 README，先按 Quick Start 跑通一个最小示例，再决定是否深入。",
+    }
+
+
 def validate_payload(payload: Any, repos: list[TrendingRepo]) -> dict[str, Any]:
     """Strictly validate the LLM JSON; raise ValueError with a precise reason."""
     if not isinstance(payload, dict):
@@ -294,17 +293,13 @@ def build_record(
     record_repos: list[dict[str, Any]] = []
     for repo in repos:
         project = (payload or {}).get("projects", {}).get(repo.full_name, {})
-        what = project.get("what", "")
-        if not what:
-            # fallback: never echo the raw (usually English) GitHub blurb;
-            # leave what empty so the UI shows its own honest placeholder.
-            what = ""
+        fallback = fallback_project_copy(repo)
         record_repos.append(
             {
                 **repo_to_payload(repo),
-                "what": what,
-                "help": project.get("help", ""),
-                "how": project.get("how", ""),
+                "what": project.get("what") or fallback["what"],
+                "help": project.get("help") or fallback["help"],
+                "how": project.get("how") or fallback["how"],
             }
         )
     return {
@@ -324,6 +319,11 @@ def build_record(
 def save_record(
     record: dict[str, Any], date_str: str, *, force: bool
 ) -> Path | None:
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix="github-daily-check-") as directory:
+        candidate = Path(directory) / "record.json"
+        candidate.write_text(json.dumps(record, ensure_ascii=False), encoding="utf-8")
+        scan_files(Path(directory), [candidate.name])
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     filepath = DATA_DIR / f"{date_str}.json"
     if filepath.exists() and not force:
@@ -349,6 +349,7 @@ def save_record(
 
 
 def run_generation(args: argparse.Namespace) -> int:
+    load_private_config(BLOG_DIR)
     date_str = args.date or datetime.now(CST).strftime("%Y-%m-%d")
     api_key, base_url, model = _llm_settings()
 
@@ -394,7 +395,7 @@ def run_generation(args: argparse.Namespace) -> int:
     else:
         print("  [warn] No LLM credentials configured")
     if payload is None:
-        print("  [warn] Falling back to raw board mode")
+        print("  [warn] Falling back to Chinese-safe board mode")
 
     if args.dry_run:
         print("\n[4/4] Dry run complete; no files were written.")
@@ -454,6 +455,7 @@ def run_publisher(date_str: str, *, force: bool) -> int:
         commit_message=publisher_commit_message,
         remote_artifact=publisher_remote_artifact,
         live_url=None,
+        publication_key="github-daily",
     )
     result = publisher.publish(date_str, force=force, generate=generate)
     print(f"  [ok] {result.status}: {result.commit_sha} (remote SHA verified)")
@@ -495,12 +497,13 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    load_env_file(SCRIPT_DIR / "dc-config.env")
+    load_private_config(BLOG_DIR)
+    protect_output()
     try:
         sys.exit(main())
     except KeyboardInterrupt:
         print("\n  Stopped by user")
         sys.exit(130)
-    except Exception:
-        traceback.print_exc()
+    except Exception as error:
+        print_error(error)
         sys.exit(1)

@@ -3,28 +3,29 @@
 ## 目标
 
 AI Daily 使用同一条 Python 命令完成数据采集、自动质量控制、日报生成、
-Git 发布和 Cloudflare Pages 线上验证。发布过程始终基于最新
+GitHub PR 发布和 Cloudflare Pages 线上验证。发布过程始终基于最新
 `origin/main` 的临时 worktree，不继承当前开发分支的提交或未提交文件。
 
 ## 环境要求
 
 - Python 3.10 或更高版本。
-- Git，且 `origin` 已配置 `main` 分支写权限。
-- 安装 `scripts/requirements.txt` 中的 Python 依赖。
+- Git 和已登录的 GitHub CLI；发布身份需要本仓库内容及 PR 写权限，无需绕过保护。
+- 安装 `scripts/requirements.lock` 中的固定依赖及 Gitleaks 8.30.1。
 - 运行目录必须是 blog 仓库根目录。
 - Cloudflare Pages 继续监听 GitHub `main`，本仓库不增加第二个定时任务。
 
 macOS/Linux：
 
 ```bash
-python3 -m pip install -r scripts/requirements.txt
+python3 -m pip install --require-hashes -r scripts/requirements.lock
+python3 scripts/install_gitleaks.py
 python3 scripts/generate-ai-daily.py
 ```
 
 Windows PowerShell：
 
 ```powershell
-py -3 -m pip install -r scripts/requirements.txt
+py -3 -m pip install --require-hashes -r scripts/requirements.lock
 py -3 scripts/generate-ai-daily.py
 ```
 
@@ -66,34 +67,48 @@ Hacker News、GitHub 和 Hugging Face Papers 使用按日查询；没有可回�
 
 ## 数据源与凭证
 
-| 来源 | 首选方式 | 降级方式 | 环境变量 |
+默认主流程启用官方、项目和经过限额的社区来源：OpenAI、Anthropic、GitHub Changelog、Cloudflare Blog、LangChain Blog、GitHub Trending、HuggingFace Papers、V2EX、Linux.do、Reddit、Stack Overflow、Medium AI、DEV Community、博客园、Google Trends、AI Creator Opportunities。
+
+Hacker News、Product Hunt、X/Twitter、Follow Builders、YouTube、Bilibili、Zhihu 和小红书的适配器仍保留在代码中，但默认不进入日报主流程；重新启用前应先补充来源级过滤和测试。
+
+| 来源 | 首选方式 | 信号类型 | 环境变量 |
 | --- | --- | --- | --- |
-| OpenAI | 官方 RSS | 无 | 无 |
-| Anthropic | 官方 Newsroom + Sitemap | 无 | 无 |
-| Linux.do | Discourse RSS | `bb-browser linuxdo/latest` | 无 |
-| Reddit | 公共 JSON | `bb-browser reddit/hot` | 无 |
-| X | 官方 recent search API | `bb-browser twitter/search` | `X_BEARER_TOKEN` |
-| 小红书 | 本地登录态 MCP | `bb-browser xiaohongshu/search` | `XIAOHONGSHU_API_BASE` |
-| 其他既有来源 | 现有 HTTP 或 `bb-browser` 采集器 | 跳过 | 视来源而定 |
+| OpenAI | 官方 RSS | story | 无 |
+| Anthropic | 官方 Newsroom + Sitemap | story | 无 |
+| GitHub Changelog | 官方 RSS + 主题关键词 | story | 无 |
+| Cloudflare Blog | 官方 RSS + AI 关键词 | story | 无 |
+| LangChain Blog | 官方 RSS + Agent 关键词 | story | 无 |
+| GitHub Trending | Trending HTML / GitHub API | story | `GITHUB_TOKEN`（可选） |
+| HuggingFace Papers | Daily Papers API | story | 无 |
+| Google Trends | `pytrends` | trend | 无 |
+| V2EX | 热门主题 API | social | 无 |
+| Linux.do | Discourse RSS / 浏览器降级 | social | 无 |
+| Reddit | 公共 JSON / 浏览器降级 | social | 无 |
+| Stack Overflow | Atom/RSS | social | 无 |
+| Medium AI | Medium 标签 RSS | social | 无 |
+| DEV Community | DEV 标签 RSS | social | 无 |
+| 博客园 | Atom RSS | social | 无 |
+| Google Trends | `pytrends` | trend | 无 |
+| AI Creator Opportunities | 本地官方机会清单 | opportunity | 无 |
 
 LLM 使用 `DEEPSEEK_API_KEY`，未设置时回退到 `OPENAI_API_KEY`。
-密钥可放在进程环境或本机 `scripts/.env`，不得提交到 Git。
+两个生成器都依次读取进程环境、`scripts/.env`、兼容文件 `scripts/dc-config.env`；已有值不会被覆盖。配置文件权限为 0600（POSIX），不得提交到 Git。安装及应急操作见 [安全 SOP](security.md)。
 
 小红书 MCP 默认不自动假设地址；只有设置 `XIAOHONGSHU_API_BASE` 后才启用。
-浏览器来源不可用时标记为 `skipped` 或 `degraded`，不会阻止官方和公共来源生成日报。
+浏览器来源只作为 Linux.do、Reddit 等来源的降级路径；标记为 `skipped` 或 `degraded`，不能阻止官方来源生成日报。
 
 ## 自动质量控制
 
 发布前自动执行以下检查：
 
-1. 删除空标题、无效 URL、明显过期和未来日期数据。
-2. 对规范化 URL 去重。
-3. 报告引用的 URL 必须出现在本次采集证据中。
-4. 社区消息必须使用“据社区讨论”“有用户/开发者指出”等归因措辞。
-5. 无证据支持的“最快”“第一”“唯一”“明确蓝海”等表述不允许通过。
-6. 首次检查失败时调用 LLM 修复一次。
-7. 修复后仍无来源的单条内容自动删除，空栏目自动省略。
-8. 没有合格编辑条目或 LLM 不可用时，自动生成只包含真实来源链接的原始信号归档。
+1. **脚本固定**：来源白名单、URL、日期、条数配额、明显垃圾信息、规范化 URL 去重和证据边界。
+2. **Agent 判断**：语义相关性、跨来源事件合并、重要性排序、栏目归类、解释和下一步动作。
+3. 删除空标题、无效 URL、明显过期和未来日期数据。
+4. 报告引用的 URL 必须出现在本次采集证据中。
+5. 趋势信号只能写成趋势、搜索热度或后续观察；活动机会必须保留报名、截止、奖励或资格语义。
+6. 无证据支持的“最快”“第一”“唯一”“明确蓝海”等表述不允许通过。
+7. 首次检查失败时调用 LLM 修复一次；修复仍失败则只保留真实来源链接。
+8. 没有合格编辑条目或 LLM 不可用时，自动生成原始信号归档。
 
 没有人工审批步骤。只有所有核心来源都没有可用数据，或最终 Markdown
 无法形成编号栏目时，生成流程才返回非零状态。
@@ -109,11 +124,12 @@ LLM 使用 `DEEPSEEK_API_KEY`，未设置时回退到 `OPENAI_API_KEY`。
    - `src/content/ai-daily/YYYY-MM-DD.md`
    - `public/ai-daily.xml`
    - `src/data/ai-trends.json`
-7. 提交并执行非强制 `git push origin HEAD:main`。
-8. 非快进失败时，从新的 `origin/main` 完整重试一次。
-9. 使用 `git ls-remote` 验证远端 SHA。
-10. 轮询 `https://blog.icemouce.cc/ai-daily.xml`，确认目标日期已上线。
-11. 在 `finally` 中移除临时 worktree 和锁。
+7. 扫描待发布文件后提交至 `codex/ai-daily-YYYY-MM-DD` 分支，创建 PR；GitHub 日报使用 `codex/github-daily-YYYY-MM-DD`。
+8. 等待 `security`、`tests`、`build` 全部成功，按已扫描 head SHA 请求自动 squash 合并；不使用管理员绕过。
+9. 最多等待十分钟；超时、冲突、检查失败或 head 被替换时返回非零，并给出 PR 链接。重跑复用待合并 PR，不重新调用模型；待合并时不接受 `--force` 覆盖。
+10. 拉取远端 `main`，验证合并提交是其祖先且目标文件存在。
+11. 轮询 `https://blog.icemouce.cc/ai-daily.xml`，确认目标日期已上线。
+12. 在 `finally` 中移除临时 worktree 和锁。
 
 报告已存在时，流程仍会验证远端报告、RSS 和线上状态，不会把
 `Everything up-to-date` 当成未经验证的成功。

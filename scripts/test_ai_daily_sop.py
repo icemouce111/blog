@@ -2,6 +2,7 @@ import subprocess
 import tempfile
 import time
 import unittest
+from unittest.mock import Mock
 from pathlib import Path
 
 from scripts.ai_daily_sop import (
@@ -10,6 +11,8 @@ from scripts.ai_daily_sop import (
     Publisher,
     allowed_artifact_paths,
 )
+from scripts.github_pr import PullRequestError
+from scripts.security_check import SecurityError
 
 
 def run_git(cwd: Path, *args: str) -> str:
@@ -21,6 +24,41 @@ def run_git(cwd: Path, *args: str) -> str:
         text=True,
     )
     return result.stdout.strip()
+
+
+class LocalPullRequests:
+    """Exercise real Git branches and squash merges against a local bare remote."""
+    def __init__(self, seed: Path, remote: Path):
+        self.seed, self.remote = seed, remote
+        self.pending = None
+        self.created = 0
+        self.fail_merge = False
+
+    def find(self, _head):
+        return self.pending
+
+    def validate(self, _pr, _allowed):
+        pass
+
+    def create(self, head, _title):
+        self.created += 1
+        self.pending = {"number": self.created, "url": "https://github.com/example/blog/pull/1",
+                        "headRefName": head, "headRefOid": run_git(self.remote, "rev-parse", f"refs/heads/{head}")}
+        return self.pending
+
+    def wait_for_merge(self, pr, allowed, **_kwargs):
+        if self.fail_merge:
+            raise PullRequestError(f"PR still pending: {pr['url']}")
+        run_git(self.seed, "fetch", "origin", "main")
+        run_git(self.seed, "checkout", "main")
+        run_git(self.seed, "merge", "--ff-only", "origin/main")
+        run_git(self.seed, "fetch", "origin", pr["headRefName"])
+        run_git(self.seed, "merge", "--squash", "FETCH_HEAD")
+        run_git(self.seed, "commit", "-m", "Merge daily PR")
+        run_git(self.seed, "push", "origin", "main")
+        merged = run_git(self.seed, "rev-parse", "HEAD")
+        self.pending = None
+        return merged
 
 
 class AtomicRunLockTest(unittest.TestCase):
@@ -131,10 +169,12 @@ class PublisherTest(unittest.TestCase):
         run_git(self.checkout, "commit", "-m", "feature work")
 
         self.live_checks = []
+        self.pull_requests = LocalPullRequests(self.seed, self.remote)
         self.publisher = Publisher(
             self.checkout,
             live_check=lambda date: self.live_checks.append(date) or True,
             verify_timeout=0,
+            pull_requests=self.pull_requests,
         )
 
     def tearDown(self):
@@ -231,6 +271,44 @@ class PublisherTest(unittest.TestCase):
         self.assertEqual(result.status, "published")
         self.assertIn("concurrent.txt", remote_files)
         self.assertIn("src/content/ai-daily/2026-07-01.md", remote_files)
+
+    def test_pending_pr_is_resumed_without_regeneration(self):
+        before = run_git(self.remote, "rev-parse", "refs/heads/main")
+        self.pull_requests.fail_merge = True
+        with self.assertRaises(PullRequestError):
+            self.publisher.publish("2026-07-01", generate=self.generate_valid)
+        self.assertEqual(before, run_git(self.remote, "rev-parse", "refs/heads/main"))
+        self.pull_requests.fail_merge = False
+        generator = Mock(side_effect=AssertionError("must reuse the pending PR"))
+        result = self.publisher.publish("2026-07-01", generate=generator)
+        self.assertEqual(result.status, "published")
+        self.assertEqual(self.pull_requests.created, 1)
+        generator.assert_not_called()
+
+    def test_secret_failure_never_pushes_a_branch(self):
+        self.publisher.security_check = Mock(side_effect=SecurityError("synthetic credential detected"))
+        before = run_git(self.remote, "show-ref")
+        with self.assertRaises(SecurityError):
+            self.publisher.publish("2026-07-01", generate=self.generate_valid)
+        self.assertEqual(before, run_git(self.remote, "show-ref"))
+        self.assertEqual(self.pull_requests.created, 0)
+
+    def test_failed_checks_do_not_report_publication_or_verify_live(self):
+        self.pull_requests.fail_merge = True
+        with self.assertRaises(PullRequestError):
+            self.publisher.publish("2026-07-01", generate=self.generate_valid)
+        self.assertEqual(self.live_checks, [])
+
+    def test_branch_is_recovered_if_pr_creation_failed_after_push(self):
+        original = self.pull_requests.create
+        self.pull_requests.create = Mock(side_effect=PullRequestError("temporary GitHub failure"))
+        with self.assertRaises(PullRequestError):
+            self.publisher.publish("2026-07-01", generate=self.generate_valid)
+        self.pull_requests.create = original
+        generator = Mock(side_effect=AssertionError("must not regenerate"))
+        result = self.publisher.publish("2026-07-01", generate=generator)
+        self.assertEqual(result.status, "published")
+        generator.assert_not_called()
 
 
 if __name__ == "__main__":
