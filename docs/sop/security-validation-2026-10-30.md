@@ -28,6 +28,8 @@
 - `https://blog-9is.pages.dev/ai-daily?security_probe=1` 返回 `301`，Location 为 `https://blog.icemouce.cc/ai-daily?security_probe=1`。
 - 仅进行了低流量 GET/HEAD 验证，没有对生产站进行阈值压测。控制台截图保存在本机忽略目录，不上传账号界面或凭证至公开仓库。
 
+页面资源核对发现既有 Cloudflare Web Analytics beacon。CSP 对 `static.cloudflareinsights.com` 的脚本和 `cloudflareinsights.com` 的统计连接保留精确许可，避免拦截既有功能；不允许任意脚本来源。参考 [Cloudflare CSP 要求](https://developers.cloudflare.com/fundamentals/reference/policies-compliances/content-security-policies/)。
+
 ## 剩余风险与维护边界
 
 1. 限流已配置，但尚无真实触发证据；不能宣称已验证拦截效率。首次误拦应调整或撤回对应边缘规则，保留主分支和密钥门禁。
