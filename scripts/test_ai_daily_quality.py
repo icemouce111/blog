@@ -78,6 +78,24 @@ class ItemFilterTest(unittest.TestCase):
 
         self.assertEqual([item.title for item in usable], ["OpenAI 发布新模型"])
 
+    def test_can_require_published_at_for_story_sources(self):
+        items = [
+            official_item(published_at=None),
+            official_item(
+                title="有日期消息",
+                url="https://openai.com/index/dated",
+                published_at="2026-07-01",
+            ),
+        ]
+
+        usable = filter_usable_items(
+            items,
+            date(2026, 7, 1),
+            require_published_at=True,
+        )
+
+        self.assertEqual([item.title for item in usable], ["有日期消息"])
+
     def test_historical_mode_requires_a_verified_item_from_the_target_date(self):
         items = [
             official_item(published_at="2026-07-01"),
@@ -103,6 +121,41 @@ class ItemFilterTest(unittest.TestCase):
 
 
 class ReportValidationTest(unittest.TestCase):
+    def test_trend_signal_must_be_described_as_a_trend(self):
+        evidence = official_item(
+            title="AI Agent 搜索数据",
+            url="https://trends.google.com/trends/explore?q=AI+Agent",
+            metadata={"signal_type": "trend"},
+        )
+        report = """## 01 📌 今日头条
+
+1. **AI Agent 已成为主流产品**
+   AI Agent 已成为主流产品。来源：https://trends.google.com/trends/explore?q=AI+Agent
+"""
+
+        validation = validate_report(report, [evidence])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(any("trend signal" in issue for issue in validation.issues))
+
+    def test_opportunity_signal_must_include_action_context(self):
+        evidence = official_item(
+            source="AI Creator Opportunities",
+            title="AI 创作者计划",
+            url="https://example.com/opportunity",
+            metadata={"signal_type": "opportunity"},
+        )
+        report = """## 01 📌 今日头条
+
+1. **AI 创作者消息**
+   这是一个重要变化。来源：https://example.com/opportunity
+"""
+
+        validation = validate_report(report, [evidence])
+
+        self.assertFalse(validation.valid)
+        self.assertTrue(any("opportunity context" in issue for issue in validation.issues))
+
     def test_rejects_urls_not_present_in_collected_evidence(self):
         report = """## 01 📌 今日头条
 
@@ -257,6 +310,42 @@ class RepairFallbackTest(unittest.TestCase):
 
         self.assertIn("AI agent", fallback)
         self.assertNotIn("toothbrush", fallback)
+
+    def test_fallback_labels_trend_and_opportunity_signals(self):
+        trend = official_item(
+            source="Google Trends",
+            title="AI Agent 搜索热度",
+            url="https://trends.google.com/trends/explore?q=AI+Agent",
+            published_at=None,
+            metadata={"signal_type": "trend"},
+        )
+        opportunity = official_item(
+            source="AI Creator Opportunities",
+            title="AI 创作者计划",
+            url="https://example.com/opportunity",
+            published_at=None,
+            metadata={"signal_type": "opportunity"},
+        )
+        results = {
+            "Google Trends": SourceResult(
+                "Google Trends",
+                SourceStatus.ACTIVE,
+                [trend],
+            ),
+            "AI Creator Opportunities": SourceResult(
+                "AI Creator Opportunities",
+                SourceStatus.ACTIVE,
+                [opportunity],
+            ),
+        }
+
+        fallback = build_signal_fallback(
+            results,
+            target_date=date(2026, 7, 1),
+        )
+
+        self.assertIn("趋势信号：AI Agent 搜索热度", fallback)
+        self.assertIn("活动机会：AI 创作者计划", fallback)
 
     def test_duplicate_repair_prompt_requires_cross_item_deduplication(self):
         duplicate = """## 01 📌 今日头条

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import html
+import json
 import os
 import re
 import xml.etree.ElementTree as ET
@@ -29,6 +30,15 @@ class SourceTier(str, Enum):
     OFFICIAL = "official"
     COMMUNITY = "community"
     AGGREGATOR = "aggregator"
+
+
+class SignalType(str, Enum):
+    """The kind of judgment the editor may make about a source item."""
+
+    STORY = "story"
+    SOCIAL = "social"
+    TREND = "trend"
+    OPPORTUNITY = "opportunity"
 
 
 @dataclass(frozen=True)
@@ -61,6 +71,7 @@ class SourceResult:
     status: SourceStatus
     items: list[SourceItem] = field(default_factory=list)
     error: str | None = None
+    signal_type: SignalType = SignalType.STORY
 
     @classmethod
     def from_dicts(
@@ -71,6 +82,7 @@ class SourceResult:
         *,
         status: SourceStatus = SourceStatus.ACTIVE,
         metadata: Mapping[str, Any] | None = None,
+        signal_type: SignalType = SignalType.STORY,
     ) -> "SourceResult":
         normalized = []
         for raw in items:
@@ -86,6 +98,7 @@ class SourceResult:
             item_metadata = dict(raw.get("metadata") or {})
             if metadata:
                 item_metadata.update(metadata)
+            item_metadata.setdefault("signal_type", signal_type.value)
             engagement = dict(raw.get("engagement") or {})
             for key in (
                 "score",
@@ -129,7 +142,7 @@ class SourceResult:
                 )
             )
         resolved_status = status if normalized else SourceStatus.SKIPPED
-        return cls(source, resolved_status, normalized)
+        return cls(source, resolved_status, normalized, signal_type=signal_type)
 
 
 class SourceAdapter(Protocol):
@@ -197,11 +210,13 @@ class CallableSource:
         fetcher: Callable[[SourceContext], list[Mapping[str, Any]]],
         *,
         supports_historical: bool = True,
+        signal_type: SignalType = SignalType.STORY,
     ):
         self.name = name
         self.tier = tier
         self.fetcher = fetcher
         self.supports_historical = supports_historical
+        self.signal_type = signal_type
 
     def fetch(self, context: SourceContext) -> SourceResult:
         if context.historical and not self.supports_historical:
@@ -215,6 +230,7 @@ class CallableSource:
                 self.name,
                 self.tier,
                 self.fetcher(context)[: context.limit],
+                signal_type=self.signal_type,
             )
         except Exception as error:
             return SourceResult(
@@ -227,6 +243,7 @@ class CallableSource:
 class OpenAINewsSource:
     name = "OpenAI"
     url = "https://openai.com/news/rss.xml"
+    signal_type = SignalType.STORY
 
     def __init__(self, transport: HttpTransport | None = None):
         self.transport = transport or RequestsTransport()
@@ -249,11 +266,15 @@ class OfficialRssSource:
         *,
         keywords: Iterable[str] = (),
         transport: HttpTransport | None = None,
+        signal_type: SignalType = SignalType.STORY,
+        tier: SourceTier = SourceTier.OFFICIAL,
     ):
         self.name = name
         self.url = url
         self.keywords = tuple(keyword.casefold() for keyword in keywords)
         self.transport = transport or RequestsTransport()
+        self.signal_type = signal_type
+        self.tier = tier
 
     def fetch(self, context: SourceContext) -> SourceResult:
         try:
@@ -269,8 +290,49 @@ class OfficialRssSource:
                 ]
             return SourceResult.from_dicts(
                 self.name,
-                SourceTier.OFFICIAL,
+                self.tier,
                 items[: context.limit],
+                signal_type=self.signal_type,
+            )
+        except Exception as error:
+            return _failed(self.name, error)
+
+
+class FollowBuildersSource:
+    """Read the central Follow Builders feeds for builder and podcast signals."""
+
+    name = "Follow Builders"
+    supports_historical = False
+    signal_type = SignalType.SOCIAL
+    feed_urls = {
+        "x": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-x.json",
+        "podcasts": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-podcasts.json",
+        "blogs": "https://raw.githubusercontent.com/zarazhangrui/follow-builders/main/feed-blogs.json",
+    }
+
+    def __init__(self, transport: HttpTransport | None = None):
+        self.transport = transport or RequestsTransport()
+
+    def fetch(self, context: SourceContext) -> SourceResult:
+        if context.historical:
+            return SourceResult(
+                self.name,
+                SourceStatus.SKIPPED,
+                error="historical retrieval is unavailable for the central feed",
+            )
+
+        try:
+            feeds = {
+                key: json.loads(self.transport.get_text(url))
+                for key, url in self.feed_urls.items()
+            }
+            items = _follow_builders_items(feeds)
+            return SourceResult.from_dicts(
+                self.name,
+                SourceTier.AGGREGATOR,
+                items[: context.limit],
+                metadata={"retrieval": "follow-builders-central-feed"},
+                signal_type=self.signal_type,
             )
         except Exception as error:
             return _failed(self.name, error)
@@ -280,6 +342,7 @@ class AnthropicNewsSource:
     name = "Anthropic"
     sitemap_url = "https://www.anthropic.com/sitemap.xml"
     newsroom_url = "https://www.anthropic.com/news"
+    signal_type = SignalType.STORY
 
     def __init__(self, transport: HttpTransport | None = None):
         self.transport = transport or RequestsTransport()
@@ -330,6 +393,7 @@ class LinuxDoSource:
     name = "Linux.do"
     supports_historical = False
     url = "https://linux.do/latest.rss"
+    signal_type = SignalType.SOCIAL
 
     def __init__(
         self,
@@ -346,6 +410,7 @@ class LinuxDoSource:
                 self.name,
                 SourceTier.COMMUNITY,
                 items,
+                signal_type=self.signal_type,
             )
             if result.items:
                 return result
@@ -365,6 +430,7 @@ class LinuxDoSource:
 class RedditSource:
     name = "Reddit"
     supports_historical = False
+    signal_type = SignalType.SOCIAL
 
     def __init__(
         self,
@@ -376,6 +442,7 @@ class RedditSource:
             "ClaudeCode",
             "OpenAI",
             "ArtificialIntelligence",
+            "ExperiencedDevs",
         ),
         fallback: Callable[[], list[Mapping[str, Any]]] | None = None,
     ):
@@ -415,6 +482,7 @@ class RedditSource:
             self.name,
             SourceTier.COMMUNITY,
             items[: context.limit],
+            signal_type=self.signal_type,
         )
         if result.items:
             if errors:
@@ -434,6 +502,7 @@ class XSource:
     name = "X/Twitter"
     supports_historical = False
     endpoint = "https://api.x.com/2/tweets/search/recent"
+    signal_type = SignalType.SOCIAL
 
     def __init__(
         self,
@@ -497,6 +566,7 @@ class XSource:
                     SourceTier.COMMUNITY,
                     items,
                     metadata={"retrieval": "official-api"},
+                    signal_type=self.signal_type,
                 )
                 if result.items:
                     return result
@@ -517,6 +587,7 @@ class XSource:
 class XiaohongshuSource:
     name = "Xiaohongshu"
     supports_historical = False
+    signal_type = SignalType.SOCIAL
 
     def __init__(
         self,
@@ -588,6 +659,7 @@ class XiaohongshuSource:
                     SourceTier.COMMUNITY,
                     items[: context.limit],
                     metadata={"retrieval": "xiaohongshu-mcp"},
+                    signal_type=self.signal_type,
                 )
                 if result.items:
                     return result
@@ -647,6 +719,13 @@ class SourceRegistry:
         ordered = {}
         for adapter in self.adapters:
             result = fetched[adapter.name]
+            result.signal_type = getattr(
+                adapter,
+                "signal_type",
+                result.signal_type,
+            )
+            for item in result.items:
+                item.metadata["signal_type"] = result.signal_type.value
             deduplicated = []
             for item in result.items:
                 key = _canonical_url(item.url)
@@ -701,18 +780,95 @@ def _run_fallback(
 def _parse_rss(xml_text: str) -> list[dict[str, Any]]:
     root = ET.fromstring(xml_text)
     items = []
-    for node in root.findall(".//item"):
+    nodes = root.findall(".//item")
+    if not nodes:
+        nodes = root.findall(".//{*}entry")
+    for node in nodes:
         items.append({
             "title": _node_text(node, "title"),
-            "url": _node_text(node, "link"),
+            "url": _node_link(node),
             "summary": _strip_html(
                 _node_text(node, "description")
                 or _node_text(node, "content")
+                or _node_text(node, "summary")
             ),
-            "published_at": _node_text(node, "pubDate"),
+            "published_at": (
+                _node_text(node, "pubDate")
+                or _node_text(node, "published")
+                or _node_text(node, "updated")
+            ),
             "author": _node_text(node, "author") or None,
         })
     return items
+
+
+def _follow_builders_items(feeds: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Flatten Follow Builders' X, podcast, and blog feeds into source items."""
+    items: list[dict[str, Any]] = []
+
+    for builder in (feeds.get("x") or {}).get("x", []):
+        name = str(builder.get("name") or builder.get("handle") or "AI builder").strip()
+        handle = str(builder.get("handle") or "").strip()
+        bio = _compact_feed_text(builder.get("bio"), 220)
+        for tweet in builder.get("tweets") or []:
+            text = _compact_feed_text(tweet.get("text"), 420)
+            url = str(tweet.get("url") or "").strip()
+            if not text or not _valid_http_url(url):
+                continue
+            summary = f"{name} (@{handle})：{text}" if handle else f"{name}：{text}"
+            if bio:
+                summary += f"｜作者简介：{bio}"
+            items.append({
+                "title": f"{name}：{text[:110]}",
+                "url": url,
+                "summary": summary,
+                "published_at": tweet.get("createdAt"),
+                "likes": tweet.get("likes"),
+                "retweets": tweet.get("retweets"),
+                "replies": tweet.get("replies"),
+            })
+
+    for podcast in (feeds.get("podcasts") or {}).get("podcasts", []):
+        name = str(podcast.get("name") or "AI 播客").strip()
+        title = str(podcast.get("title") or "").strip()
+        url = str(podcast.get("url") or "").strip()
+        if not title or not _valid_http_url(url):
+            continue
+        transcript = _compact_feed_text(podcast.get("transcript"), 1200)
+        items.append({
+            "title": f"{name}：{title}",
+            "url": url,
+            "summary": transcript,
+            "published_at": podcast.get("publishedAt"),
+        })
+
+    for blog in (feeds.get("blogs") or {}).get("blogs", []):
+        title = str(blog.get("title") or blog.get("name") or "").strip()
+        url = str(blog.get("url") or blog.get("link") or "").strip()
+        if not title or not _valid_http_url(url):
+            continue
+        items.append({
+            "title": title,
+            "url": url,
+            "summary": _compact_feed_text(
+                blog.get("summary") or blog.get("description"),
+                800,
+            ),
+            "published_at": blog.get("publishedAt") or blog.get("published_at"),
+        })
+
+    items.sort(
+        key=lambda item: _normalize_date(item.get("published_at")) or "",
+        reverse=True,
+    )
+    return items
+
+
+def _compact_feed_text(value: Any, limit: int) -> str:
+    text = " ".join(str(value or "").split())
+    if len(text) <= limit:
+        return text
+    return text[: max(1, limit - 1)].rstrip() + "…"
 
 
 def _parse_sitemap_dates(xml_text: str) -> dict[str, str]:
@@ -731,6 +887,15 @@ def _node_text(node: ET.Element, name: str) -> str:
     if child is None:
         child = node.find(f"{{*}}{name}")
     return (child.text or "").strip() if child is not None else ""
+
+
+def _node_link(node: ET.Element) -> str:
+    child = node.find("link")
+    if child is None:
+        child = node.find("{*}link")
+    if child is None:
+        return ""
+    return (child.get("href") or child.text or "").strip()
 
 
 def _strip_html(value: str) -> str:

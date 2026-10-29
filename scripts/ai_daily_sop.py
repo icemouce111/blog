@@ -10,9 +10,19 @@ import sys
 import tempfile
 import time
 import urllib.request
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
+
+try:
+    from scripts.github_pr import GitHubPullRequests
+    from scripts.security_check import scan_files
+    from scripts.security_config import load_private_config, redact
+except ModuleNotFoundError:
+    from github_pr import GitHubPullRequests
+    from security_check import scan_files
+    from security_config import load_private_config, redact
 
 
 LIVE_RSS_URL = "https://blog.icemouce.cc/ai-daily.xml"
@@ -26,6 +36,7 @@ class PublishError(RuntimeError):
 class PublishResult:
     status: str
     commit_sha: str
+    pr_url: str | None = None
 
 
 def allowed_artifact_paths(date: str) -> set[str]:
@@ -51,7 +62,7 @@ def _run(
     )
     if check and result.returncode != 0:
         detail = result.stderr.strip() or result.stdout.strip()
-        raise PublishError(f"{' '.join(args)} failed: {detail}")
+        raise PublishError(redact(f"{' '.join(args)} failed: {detail}"))
     return result
 
 
@@ -138,6 +149,9 @@ class Publisher:
         commit_message: Callable[[str], str] | None = None,
         remote_artifact: Callable[[str], str] | None = None,
         live_url: str | None = LIVE_RSS_URL,
+        publication_key: str = "ai-daily",
+        pull_requests=None,
+        security_check: Callable = scan_files,
     ):
         self.repo_root = Path(repo_root).resolve()
         self.remote = remote
@@ -153,6 +167,9 @@ class Publisher:
         self.remote_artifact = remote_artifact or (
             lambda date: f"src/content/ai-daily/{date}.md"
         )
+        self.publication_key = publication_key
+        self.pull_requests = pull_requests
+        self.security_check = security_check
 
     def publish(
         self,
@@ -161,23 +178,12 @@ class Publisher:
         force: bool = False,
         generate: Callable[[Path, str], None] | None = None,
     ) -> PublishResult:
+        from datetime import date as calendar_date
+        if calendar_date.fromisoformat(date).isoformat() != date:
+            raise PublishError("Date must be YYYY-MM-DD")
+        load_private_config(self.repo_root)
         with AtomicRunLock(self.repo_root):
-            for attempt in range(2):
-                try:
-                    return self._publish_attempt(date, generate, force)
-                except PublishError as error:
-                    if attempt == 0 and self._is_non_fast_forward(error):
-                        continue
-                    raise
-        raise PublishError("AI Daily publication retry exhausted")
-
-    @staticmethod
-    def _is_non_fast_forward(error: PublishError) -> bool:
-        message = str(error).lower()
-        return "git push" in message and any(
-            marker in message
-            for marker in ("non-fast-forward", "fetch first", "[rejected]")
-        )
+            return self._publish_attempt(date, generate, force)
 
     def _publish_attempt(
         self,
@@ -194,6 +200,47 @@ class Publisher:
             "--prune",
         )
         base_ref = f"{self.remote}/{self.branch}"
+        client = self.pull_requests or GitHubPullRequests(self.repo_root, self.branch)
+        head = f"codex/{self.publication_key}-{date}"
+        allowed = self.artifacts(date)
+        existing = client.find(head)
+        recover_branch = False
+        if existing:
+            head = existing["headRefName"]
+            client.validate(existing, allowed)
+            # Scan the actual remote head before resuming, never overwrite a
+            # pending branch or regenerate a potentially costly daily report.
+            _run(self.repo_root, "git", "fetch", self.remote, head)
+            fetched_head = _run(self.repo_root, "git", "rev-parse", "FETCH_HEAD").stdout.strip()
+            if fetched_head != existing["headRefOid"]:
+                raise PublishError("Remote PR head changed during verification")
+            if force:
+                raise PublishError(f"Close the pending PR before forcing regeneration: {existing['url']}")
+        else:
+            remote_head = _run(self.repo_root, "git", "ls-remote", "--heads", self.remote,
+                               f"refs/heads/{head}").stdout.strip()
+            if remote_head and force:
+                # A previously closed/merged PR may leave its branch behind.
+                # A fresh branch avoids force-pushing or deleting reviewed work.
+                head = f"{head}-{uuid.uuid4().hex[:8]}"
+            elif remote_head:
+                _run(self.repo_root, "git", "fetch", self.remote, head)
+                fetched_head = _run(self.repo_root, "git", "rev-parse", "FETCH_HEAD").stdout.strip()
+                same_report = _run(self.repo_root, "git", "diff", "--quiet", base_ref,
+                                   fetched_head, "--", self.remote_artifact(date), check=False)
+                if same_report.returncode == 0:
+                    # Squash merges need not remove their old source branch.
+                    # Work from main and use a fresh name only if new changes
+                    # are actually generated; do not publish the old PR again.
+                    head = f"{head}-{uuid.uuid4().hex[:8]}"
+                elif same_report.returncode == 1:
+                    changed = set(_run(self.repo_root, "git", "diff", "--name-only",
+                                       f"{base_ref}...{fetched_head}").stdout.splitlines())
+                    if not changed or changed - allowed:
+                        raise PublishError("Existing daily branch is not a recoverable artifact-only change")
+                    recover_branch = True
+                else:
+                    raise PublishError("Unable to inspect existing daily branch")
         workspace = Path(tempfile.mkdtemp(prefix="ai-daily-worktree-"))
         worktree_added = False
         try:
@@ -204,16 +251,25 @@ class Publisher:
                 "add",
                 "--detach",
                 str(workspace),
-                base_ref,
+                fetched_head if existing or recover_branch else base_ref,
             )
             worktree_added = True
+            if existing or recover_branch:
+                self.security_check(workspace, allowed)
+                if not existing:
+                    existing = client.create(head, self.commit_message(date))
+                if not existing or existing["headRefOid"] != fetched_head:
+                    raise PublishError("Recovered PR does not match the scanned branch")
+                client.validate(existing, allowed)
+                merged = client.wait_for_merge(existing, allowed, timeout=self.verify_timeout, interval=self.poll_interval)
+                self._verify_merged(merged, date)
+                return PublishResult("published", merged, existing["url"])
             if generate is None:
                 self._run_generator(workspace, date, force=force)
             else:
                 generate(workspace, date)
 
             changed = self._changed_paths(workspace)
-            allowed = self.artifacts(date)
             unexpected = changed - allowed
             if unexpected:
                 raise PublishError(
@@ -223,11 +279,13 @@ class Publisher:
 
             if not changed:
                 remote_sha = self._remote_sha()
+                self.security_check(workspace, allowed)
                 self._require_remote_artifact(date)
                 self._verify_live(date)
                 return PublishResult("already-published", remote_sha)
 
             artifact_paths = sorted(allowed)
+            self.security_check(workspace, artifact_paths)
             _run(workspace, "git", "add", "--", *artifact_paths)
             staged = set(
                 filter(
@@ -262,16 +320,16 @@ class Publisher:
                 "git",
                 "push",
                 self.remote,
-                f"HEAD:{self.branch}",
+                f"HEAD:refs/heads/{head}",
                 timeout=180,
             )
-            remote_sha = self._remote_sha()
-            if remote_sha != commit_sha:
-                raise PublishError(
-                    f"remote {self.branch} is {remote_sha}, expected {commit_sha}"
-                )
-            self._verify_live(date)
-            return PublishResult("published", commit_sha)
+            pr = client.create(head, self.commit_message(date))
+            if not pr or pr["headRefOid"] != commit_sha:
+                raise PublishError("PR head does not match the scanned commit")
+            client.validate(pr, allowed)
+            merged = client.wait_for_merge(pr, allowed, timeout=self.verify_timeout, interval=self.poll_interval)
+            self._verify_merged(merged, date)
+            return PublishResult("published", merged, pr["url"])
         finally:
             if worktree_added:
                 _run(
@@ -284,6 +342,15 @@ class Publisher:
                     check=False,
                 )
             shutil.rmtree(workspace, ignore_errors=True)
+
+    def _verify_merged(self, commit_sha: str, date: str) -> None:
+        _run(self.repo_root, "git", "fetch", self.remote, self.branch)
+        result = _run(self.repo_root, "git", "merge-base", "--is-ancestor", commit_sha,
+                      f"{self.remote}/{self.branch}", check=False)
+        if result.returncode:
+            raise PublishError("Merged commit was not found on the remote production branch")
+        self._require_remote_artifact(date)
+        self._verify_live(date)
 
     def _run_generator(
         self,

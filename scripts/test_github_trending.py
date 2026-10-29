@@ -6,6 +6,7 @@ from scripts.github_daily import (
     build_record,
     build_user_prompt,
     extract_json,
+    fallback_project_copy,
     fetch_readmes,
     publisher_artifacts,
     publisher_commit_message,
@@ -243,14 +244,21 @@ class BuildRecordTest(unittest.TestCase):
         self.assertEqual(alpha["help"], "适合初学者上手练习。")
         self.assertEqual(alpha["how"], "先跑示例。")
 
-    def test_fallback_mode_keeps_raw_board(self):
+    def test_fallback_mode_keeps_board_readable_in_chinese(self):
         record = build_record("2026-08-31", make_repos(), None, "2026-08-31 09:20")
         self.assertEqual(record["mode"], "fallback")
         self.assertEqual(record["highlights"], [])
-        # fallback must NOT echo the raw English GitHub blurb into `what`
-        self.assertEqual(record["repos"][0]["what"], "")
+        # fallback must keep the board usable in Chinese without echoing raw English
+        self.assertIn("暂未生成基于 README 的中文解读", record["repos"][0]["what"])
+        self.assertIn("README", record["repos"][0]["how"])
         self.assertEqual(record["repos"][0]["description"], "Alpha does things well")
-        self.assertEqual(record["repos"][1]["what"], "")
+        self.assertIn("未知语言", record["repos"][1]["what"])
+
+    def test_fallback_project_copy_is_chinese_and_conservative(self):
+        copy = fallback_project_copy(make_repos()[0])
+        self.assertIn("Python", copy["what"])
+        self.assertIn("中文解读", copy["what"])
+        self.assertNotIn("Alpha does things well", copy["what"])
 
 
 class BuildUserPromptTest(unittest.TestCase):

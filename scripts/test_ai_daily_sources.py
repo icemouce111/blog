@@ -1,9 +1,11 @@
+import json
 import unittest
 from datetime import date
 
 from scripts.ai_daily_sources import (
     AnthropicNewsSource,
     CallableSource,
+    FollowBuildersSource,
     LinuxDoSource,
     OpenAINewsSource,
     OfficialRssSource,
@@ -12,6 +14,7 @@ from scripts.ai_daily_sources import (
     SourceRegistry,
     SourceResult,
     SourceStatus,
+    SignalType,
     SourceTier,
     XiaohongshuSource,
     XSource,
@@ -77,6 +80,34 @@ class OfficialSourceTest(unittest.TestCase):
         self.assertEqual([item.title for item in result.items], ["Agent memory patterns"])
         self.assertEqual(result.items[0].source_tier, SourceTier.OFFICIAL)
 
+    def test_atom_feed_uses_link_href_and_updated_date(self):
+        transport = FakeTransport()
+        feed_url = "https://example.com/atom.xml"
+        transport.text[feed_url] = """<?xml version="1.0"?>
+        <feed xmlns="http://www.w3.org/2005/Atom">
+          <entry>
+            <title>AI developer question</title>
+            <link href="https://example.com/questions/1"/>
+            <summary>How do I use an LLM?</summary>
+            <updated>2026-07-01T12:00:00Z</updated>
+          </entry>
+        </feed>"""
+
+        result = OfficialRssSource(
+            "Stack Overflow",
+            feed_url,
+            keywords=("AI",),
+            tier=SourceTier.COMMUNITY,
+            signal_type=SignalType.SOCIAL,
+            transport=transport,
+        ).fetch(context())
+
+        self.assertEqual(result.status, SourceStatus.ACTIVE)
+        self.assertEqual(result.items[0].url, "https://example.com/questions/1")
+        self.assertEqual(result.items[0].published_at, "2026-07-01T12:00:00+00:00")
+        self.assertEqual(result.items[0].source_tier, SourceTier.COMMUNITY)
+        self.assertEqual(result.signal_type, SignalType.SOCIAL)
+
     def test_openai_rss_produces_official_items(self):
         transport = FakeTransport()
         transport.text["https://openai.com/news/rss.xml"] = """<?xml version="1.0"?>
@@ -116,6 +147,48 @@ class OfficialSourceTest(unittest.TestCase):
         self.assertEqual(result.items[0].summary, "Agentic model release details.")
         self.assertEqual(result.items[0].published_at, "2026-06-30")
         self.assertEqual(result.items[0].source_tier, SourceTier.OFFICIAL)
+
+
+class FollowBuildersSourceTest(unittest.TestCase):
+    def test_flattens_builder_and_podcast_feeds(self):
+        transport = FakeTransport()
+        urls = FollowBuildersSource.feed_urls
+        transport.text[urls["x"]] = json.dumps({
+            "x": [{
+                "name": "Builder One",
+                "handle": "builderone",
+                "bio": "Builds AI products",
+                "tweets": [{
+                    "text": "A useful agent workflow",
+                    "url": "https://x.com/builderone/status/1",
+                    "createdAt": "2026-07-01T10:00:00Z",
+                    "likes": 3,
+                }],
+            }],
+        })
+        transport.text[urls["podcasts"]] = json.dumps({
+            "podcasts": [{
+                "name": "AI Podcast",
+                "title": "Building agents",
+                "url": "https://youtube.com/@ai-podcast/videos",
+                "publishedAt": "2026-07-01T09:00:00Z",
+                "transcript": "A transcript excerpt",
+            }],
+        })
+        transport.text[urls["blogs"]] = json.dumps({"blogs": []})
+
+        result = FollowBuildersSource(transport).fetch(context(limit=10))
+
+        self.assertEqual(result.status, SourceStatus.ACTIVE)
+        self.assertEqual(result.source, "Follow Builders")
+        self.assertEqual(len(result.items), 2)
+        self.assertIn("Builder One", result.items[0].title)
+        self.assertIn("A transcript excerpt", result.items[1].summary)
+
+    def test_historical_runs_are_skipped(self):
+        result = FollowBuildersSource(FakeTransport()).fetch(context(historical=True))
+
+        self.assertEqual(result.status, SourceStatus.SKIPPED)
 
 
 class CommunitySourceTest(unittest.TestCase):
@@ -245,6 +318,25 @@ class CommunitySourceTest(unittest.TestCase):
 
 
 class RegistryTest(unittest.TestCase):
+    def test_callable_source_preserves_signal_type_for_editor(self):
+        source = CallableSource(
+            "Trends",
+            SourceTier.AGGREGATOR,
+            lambda _context: [{
+                "title": "AI Agent 搜索趋势",
+                "url": "https://trends.google.com/trends/explore?q=AI+Agent",
+            }],
+            signal_type=SignalType.TREND,
+        )
+
+        result = source.fetch(context())
+
+        self.assertEqual(result.signal_type, SignalType.TREND)
+        self.assertEqual(
+            result.items[0].metadata["signal_type"],
+            "trend",
+        )
+
     def test_callable_source_receives_the_target_date_context(self):
         received = []
         source = CallableSource(

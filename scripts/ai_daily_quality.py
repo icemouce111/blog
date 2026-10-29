@@ -59,12 +59,17 @@ KNOWN_SOURCE_NAMES = (
     "Linux.do",
     "Reddit",
     "X/Twitter",
+    "Follow Builders",
     "YouTube",
     "Bilibili",
     "Zhihu",
     "Xiaohongshu",
     "Google Trends",
     "AI Creator Opportunities",
+    "Stack Overflow",
+    "Medium AI",
+    "DEV Community",
+    "博客园",
 )
 ALWAYS_RELEVANT_FALLBACK_SOURCES = {
     "OpenAI",
@@ -72,6 +77,7 @@ ALWAYS_RELEVANT_FALLBACK_SOURCES = {
     "GitHub Changelog",
     "Cloudflare Blog",
     "LangChain Blog",
+    "Follow Builders",
     "HuggingFace Papers",
     "Google Trends",
     "AI Creator Opportunities",
@@ -112,20 +118,31 @@ def filter_usable_items(
     items: Iterable[SourceItem],
     target_date: date,
     *,
-    max_age_days: int = 45,
+    max_age_days: int | None = 45,
     require_exact_date: bool = False,
+    require_published_at: bool = False,
 ) -> list[SourceItem]:
     usable = []
-    earliest = target_date - timedelta(days=max_age_days)
+    earliest = (
+        target_date - timedelta(days=max_age_days)
+        if max_age_days is not None
+        else None
+    )
     latest = target_date + timedelta(days=1)
     for item in items:
         if not item.title.strip() or not _valid_http_url(item.url):
             continue
         published = _date_part(item.published_at)
+        if require_published_at and published is None:
+            continue
         if require_exact_date:
             if published != target_date:
                 continue
-        elif published and not earliest <= published <= latest:
+        elif (
+            published
+            and earliest is not None
+            and not earliest <= published <= latest
+        ):
             continue
         usable.append(item)
     return usable
@@ -164,6 +181,30 @@ def validate_report(
                 )
             else:
                 seen_item_urls[key] = index
+
+        block_items = [
+            allowed[_canonical_url(url)]
+            for url in block_urls
+            if _canonical_url(url) in allowed
+        ]
+        signal_types = {
+            str(item.metadata.get("signal_type", "story"))
+            for item in block_items
+        }
+        if "trend" in signal_types and not re.search(
+            r"趋势|搜索|热度|关注|上升|下降|变化",
+            block,
+        ):
+            issues.append(
+                f"numbered item {index} treats a trend signal as a factual story"
+            )
+        if "opportunity" in signal_types and not re.search(
+            r"报名|截止|招募|计划|活动|奖励|奖金|机会|申请",
+            block,
+        ):
+            issues.append(
+                f"numbered item {index} omits opportunity context"
+            )
 
     for block in re.split(r"\n\s*\n", content):
         community_urls = [
@@ -278,7 +319,12 @@ def build_signal_fallback(
             continue
         parts.append(f"### {source}")
         for item in items[:5]:
-            if item.source_tier == SourceTier.COMMUNITY:
+            signal_type = str(item.metadata.get("signal_type", "story"))
+            if signal_type == "trend":
+                lead = f"趋势信号：{item.title}"
+            elif signal_type == "opportunity":
+                lead = f"活动机会：{item.title}"
+            elif item.source_tier == SourceTier.COMMUNITY:
                 lead = f"据 {source} 社区：{item.title}"
             else:
                 lead = item.title
@@ -319,7 +365,7 @@ def _repair_prompt(
     items: Iterable[SourceItem],
 ) -> str:
     evidence_lines = [
-        f"- [{item.source_tier.value}] {item.source}: "
+        f"- [{item.source_tier.value}/{item.metadata.get('signal_type', 'story')}] {item.source}: "
         f"{item.title} | {item.url} | {item.summary}"
         for item in items
     ]
@@ -334,6 +380,8 @@ def _repair_prompt(
 - 每个编号条目至少保留一个证据清单中的来源 URL。
 - 同一来源 URL 只能保留在一个编号条目；合并互补信息并删除后续重复项，不保留空板块。
 - 删除证据清单中没有出现的百分比、倍数、金额和数量。
+- `trend` 证据只能写成趋势、搜索热度或后续观察，不能写成已发生的产品事实。
+- `opportunity` 证据必须保留报名、截止、奖励、资格或行动信息，不能改写成普通新闻。
 - 不得添加证据清单之外的 URL。
 - 只输出修复后的 Markdown 正文。
 
