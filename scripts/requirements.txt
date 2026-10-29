@@ -1,5 +1,5 @@
 requests
 beautifulsoup4
 lxml
-openai>=1.0
+openai>=3.37.0
 pytrends>=4.9
