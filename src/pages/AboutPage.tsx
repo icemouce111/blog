@@ -102,7 +102,7 @@ export function AboutPage() {
               <Mail className="h-5 w-5 shrink-0 text-blue-500" />
               <div>
                 <p className="text-sm font-medium">邮箱</p>
-                <p className="text-sm text-muted-foreground">2925547464@qq.com</p>
+                <p className="text-sm text-muted-foreground">2608909706@qq.com</p>
               </div>
             </div>
           </div>
