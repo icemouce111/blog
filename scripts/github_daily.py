@@ -10,7 +10,7 @@
   DESIRECORE_CLOUD_API_KEY + DESIRECORE_BASE_URL + DESIRECORE_MODEL
   DEEPSEEK_API_KEY
   OPENAI_API_KEY
-缺少 key 时自动尝试加载 scripts/dc-config.env。无任何 key 时降级为
+读取进程环境、scripts/.env 和兼容的 scripts/dc-config.env。无任何 key 时降级为
 fallback 模式（榜单照发，项目说明使用中文兜底文案）。
 """
 
@@ -32,6 +32,7 @@ try:
     from scripts.ai_daily_sop import PublishError, Publisher
     from scripts.security_config import load_env_file, load_private_config, protect_output, print_error
     from scripts.security_check import scan_files
+    from scripts.llm_config import completion_options, llm_settings
     from scripts.github_trending import (
         TrendingFetchError,
         TrendingRepo,
@@ -43,6 +44,7 @@ except ModuleNotFoundError:
     from ai_daily_sop import PublishError, Publisher
     from security_config import load_env_file, load_private_config, protect_output, print_error
     from security_check import scan_files
+    from llm_config import completion_options, llm_settings
     from github_trending import (
         TrendingFetchError,
         TrendingRepo,
@@ -96,19 +98,7 @@ def _is_mostly_chinese(text: str, *, min_cjk: int = 4) -> bool:
 
 
 def _llm_settings() -> tuple[str | None, str, str]:
-    api_key = (
-        os.environ.get("DESIRECORE_CLOUD_API_KEY")
-        or os.environ.get("DEEPSEEK_API_KEY")
-        or os.environ.get("OPENAI_API_KEY")
-    )
-    if os.environ.get("DESIRECORE_CLOUD_API_KEY"):
-        base_url = os.environ.get("DESIRECORE_BASE_URL", "").rstrip("/")
-        model = os.environ.get("DESIRECORE_MODEL", "")
-    elif os.environ.get("DEEPSEEK_API_KEY"):
-        base_url, model = "https://api.deepseek.com/v1", "deepseek-chat"
-    else:
-        base_url, model = "https://api.openai.com/v1", "gpt-4o"
-    return api_key, base_url, model
+    return llm_settings(allow_desirecore=True)
 
 
 def fetch_readmes(
@@ -175,6 +165,7 @@ def call_llm(
             ],
             "temperature": 0.4,
             "max_tokens": 8192,
+            **completion_options(base_url),
         }
     ).encode("utf-8")
     request = Request(

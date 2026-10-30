@@ -89,12 +89,32 @@ Hacker News、Product Hunt、X/Twitter、Follow Builders、YouTube、Bilibili、
 | DEV Community | DEV 标签 RSS | social | 无 |
 | 博客园 | Atom RSS | social | 无 |
 | Google Trends | `pytrends` | trend | 无 |
-| AI Creator Opportunities | 本地官方机会清单 | opportunity | 无 |
+| AI Creator Opportunities | 每日搜索发现、来源目录、官方规则复核、Agent 筛选 | opportunity | 使用同一 LLM 配置 |
 
 LLM 使用 `DEEPSEEK_API_KEY`，未设置时回退到 `OPENAI_API_KEY`。
+DeepSeek 使用官方端点 `https://api.deepseek.com/v1`，默认模型为
+`deepseek-flash`；可用 `DEEPSEEK_MODEL` 覆盖。日报请求显式关闭思考模式，
+保留既有最终正文的输出预算与超时。模型名及参数以
+[DeepSeek 官方文档](https://api-docs.deepseek.com/zh-cn/)为准。
 两个生成器都依次读取进程环境、`scripts/.env`、兼容文件 `scripts/dc-config.env`；已有值不会被覆盖。配置文件权限为 0600（POSIX），不得提交到 Git。安装及应急操作见 [安全 SOP](security.md)。
 
+本机接入时只编辑被忽略的 `scripts/.env`，不要在聊天、示例文件、前端变量或
+Cloudflare 构建中填写真实密钥：
+
+```dotenv
+DEEPSEEK_API_KEY=你的密钥
+DEEPSEEK_MODEL=deepseek-flash
+```
+
+首次验证可运行 `python3 scripts/generate-ai-daily.py --dry-run`；会产生模型调用费用，
+但不写文章或发布。正式运行仍使用上面的发布命令。
+
 小红书 MCP 默认不自动假设地址；只有设置 `XIAOHONGSHU_API_BASE` 后才启用。
+创作者机会按不足千粉、每周 5—10 小时、AI 内容制作与个人 IP 方向筛选。
+每次当天日报生成前刷新；同日补救复用已完成的刷新，历史补档不抓未来活动。
+公开规则不完整、核验超过 7 天、截止冲突或官方身份未确认的线索单独展示，
+不进入正文的可参与推荐；高粉丝门槛与重制作任务留在“后续再看”。
+完整来源、字段和故障处理见 [创作者机会 SOP](creator-opportunities.md)。
 浏览器来源只作为 Linux.do、Reddit 等来源的降级路径；标记为 `skipped` 或 `degraded`，不能阻止官方来源生成日报。
 
 ## 自动质量控制
@@ -124,6 +144,7 @@ LLM 使用 `DEEPSEEK_API_KEY`，未设置时回退到 `OPENAI_API_KEY`。
    - `src/content/ai-daily/YYYY-MM-DD.md`
    - `public/ai-daily.xml`
    - `src/data/ai-trends.json`
+   - `src/data/ai-opportunities.json`
 7. 扫描待发布文件后提交至 `codex/ai-daily-YYYY-MM-DD` 分支，创建 PR；GitHub 日报使用 `codex/github-daily-YYYY-MM-DD`。
 8. 等待 `security`、`tests`、`build` 全部成功，按已扫描 head SHA 请求自动 squash 合并；不使用管理员绕过。
 9. 最多等待十分钟；超时、冲突、检查失败或 head 被替换时返回非零，并给出 PR 链接。重跑复用待合并 PR，不重新调用模型；待合并时不接受 `--force` 覆盖。

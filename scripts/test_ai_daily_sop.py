@@ -115,13 +115,14 @@ class AtomicRunLockTest(unittest.TestCase):
 
 
 class ArtifactContractTest(unittest.TestCase):
-    def test_allowed_artifacts_include_report_rss_and_trends_only(self):
+    def test_allowed_artifacts_include_only_report_and_derived_data(self):
         self.assertEqual(
             allowed_artifact_paths("2026-07-01"),
             {
                 "src/content/ai-daily/2026-07-01.md",
                 "public/ai-daily.xml",
                 "src/data/ai-trends.json",
+                "src/data/ai-opportunities.json",
             },
         )
 
@@ -150,6 +151,9 @@ class PublisherTest(unittest.TestCase):
         (self.seed / "src" / "data" / "ai-trends.json").write_text(
             '{"windows":[]}\n',
             encoding="utf-8",
+        )
+        (self.seed / "src" / "data" / "ai-opportunities.json").write_text(
+            '{"schemaVersion":2,"opportunities":[]}\n', encoding="utf-8",
         )
         run_git(self.seed, "add", ".")
         run_git(self.seed, "commit", "-m", "seed")
@@ -193,6 +197,9 @@ class PublisherTest(unittest.TestCase):
         (worktree / "src" / "data" / "ai-trends.json").write_text(
             '{"windows":[{"window":"week"}]}\n',
             encoding="utf-8",
+        )
+        (worktree / "src" / "data" / "ai-opportunities.json").write_text(
+            '{"schemaVersion":2,"opportunities":[{"id":"checked-opportunity"}]}\n', encoding="utf-8",
         )
 
     def test_publishes_from_origin_main_without_feature_commits(self):

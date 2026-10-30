@@ -301,6 +301,23 @@
 .ai-opportunity-sources a,
 .ai-trend-panel details a { color: var(--daily-muted); text-underline-offset: .2em; }
 .ai-opportunity-empty { color: var(--daily-muted); font-size: .8rem; }
+.ai-opportunity-group-title { margin: 1.4rem 0 .3rem; font-size: .95rem; color: var(--daily-ink); }
+.ai-opportunity-group-title > span { color: var(--daily-faint); font-size: .75rem; }
+.ai-opportunity-update, .ai-opportunity-verified { color: var(--daily-faint); font-size: .7rem; line-height: 1.6; }
+.ai-opportunity-badges { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
+.ai-opportunity-badges > span { border: 1px solid var(--daily-rule); border-radius: 1rem; padding: .15rem .45rem; font-size: .65rem; color: var(--daily-muted); }
+.ai-opportunity-facts { margin: .7rem 0; font-size: .75rem; line-height: 1.7; }
+.ai-opportunity-facts > div { margin: .45rem 0; }
+.ai-opportunity-facts dt { font-weight: 700; color: var(--daily-ink); }
+.ai-opportunity-facts dd { margin: .1rem 0 0; color: var(--daily-muted); overflow-wrap: anywhere; }
+.ai-opportunity-links a { color: var(--daily-amber); font-weight: 650; }
+.ai-opportunity-more { margin: .9rem 0; font-size: .8rem; }
+.ai-opportunity-more summary { cursor: pointer; color: var(--daily-muted); line-height: 1.7; }
+.ai-daily-supplement :is(.ai-opportunity-group-title, .ai-opportunity-update, .ai-opportunity-empty, .ai-opportunity-more) { margin-left: 3.9rem; }
+.ai-daily-supplement .ai-opportunity-more .ai-opportunity-list { margin-left: 0; }
+@media (max-width: 700px) {
+  .ai-daily-supplement :is(.ai-opportunity-group-title, .ai-opportunity-update, .ai-opportunity-empty, .ai-opportunity-more) { margin-left: 0; }
+}
 
 .ai-github-digest > header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 .ai-github-digest > header time { color: var(--daily-faint); font-size: .7rem; font-variant-numeric: tabular-nums; }

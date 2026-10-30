@@ -23,13 +23,18 @@ export interface ParsedAiDailyContent {
   fallbackMarkdown: string
 }
 
-interface FirstListItem {
+interface FirstStoryItem {
   raw: string
   remainingMarkdown: string
 }
 
 const listItemPattern = /^\s{0,3}(?:(?:\d+\.|[-*+])\s+|\*\*\d+\.\s*)/
+const standaloneStoryTitlePattern = /^\s{0,3}\*\*(?!\[)[^*\n]+\*\*\s*$/
 const urlPattern = /https?:\/\/[^\s)>\]]+/g
+
+function isStoryStart(line: string) {
+  return listItemPattern.test(line) || standaloneStoryTitlePattern.test(line)
+}
 
 function unquoteYamlScalar(value: string) {
   const trimmed = value.trim()
@@ -110,15 +115,15 @@ function cleanSectionTitle(title: string) {
   return title.replace(/^[^\p{L}\p{N}]+/u, '').trim()
 }
 
-function extractFirstListItem(markdown: string): FirstListItem | null {
+function extractFirstStoryItem(markdown: string): FirstStoryItem | null {
   const lines = markdown.split('\n')
-  const start = lines.findIndex((line) => listItemPattern.test(line))
+  const start = lines.findIndex(isStoryStart)
   if (start < 0) return null
 
   let end = start + 1
   while (end < lines.length) {
     const line = lines[end]
-    if (listItemPattern.test(line) || /^#{2,3}\s+/.test(line) || /^---\s*$/.test(line)) {
+    if (isStoryStart(line) || /^#{2,3}\s+/.test(line) || /^---\s*$/.test(line)) {
       break
     }
     end += 1
@@ -187,7 +192,7 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     || sections[0]?.title.includes('今日来源速览'),
   )
   const firstItem = sections[0] && !isSignalArchive
-    ? extractFirstListItem(sections[0].markdown)
+    ? extractFirstStoryItem(sections[0].markdown)
     : null
   const leadStory = firstItem ? parseLeadStory(firstItem.raw) : null
 
@@ -200,7 +205,7 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
   )
   const storyCount = originalSectionMarkdown.reduce(
     (total, markdown) =>
-      total + markdown.split('\n').filter((line) => listItemPattern.test(line)).length,
+      total + markdown.split('\n').filter(isStoryStart).length,
     0
   )
   const readableContent = editorialContent.replace(/[#>*_`|:[\]()!-]/g, ' ')

@@ -44,6 +44,7 @@ def allowed_artifact_paths(date: str) -> set[str]:
         f"src/content/ai-daily/{date}.md",
         "public/ai-daily.xml",
         "src/data/ai-trends.json",
+        "src/data/ai-opportunities.json",
     }
 
 
