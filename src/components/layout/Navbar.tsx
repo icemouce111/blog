@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { Moon, Sun, Menu } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useTheme } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
@@ -12,104 +13,63 @@ const navItems = [
   { href: '/projects', label: '作品集' },
   { href: '/resources', label: '资源导航' },
   { href: '/tools', label: '工具集' },
-  { href: '/ai-daily', label: 'AI情报' },
+  { href: '/ai-daily', label: 'AI 情报' },
   { href: '/about', label: '关于' },
 ] as const
 
 export function Navbar() {
   const { resolvedTheme, toggleTheme, mounted } = useTheme()
-  const location = useLocation()
-
+  const [menuOpen, setMenuOpen] = useState(false)
+  const links = (mobile = false) =>
+    navItems.map((item) => (
+      <NavLink
+        key={item.href}
+        to={item.href}
+        onClick={() => setMenuOpen(false)}
+        className={({ isActive }) =>
+          cn(
+            buttonVariants({ variant: 'ghost' }),
+            mobile && 'justify-start text-base',
+            isActive && 'bg-accent text-accent-foreground',
+          )
+        }
+      >
+        {item.label}
+      </NavLink>
+    ))
   return (
-    <header className="site-navbar sticky top-0 z-50 w-full border-b backdrop-blur">
-      <div className={cn(siteContainerClass, 'flex h-16 items-center gap-6')}>
-        <Button
-          variant="link"
-          nativeButton={false}
-          className="flex items-center gap-2.5 font-bold text-lg p-0 shrink-0"
-          render={<Link to="/" />}
-        >
+    <header className="site-navbar sticky top-0 z-50 w-full border-b">
+      <div className={cn(siteContainerClass, 'site-navbar-inner flex items-center gap-6')}>
+        <Link to="/" className="site-brand flex items-center gap-2.5 font-bold text-lg shrink-0">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/avatar.jpg" alt="icemouce" />
-            <AvatarFallback className="text-xs">IM</AvatarFallback>
+            <AvatarImage src="/avatar.jpg" alt="" />
+            <AvatarFallback>IM</AvatarFallback>
           </Avatar>
           icemouce
-        </Button>
-
-        <nav className="hidden md:flex flex-1 items-center justify-center gap-1">
-          {navItems.map((item) => (
-            <Button
-              key={item.href}
-              variant="ghost"
-              nativeButton={false}
-              className={cn(
-                'text-sm',
-                location.pathname.startsWith(item.href) && 'bg-accent text-accent-foreground'
-              )}
-              render={<Link to={item.href} />}
-            >
-              {item.label}
-            </Button>
-          ))}
+        </Link>
+        <nav
+          aria-label="主导航"
+          className="hidden lg:flex flex-1 items-center justify-center gap-1"
+        >
+          {links()}
         </nav>
-
-        <div className="flex items-center gap-1 md:ml-auto">
+        <div className="flex items-center gap-1 ml-auto">
           {mounted && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="hidden md:inline-flex"
-              aria-label="切换主题"
-            >
-              {resolvedTheme === 'dark' ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
+            <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="切换主题">
+              {resolvedTheme === 'dark' ? <Sun /> : <Moon />}
             </Button>
           )}
-
-          <Sheet>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger
-              className="md:hidden"
+              className="lg:hidden"
               render={<Button variant="ghost" size="icon" aria-label="打开菜单" />}
             >
-              <Menu className="h-4 w-4" />
+              <Menu />
             </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col gap-2 pt-6">
-                {navItems.map((item) => (
-                  <Button
-                    key={item.href}
-                    variant="ghost"
-                    nativeButton={false}
-                    className={cn(
-                      'justify-start text-base',
-                      location.pathname.startsWith(item.href) && 'bg-accent text-accent-foreground'
-                    )}
-                    render={<Link to={item.href} />}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-                {mounted && (
-                  <Button
-                    variant="ghost"
-                    className="justify-start text-base"
-                    onClick={toggleTheme}
-                  >
-                    {resolvedTheme === 'dark' ? (
-                      <>
-                        <Sun className="h-4 w-4 mr-2" /> 切换亮色模式
-                      </>
-                    ) : (
-                      <>
-                        <Moon className="h-4 w-4 mr-2" /> 切换暗色模式
-                      </>
-                    )}
-                  </Button>
-                )}
+            <SheetContent side="right" className="site-menu-sheet" aria-describedby={undefined}>
+              <SheetTitle>浏览本站</SheetTitle>
+              <nav aria-label="手机主导航" className="flex flex-col gap-2 pt-6">
+                {links(true)}
               </nav>
             </SheetContent>
           </Sheet>

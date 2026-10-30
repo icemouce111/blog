@@ -2,11 +2,9 @@ import { Link, useParams } from 'react-router-dom'
 import { Flame, Sparkles, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { SectionHero } from '@/components/layout/SectionHero'
 import { PageContainer } from '@/components/layout/PageContainer'
-import {
-  formatStars,
-  getGithubDailyPost,
-} from '@/lib/github-daily'
+import { formatStars, getGithubDailyPost } from '@/lib/github-daily'
 
 export function GithubPostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -14,7 +12,7 @@ export function GithubPostPage() {
 
   if (!post) {
     return (
-      <PageContainer>
+      <PageContainer size="wide" className="github-page">
         <div className="text-center py-16">
           <p className="text-muted-foreground mb-4">这期榜单不在档案中</p>
           <Link to="/github" className="text-primary hover:underline">
@@ -26,28 +24,21 @@ export function GithubPostPage() {
   }
 
   return (
-    <PageContainer>
-      <Link to="/github" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+    <PageContainer size="wide" className="github-page">
+      <Link
+        to="/github"
+        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
         ← 返回榜单归档
       </Link>
 
-      <div className="mt-4 mb-8">
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Flame className="h-7 w-7 text-orange-500" /> GitHub 每日榜单
-          </h1>
-          {post.mode === 'analyzed' ? (
-            <Badge variant="secondary" className="gap-1">
-              <Sparkles className="h-3 w-3" /> AI 解读
-            </Badge>
-          ) : (
-            <Badge variant="outline">原始榜单</Badge>
-          )}
-        </div>
-        <p className="text-muted-foreground">
-          {post.dateDisplay} · {post.repos.length} 个热门项目
-        </p>
-      </div>
+      <SectionHero
+        title="GitHub 每日榜单"
+        eyebrow="OPEN SOURCE / DAILY"
+        description={`${post.dateDisplay} · ${post.repos.length} 个热门项目`}
+        icon={Flame}
+        meta={post.mode === 'analyzed' ? 'AI 解读' : '原始榜单'}
+      />
 
       <Card className="mb-8 border-primary/20 bg-primary/5">
         <CardContent className="pt-6">
@@ -60,9 +51,7 @@ export function GithubPostPage() {
           <h2 id="highlights-heading" className="text-xl font-bold mb-1 flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-amber-500" /> 精选榜单
           </h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            AI 从今日榜中挑出的最值得关注项目
-          </p>
+          <p className="text-sm text-muted-foreground mb-4">AI 从今日榜中挑出的最值得关注项目</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {post.highlights.map((highlight) => {
               const repo = post.repos.find((item) => item.fullName === highlight.repo)
@@ -108,13 +97,15 @@ export function GithubPostPage() {
       )}
 
       <section aria-labelledby="board-heading">
-        <h2 id="board-heading" className="text-xl font-bold mb-4">热门榜单</h2>
+        <h2 id="board-heading" className="text-xl font-bold mb-4">
+          热门榜单
+        </h2>
         <div className="space-y-3">
           {post.repos.map((repo) => (
             <Card key={repo.fullName}>
               <CardContent className="pt-5">
                 <div className="flex items-start gap-3">
-                  <span className="font-mono text-lg font-bold text-muted-foreground/60 w-7 shrink-0 text-right">
+                  <span className="font-mono text-lg font-bold text-muted-foreground w-7 shrink-0 text-right">
                     {repo.rank}
                   </span>
                   <div className="flex-1 min-w-0">

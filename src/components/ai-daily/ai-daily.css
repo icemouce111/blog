@@ -1,752 +1,135 @@
+/* Daily pages share the site's tokens and the reading template. */
 .ai-daily-shell {
-  --daily-bg: #f3f4f8;
-  --daily-surface: #ffffff;
-  --daily-surface-soft: #f8f8fc;
-  --daily-ink: #22232d;
-  --daily-muted: #717686;
-  --daily-faint: #979baa;
-  --daily-rule: #dfe1e8;
-  --daily-violet: #6657ff;
-  --daily-cyan: #098ba0;
-  --daily-amber: #c66a08;
-  min-height: 100vh;
-  color: var(--daily-ink);
-  background:
-    radial-gradient(circle at 8% 6%, rgb(105 87 255 / 8%), transparent 24rem),
-    radial-gradient(circle at 92% 24%, rgb(9 139 160 / 7%), transparent 26rem),
-    var(--daily-bg);
+  --daily-bg: var(--background); --daily-surface: var(--card); --daily-surface-soft: var(--muted);
+  --daily-ink: var(--foreground); --daily-muted: var(--muted-foreground); --daily-faint: var(--muted-foreground);
+  --daily-rule: var(--border); --daily-violet: var(--primary); --daily-cyan: var(--primary); --daily-amber: var(--site-warm);
+  background: var(--background); color: var(--foreground);
 }
-
-.ai-daily-paper { max-width: 78rem; }
-.ai-daily-serif { font-family: Georgia, "Songti SC", STSong, "Noto Serif SC", serif; }
-
-.ai-daily-eyebrow {
-  margin: 0;
-  color: var(--daily-violet);
-  font-size: .7rem;
-  font-weight: 750;
-  letter-spacing: .15em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.ai-daily-masthead {
-  display: flex;
-  min-height: 7.5rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.5rem 1.65rem;
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.75rem 1.75rem 0 0;
-  background: rgb(255 255 255 / 82%);
-  backdrop-filter: blur(16px);
-}
-
-.ai-daily-identity { display: flex; align-items: center; gap: .9rem; }
-.ai-daily-mark {
-  display: grid;
-  width: 3.2rem;
-  height: 3.2rem;
-  flex: 0 0 auto;
-  place-items: center;
-  border-radius: 1rem;
-  background: linear-gradient(145deg, #755cff, #0b879e);
-  box-shadow: 0 .8rem 2rem rgb(74 73 213 / 20%);
-  color: white;
-}
-.ai-daily-mark svg { width: 1.55rem; height: 1.55rem; }
-.ai-daily-brand {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
-  font-weight: 800;
-  letter-spacing: -.035em;
-  line-height: 1.15;
-}
-.ai-daily-brand-note {
-  margin: .28rem 0 0;
-  color: var(--daily-faint);
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .13em;
-}
-.ai-daily-masthead-meta {
-  display: grid;
-  gap: .3rem;
-  justify-items: end;
-  color: var(--daily-muted);
-  font-size: .76rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .06em;
-}
-.ai-daily-masthead-meta span:last-child {
-  color: var(--daily-faint);
-  font-size: .67rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-}
-
-.ai-daily-archive-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, .8fr);
-  gap: 1.5rem;
-  padding: 1.5rem;
-  border: 1px solid var(--daily-rule);
-  border-top: 0;
-  border-radius: 0 0 1.75rem 1.75rem;
-  background: rgb(246 247 251 / 88%);
-}
-.ai-daily-latest { grid-column: 1 / -1; }
-.ai-daily-briefing-bar {
-  display: flex;
-  min-height: 4.2rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0 .1rem;
-  color: var(--daily-muted);
-  font-size: .78rem;
-  letter-spacing: .06em;
-}
-.ai-daily-briefing-bar strong { color: var(--daily-ink); font-size: .78rem; letter-spacing: 0; }
-
-.ai-daily-featured,
-.ai-daily-story-header {
-  position: relative;
-  min-height: 31rem;
-  overflow: hidden;
-  padding: clamp(2rem, 5vw, 4rem);
-  border-radius: 2.5rem;
-  background: linear-gradient(135deg, #3c24cb, #6756ff 55%, #058599);
-  box-shadow: 0 1.5rem 3.5rem rgb(66 59 180 / 18%);
-  color: #fff;
-}
-.ai-daily-featured { display: flex; flex-direction: column; }
-.ai-daily-featured::before,
-.ai-daily-story-header::before {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 18% 12%, rgb(255 255 255 / 11%), transparent 16rem),
-    linear-gradient(135deg, transparent 45%, rgb(255 255 255 / 5%));
-  content: "";
-  pointer-events: none;
-}
-.ai-daily-featured-kicker {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: .8rem;
-  margin: 0;
-  color: rgb(255 255 255 / 90%);
-  font-size: .72rem;
-  font-weight: 750;
-  letter-spacing: .18em;
-}
-.ai-daily-featured-kicker > span { width: 2.4rem; height: 1px; background: currentColor; }
-.ai-daily-shell article.ai-daily-featured h1,
-.ai-daily-shell article.ai-daily-article .ai-daily-story-header h1 {
-  position: relative;
-  z-index: 1;
-  max-width: 14ch;
-  margin: clamp(1.8rem, 4vw, 3.2rem) 0 1.25rem;
-  border: 0;
-  padding: 0;
-  color: #fff;
-  font-size: clamp(2.7rem, 7vw, 6.4rem);
-  font-weight: 500;
-  letter-spacing: -.055em;
-  line-height: 1.02;
-}
-.ai-daily-featured h1 a { color: inherit; text-decoration: none; }
-.ai-daily-featured-summary,
-.ai-daily-standfirst {
-  position: relative;
-  z-index: 1;
-  max-width: 43rem;
-  color: rgb(255 255 255 / 78%);
-  font-size: clamp(.95rem, 1.8vw, 1.15rem);
-  line-height: 1.75;
-}
-.ai-daily-featured-summary p,
-.ai-daily-standfirst p { margin: 0; }
-.ai-daily-featured-orbit {
-  position: absolute;
-  right: -3.5rem;
-  bottom: -5rem;
-  z-index: 0;
-  display: grid;
-  width: 24rem;
-  height: 24rem;
-  place-items: center;
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: 50%;
-}
-.ai-daily-featured-orbit::before,
-.ai-daily-featured-orbit::after {
-  position: absolute;
-  border: 1px solid rgb(255 255 255 / 20%);
-  border-radius: inherit;
-  content: "";
-}
-.ai-daily-featured-orbit::before { inset: 3.5rem; }
-.ai-daily-featured-orbit::after { inset: 7rem; }
-.ai-daily-featured-orbit span {
-  transform: translate(-.3rem, -.25rem);
-  color: rgb(255 255 255 / 44%);
-  font-family: Georgia, serif;
-  font-size: 6rem;
-  font-style: italic;
-}
-.ai-daily-read-link {
-  position: relative;
-  z-index: 2;
-  display: inline-flex;
-  min-height: 3.6rem;
-  width: fit-content;
-  align-items: center;
-  gap: .9rem;
-  margin-top: auto;
-  border: 1px solid rgb(255 255 255 / 24%);
-  border-radius: 1rem;
-  padding: 0 1.35rem;
-  background: rgb(30 36 99 / 34%);
-  box-shadow: inset 0 1px rgb(255 255 255 / 10%);
-  color: #fff;
-  font-size: .88rem;
-  font-weight: 700;
-  text-decoration: none;
-  backdrop-filter: blur(12px);
-}
-.ai-daily-read-link:hover { background: rgb(20 25 81 / 52%); }
-
-.ai-daily-signal-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  overflow: hidden;
-  margin: 1.5rem 0 0;
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.55rem;
-  background: var(--daily-surface);
-}
-.ai-daily-signal-stats > div { min-height: 8.2rem; padding: 1.5rem 1.65rem; }
-.ai-daily-signal-stats > div + div { border-left: 1px solid var(--daily-rule); }
-.ai-daily-signal-stats dt { color: var(--daily-muted); font-size: .78rem; font-weight: 650; }
-.ai-daily-signal-stats dd {
-  display: flex;
-  align-items: baseline;
-  gap: .3rem;
-  margin: .85rem 0 0;
-  color: var(--daily-violet);
-}
-.ai-daily-signal-stats div:nth-child(2) dd { color: var(--daily-cyan); }
-.ai-daily-signal-stats div:nth-child(3) dd { color: var(--daily-amber); }
-.ai-daily-signal-stats strong { font-size: 2rem; font-weight: 600; line-height: 1; }
-.ai-daily-signal-stats dd span { font-size: .88rem; }
-
-.ai-opportunity-radar,
-.ai-github-digest,
-.ai-trends,
-.ai-daily-archive {
-  align-self: start;
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.7rem;
-  padding: clamp(1.35rem, 3vw, 2rem);
-  background: var(--daily-surface);
-  box-shadow: 0 1rem 2.5rem rgb(36 39 69 / 5%);
-}
-.ai-github-digest { grid-column: 1; grid-row: 2; }
-.ai-opportunity-radar { grid-column: 2; grid-row: 2; }
-.ai-trends { grid-column: 1 / -1; grid-row: 3; }
-.ai-daily-archive { grid-column: 1 / -1; grid-row: 4; }
-.ai-opportunity-radar > header h2,
-.ai-github-digest > header h2,
-.ai-trends header h2 {
-  margin: .45rem 0 .75rem;
-  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
-  font-weight: 700;
-  letter-spacing: -.035em;
-  line-height: 1.25;
-}
-.ai-opportunity-radar > header > p:last-child,
-.ai-daily-section-intro,
-.ai-github-intro { margin: 0; color: var(--daily-muted); font-size: .8rem; line-height: 1.7; }
-.ai-opportunity-list,
-.ai-github-picks,
-.ai-trend-panel > ol,
-.ai-daily-archive-list { margin: 1rem 0 0; padding: 0; list-style: none; }
-.ai-opportunity-list > li { margin: 0; padding: 1.15rem 0; border-bottom: 1px solid var(--daily-rule); }
-.ai-opportunity-topline {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--daily-faint);
-  font-size: .66rem;
-  letter-spacing: .04em;
-}
-.ai-opportunity-topline > span { color: var(--daily-amber); font-weight: 750; }
-.ai-opportunity-list h3 { margin: .45rem 0; font-size: 1.03rem; font-weight: 700; line-height: 1.4; }
-.ai-opportunity-list h3 a { color: inherit; text-decoration: none; }
-.ai-opportunity-list h3 a:hover { color: var(--daily-amber); }
-.ai-opportunity-list p { margin: .28rem 0 0; color: var(--daily-muted); font-size: .75rem; line-height: 1.6; }
-.ai-opportunity-list .ai-opportunity-reward { color: var(--daily-ink); font-weight: 650; }
-.ai-opportunity-sources,
-.ai-trend-panel details { margin-top: .8rem; color: var(--daily-faint); font-size: .7rem; }
-.ai-opportunity-sources summary,
-.ai-trend-panel summary { min-height: 2.75rem; cursor: pointer; line-height: 2.75rem; }
-.ai-opportunity-sources ul,
-.ai-trend-panel details ul { margin: 0; padding: 0 0 .5rem; list-style: none; }
-.ai-opportunity-sources li { margin: .4rem 0; }
-.ai-opportunity-sources a,
-.ai-trend-panel details a { color: var(--daily-muted); text-underline-offset: .2em; }
-.ai-opportunity-empty { color: var(--daily-muted); font-size: .8rem; }
-.ai-opportunity-group-title { margin: 1.4rem 0 .3rem; font-size: .95rem; color: var(--daily-ink); }
-.ai-opportunity-group-title > span { color: var(--daily-faint); font-size: .75rem; }
-.ai-opportunity-update, .ai-opportunity-verified { color: var(--daily-faint); font-size: .7rem; line-height: 1.6; }
-.ai-opportunity-badges { display: flex; flex-wrap: wrap; gap: .35rem; margin: .5rem 0; }
-.ai-opportunity-badges > span { border: 1px solid var(--daily-rule); border-radius: 1rem; padding: .15rem .45rem; font-size: .65rem; color: var(--daily-muted); }
-.ai-opportunity-facts { margin: .7rem 0; font-size: .75rem; line-height: 1.7; }
-.ai-opportunity-facts > div { margin: .45rem 0; }
-.ai-opportunity-facts dt { font-weight: 700; color: var(--daily-ink); }
-.ai-opportunity-facts dd { margin: .1rem 0 0; color: var(--daily-muted); overflow-wrap: anywhere; }
-.ai-opportunity-links a { color: var(--daily-amber); font-weight: 650; }
-.ai-opportunity-more { margin: .9rem 0; font-size: .8rem; }
-.ai-opportunity-more summary { cursor: pointer; color: var(--daily-muted); line-height: 1.7; }
-.ai-daily-supplement :is(.ai-opportunity-group-title, .ai-opportunity-update, .ai-opportunity-empty, .ai-opportunity-more) { margin-left: 3.9rem; }
-.ai-daily-supplement .ai-opportunity-more .ai-opportunity-list { margin-left: 0; }
-@media (max-width: 700px) {
-  .ai-daily-supplement :is(.ai-opportunity-group-title, .ai-opportunity-update, .ai-opportunity-empty, .ai-opportunity-more) { margin-left: 0; }
-}
-
-.ai-github-digest > header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
-.ai-github-digest > header time { color: var(--daily-faint); font-size: .7rem; font-variant-numeric: tabular-nums; }
-.ai-github-picks > li {
-  margin: 0;
-  border-bottom: 1px solid var(--daily-rule);
-}
-.ai-trend-panel > ol > li {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: .95rem;
-  margin: 0;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--daily-rule);
-}
-.ai-github-project-card {
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: .95rem;
-  margin: 0 -.45rem;
-  padding: 1.25rem .45rem;
-  border-radius: .75rem;
-  color: inherit;
-  text-decoration: none;
-  transition: background .15s ease, box-shadow .15s ease;
-}
-.ai-github-project-card:hover { background: var(--daily-surface-soft); box-shadow: inset 0 0 0 1px var(--daily-rule); }
-.ai-github-project-card:focus-visible { outline: 2px solid var(--daily-cyan); outline-offset: 2px; }
-.ai-github-rank,
-.ai-trend-index {
-  padding-top: .15rem;
-  color: var(--daily-violet);
-  font-size: .68rem;
-  font-style: italic;
-  font-variant-numeric: tabular-nums;
-}
-.ai-trend-index { color: var(--daily-cyan); }
-.ai-github-repo-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .35rem .8rem;
-  margin: 0 0 .38rem;
-  color: var(--daily-faint);
-  font-size: .66rem;
-}
-.ai-github-repo-name { color: var(--daily-cyan); font-family: var(--font-mono); }
-.ai-github-external-icon { width: .85rem; height: .85rem; margin-left: auto; color: var(--daily-faint); }
-.ai-github-picks h3,
-.ai-trend-panel h3 { margin: 0 0 .45rem; font-size: 1.06rem; font-weight: 700; line-height: 1.4; }
-.ai-github-picks > li p:not(.ai-github-repo-meta),
-.ai-trend-panel p { margin: 0; color: var(--daily-muted); font-size: .79rem; line-height: 1.65; }
-.ai-github-scan-list { display: grid; gap: .55rem; margin: .65rem 0 0; }
-.ai-github-scan-list > div { display: grid; grid-template-columns: 3.7rem minmax(0, 1fr); gap: .7rem; align-items: start; }
-.ai-github-scan-list dt { color: var(--daily-violet); font-size: .78rem; font-weight: 750; line-height: 1.65; }
-.ai-github-scan-list dd { margin: 0; color: var(--daily-muted); font-size: 1rem; line-height: 1.65; }
-.ai-trend-tabs {
-  display: inline-flex;
-  margin-top: .4rem;
-  border: 1px solid var(--daily-rule);
-  border-radius: .8rem;
-  padding: .2rem;
-  background: var(--daily-surface-soft);
-}
-.ai-trend-tabs button {
-  min-width: 4rem;
-  min-height: 2.25rem;
-  border: 0;
-  border-radius: .6rem;
-  background: transparent;
-  color: var(--daily-muted);
-  cursor: pointer;
-  font: inherit;
-  font-size: .75rem;
-}
-.ai-trend-tabs button[aria-selected="true"] {
-  background: var(--daily-surface);
-  box-shadow: 0 .25rem .8rem rgb(34 35 45 / 8%);
-  color: var(--daily-cyan);
-  font-weight: 750;
-}
-.ai-trend-range {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin: 0;
-  padding: 1rem 0 0;
-  color: var(--daily-faint);
-  font-size: .68rem;
-}
-.ai-trend-panel > ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.ai-trend-panel > ol > li {
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.1rem;
-  padding: 1.15rem;
-  background: var(--daily-surface-soft);
-}
-.ai-trend-panel details li { display: grid; gap: .15rem; margin: .5rem 0; }
-.ai-trend-panel details time { color: var(--daily-faint); }
-
-.ai-daily-section-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: .5rem;
-  color: var(--daily-muted);
-  font-size: .74rem;
-  font-weight: 700;
-}
-.ai-daily-section-label h2,
-.ai-daily-section-label span { margin: 0; }
-.ai-daily-archive-list > li { margin: 0; border-bottom: 1px solid var(--daily-rule); }
-.ai-daily-archive-list a {
-  display: grid;
-  grid-template-columns: 3.6rem minmax(0, 1fr) auto;
-  gap: 1rem;
-  min-height: 5.4rem;
-  align-items: center;
-  color: inherit;
-  text-decoration: none;
-}
-.ai-daily-archive-list time { color: var(--daily-faint); font-size: .72rem; font-variant-numeric: tabular-nums; }
-.ai-daily-archive-copy { display: grid; gap: .3rem; }
-.ai-daily-archive-title { font-size: 1.03rem; font-weight: 700; line-height: 1.35; }
-.ai-daily-archive-note,
-.ai-daily-archive-arrow { color: var(--daily-faint); font-size: .72rem; }
-.ai-daily-archive-list a:hover .ai-daily-archive-title { color: var(--daily-violet); }
-.ai-daily-archive-toggle {
-  min-height: 2.75rem;
-  margin-top: 1rem;
-  border: 0;
-  background: transparent;
-  color: var(--daily-violet);
-  cursor: pointer;
-  font: inherit;
-  font-size: .78rem;
-  font-weight: 750;
-}
-
-.ai-daily-back {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  margin-bottom: .75rem;
-  color: var(--daily-muted);
-  font-size: .8rem;
-  font-weight: 650;
-  text-decoration: none;
-}
-.ai-daily-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 15rem;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  padding: 1.5rem;
-  border: 1px solid var(--daily-rule);
-  border-top: 0;
-  border-radius: 0 0 1.75rem 1.75rem;
-  background: rgb(246 247 251 / 90%);
-}
-.ai-daily-article { min-width: 0; }
-.ai-daily-content .ai-daily-briefing-bar { padding-inline: .15rem; }
-.ai-daily-story-header { display: flex; flex-direction: column; min-height: 30rem; }
-.ai-daily-story-header .ai-daily-lead-meta { margin-top: auto; }
-.ai-daily-lead-meta {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: .75rem 1.25rem;
-  align-items: center;
-  color: rgb(255 255 255 / 75%);
-  font-size: .72rem;
-}
-.ai-daily-lead-meta span { font-weight: 700; }
-.ai-daily-lead-meta a { color: #fff; text-underline-offset: .25em; }
-.ai-daily-content-section {
-  scroll-margin-top: 6rem;
-  margin-top: 1.3rem;
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.6rem;
-  padding: clamp(1.4rem, 4vw, 2.3rem);
-  background: var(--daily-surface);
-  box-shadow: 0 1rem 2.5rem rgb(36 39 69 / 4%);
-}
-.ai-daily-content-heading {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: .9rem;
-  align-items: baseline;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.15rem;
-  border-bottom: 1px solid var(--daily-rule);
-}
-.ai-daily-content-heading > span {
-  color: var(--daily-violet);
-  font-family: Georgia, serif;
-  font-size: 1.35rem;
-  font-style: italic;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-content-heading h2 {
-  margin: 0;
-  border: 0;
-  padding: 0;
-  font-size: clamp(1.45rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -.035em;
-  line-height: 1.25;
-}
-.ai-daily-markdown { font-size: .92rem; }
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown h3 {
-  margin: 1.7rem 0 .6rem;
-  font-size: .82rem;
-  font-weight: 750;
-  letter-spacing: .04em;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown p {
-  margin: .6rem 0 1rem;
-  color: var(--daily-muted);
-  line-height: 1.8;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown ol,
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown ul { margin: 0; padding-left: 1.35rem; }
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown li {
-  margin: 0;
-  padding: 1rem 0 1rem .45rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--daily-rule), transparent 25%);
-  line-height: 1.78;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown li::marker { color: var(--daily-violet); font-weight: 750; }
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown a {
-  color: var(--daily-cyan);
-  overflow-wrap: anywhere;
-  text-decoration-color: rgb(9 139 160 / 35%);
-  text-underline-offset: .22em;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown blockquote {
-  margin: 1.4rem 0;
-  border-left: 3px solid var(--daily-violet);
-  border-radius: 0 .8rem .8rem 0;
-  padding: .8rem 1rem;
-  background: var(--daily-surface-soft);
-  color: var(--daily-muted);
-  font-style: normal;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-  border-collapse: collapse;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown th,
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown td {
-  border: 0;
-  border-bottom: 1px solid var(--daily-rule);
-  padding: .75rem;
-  background: transparent;
-  text-align: left;
-}
-.ai-daily-shell article.ai-daily-article .ai-daily-markdown code { border-radius: .3rem; background: var(--daily-surface-soft); }
-.ai-daily-supplement .ai-daily-section-intro,
-.ai-daily-supplement .ai-opportunity-list,
-.ai-daily-supplement .ai-opportunity-sources,
-.ai-daily-supplement .ai-github-intro,
-.ai-daily-supplement .ai-github-picks { margin-left: 3.9rem; }
-.ai-daily-supplement .ai-opportunity-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 1.5rem;
-}
-.ai-daily-issue-footer { padding: 2rem 0 .5rem; color: var(--daily-faint); font-size: .7rem; }
-
-.ai-daily-desktop-nav { min-width: 0; padding-top: 4.2rem; }
-.ai-daily-nav-sticky {
-  position: sticky;
-  top: 5.5rem;
-  border: 1px solid var(--daily-rule);
-  border-radius: 1.3rem;
-  padding: 1.15rem;
-  background: rgb(255 255 255 / 78%);
-  backdrop-filter: blur(14px);
-}
-.ai-daily-desktop-nav ol { margin: .7rem 0 0; padding: 0; list-style: none; }
-.ai-daily-desktop-nav li { margin: 0; border-top: 1px solid var(--daily-rule); }
-.ai-daily-desktop-nav a {
-  display: grid;
-  grid-template-columns: 1.6rem minmax(0, 1fr);
-  gap: .5rem;
-  min-height: 2.8rem;
-  align-items: center;
-  color: var(--daily-muted);
-  font-size: .72rem;
-  line-height: 1.35;
-  text-decoration: none;
-}
-.ai-daily-desktop-nav a span { color: var(--daily-faint); font-variant-numeric: tabular-nums; }
-.ai-daily-desktop-nav a[aria-current="location"] { color: var(--daily-violet); font-weight: 750; }
-.ai-daily-issue-stats {
-  display: grid;
-  gap: .55rem;
-  margin: 1.4rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px solid var(--daily-rule);
-}
-.ai-daily-issue-stats > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: var(--daily-faint);
-  font-size: .7rem;
-}
-.ai-daily-issue-stats dd { margin: 0; color: var(--daily-muted); }
-.ai-daily-adjacent { display: grid; margin-top: .9rem; border-top: 1px solid var(--daily-rule); padding-top: .4rem; }
-.ai-daily-adjacent a { display: flex; }
-.ai-daily-mobile-nav { display: none; }
-.ai-daily-empty { min-height: 22rem; display: grid; align-content: center; justify-items: start; }
-.ai-daily-empty h1,
-.ai-daily-empty h2 { max-width: 20ch; margin: .5rem 0; font-size: clamp(2rem, 5vw, 4rem); }
-.ai-daily-shell a:focus-visible,
-.ai-daily-shell button:focus-visible,
-.ai-daily-shell summary:focus-visible { outline: 2px solid var(--daily-violet); outline-offset: 3px; }
-
-.dark .ai-daily-shell {
-  --daily-bg: #11131a;
-  --daily-surface: #1b1e28;
-  --daily-surface-soft: #222630;
-  --daily-ink: #f2f3f8;
-  --daily-muted: #b4b8c7;
-  --daily-faint: #858b9d;
-  --daily-rule: #343846;
-  --daily-violet: #9387ff;
-  --daily-cyan: #55c5d4;
-  --daily-amber: #f0a044;
-}
-.dark .ai-daily-masthead,
-.dark .ai-daily-nav-sticky { background: rgb(27 30 40 / 82%); }
-.dark .ai-daily-archive-layout,
-.dark .ai-daily-layout { background: rgb(20 23 31 / 92%); }
-
-@media (max-width: 900px) {
-  .ai-daily-archive-layout { grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem); }
-  .ai-trend-panel > ol { grid-template-columns: 1fr; }
-  .ai-daily-layout { grid-template-columns: minmax(0, 1fr) 12.5rem; }
-}
-
+.ai-daily-paper { max-width: 1200px; }
+.ai-daily-serif { font-family: Georgia, 'Songti SC', STSong, serif; }
+.ai-daily-eyebrow { margin: 0 0 10px; color: var(--primary); font-size: 14px; font-weight: 600; letter-spacing: .06em; }
+.ai-daily-masthead { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 32px; }
+.ai-daily-identity { display: flex; align-items: center; gap: 14px; }
+.ai-daily-mark { color: var(--primary); }
+.ai-daily-mark svg { width: 26px; height: 26px; }
+.ai-daily-brand { font-size: 26px; font-weight: 600; line-height: 1.5; margin: 0; }
+.ai-daily-brand-note { font-size: 14px; color: var(--muted-foreground); margin: 4px 0 0; }
+.ai-daily-masthead-meta { display: grid; text-align: right; color: var(--muted-foreground); font-size: 14px; flex-shrink: 0; }
+.ai-daily-archive-layout { display: flex; flex-direction: column; gap: 56px; }
+.ai-daily-briefing-bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 20px; color: var(--muted-foreground); font-size: 14px; }
+.ai-daily-briefing-bar strong { font-weight: 400; }
+.ai-daily-featured { max-width: 800px; padding-block: 8px; }
+.ai-daily-featured-kicker { font-size: 14px; color: var(--primary); letter-spacing: .04em; margin: 0 0 12px; }
+.ai-daily-featured h2, .ai-daily-story-header h1 { margin: 0 0 24px; font-size: clamp(30px, 3.2vw, 42px); font-weight: 600; line-height: 1.5; }
+.ai-daily-featured h2 a { text-decoration: none; color: inherit; }
+.ai-daily-featured h2 a:hover { color: var(--primary); }
+.ai-daily-featured-summary, .ai-daily-standfirst { font-size: 18px; line-height: 1.85; color: var(--muted-foreground); }
+.ai-daily-featured-summary p { margin: 0 0 20px; }
+.ai-daily-read-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--primary); font-size: 16px; margin-top: 12px; }
+.ai-daily-signal-stats { display: flex; flex-wrap: wrap; gap: 24px 48px; border-block: 1px solid var(--border); padding-block: 20px; margin: 28px 0 0; }
+.ai-daily-signal-stats > div { display: flex; align-items: baseline; gap: 12px; }
+.ai-daily-signal-stats dt { font-size: 14px; color: var(--muted-foreground); }
+.ai-daily-signal-stats dd { display: flex; align-items: baseline; gap: 6px; margin: 0; }
+.ai-daily-signal-stats strong { font-size: 22px; font-weight: 550; }
+.ai-daily-signal-stats dd > span { font-size: 14px; color: var(--muted-foreground); }
+.ai-daily-back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 20px; color: var(--primary); font-size: 14px; }
+.ai-daily-content-section { padding-top: 44px; margin-top: 44px; border-top: 1px solid var(--border); }
+.ai-daily-content-heading { display: flex; align-items: baseline; gap: 16px; margin-bottom: 24px; }
+.ai-daily-content-heading > span { font: 14px var(--font-mono); color: var(--primary); }
+.ai-daily-content-heading h2 { font-size: 26px; line-height: 1.6; font-weight: 600; margin: 0; }
+.ai-daily-lead-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 20px; font-size: 14px; }
+.ai-daily-lead-meta a { color: var(--primary); display: inline-flex; align-items: center; min-height: 44px; }
+.ai-daily-section-intro, .ai-github-intro { font-size: 16px; line-height: 1.85; color: var(--muted-foreground); margin: 0 0 20px; }
+.ai-daily-section-label { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.ai-daily-section-label h2, .ai-opportunity-radar > header h2, .ai-github-digest > header h2, .ai-trends > header h2 { font-size: 26px; line-height: 1.6; font-weight: 600; margin: 0 0 20px; }
+.ai-daily-section-label > span { color: var(--muted-foreground); font-size: 14px; }
+.ai-daily-archive-list { list-style: none; margin: 0; padding: 0; }
+.ai-daily-archive-list li { border-top: 1px solid var(--border); }
+.ai-daily-archive-list a { display: grid; grid-template-columns: 56px minmax(0, 1fr) 20px; gap: 20px; padding-block: 20px; }
+.ai-daily-archive-list time, .ai-daily-archive-arrow { font-size: 14px; color: var(--primary); }
+.ai-daily-archive-copy { display: grid; gap: 8px; }
+.ai-daily-archive-title { font-size: 20px; line-height: 1.5; }
+.ai-daily-archive-note { font-size: 14px; color: var(--muted-foreground); }
+.ai-daily-archive-toggle { min-height: 44px; color: var(--primary); font-size: 15px; padding-block: 12px; }
+.ai-daily-issue-footer { padding-top: 28px; margin-top: 48px; border-top: 1px solid var(--border); font-size: 14px; color: var(--muted-foreground); }
+.ai-opportunity-radar, .ai-github-digest, .ai-trends { min-width: 0; border-top: 1px solid var(--border); padding-top: 36px; }
+.ai-opportunity-update, .ai-opportunity-empty { font-size: 14px; color: var(--muted-foreground); line-height: 1.8; margin-bottom: 24px; }
+.ai-opportunity-group-title { display: flex; align-items: baseline; gap: 12px; font-size: 20px; font-weight: 600; margin: 32px 0 20px; }
+.ai-opportunity-group-title > span { font-size: 14px; color: var(--muted-foreground); font-weight: 400; }
+.ai-opportunity-list { display: grid; gap: 20px; list-style: none; padding: 0; margin: 0; }
+.ai-opportunity-radar .ai-opportunity-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ai-opportunity-list > li { min-width: 0; border: 1px solid var(--border); border-radius: 12px; padding: 24px; background: var(--card); }
+.ai-opportunity-topline { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted-foreground); font-size: 14px; margin-bottom: 12px; }
+.ai-opportunity-topline > span:first-child { color: var(--primary); }
+.ai-opportunity-list h3 { font-size: 21px; font-weight: 600; line-height: 1.6; margin: 0 0 14px; }
+.ai-opportunity-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.ai-opportunity-badges > span { border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; color: var(--primary); font-size: 14px; }
+.ai-opportunity-reward { font-size: 16px; line-height: 1.8; margin: 0 0 20px; }
+.ai-opportunity-facts { display: grid; gap: 16px; font-size: 16px; line-height: 1.8; margin: 0; }
+.ai-opportunity-facts dt { font-size: 14px; color: var(--muted-foreground); margin-bottom: 4px; }
+.ai-opportunity-facts dd { margin: 0; }
+.ai-opportunity-pending { border-left: 2px solid var(--site-warm); padding-left: 12px; }
+.ai-opportunity-pending dt { color: var(--site-warm); }
+.ai-opportunity-detail { margin-top: 16px; }
+.ai-opportunity-detail summary, .ai-opportunity-more > summary, .ai-opportunity-sources > summary, .ai-trend-panel summary { min-height: 44px; padding-block: 10px; font-size: 14px; color: var(--primary); }
+.ai-opportunity-detail[open] summary { margin-bottom: 12px; }
+.ai-opportunity-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; font-size: 14px; }
+.ai-opportunity-foot a { color: var(--primary); min-height: 44px; display: inline-flex; align-items: center; }
+.ai-opportunity-foot > span { color: var(--muted-foreground); }
+.ai-opportunity-more, .ai-opportunity-sources { margin-top: 24px; border-top: 1px solid var(--border); padding-top: 12px; }
+.ai-opportunity-more[open] > summary { margin-bottom: 16px; }
+.ai-opportunity-sources ul { margin: 0; padding-left: 20px; list-style: disc; }
+.ai-opportunity-sources a { font-size: 15px; color: var(--primary); display: inline-flex; min-height: 44px; align-items: center; }
+.ai-opportunity-index-footer { font-size: 14px; color: var(--muted-foreground); margin-top: 24px; }
+.ai-opportunity-index-footer .site-text-link { margin-top: 4px; }
+.ai-github-digest > header { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+.ai-github-digest > header time { font-size: 14px; color: var(--muted-foreground); }
+.ai-github-picks { margin: 0; padding: 0; list-style: none; }
+.ai-github-picks > li { border-bottom: 1px solid var(--border); }
+.ai-github-project-card { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding-block: 24px; color: inherit; text-decoration: none; }
+.ai-github-project-card:hover .ai-github-repo-name { color: var(--primary); text-decoration: underline; }
+.ai-github-rank { font: 14px var(--font-mono); color: var(--muted-foreground); padding-top: 6px; }
+.ai-github-repo-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 16px; font-size: 14px; color: var(--muted-foreground); }
+.ai-github-repo-name { font-size: 20px; font-weight: 600; color: var(--foreground); }
+.ai-github-external-icon { width: 16px; height: 16px; color: var(--primary); }
+.ai-github-scan-list { display: grid; gap: 8px; margin: 0; font-size: 16px; line-height: 1.8; }
+.ai-github-scan-list > div { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; }
+.ai-github-scan-list dt { color: var(--muted-foreground); font-size: 14px; }
+.ai-github-scan-list dd { margin: 0; }
+.ai-trend-tabs { margin-block: 16px; }
+.ai-trend-tabs [data-slot=tabs-trigger] { min-height: 44px; padding-inline: 20px; font-size: 15px; }
+.ai-trend-range { display: flex; flex-wrap: wrap; gap: 12px 24px; font-size: 14px; color: var(--muted-foreground); margin: 20px 0 28px; }
+.ai-trend-panel ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 40px; margin: 0; padding: 0; list-style: none; }
+.ai-trend-panel ol > li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; }
+.ai-trend-index { font: 14px var(--font-mono); color: var(--primary); padding-top: 5px; }
+.ai-trend-panel h3 { font-size: 20px; font-weight: 600; margin-bottom: 12px; line-height: 1.6; }
+.ai-trend-panel p:not(.ai-trend-range) { font-size: 16px; line-height: 1.85; color: var(--muted-foreground); }
+.ai-trend-panel ul { padding-left: 16px; list-style: disc; font-size: 14px; }
+.ai-trend-panel ul li { margin-bottom: 12px; }
+.ai-trend-panel a { color: var(--primary); }
+.ai-trend-panel time { display: block; color: var(--muted-foreground); margin-top: 4px; }
+.ai-daily-empty { padding-block: 48px; }
+.ai-daily-empty h1, .ai-daily-empty h2 { font-size: 30px; line-height: 1.5; }
+@media (max-width: 1023px) { .ai-opportunity-radar .ai-opportunity-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 767px) {
-  .ai-daily-paper { padding-block: 1rem 2.5rem; }
-  .ai-daily-masthead {
-    min-height: 6.2rem;
-    padding: 1rem;
-    border-radius: 1.35rem 1.35rem 0 0;
-  }
-  .ai-daily-mark { width: 2.8rem; height: 2.8rem; border-radius: .85rem; }
-  .ai-daily-brand { font-size: 1.2rem; }
-  .ai-daily-brand-note { display: none; }
-  .ai-daily-masthead-meta { font-size: .65rem; }
-  .ai-daily-archive-layout,
-  .ai-daily-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: 0 0 1.35rem 1.35rem;
-  }
-  .ai-daily-latest { order: 1; }
-  .ai-opportunity-radar { order: 2; }
-  .ai-github-digest { order: 3; }
-  .ai-trends { order: 4; }
-  .ai-daily-archive { order: 5; }
-  .ai-daily-briefing-bar { min-height: 3.6rem; font-size: .68rem; }
-  .ai-daily-briefing-bar strong { font-size: .68rem; }
-  .ai-daily-featured,
-  .ai-daily-story-header { min-height: 31rem; border-radius: 2rem; padding: 2rem 1.5rem; }
-  .ai-daily-featured-kicker { font-size: .64rem; }
-  .ai-daily-shell article.ai-daily-featured h1,
-  .ai-daily-shell article.ai-daily-article .ai-daily-story-header h1 {
-    margin-top: 2.2rem;
-    font-size: clamp(2.45rem, 12vw, 4rem);
-    line-height: 1.02;
-  }
-  .ai-daily-featured-summary,
-  .ai-daily-standfirst { font-size: .93rem; line-height: 1.7; }
-  .ai-daily-featured-orbit { right: -8rem; bottom: -7rem; }
-  .ai-daily-read-link { width: 100%; justify-content: flex-start; }
-  .ai-daily-signal-stats { border-radius: 1.25rem; }
-  .ai-daily-signal-stats > div { min-height: 6.6rem; padding: 1.15rem .8rem; }
-  .ai-daily-signal-stats dt { font-size: .67rem; }
-  .ai-daily-signal-stats strong { font-size: 1.6rem; }
-  .ai-opportunity-radar,
-  .ai-github-digest,
-  .ai-trends,
-  .ai-daily-archive,
-  .ai-daily-content-section { border-radius: 1.35rem; padding: 1.25rem; }
-  .ai-daily-desktop-nav { display: none; }
-  .ai-daily-mobile-nav {
-    display: flex;
-    gap: .25rem;
-    margin: 0;
-    padding: .5rem .2rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .ai-daily-mobile-nav::-webkit-scrollbar { display: none; }
-  .ai-daily-mobile-nav a {
-    display: flex;
-    min-height: 2.5rem;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: .35rem;
-    border: 1px solid var(--daily-rule);
-    border-radius: 99rem;
-    padding: 0 .8rem;
-    background: var(--daily-surface);
-    color: var(--daily-muted);
-    font-size: .7rem;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .ai-daily-mobile-nav a span { color: var(--daily-violet); }
-  .ai-daily-layout { padding-top: .5rem; }
-  .ai-daily-content-heading { grid-template-columns: 2.3rem minmax(0, 1fr); gap: .6rem; }
-  .ai-daily-supplement .ai-daily-section-intro,
-  .ai-daily-supplement .ai-opportunity-list,
-  .ai-daily-supplement .ai-opportunity-sources,
-  .ai-daily-supplement .ai-github-intro,
-  .ai-daily-supplement .ai-github-picks { margin-left: 0; }
-  .ai-daily-supplement .ai-opportunity-list { display: block; }
-  .ai-daily-archive-list a { grid-template-columns: 3.2rem minmax(0, 1fr) auto; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ai-daily-shell { scroll-behavior: auto; }
+  .ai-daily-masthead { flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+  .ai-daily-masthead-meta { display: flex; flex-wrap: wrap; gap: 16px; width: 100%; text-align: left; }
+  .ai-daily-brand { font-size: 24px; }
+  .ai-daily-mark { display: none; }
+  .ai-daily-featured h2, .ai-daily-story-header h1 { font-size: 30px; }
+  .ai-daily-featured-summary, .ai-daily-standfirst { font-size: 17px; }
+  .ai-daily-signal-stats { gap: 12px 24px; }
+  .ai-daily-signal-stats > div { gap: 8px; }
+  .ai-daily-archive-layout { gap: 36px; }
+  .ai-daily-content-section { padding-top: 32px; margin-top: 32px; }
+  .ai-daily-content-heading { gap: 12px; }
+  .ai-daily-content-heading h2 { font-size: 24px; }
+  .ai-daily-section-label h2, .ai-opportunity-radar > header h2, .ai-github-digest > header h2, .ai-trends > header h2 { font-size: 24px; }
+  .ai-opportunity-radar .ai-opportunity-list { grid-template-columns: 1fr; }
+  .ai-opportunity-list > li { padding: 20px; }
+  .ai-opportunity-list h3 { font-size: 20px; }
+  .ai-trend-panel ol { grid-template-columns: 1fr; }
+  .ai-github-project-card { grid-template-columns: 24px minmax(0, 1fr); gap: 12px; }
+  .ai-github-scan-list > div { grid-template-columns: 1fr; gap: 0; }
+  .ai-daily-archive-list a { gap: 12px; grid-template-columns: 44px minmax(0, 1fr) 16px; }
 }

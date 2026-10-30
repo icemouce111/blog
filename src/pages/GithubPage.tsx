@@ -3,6 +3,7 @@ import { Flame, Star, Sparkles, ArrowRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { PageContainer } from '@/components/layout/PageContainer'
+import { SectionHero } from '@/components/layout/SectionHero'
 import { getGithubDailyPosts, type GithubDailyPost } from '@/lib/github-daily'
 
 function PostSummary({ post }: { post: GithubDailyPost }) {
@@ -27,12 +28,13 @@ function PostSummary({ post }: { post: GithubDailyPost }) {
         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{post.intro}</p>
         <div className="space-y-1 text-sm">
           {topRepos.map((repo) => (
-            <div key={repo.fullName} className="flex items-center gap-2 text-muted-foreground">
+            <div
+              key={repo.fullName}
+              className="github-summary-row flex items-center gap-2 text-muted-foreground"
+            >
               <span className="font-mono text-xs w-4">{repo.rank}</span>
               <span className="font-medium text-foreground">{repo.fullName}</span>
-              {repo.starsToday !== null && (
-                <span className="text-xs">+{repo.starsToday}</span>
-              )}
+              {repo.starsToday !== null && <span className="text-xs">+{repo.starsToday}</span>}
             </div>
           ))}
         </div>
@@ -51,20 +53,17 @@ export function GithubPage() {
   const posts = getGithubDailyPosts()
 
   return (
-    <PageContainer>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight mb-2 flex items-center gap-2">
-          <Flame className="h-7 w-7 text-orange-500" /> GitHub 榜单
-        </h1>
-        <p className="text-muted-foreground">
-          每日追踪 GitHub Trending 热门项目，AI 帮你解读每个项目是干啥的、对你有什么用
-        </p>
-      </div>
+    <PageContainer size="wide" className="github-page">
+      <SectionHero
+        title="GitHub 榜单"
+        eyebrow="OPEN SOURCE / DAILY"
+        description="每日追踪 GitHub Trending 热门项目，理解项目用途、价值与上手方式。"
+        icon={Flame}
+        meta={`${posts.length} 期归档`}
+      />
 
       {posts.length === 0 ? (
-        <div className="text-center py-16 text-muted-foreground">
-          第一期榜单正在路上...
-        </div>
+        <div className="text-center py-16 text-muted-foreground">第一期榜单正在路上...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {posts.map((post) => (

@@ -1,24 +1,27 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import Fuse from 'fuse.js'
-import { ArrowUpRight, BookOpen, Search } from 'lucide-react'
+import { BookOpen, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ContentList } from '@/components/reading/ContentList'
 import { Badge } from '@/components/ui/badge'
 import { getAllTags, getPosts, type PostMeta } from '@/lib/posts'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { SectionHero } from '@/components/layout/SectionHero'
 
 export function BlogPage() {
-  const posts = getPosts()
-  const allTags = getAllTags()
+  const posts = useMemo(() => getPosts(), [])
+  const allTags = useMemo(() => getAllTags(), [])
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
-  const fuse = useMemo(() => new Fuse(posts, {
-    keys: ['title', 'description', 'tags'],
-    threshold: 0.3,
-  }), [posts])
+  const fuse = useMemo(
+    () =>
+      new Fuse(posts, {
+        keys: ['title', 'description', 'tags'],
+        threshold: 0.3,
+      }),
+    [posts],
+  )
 
   const filteredPosts = useMemo(() => {
     let result: PostMeta[] = posts
@@ -43,6 +46,7 @@ export function BlogPage() {
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
+              aria-label="搜索文章"
               type="search"
               placeholder="搜索文章、标签或问题…"
               value={searchQuery}
@@ -53,6 +57,7 @@ export function BlogPage() {
           {allTags.length > 0 && (
             <div className="site-filter-tags" aria-label="按标签筛选">
               <Badge
+                render={<button type="button" aria-pressed={selectedTag === null} />}
                 variant={selectedTag === null ? 'default' : 'outline'}
                 className="cursor-pointer"
                 onClick={() => setSelectedTag(null)}
@@ -61,6 +66,7 @@ export function BlogPage() {
               </Badge>
               {allTags.map((tag) => (
                 <Badge
+                  render={<button type="button" aria-pressed={selectedTag === tag} />}
                   key={tag}
                   variant={selectedTag === tag ? 'default' : 'outline'}
                   className="cursor-pointer"
@@ -73,33 +79,13 @@ export function BlogPage() {
           )}
         </div>
 
+        <p className="site-filter-count" role="status">
+          {filteredPosts.length} 篇文章
+        </p>
         {filteredPosts.length === 0 ? (
           <div className="site-panel py-16 text-center text-muted-foreground">没有找到相关文章</div>
         ) : (
-          <div className="site-blog-grid site-tone-violet">
-            {filteredPosts.map((post, index) => (
-              <Link key={post.slug} to={`/blog/${post.slug}`}>
-                <Card className="site-card site-blog-card">
-                  <CardHeader>
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="site-card-index">{String(index + 1).padStart(2, '0')}</span>
-                      <time className="text-xs text-muted-foreground">{post.date}</time>
-                    </div>
-                    <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                    <CardDescription className="line-clamp-3">{post.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mt-auto">
-                    <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag) => <span className="site-chip" key={tag}>{tag}</span>)}
-                    </div>
-                    <div className="site-blog-card-footer">
-                      <span>阅读全文</span><ArrowUpRight className="h-4 w-4" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <ContentList posts={filteredPosts} />
         )}
       </PageContainer>
     </div>
