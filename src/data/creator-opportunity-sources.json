@@ -22,7 +22,8 @@
     "newCandidates": 8,
     "timeoutSeconds": 12,
     "queriesPerChannel": 2,
-    "generalSearchQueries": 2
+    "generalSearchQueries": 2,
+    "platformSearchIntervalDays": 3
   },
   "officialHosts": [
     "liblib.tv",
@@ -46,7 +47,7 @@
     "jingrui-ai-competition.youku.com"
   ],
   "discoveryQueries": [
-    "{year} {month} 抖音 小红书 AI短视频 创作 活动 现金 商家",
+    "{year} {month} AI短视频 知识共创 创作者 活动 扶持",
     "{year} AI 创作者 招募 商品视频 模板 奖金 官方",
     "{year} AI工具 创作者 任务 赏金 制作 商业合作",
     "{year} {month} AI视频制作 商品短视频 商家 悬赏 接单 需求"

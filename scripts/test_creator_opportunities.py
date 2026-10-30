@@ -232,8 +232,9 @@ class TargetedDiscoveryTest(unittest.TestCase):
     def refresh(self, search, **kwargs):
         fetch = Mock(side_effect=AssertionError('social posts must not be fetched as official rules'))
         extract = Mock(side_effect=AssertionError('social posts must not be verified by the model'))
-        result = radar.refresh_opportunities(self.root, TODAY, search=search, fetch=fetch,
-                                            extract=extract, dry_run=kwargs.get('dry_run', True))
+        reference = kwargs.pop('reference', TODAY)
+        result = radar.refresh_opportunities(self.root, reference, search=search, fetch=fetch,
+                                            extract=extract, dry_run=kwargs.pop('dry_run', True), **kwargs)
         fetch.assert_not_called()
         extract.assert_not_called()
         return result
@@ -341,7 +342,66 @@ class TargetedDiscoveryTest(unittest.TestCase):
         self.write_config()
         search = Mock(return_value=[])
         self.refresh(search)
-        self.assertEqual(search.call_count, 10)
+        self.assertEqual(search.call_count, 2)  # config refresh does not bypass the platform interval
+
+    def test_platform_search_runs_every_three_days_and_preserves_previous_dates(self):
+        with patch.object(radar, 'scan_files'):
+            first_search = Mock(return_value=[])
+            first = self.refresh(first_search, dry_run=False)
+            self.assertEqual(first_search.call_count, 10)
+            for offset in (1, 2):
+                search = Mock(return_value=[])
+                result = self.refresh(search, reference=TODAY+timedelta(days=offset), dry_run=False)
+                self.assertEqual(search.call_count, 2)  # daily general discovery still runs
+                for key, metric in result['collection']['channels'].items():
+                    self.assertTrue(metric['skipped'])
+                    self.assertEqual(metric['lastSearchedAt'], str(TODAY))
+                    self.assertEqual(metric['nextSearchAt'], str(TODAY+timedelta(days=3)))
+                    self.assertEqual(metric['completed'], first['collection']['channels'][key]['completed'])
+            search = Mock(return_value=[])
+            result = self.refresh(search, reference=TODAY+timedelta(days=3))
+            self.assertEqual(search.call_count, 10)
+            self.assertTrue(all(not m['skipped'] for m in result['collection']['channels'].values()))
+
+    def test_forcing_a_daily_report_does_not_bypass_platform_interval(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        search = Mock(return_value=[])
+        self.refresh(search, force=True)
+        self.assertEqual(search.call_count, 2)
+
+    def test_failed_platform_attempt_also_observes_the_three_day_interval(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(Mock(side_effect=TimeoutError()), dry_run=False)
+        search = Mock(return_value=[])
+        result = self.refresh(search, reference=TODAY+timedelta(days=1))
+        self.assertEqual(search.call_count, 2)
+        self.assertEqual(result['collection']['channels']['x']['failures'], 2)
+        self.assertTrue(result['collection']['channels']['x']['skipped'])
+        self.assertEqual(result['collection']['searchFailures'], 0)
+
+    def test_old_channel_metrics_use_the_previous_collection_date(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        path = self.root / radar.DATA_PATH
+        data = json.loads(path.read_text())
+        for metric in data['collection']['channels'].values():
+            metric.pop('lastSearchedAt')
+            metric.pop('nextSearchAt')
+        path.write_text(json.dumps(data))
+        search = Mock(return_value=[])
+        result = self.refresh(search, reference=TODAY+timedelta(days=1))
+        self.assertEqual(search.call_count, 2)
+        self.assertEqual(result['collection']['channels']['wechat']['lastSearchedAt'], str(TODAY))
+
+    def test_incidental_general_hit_does_not_rewrite_previous_platform_statistics(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        result = self.refresh(lambda q,t: [{'title':'AI替我说', 'url':'https://www.xiaohongshu.com/explore/new'}], reference=TODAY+timedelta(days=1))
+        self.assertEqual(result['collection']['discovered'], 1)
+        self.assertEqual(result['collection']['incidentalPlatformDiscoveries']['xiaohongshu'], 1)
+        self.assertEqual(result['collection']['channels']['xiaohongshu']['discovered'], 0)
+        self.assertEqual(result['collection']['channels']['xiaohongshu']['lastSearchedAt'], str(TODAY))
 
     def test_targeted_dry_run_does_not_write_public_data(self):
         before = (self.root / radar.DATA_PATH).read_bytes()

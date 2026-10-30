@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from typing import Callable
@@ -82,6 +82,29 @@ def discovery_plan(config: dict, reference: date) -> list[dict]:
                      "scope": "web"})
     return [dict(item, query=item["query"].format(year=reference.year, month=f"{reference.month}月"))
             for item in plan[:budget]]
+
+
+def platform_search_state(config: dict, collection: dict, reference: date) -> dict:
+    interval = config["limits"].get("platformSearchIntervalDays", 1)
+    if type(interval) is not int or interval < 1:
+        raise ValueError("Platform search interval must be a positive number of days")
+    state = {}
+    for channel in config.get("platformChannels", []):
+        previous = collection.get("channels", {}).get(channel["id"], {})
+        last = iso_date(previous.get("lastSearchedAt"))
+        # Older snapshots dated the whole collection rather than each platform.
+        if not last and previous.get("queries", 0):
+            last = iso_date(collection.get("date"))
+        due = not last or last > reference or (reference - last).days >= interval
+        defaults = {"name": channel["name"], "queries": 0, "completed": 0,
+                    "failures": 0, "leads": 0, "platformLeads": 0,
+                    "secondaryLeads": 0, "discovered": 0}
+        searched = reference if due else last
+        state[channel["id"]] = dict(defaults if due else defaults | previous,
+                                    name=channel["name"], skipped=not due,
+                                    lastSearchedAt=str(searched),
+                                    nextSearchAt=str(searched + timedelta(days=interval)))
+    return state
 
 
 def platform_for_url(url: str, config: dict) -> str | None:
@@ -496,11 +519,13 @@ def refresh_opportunities(
     status = {"date": str(reference), "searches": 0, "searchFailures": 0,
               "discovered": 0, "pagesChecked": 0, "pageFailures": 0,
               "verified": 0, "directoriesChecked": 0, "modelStatus": "not-needed",
-              "discoveryFingerprint": fingerprint, "channels": {}}
+              "discoveryFingerprint": fingerprint,
+              "channels": platform_search_state(config, snapshot.get("collection", {}), reference)}
     channels = {channel["id"]: channel for channel in config.get("platformChannels", [])}
     batches = {key: [] for key in channels}
     batches["general"] = []
-    plan = discovery_plan(config, reference)
+    plan = [request for request in discovery_plan(config, reference)
+            if request["channel"] == "general" or not status["channels"][request["channel"]]["skipped"]]
 
     def run_search(request):
         try:
@@ -593,7 +618,11 @@ def refresh_opportunities(
             item.update(discoveryPlatform=platform, reviewMode="manual",
                         type=channels[platform]["name"] + "活动与合作线索",
                         pendingReason="须核验发布账号身份、当前官方细则和实际资格；站内帖子不等于官方活动")
-            status["channels"][platform]["discovered"] += 1
+            if status["channels"][platform]["skipped"]:
+                incidental = status.setdefault("incidentalPlatformDiscoveries", {})
+                incidental[platform] = incidental.get(platform, 0) + 1
+            else:
+                status["channels"][platform]["discovered"] += 1
         records[key] = item
         status["discovered"] += 1
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import {
   getOpportunityCollection,
   getOpportunityChannelCoverage,
+  getOpportunitySearchIntervalDays,
   getOpportunityGroups,
   getOpportunityProfile,
   getOpportunityWatchSources,
@@ -129,15 +130,23 @@ function RadarContent({ compact }: { compact: boolean }) {
         最近搜集：{collection.date || collection.updatedAt}
         {failed ? ' · 部分来源待复核' : ''}
       </p>
+      <p className="ai-opportunity-update">
+        四平台定向检索：每 {getOpportunitySearchIntervalDays()} 天一轮，未到期时沿用上次结果。
+      </p>
       <ul className="ai-opportunity-channel-status" aria-label="四平台定向搜集状态">
         {getOpportunityChannelCoverage().map(({ id, name, result }) => (
           <li key={id}>
             <strong>{name}</strong>
             <span>
               {result
-                ? `${result.completed}/${result.queries} 次搜索 · ${result.leads ? `${result.leads} 条候选／${result.discovered} 条新增` : '未命中有效线索'}${result.failures ? ` · ${result.failures} 次失败` : ''}`
+                ? `${result.skipped ? '上次：' : ''}${result.completed}/${result.queries} 次搜索 · ${result.leads ? `${result.leads} 条候选／${result.discovered} 条新增` : '未命中有效线索'}${result.failures ? ` · ${result.failures} 次失败` : ''}`
                 : '待首次定向搜集'}
             </span>
+            {result?.lastSearchedAt && (
+              <span>
+                搜集 {result.lastSearchedAt} · 下次 {result.nextSearchAt}
+              </span>
+            )}
           </li>
         ))}
       </ul>

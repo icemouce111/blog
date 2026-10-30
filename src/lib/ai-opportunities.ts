@@ -22,6 +22,9 @@ interface OpportunitySeed {
         failures: number
         leads: number
         discovered: number
+        skipped?: boolean
+        lastSearchedAt?: string
+        nextSearchAt?: string
       }
     >
   }
@@ -62,4 +65,8 @@ export function getOpportunityChannelCoverage() {
     name: channel.name,
     result: seed.collection.channels?.[channel.id],
   }))
+}
+
+export function getOpportunitySearchIntervalDays() {
+  return sourceConfig.limits.platformSearchIntervalDays
 }
