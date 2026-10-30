@@ -1,1 +1,1 @@
-export const siteContainerClass = 'container mx-auto max-w-5xl px-4'
+export const siteContainerClass = 'site-container mx-auto'

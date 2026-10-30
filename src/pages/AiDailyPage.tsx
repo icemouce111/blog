@@ -1,7 +1,4 @@
-import {
-  AiDailyArchiveList,
-  AiDailyLatestIssue,
-} from '@/components/ai-daily/AiDailyIssueList'
+import { AiDailyArchiveList, AiDailyLatestIssue } from '@/components/ai-daily/AiDailyIssueList'
 import { AiDailyMasthead } from '@/components/ai-daily/AiDailyMasthead'
 import { AiTrendInsights } from '@/components/ai-daily/AiTrendInsights'
 import { AiOpportunityRadar } from '@/components/ai-daily/AiOpportunityRadar'
@@ -17,13 +14,16 @@ export function AiDailyPage() {
   const posts = getAiDailyPosts()
   const githubPost = getGithubDailyPosts()[0]
   const opportunityCount = getActiveAiOpportunities().length
-  const openSourceCount = Math.min(3, githubPost?.highlights.length || githubPost?.repos.length || 0)
+  const openSourceCount = Math.min(
+    3,
+    githubPost?.highlights.length || githubPost?.repos.length || 0,
+  )
   const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
 
   return (
     <div className="ai-daily-shell">
       <PageContainer size="wide" className="ai-daily-paper">
-        <AiDailyMasthead date={posts[0]?.date} issueId={posts[0]?.issueId} />
+        <AiDailyMasthead heading date={posts[0]?.date} issueId={posts[0]?.issueId} />
         {posts.length > 0 ? (
           <div className="ai-daily-archive-layout">
             <AiDailyLatestIssue

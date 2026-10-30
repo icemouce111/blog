@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils'
 
 const sizes = {
-  default: 'max-w-5xl',
+  default: 'max-w-[1200px]',
   narrow: 'max-w-3xl',
-  wide: 'max-w-6xl',
+  wide: 'max-w-[1200px]',
 } as const
 
 type PageContainerSize = keyof typeof sizes
@@ -14,13 +14,9 @@ interface PageContainerProps {
   children: React.ReactNode
 }
 
-export function PageContainer({
-  size = 'default',
-  className,
-  children,
-}: PageContainerProps) {
+export function PageContainer({ size = 'default', className, children }: PageContainerProps) {
   return (
-    <div className={cn('container mx-auto px-4 py-12', sizes[size], className)}>
+    <div className={cn('site-container site-page-container mx-auto', sizes[size], className)}>
       {children}
     </div>
   )

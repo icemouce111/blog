@@ -1,138 +1,130 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookOpen, FolderGit2, Link2, Sparkles, Wrench } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getPosts } from '@/lib/posts'
+import { ArrowRight, ArrowUpRight, BookOpen, FolderGit2, Link2, Wrench } from 'lucide-react'
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { PageContainer } from '@/components/layout/PageContainer'
-
-const sections = [
-  {
-    title: '博客',
-    description: '记录工程实践、产品判断与问题解决过程',
-    eyebrow: 'WRITING',
-    icon: BookOpen,
-    href: '/blog',
-    tone: 'violet',
-  },
-  {
-    title: '作品集',
-    description: '可以运行、验证和继续迭代的真实项目',
-    eyebrow: 'BUILDING',
-    icon: FolderGit2,
-    href: '/projects',
-    tone: 'cyan',
-  },
-  {
-    title: '资源导航',
-    description: '个人长期使用和整理的实用入口',
-    eyebrow: 'COLLECTION',
-    icon: Link2,
-    href: '/resources',
-    tone: 'amber',
-  },
-  {
-    title: '工具集',
-    description: '可以直接试用和加入工作流的在线工具',
-    eyebrow: 'TOOLS',
-    icon: Wrench,
-    href: '/tools',
-    tone: 'cyan',
-  },
-  {
-    title: 'AI 情报',
-    description: '从变化中筛出值得理解、实践和参与的信号',
-    eyebrow: 'INTELLIGENCE',
-    icon: Sparkles,
-    href: '/ai-daily',
-    tone: 'mixed',
-  },
-] as const
+import { ContentList } from '@/components/reading/ContentList'
+import { getPosts } from '@/lib/posts'
+import { getAiDailyPosts } from '@/lib/ai-daily'
+import projects from '@/data/projects.json'
 
 export function HomePage() {
   const posts = getPosts().slice(0, 3)
-
+  const latest = getAiDailyPosts()[0]
   return (
     <div className="site-page">
       <PageContainer size="wide">
         <section className="site-home-hero" aria-labelledby="home-heading">
-          <div className="site-home-copy">
-            <div className="site-home-intro">
-              <img src="/avatar.jpg" alt="" />
-              ICEMOUCE · BUILD IN PUBLIC
-            </div>
-            <h1 id="home-heading">你好！我是学山，希望对你有收获！</h1>
-            <p className="site-home-hero-copy">
-              我在这里记录 Agent 工程、AI 办公、全栈产品和真实业务实践，也把复杂工具翻译成普通人可以开始的第一步。
-            </p>
-            <div className="site-home-actions">
-              <Link to="/ai-daily">进入 AI 情报站 <ArrowRight /></Link>
-              <Link to="/projects">查看实践作品 <ArrowRight /></Link>
-            </div>
+          <div className="site-home-intro">
+            <img src="/avatar.jpg" alt="icemouce 的头像" />
+            <span>ICEMOUCE / 学山</span>
           </div>
-          <div className="site-home-monogram" aria-hidden="true">AI</div>
-        </section>
-
-        <section className="site-home-section" aria-labelledby="explore-heading">
-          <div className="site-home-section-heading">
-            <div>
-              <p className="site-eyebrow">EXPLORE</p>
-              <h2 id="explore-heading">从这里开始</h2>
-            </div>
-          </div>
-          <div className="site-home-nav-grid">
-            {sections.map((section) => (
-              <Link key={section.href} to={section.href} className={`site-tone-${section.tone}`}>
-                <Card className="site-card site-home-nav-card">
-                  <CardHeader>
-                    <span className="site-home-nav-icon"><section.icon /></span>
-                    <p className="site-eyebrow">{section.eyebrow}</p>
-                    <CardTitle>{section.title}</CardTitle>
-                    <CardDescription>{section.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="mt-auto">
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                      探索更多 <ArrowRight className="h-3 w-3" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+          <p className="site-eyebrow">持续学习，公开构建</p>
+          <h1 id="home-heading">
+            把 AI 放进真实工作，
+            <br />
+            把实践写成可用的经验。
+          </h1>
+          <p className="site-home-hero-copy">
+            你好，我是学山。我在这里记录 Agent 工程、AI
+            办公、全栈产品和真实业务实践，也把复杂工具翻译成普通人可以开始的第一步。
+          </p>
+          <div className="site-home-actions">
+            <Link to="/projects">
+              查看作品 <FolderGit2 aria-hidden="true" />
+            </Link>
+            <Link to="/blog">
+              阅读文章 <BookOpen aria-hidden="true" />
+            </Link>
           </div>
         </section>
-
-        {posts.length > 0 && (
-          <section className="site-home-section" aria-labelledby="latest-posts-heading">
+        {projects.length > 0 && (
+          <section className="site-home-section" aria-labelledby="home-projects-heading">
             <div className="site-home-section-heading">
               <div>
-                <p className="site-eyebrow">LATEST NOTES</p>
-                <h2 id="latest-posts-heading">最近写下的内容</h2>
+                <p className="site-eyebrow">SELECTED WORK</p>
+                <h2 id="home-projects-heading">从想法到作品</h2>
               </div>
-              <Link className="flex items-center gap-1 text-sm text-muted-foreground" to="/blog">
-                查看全部 <ArrowRight className="h-4 w-4" />
+              <Link to="/projects">
+                全部作品 <ArrowRight aria-hidden="true" />
               </Link>
             </div>
-            <div className="site-blog-grid site-tone-violet">
-              {posts.map((post, index) => (
-                <Link key={post.slug} to={`/blog/${post.slug}`}>
-                  <Card className="site-card site-blog-card">
-                    <CardHeader>
-                      <div className="flex items-center justify-between gap-4">
-                        <span className="site-card-index">{String(index + 1).padStart(2, '0')}</span>
-                        <time className="text-xs text-muted-foreground">{post.date}</time>
-                      </div>
-                      <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                      <CardDescription className="line-clamp-3">{post.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="mt-auto">
-                      <div className="flex flex-wrap gap-1.5">
-                        {post.tags.slice(0, 3).map((tag) => <span className="site-chip" key={tag}>{tag}</span>)}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+            <div className="site-project-grid">
+              {projects.slice(0, 3).map((project, index) => (
+                <Card className="site-card site-project-card" key={project.name}>
+                  <CardHeader>
+                    <p className="site-card-index">0{index + 1} / PROJECT</p>
+                    <CardTitle role="heading" aria-level={3}>
+                      {project.name}
+                    </CardTitle>
+                    <CardDescription>{project.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="content-list-tags">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                    <a
+                      className="site-text-link"
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      查看项目 <ArrowUpRight aria-hidden="true" />
+                    </a>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </section>
         )}
+        {posts.length > 0 && (
+          <section className="site-home-section" aria-labelledby="home-posts-heading">
+            <div className="site-home-section-heading">
+              <div>
+                <p className="site-eyebrow">LATEST WRITING</p>
+                <h2 id="home-posts-heading">最近写下的内容</h2>
+              </div>
+              <Link to="/blog">
+                全部文章 <ArrowRight aria-hidden="true" />
+              </Link>
+            </div>
+            <ContentList posts={posts} headingLevel={3} />
+          </section>
+        )}
+        {latest && (
+          <section
+            className="site-home-section site-home-daily"
+            aria-labelledby="home-daily-heading"
+          >
+            <div>
+              <p className="site-eyebrow">AI DAILY / {latest.dateISO}</p>
+              <h2 id="home-daily-heading">每天，筛出值得行动的变化。</h2>
+              <p>{latest.leadTitle}</p>
+            </div>
+            <Link to={`/ai-daily/${latest.slug}`}>
+              阅读最新一期 <ArrowRight aria-hidden="true" />
+            </Link>
+          </section>
+        )}
+        <section className="site-home-section site-home-quicklinks" aria-label="继续探索">
+          <Link to="/resources">
+            <Link2 aria-hidden="true" />
+            <span>
+              <strong>资源导航</strong>
+              <small>长期整理的实用入口</small>
+            </span>
+            <ArrowUpRight aria-hidden="true" />
+          </Link>
+          <Link to="/tools">
+            <Wrench aria-hidden="true" />
+            <span>
+              <strong>工具集</strong>
+              <small>加入日常工作流的小帮手</small>
+            </span>
+            <ArrowUpRight aria-hidden="true" />
+          </Link>
+        </section>
       </PageContainer>
     </div>
   )

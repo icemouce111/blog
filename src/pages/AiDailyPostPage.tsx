@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { AiDailyContent } from '@/components/ai-daily/AiDailyContent'
 import { AiDailyMasthead } from '@/components/ai-daily/AiDailyMasthead'
 import { AiOpportunityRadar } from '@/components/ai-daily/AiOpportunityRadar'
 import { GithubDailyDigest } from '@/components/ai-daily/GithubDailyDigest'
-import {
-  AiDailyDesktopNavigation,
-  AiDailyMobileNavigation,
-} from '@/components/ai-daily/AiDailyNavigation'
+import { ReadingLayout } from '@/components/reading/ReadingLayout'
 import '@/components/ai-daily/ai-daily.css'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { getAiDailyPost, getAiDailyPosts } from '@/lib/ai-daily'
@@ -24,15 +21,15 @@ function getNextSectionNumber(sections: AiDailySection[]) {
 export function AiDailyPostPage() {
   const { slug } = useParams<{ slug: string }>()
   const post = useMemo(() => (slug ? getAiDailyPost(slug) : null), [slug])
-  const [activeSection, setActiveSection] = useState('')
   const githubPost = post ? getGithubDailyForDate(post.dateISO) : null
   const showOpportunities = Boolean(post && getAiDailyPosts()[0]?.slug === post.slug)
-  const openSourceCount = Math.min(3, githubPost?.highlights.length || githubPost?.repos.length || 0)
+  const openSourceCount = Math.min(
+    3,
+    githubPost?.highlights.length || githubPost?.repos.length || 0,
+  )
   const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
   const opportunityCount = showOpportunities ? getActiveAiOpportunities().length : 0
-  const prioritizeSupplements = Boolean(
-    post?.isSignalArchive && (githubPost || showOpportunities)
-  )
+  const prioritizeSupplements = Boolean(post?.isSignalArchive && (githubPost || showOpportunities))
   const contentSections = useMemo(() => {
     if (!post) return []
     const supplementCount = Number(Boolean(githubPost)) + Number(showOpportunities)
@@ -48,9 +45,7 @@ export function AiDailyPostPage() {
     if (!post) return { sections: [] as AiDailySection[], githubNumber: '', opportunityNumber: '' }
 
     const sections: AiDailySection[] = []
-    let nextNumber = prioritizeSupplements
-      ? '01'
-      : getNextSectionNumber(contentSections)
+    let nextNumber = prioritizeSupplements ? '01' : getNextSectionNumber(contentSections)
     const githubNumber = githubPost ? nextNumber : ''
     if (githubPost) {
       sections.push({
@@ -63,19 +58,21 @@ export function AiDailyPostPage() {
     }
     const opportunityNumber = showOpportunities ? nextNumber : ''
     if (showOpportunities) {
-      sections.push({ number: nextNumber, title: 'AI 创作者机会', id: 'creator-opportunities', markdown: '' })
+      sections.push({
+        number: nextNumber,
+        title: 'AI 创作者机会',
+        id: 'creator-opportunities',
+        markdown: '',
+      })
     }
     return { sections, githubNumber, opportunityNumber }
   }, [contentSections, githubPost, post, prioritizeSupplements, showOpportunities])
-  const navigationSections = useMemo(
-    () => {
-      if (!post) return []
-      return prioritizeSupplements
-        ? [...supplemental.sections, ...contentSections]
-        : [...contentSections, ...supplemental.sections]
-    },
-    [contentSections, post, prioritizeSupplements, supplemental.sections]
-  )
+  const navigationSections = useMemo(() => {
+    if (!post) return []
+    return prioritizeSupplements
+      ? [...supplemental.sections, ...contentSections]
+      : [...contentSections, ...supplemental.sections]
+  }, [contentSections, post, prioritizeSupplements, supplemental.sections])
 
   const supplements = post ? (
     <>
@@ -97,72 +94,51 @@ export function AiDailyPostPage() {
     </>
   ) : null
 
-  useEffect(() => {
-    if (!navigationSections.length) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-        if (visible[0]) setActiveSection(visible[0].target.id)
-      },
-      { rootMargin: '-15% 0px -70% 0px' }
-    )
-
-    navigationSections.forEach((section) => {
-      const element = document.getElementById(section.id)
-      if (element) observer.observe(element)
-    })
-
-    return () => observer.disconnect()
-  }, [navigationSections])
-
   if (!post) {
     return (
       <div className="ai-daily-shell">
         <PageContainer size="narrow" className="ai-daily-paper ai-daily-empty">
           <p className="ai-daily-eyebrow">404 / NOT FOUND</p>
           <h1 className="ai-daily-serif">这期日报不在档案中</h1>
-          <Link className="ai-daily-back" to="/ai-daily">← 返回情报归档</Link>
+          <Link className="ai-daily-back" to="/ai-daily">
+            ← 返回情报归档
+          </Link>
         </PageContainer>
       </div>
     )
   }
 
-  const scrollToSection = (id: string) => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    document.getElementById(id)?.scrollIntoView({
-      behavior: reduceMotion ? 'auto' : 'smooth',
-      block: 'start',
-    })
-  }
-
   return (
     <div className="ai-daily-shell">
       <PageContainer size="wide" className="ai-daily-paper">
-        <Link className="ai-daily-back" to="/ai-daily">← 返回情报归档</Link>
+        <Link className="ai-daily-back" to="/ai-daily">
+          ← 返回情报归档
+        </Link>
         <AiDailyMasthead date={post.date} issueId={post.issueId} />
-        <AiDailyMobileNavigation sections={navigationSections} />
-        <div className="ai-daily-layout">
-          <article className="ai-daily-article">
-            <AiDailyContent
-              afterSections={prioritizeSupplements ? null : supplements}
-              beforeSections={prioritizeSupplements ? supplements : null}
-              post={post}
-              sections={contentSections}
-              openSourceCount={openSourceCount}
-              openSourceLabel={openSourceLabel}
-              opportunityCount={opportunityCount}
-            />
-          </article>
-          <AiDailyDesktopNavigation
-            activeSection={activeSection}
-            onSectionClick={scrollToSection}
+        <ReadingLayout
+          sections={navigationSections}
+          directoryFooter={
+            <>
+              <p>
+                {post.storyCount} 条信号 · {post.readingMinutes} 分钟阅读
+              </p>
+              <nav aria-label="相邻日报">
+                {post.newerSlug && <Link to={`/ai-daily/${post.newerSlug}`}>← 更新一期</Link>}
+                {post.olderSlug && <Link to={`/ai-daily/${post.olderSlug}`}>更早一期 →</Link>}
+              </nav>
+            </>
+          }
+        >
+          <AiDailyContent
+            afterSections={prioritizeSupplements ? null : supplements}
+            beforeSections={prioritizeSupplements ? supplements : null}
             post={post}
-            sections={navigationSections}
+            sections={contentSections}
+            openSourceCount={openSourceCount}
+            openSourceLabel={openSourceLabel}
+            opportunityCount={opportunityCount}
           />
-        </div>
+        </ReadingLayout>
       </PageContainer>
     </div>
   )

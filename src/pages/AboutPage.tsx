@@ -1,3 +1,4 @@
+import { ButtonLink } from '@/components/ui/button-link'
 import {
   BriefcaseBusiness,
   ExternalLink,
@@ -8,7 +9,6 @@ import {
   Workflow,
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import friendsData from '@/data/friends.json'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { SectionHero } from '@/components/layout/SectionHero'
@@ -38,8 +38,14 @@ const focusAreas = [
 ]
 
 const skills = [
-  'TypeScript', 'React', 'Vite', 'Tailwind CSS',
-  'Node.js', 'Cloudflare', 'PostgreSQL', 'Drizzle ORM',
+  'TypeScript',
+  'React',
+  'Vite',
+  'Tailwind CSS',
+  'Node.js',
+  'Cloudflare',
+  'PostgreSQL',
+  'Drizzle ORM',
 ]
 
 export function AboutPage() {
@@ -61,7 +67,8 @@ export function AboutPage() {
           <section className="site-panel site-about-statement">
             <h2>你好，我是 icemouce</h2>
             <p>
-              我是一名持续学习和构建中的全栈开发者。目前主要探索 Agent 工程、AI 辅助开发与企业场景落地，并把真实实践整理成教程、工具和可以继续迭代的作品。
+              我是一名持续学习和构建中的全栈开发者。目前主要探索 Agent 工程、AI
+              辅助开发与企业场景落地，并把真实实践整理成教程、工具和可以继续迭代的作品。
             </p>
           </section>
           <aside className="site-panel site-about-principle">
@@ -105,7 +112,11 @@ export function AboutPage() {
           <p className="site-eyebrow">TOOLKIT</p>
           <h2 id="skills-heading">技能与工具</h2>
           <div className="flex flex-wrap gap-2">
-            {skills.map((skill) => <span className="site-chip" key={skill}>{skill}</span>)}
+            {skills.map((skill) => (
+              <span className="site-chip" key={skill}>
+                {skill}
+              </span>
+            ))}
           </div>
         </section>
 
@@ -121,9 +132,15 @@ export function AboutPage() {
                     <CardDescription>{friend.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button variant="outline" size="sm" render={<a href={friend.url} target="_blank" rel="noopener noreferrer" />}>
+                    <ButtonLink
+                      variant="outline"
+                      size="sm"
+                      href={friend.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       访问 <ExternalLink className="h-3.5 w-3.5" />
-                    </Button>
+                    </ButtonLink>
                   </CardContent>
                 </Card>
               ))}

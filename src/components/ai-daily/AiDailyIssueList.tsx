@@ -24,20 +24,21 @@ export function AiDailyLatestIssue({
   return (
     <section className="ai-daily-latest" aria-labelledby="latest-issue-heading">
       <div className="ai-daily-briefing-bar">
-        <span>MORNING BRIEFING / ISSUE {latest.issueId.slice(-4)}</span>
+        <span>最新一期 / {latest.dateISO}</span>
         <strong>预计阅读 {latest.readingMinutes} 分钟</strong>
       </div>
       <article className="ai-daily-featured">
-        <div className="ai-daily-featured-kicker"><span /> TODAY&apos;S DEFINING SHIFT</div>
-        <h1 id="latest-issue-heading" className="ai-daily-serif">
+        <div className="ai-daily-featured-kicker">
+          <span /> 今日主线
+        </div>
+        <h2 id="latest-issue-heading" className="ai-daily-serif">
           <Link to={`/ai-daily/${latest.slug}`}>{latest.leadTitle}</Link>
-        </h1>
+        </h2>
         {latest.leadSummary && (
           <div className="ai-daily-featured-summary">
             <ReactMarkdown>{latest.leadSummary}</ReactMarkdown>
           </div>
         )}
-        <div className="ai-daily-featured-orbit" aria-hidden="true"><span>AI</span></div>
         <Link className="ai-daily-read-link" to={`/ai-daily/${latest.slug}`}>
           <span aria-hidden="true">→</span> 阅读本期行动情报
         </Link>
@@ -75,7 +76,9 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
                   {post.isSignalArchive ? '来源速览' : `${post.storyCount} 条编辑信号`}
                 </span>
               </span>
-              <span className="ai-daily-archive-arrow" aria-hidden="true">↗</span>
+              <span className="ai-daily-archive-arrow" aria-hidden="true">
+                ↗
+              </span>
             </Link>
           </li>
         ))}
