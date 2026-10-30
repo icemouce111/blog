@@ -253,6 +253,19 @@ class ReportValidationTest(unittest.TestCase):
         self.assertFalse(validate_report(unsupported, [evidence]).valid)
         self.assertTrue(validate_report(supported, [evidence]).valid)
 
+    def test_equivalent_counts_and_currency_amounts_preserve_units(self):
+        cases = [
+            ("10000次自然播放", "1 万次自然播放", True),
+            ("现金奖励10000元", "现金奖励1万元", True),
+            ("现金奖励100美元", "现金奖励100元", False),
+            ("数据为50次播放", "奖励50%", False),
+            ("数据为1000次播放", "数据为1万次播放", False),
+        ]
+        for source, claim, expected in cases:
+            with self.subTest(source=source, claim=claim):
+                report = "## 01 活动机会\n\n1. **创作计划**\n" + claim + "。来源：https://openai.com/index/new-model\n"
+                self.assertEqual(validate_report(report, [official_item(summary=source)]).valid, expected)
+
     def test_rejects_claims_attributed_to_an_unavailable_source(self):
         report = """## 01 📌 今日头条
 

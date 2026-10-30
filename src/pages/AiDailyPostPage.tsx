@@ -29,7 +29,7 @@ export function AiDailyPostPage() {
   const showOpportunities = Boolean(post && getAiDailyPosts()[0]?.slug === post.slug)
   const openSourceCount = Math.min(3, githubPost?.highlights.length || githubPost?.repos.length || 0)
   const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
-  const opportunityCount = showOpportunities ? getActiveAiOpportunities(post?.dateISO).length : 0
+  const opportunityCount = showOpportunities ? getActiveAiOpportunities().length : 0
   const prioritizeSupplements = Boolean(
     post?.isSignalArchive && (githubPost || showOpportunities)
   )

@@ -1,0 +1,37 @@
+{
+  "profile": {
+    "followersBelow": 1000,
+    "weeklyHours": 10,
+    "verificationMaxAgeDays": 7,
+    "themes": ["AI短视频", "商品展示", "AI穿搭", "工具实测", "制作拆解", "个人IP", "Skill工作流"]
+  },
+  "limits": {"searchQueries": 4, "pagesPerRun": 10, "newCandidates": 5, "timeoutSeconds": 12},
+  "officialHosts": [
+    "liblib.tv", "developer.huaweicloud.com", "support.huaweicloud.com",
+    "vidu.com", "akool.com", "elevenlabs.io", "hailuoai.video",
+    "jimeng.jianying.com", "pgy.xiaohongshu.com", "xingtu.cn", "creator.douyin.com",
+    "bilibili.com", "klingai.com", "kuaishou.com", "life.douyin.com",
+    "lf26-cdn-tos.draftstatic.com", "lf3-cdn-tos.draftstatic.com",
+    "training.tencentads.com", "jingrui-ai-competition.youku.com"
+  ],
+  "discoveryQueries": [
+    "{year} {month} 抖音 小红书 AI短视频 创作 活动 现金 商家",
+    "{year} AI 创作者 招募 商品视频 模板 奖金 官方",
+    "{year} AI工具 创作者 任务 赏金 制作 商业合作",
+    "{year} {month} AI视频制作 商品短视频 商家 悬赏 接单 需求"
+  ],
+  "discoverySources": [
+    {"name": "AIGC机会目录（仅发现线索）", "url": "https://www.aigccreative.com/"},
+    {"name": "AI Design Hub赛事目录（仅发现线索）", "url": "https://aimedal.cn/index.html?view=events"}
+  ],
+  "watchSources": [
+    {"name": "LibTV 创作者活动", "url": "https://www.liblib.tv/", "discovery": true},
+    {"name": "Vidu 活动与星火计划", "url": "https://www.vidu.com/zh/earn", "discovery": true},
+    {"name": "小红书蒲公英任务入口", "url": "https://pgy.xiaohongshu.com/", "discovery": false},
+    {"name": "巨量星图任务与规则", "url": "https://www.xingtu.cn/help-center/author/109194?hide_nav_bar=0", "discovery": false},
+    {"name": "B站有奖活动中心", "url": "https://www.bilibili.com/blackboard/era/reward-activity-list-page.html", "discovery": true},
+    {"name": "AKOOL 创作者计划", "url": "https://akool.com/creator-partner-program", "discovery": false},
+    {"name": "ElevenLabs 创作者合作", "url": "https://elevenlabs.io/ambassador", "discovery": false},
+    {"name": "剪映 / 抖音创作者中心（需端内核验）", "url": "https://creator.douyin.com/", "discovery": false}
+  ]
+}

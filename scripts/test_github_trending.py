@@ -332,6 +332,7 @@ class PublisherContractTest(unittest.TestCase):
                 "src/content/ai-daily/2026-08-31.md",
                 "public/ai-daily.xml",
                 "src/data/ai-trends.json",
+                "src/data/ai-opportunities.json",
             },
         )
         self.assertEqual(

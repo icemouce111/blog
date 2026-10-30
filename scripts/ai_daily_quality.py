@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
+from decimal import Decimal
 from enum import Enum
 from typing import Callable, Iterable, Mapping
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -88,11 +89,22 @@ AI_RELEVANCE_PATTERN = re.compile(
     r"artificial intelligence|prompt|multimodal|diffusion|人工智能|大模型|"
     r"语言模型|智能体|多模态|提示词|生成式|机器学习|神经网络|豆包|千问)"
 )
-METRIC_PATTERN = re.compile(r"\d+(?:\.\d+)?\s*(?:%|倍|万|亿|元)")
+METRIC_PATTERN = re.compile(
+    r"(?<![\d.])(?P<currency>US\$|USD\s*|\$)?"
+    r"(?P<number>(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?)\s*"
+    r"(?P<scale>万|亿)?\s*(?P<unit>%|倍|美元|元)?", re.I,
+)
 ORDERED_ITEM_PATTERN = re.compile(
     r"(?ms)^\d+\.\s+.*?(?=^\d+\.\s+|^##\s+|\Z)"
 )
 CST = ZoneInfo("Asia/Shanghai")
+
+
+def _metric_key(match):
+    amount = Decimal(match["number"].replace(",", ""))
+    amount *= {"万": 10000, "亿": 100000000}.get(match["scale"], 1)
+    unit = "美元" if match["currency"] or match["unit"] == "美元" else match["unit"] or "数量"
+    return amount, unit
 
 
 class QualityMode(str, Enum):
@@ -233,11 +245,10 @@ def validate_report(
             issues.append(
                 f"unsupported absolute or promotional claim: {phrase}"
             )
-    normalized_evidence = re.sub(r"\s+", "", evidence_text)
-    for metric in METRIC_PATTERN.findall(content):
-        normalized_metric = re.sub(r"\s+", "", metric)
-        if normalized_metric not in normalized_evidence:
-            issues.append(f"unsupported metric: {metric.strip()}")
+    evidence_metrics = {_metric_key(match) for match in METRIC_PATTERN.finditer(evidence_text)}
+    for match in METRIC_PATTERN.finditer(content):
+        if (match["currency"] or match["scale"] or match["unit"]) and _metric_key(match) not in evidence_metrics:
+            issues.append(f"unsupported metric: {match[0].strip()}")
     active_sources = {item.source for item in items}
     for source_name in KNOWN_SOURCE_NAMES:
         if source_name in content and source_name not in active_sources:

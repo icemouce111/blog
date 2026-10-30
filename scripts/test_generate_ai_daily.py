@@ -272,14 +272,23 @@ class SourceRegistryContractTest(unittest.TestCase):
         self.assertEqual(len(converted["OpenAI"]), 8)
         self.assertEqual(converted["OpenAI"][0]["signal_type"], "story")
 
-    def test_creator_opportunities_exclude_expired_items(self):
-        items = MODULE.fetch_creator_opportunities(
-            target_date=date(2026, 9, 20),
-        )
-
+    def test_editor_receives_suitable_verified_opportunities_only(self):
+        items = MODULE.fetch_creator_opportunities(target_date=date(2026, 10, 30))
         titles = {item["title"] for item in items}
-        self.assertFalse(any("Qwen3.8-27B" in title for title in titles))
-        self.assertTrue(any("Kimi Ambassador" in title for title in titles))
+        self.assertTrue(any("毛茸茸" in title for title in titles))
+        self.assertFalse(any("Vibe" in title or "星图" in title or "Skill 创新赛" in title for title in titles))
+        self.assertTrue(all("参与门槛" in item["description"] for item in items))
+
+    def test_final_report_still_refreshes_opportunities_before_returning(self):
+        today = MODULE.datetime.now(MODULE.CST).date().isoformat()
+        args = MODULE.parse_args(["--generate-only", "--date", today])
+        with patch.object(MODULE, "refresh_opportunities") as refresh, \
+             patch.object(MODULE, "_existing_report_is_final", return_value=True), \
+             patch.object(MODULE, "_refresh_derived_artifacts"), \
+             patch.object(MODULE, "scan_files") as scan:
+            self.assertEqual(MODULE._run_generation(args), 0)
+        refresh.assert_called_once_with(MODULE.BLOG_DIR, date.fromisoformat(today), dry_run=False, force=False)
+        self.assertIn("src/data/ai-opportunities.json", scan.call_args.args[1])
 
     def test_filters_registered_results_before_llm_analysis(self):
         results = {
