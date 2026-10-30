@@ -2,6 +2,7 @@ import { Disclosure } from '@/components/ui/disclosure'
 import { Link } from 'react-router-dom'
 import {
   getOpportunityCollection,
+  getOpportunityChannelCoverage,
   getOpportunityGroups,
   getOpportunityProfile,
   getOpportunityWatchSources,
@@ -128,6 +129,24 @@ function RadarContent({ compact }: { compact: boolean }) {
         最近搜集：{collection.date || collection.updatedAt}
         {failed ? ' · 部分来源待复核' : ''}
       </p>
+      <ul className="ai-opportunity-channel-status" aria-label="四平台定向搜集状态">
+        {getOpportunityChannelCoverage().map(({ id, name, result }) => (
+          <li key={id}>
+            <strong>{name}</strong>
+            <span>
+              {result
+                ? `${result.completed}/${result.queries} 次搜索 · ${result.leads ? `${result.leads} 条候选／${result.discovered} 条新增` : '未命中有效线索'}${result.failures ? ` · ${result.failures} 次失败` : ''}`
+                : '待首次定向搜集'}
+            </span>
+          </li>
+        ))}
+      </ul>
+      {Boolean(collection.reviewQueue?.length) && (
+        <p className="ai-opportunity-update">
+          平台待核队列：{collection.reviewQueue?.length}{' '}
+          项。搜索完成不表示已核验官方账号及参与资格。
+        </p>
+      )}
       <h3 className="ai-opportunity-group-title">
         优先尝试 <span>{groups.recommended.length}</span>
       </h3>

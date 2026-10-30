@@ -133,3 +133,8 @@
   .ai-github-scan-list > div { grid-template-columns: 1fr; gap: 0; }
   .ai-daily-archive-list a { gap: 12px; grid-template-columns: 44px minmax(0, 1fr) 16px; }
 }
+.ai-opportunity-channel-status { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 28px; padding: 0; list-style: none; }
+.ai-opportunity-channel-status li { min-width: 0; border-left: 2px solid var(--border); padding-left: 12px; }
+.ai-opportunity-channel-status strong { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.ai-opportunity-channel-status span { display: block; font-size: 14px; color: var(--muted-foreground); line-height: 1.75; }
+@media (max-width: 767px) { .ai-opportunity-channel-status { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

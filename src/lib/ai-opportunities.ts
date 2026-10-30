@@ -7,14 +7,34 @@ export type AiOpportunity = CreatorOpportunity
 interface OpportunitySeed {
   updatedAt: string
   opportunities: CreatorOpportunity[]
-  collection: { date?: string; searchFailures?: number; pageFailures?: number; modelStatus?: string }
+  collection: {
+    date?: string
+    searchFailures?: number
+    pageFailures?: number
+    modelStatus?: string
+    reviewQueue?: string[]
+    channels?: Record<
+      string,
+      {
+        name: string
+        queries: number
+        completed: number
+        failures: number
+        leads: number
+        discovered: number
+      }
+    >
+  }
 }
 
 const seed = opportunitySeed as OpportunitySeed
 
 export function todayInShanghai() {
   return new Intl.DateTimeFormat('en-CA', {
-    year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'Asia/Shanghai',
   }).format(new Date())
 }
 
@@ -26,6 +46,20 @@ export function getActiveAiOpportunities(referenceDate = todayInShanghai()) {
   return getOpportunityGroups(referenceDate).recommended
 }
 
-export function getOpportunityWatchSources() { return sourceConfig.watchSources }
-export function getOpportunityCollection() { return { updatedAt: seed.updatedAt, ...seed.collection } }
-export function getOpportunityProfile() { return sourceConfig.profile }
+export function getOpportunityWatchSources() {
+  return sourceConfig.watchSources
+}
+export function getOpportunityCollection() {
+  return { updatedAt: seed.updatedAt, ...seed.collection }
+}
+export function getOpportunityProfile() {
+  return sourceConfig.profile
+}
+
+export function getOpportunityChannelCoverage() {
+  return sourceConfig.platformChannels.map((channel) => ({
+    id: channel.id,
+    name: channel.name,
+    result: seed.collection.channels?.[channel.id],
+  }))
+}
