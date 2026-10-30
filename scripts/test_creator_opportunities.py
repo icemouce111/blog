@@ -210,5 +210,214 @@ class RefreshTest(unittest.TestCase):
         self.assertEqual(result["collection"]["verified"], 0)
 
 
+class TargetedDiscoveryTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        config_path = Path(__file__).resolve().parent.parent / radar.CONFIG_PATH
+        self.config = json.loads(config_path.read_text())
+        self.config['watchSources'] = []
+        self.config['discoverySources'] = []
+        self.config['limits']['newCandidates'] = 5
+        self.config['discoveryQueries'] = ['{year} {month} AI创作者激励', 'AI商家合作']
+        (self.root / radar.DATA_PATH).parent.mkdir(parents=True)
+        (self.root / radar.DATA_PATH).write_text(json.dumps({
+            'schemaVersion': 2, 'updatedAt': str(TODAY), 'collection': {}, 'opportunities': []}))
+        self.write_config()
+
+    def write_config(self):
+        (self.root / radar.CONFIG_PATH).write_text(json.dumps(self.config))
+
+    def refresh(self, search, **kwargs):
+        fetch = Mock(side_effect=AssertionError('social posts must not be fetched as official rules'))
+        extract = Mock(side_effect=AssertionError('social posts must not be verified by the model'))
+        reference = kwargs.pop('reference', TODAY)
+        result = radar.refresh_opportunities(self.root, reference, search=search, fetch=fetch,
+                                            extract=extract, dry_run=kwargs.pop('dry_run', True), **kwargs)
+        fetch.assert_not_called()
+        extract.assert_not_called()
+        return result
+
+    def test_each_platform_keeps_two_queries_before_general_discovery(self):
+        plan = radar.discovery_plan(self.config, TODAY)
+        self.assertEqual(len(plan), 10)
+        for key in ('xiaohongshu', 'douyin', 'x', 'wechat'):
+            self.assertEqual(sum(item['channel'] == key for item in plan), 2)
+        self.assertEqual([item['channel'] for item in plan[:4]], ['xiaohongshu', 'douyin', 'x', 'wechat'])
+        self.assertEqual(sum(item['channel'] == 'general' for item in plan), 2)
+        self.assertNotIn('{year}', str(plan))
+        self.config['limits']['searchQueries'] = 4
+        with self.assertRaises(ValueError):
+            radar.discovery_plan(self.config, TODAY)
+
+    def test_named_campaigns_and_non_cash_programs_are_not_filtered_out(self):
+        for title in ('AI替我说', 'AI 替我说知识共创', '用AI讲知识', 'vibe知识大赏',
+                      '公众号征稿', '创作基金', 'creator program', 'AI bounties', 'paid collaboration'):
+            with self.subTest(title=title):
+                self.assertTrue(radar.LEAD_WORDS.search(title))
+        self.assertIsNone(radar.LEAD_WORDS.search('Learn how to make a video'))
+
+    def test_busy_platform_cannot_starve_other_platforms(self):
+        def search(query, _timeout):
+            if 'site:xiaohongshu.com' in query:
+                return [{'title': 'AI替我说', 'url': f'https://www.xiaohongshu.com/explore/{index}'} for index in range(10)]
+            if 'site:douyin.com' in query:
+                return [{'title': 'vibe知识大赏', 'url': 'https://www.douyin.com/video/one'}]
+            if 'site:x.com' in query:
+                return [{'title': 'AI creator program', 'url': 'https://x.com/creator/status/one'}]
+            if 'site:mp.weixin.qq.com' in query:
+                return [{'title': '公众号AI征稿', 'url': 'https://mp.weixin.qq.com/s/one'}]
+            return []
+        result = self.refresh(search)
+        items = result['opportunities']
+        self.assertEqual(len(items), 5)
+        self.assertEqual({item['discoveryPlatform'] for item in items}, {'xiaohongshu', 'douyin', 'x', 'wechat'})
+        self.assertTrue(all(item['verification'] == 'pending' and item['url'] == '' and item['reviewMode'] == 'manual' for item in items))
+        self.assertEqual(len(result['collection']['reviewQueue']), 5)
+
+    def test_platform_host_never_becomes_official_authority(self):
+        for channel in self.config['platformChannels']:
+            for host in channel['hosts']:
+                url = f'https://{host}/post/example'
+                self.assertEqual(radar.platform_for_url(url, self.config), channel['id'])
+                self.assertFalse(radar.official_url(url, self.config))
+                self.assertIsNone(radar.platform_for_url(f'https://{host}.evil.example/post', self.config))
+
+    def test_search_engine_ignoring_site_filters_does_not_fake_platform_coverage(self):
+        result = self.refresh(lambda query, timeout: [{'title': 'AI创作者活动', 'url': 'https://elsewhere.example/event'}])
+        self.assertEqual(len(result['opportunities']), 1)  # general searches may retain a second-hand lead
+        self.assertNotIn('discoveryPlatform', result['opportunities'][0])
+        for metric in result['collection']['channels'].values():
+            self.assertEqual(metric['completed'], 2)
+            self.assertEqual(metric['leads'], 0)
+            self.assertEqual(metric['discovered'], 0)
+
+    def test_failure_is_reported_for_its_platform_without_stopping_other_searches(self):
+        def search(query, _timeout):
+            if 'site:x.com' in query or '推特' in query:
+                raise TimeoutError()
+            return []
+        result = self.refresh(search)
+        self.assertEqual(result['collection']['channels']['x']['failures'], 2)
+        self.assertEqual(result['collection']['channels']['wechat']['completed'], 2)
+        self.assertEqual(result['collection']['searches'], 8)
+        self.assertEqual(result['collection']['searchFailures'], 2)
+
+    def test_platform_specific_secondary_report_stays_a_manual_lead(self):
+        def search(query, _timeout):
+            return [{'title': 'AI替我说知识共创', 'url': 'https://report.example/ai-program'}] if '小红书' in query else []
+        result = self.refresh(search)
+        item = result['opportunities'][0]
+        self.assertEqual(item['discoveryPlatform'], 'xiaohongshu')
+        self.assertEqual(item['verification'], 'pending')
+        self.assertEqual(item['sourceUrl'], 'https://report.example/ai-program')
+        self.assertEqual(item['url'], '')
+        self.assertEqual(result['collection']['channels']['xiaohongshu']['platformLeads'], 0)
+        self.assertGreater(result['collection']['channels']['xiaohongshu']['secondaryLeads'], 0)
+
+    def test_full_queue_keeps_new_discoveries_and_curated_records(self):
+        old = [opportunity(id=f'discovered-old-{i}', verification='pending', url='',
+                           sourceUrl=f'https://report.example/old/{i}',
+                           discoveredAt=str(TODAY-timedelta(days=30))) for i in range(100)]
+        curated = opportunity(id='curated', verification='pending', url='', sourceUrl='https://report.example/curated')
+        path = self.root / radar.DATA_PATH
+        data = json.loads(path.read_text())
+        data['opportunities'] = old + [curated]
+        path.write_text(json.dumps(data))
+        result = self.refresh(lambda q, t: [{'title':'AI征稿', 'url':'https://report.example/new'}])
+        self.assertEqual(len(result['opportunities']), 100)
+        self.assertIn('curated', {item['id'] for item in result['opportunities']})
+        self.assertIn('https://report.example/new', {item.get('sourceUrl') for item in result['opportunities']})
+
+    def test_malformed_search_payload_is_counted_as_failure(self):
+        result = self.refresh(lambda q, t: None)
+        self.assertEqual(result['collection']['searches'], 0)
+        self.assertEqual(result['collection']['searchFailures'], 10)
+
+    def test_source_change_invalidates_same_day_cache(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q, t: [], dry_run=False)
+        self.config['platformChannels'][0]['queries'].append('site:xiaohongshu.com 新的共创计划')
+        self.write_config()
+        search = Mock(return_value=[])
+        self.refresh(search)
+        self.assertEqual(search.call_count, 2)  # config refresh does not bypass the platform interval
+
+    def test_platform_search_runs_every_three_days_and_preserves_previous_dates(self):
+        with patch.object(radar, 'scan_files'):
+            first_search = Mock(return_value=[])
+            first = self.refresh(first_search, dry_run=False)
+            self.assertEqual(first_search.call_count, 10)
+            for offset in (1, 2):
+                search = Mock(return_value=[])
+                result = self.refresh(search, reference=TODAY+timedelta(days=offset), dry_run=False)
+                self.assertEqual(search.call_count, 2)  # daily general discovery still runs
+                for key, metric in result['collection']['channels'].items():
+                    self.assertTrue(metric['skipped'])
+                    self.assertEqual(metric['lastSearchedAt'], str(TODAY))
+                    self.assertEqual(metric['nextSearchAt'], str(TODAY+timedelta(days=3)))
+                    self.assertEqual(metric['completed'], first['collection']['channels'][key]['completed'])
+            search = Mock(return_value=[])
+            result = self.refresh(search, reference=TODAY+timedelta(days=3))
+            self.assertEqual(search.call_count, 10)
+            self.assertTrue(all(not m['skipped'] for m in result['collection']['channels'].values()))
+
+    def test_forcing_a_daily_report_does_not_bypass_platform_interval(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        search = Mock(return_value=[])
+        self.refresh(search, force=True)
+        self.assertEqual(search.call_count, 2)
+
+    def test_failed_platform_attempt_also_observes_the_three_day_interval(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(Mock(side_effect=TimeoutError()), dry_run=False)
+        search = Mock(return_value=[])
+        result = self.refresh(search, reference=TODAY+timedelta(days=1))
+        self.assertEqual(search.call_count, 2)
+        self.assertEqual(result['collection']['channels']['x']['failures'], 2)
+        self.assertTrue(result['collection']['channels']['x']['skipped'])
+        self.assertEqual(result['collection']['searchFailures'], 0)
+
+    def test_old_channel_metrics_use_the_previous_collection_date(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        path = self.root / radar.DATA_PATH
+        data = json.loads(path.read_text())
+        for metric in data['collection']['channels'].values():
+            metric.pop('lastSearchedAt')
+            metric.pop('nextSearchAt')
+        path.write_text(json.dumps(data))
+        search = Mock(return_value=[])
+        result = self.refresh(search, reference=TODAY+timedelta(days=1))
+        self.assertEqual(search.call_count, 2)
+        self.assertEqual(result['collection']['channels']['wechat']['lastSearchedAt'], str(TODAY))
+
+    def test_incidental_general_hit_does_not_rewrite_previous_platform_statistics(self):
+        with patch.object(radar, 'scan_files'):
+            self.refresh(lambda q,t: [], dry_run=False)
+        result = self.refresh(lambda q,t: [{'title':'AI替我说', 'url':'https://www.xiaohongshu.com/explore/new'}], reference=TODAY+timedelta(days=1))
+        self.assertEqual(result['collection']['discovered'], 1)
+        self.assertEqual(result['collection']['incidentalPlatformDiscoveries']['xiaohongshu'], 1)
+        self.assertEqual(result['collection']['channels']['xiaohongshu']['discovered'], 0)
+        self.assertEqual(result['collection']['channels']['xiaohongshu']['lastSearchedAt'], str(TODAY))
+
+    def test_targeted_dry_run_does_not_write_public_data(self):
+        before = (self.root / radar.DATA_PATH).read_bytes()
+        self.refresh(lambda q, t: [])
+        self.assertEqual((self.root / radar.DATA_PATH).read_bytes(), before)
+
+    def test_ai_tiwoshuo_is_named_but_dates_and_cash_stay_unconfirmed(self):
+        root = Path(__file__).resolve().parent.parent
+        snapshot = json.loads((root / radar.DATA_PATH).read_text())
+        item = next(item for item in snapshot['opportunities'] if item['id'] == 'xhs-ai-knowledge')
+        self.assertIn('AI替我说', item['title'])
+        self.assertEqual(item['deadlineKind'], 'unknown')
+        self.assertEqual(item['verification'], 'pending')
+        self.assertEqual(item['url'], '')
+        self.assertTrue(item['sourceUrl'])
+
+
 if __name__ == "__main__":
     unittest.main()

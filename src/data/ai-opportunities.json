@@ -159,7 +159,8 @@
       "verifiedAt": null,
       "checkedAt": null,
       "pendingReason": "渠道机制已确认，须取得完整在投任务细则",
-      "reviewMode": "manual"
+      "reviewMode": "manual",
+      "discoveryPlatform": "douyin"
     },
     {
       "id": "douyin-vibe",
@@ -181,20 +182,21 @@
       "verifiedAt": null,
       "checkedAt": null,
       "pendingReason": "仅找到参与话题，未取得完整官方现金细则",
-      "reviewMode": "manual"
+      "reviewMode": "manual",
+      "discoveryPlatform": "douyin"
     },
     {
       "id": "xhs-ai-knowledge",
-      "title": "小红书 AI 知识视频活动线索",
+      "title": "小红书「AI替我说／用AI讲知识」",
       "organizer": "小红书",
-      "type": "知识内容线索",
-      "url": "https://pgy.xiaohongshu.com/",
+      "type": "AI知识共创活动线索",
+      "url": "",
       "rewardTypes": [],
-      "reward": "疑似流量扶持，现金未证实",
-      "requirements": "AI替我说等话题需取得官方原帖及当前规则；平台入口不代表该活动已确认",
+      "reward": "二手资料称有流量扶持；现金、扶持数量和实际资格待官方原帖核实",
+      "requirements": "二手资料称用AI制作知识科普视频或教程，并带相关活动话题；原创要求、账号资格和投稿方式待官方原帖核实",
       "deadline": null,
-      "deadlineKind": "rolling",
-      "deadlineText": "官方未列统一截止；申请与任务以当前页面为准",
+      "deadlineKind": "unknown",
+      "deadlineText": "活动截止时间及年份待官方原帖核实",
       "fitStage": "apply",
       "fit": "适合用AI制作样片、教程和真实工作流积累个人IP；申请和结算仍需主办方审核",
       "minFollowers": null,
@@ -202,8 +204,10 @@
       "verification": "pending",
       "verifiedAt": null,
       "checkedAt": null,
-      "pendingReason": "官方活动原帖和奖励细则待核实",
-      "reviewMode": "manual"
+      "pendingReason": "缺少科技薯官方原帖及完整现行细则；二手海报转述不能作为奖励、资格和截止的确认依据",
+      "reviewMode": "manual",
+      "sourceUrl": "https://betteropc.com/self-media/traffic-tags/xiaohongshu-ai-tiwoshuo-20261018",
+      "discoveryPlatform": "xiaohongshu"
     },
     {
       "id": "xhs-super-player",
@@ -227,7 +231,8 @@
       "verifiedAt": null,
       "checkedAt": null,
       "pendingReason": "未核到适合当前定位、且规则完整的在期任务",
-      "reviewMode": "manual"
+      "reviewMode": "manual",
+      "discoveryPlatform": "xiaohongshu"
     },
     {
       "id": "bilibili-incentive",
