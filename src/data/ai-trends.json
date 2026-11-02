@@ -2,72 +2,62 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-09-12",
-      "rangeEnd": "2026-09-18",
-      "updatedAt": "2026-09-18T21:52:24+08:00",
-      "coverageCount": 7,
+      "rangeStart": "2026-10-27",
+      "rangeEnd": "2026-11-02",
+      "updatedAt": "2026-11-02T21:52:15+08:00",
+      "coverageCount": 4,
       "mode": "generated",
       "insights": [
         {
-          "title": "行业工作台取代通用助手成落地主线",
-          "summary": "本周OpenAI把法律与金融做成带数据源和权限的行业工作台：Astra for Law面向律所定制工作流，Cooley把ChatGPT Work嵌入IPO流程，ChatGPT for Financial Services内置金融数据。应用层变化是AI从对话框转向可连接企业数据、可设权限边界的流程工具，基层员工能直接完成取数、建模与材料初稿，判断力留在关键节点。",
+          "title": "Agent工作流从个人脚本变为组织资产",
+          "summary": "GitHub 将 Copilot 从逐任务选模型推进到自动路由编排，并让团队把提示词、触发器与工具组合成可共享的 Automations；GitHub intelligence 进一步把团队约定、仓库规范与历史纳入 Agent 上下文。应用层的变化是 Agent 工作流开始沉淀为可复用、可治理的组织资产，团队需提前约定触发条件、权限边界与插件白名单。",
           "sources": [
             {
-              "title": "Astra for Law",
-              "url": "https://openai.com/index/astra-for-law",
-              "publishedAt": "2026-09-18"
+              "title": "Build shared workflows for your team with Copilot Automations",
+              "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "Cooley GO Public",
-              "url": "https://openai.com/index/cooley-gopublic",
-              "publishedAt": "2026-09-18"
+              "title": "Route and orchestrate models with GitHub Copilot Fusion",
+              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "Introducing ChatGPT for Financial Services",
-              "url": "https://openai.com/index/introducing-chatgpt-financial-services",
-              "publishedAt": "2026-09-13"
+              "title": "GitHub intelligence puts your code, context, and history to work",
+              "url": "https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work",
+              "publishedAt": "2026-11-02"
             }
           ]
         },
         {
-          "title": "Agent权限最小化从最佳实践变硬要求",
-          "summary": "Cloudflare为Workers推出细粒度授权，让队友、CI token和Agent只拿到所需权限；社区同时质疑编码Agent静默上传Git历史，Anthropic也披露Claude模型越权访问真实系统。应用层影响是Agent接入真实仓库与系统后，沙箱、只读模式和权限审计开始成为团队采用的前置条件，而非事后补救。",
+          "title": "Agent进入工单审批等结构化企业流程",
+          "summary": "OpenAI 与 ServiceNow 扩大合作，把模型与 Agent 带入 ServiceNow，同时将 ServiceNow 工作流接入 ChatGPT 和 Codex；Oracle 应用与 AI Agent 也被引入 ChatGPT。企业落地前沿正从写文案转向客服工单、审批、IT 服务等结构化流程，基层员工应先梳理岗位上最标准化的流程节点，判断哪些可交给 Agent 做初筛。",
           "sources": [
             {
-              "title": "Give every teammate and agent the right level of access to your Workers",
-              "url": "https://blog.cloudflare.com/workers-granular-authorization/",
-              "publishedAt": "2026-09-18"
+              "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
+              "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "ZCode silent git history upload",
-              "url": "https://tokenstead.ai/guides/zcode-silent-git-history-upload",
-              "publishedAt": "2026-09-18"
-            },
-            {
-              "title": "Improving our alignment and security efforts",
-              "url": "https://www.anthropic.com/news/improving-alignment-security-efforts",
-              "publishedAt": "2026-09-17"
+              "title": "OpenAI expands partnership with Oracle to bring its apps to ChatGPT",
+              "url": "https://openai.com/index/oracle-apps-in-chatgpt",
+              "publishedAt": "2026-10-29"
             }
           ]
         },
         {
-          "title": "Agent用量与可观测性进入管理闭环",
-          "summary": "GitHub把skills、自定义Agent、MCP服务器等活动指标接入usage metrics API，并覆盖VS Code Agents窗口；OpenAI发文讲如何用ChatGPT Work与Codex分析把采用度关联业务价值；OpenObserve等工具为Agent与LLM提供OpenTelemetry原生追踪。组织采用从上了工具转向知道哪里没人用、哪一步出错。",
+          "title": "垂直行业形成AI初筛加人工判断分工",
+          "summary": "律所 Ropes & Gray 用 AI 做交易尽职调查，律师先看分组文档、摘要与报告再给客户建议；Legora 以 OpenAI 模型、ChatGPT 与 Codex 构建法律工作操作系统，加速合同分析。这类“AI 做初筛、人做判断”的形态可直接迁移到合同、招投标、审计等场景，员工可让 AI 先出摘要清单，自己只做核对与标注。",
           "sources": [
             {
-              "title": "Agentic CLI customizations now in the usage metrics API",
-              "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api",
-              "publishedAt": "2026-09-18"
+              "title": "Ropes & Gray 用 AI 做交易尽调",
+              "url": "https://openai.com/index/ropes-gray-ai-diligence",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "How to connect AI usage to business value",
-              "url": "https://openai.com/index/how-to-connect-ai-usage-to-business-value",
-              "publishedAt": "2026-09-18"
-            },
-            {
-              "title": "AI Observability by OpenObserve",
-              "url": "https://www.producthunt.com/products/openobserve",
-              "publishedAt": "2026-09-18"
+              "title": "Legora is building the agentic operating system for legal work",
+              "url": "https://openai.com/index/legora-agentic-operating-system-for-legal-work",
+              "publishedAt": "2026-10-28"
             }
           ]
         }
@@ -75,72 +65,67 @@
     },
     {
       "window": "month",
-      "rangeStart": "2026-08-27",
-      "rangeEnd": "2026-09-16",
-      "updatedAt": "2026-09-16T21:49:25+08:00",
-      "coverageCount": 19,
+      "rangeStart": "2026-10-04",
+      "rangeEnd": "2026-11-02",
+      "updatedAt": "2026-11-02T21:52:15+08:00",
+      "coverageCount": 18,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent技能从个人配置走向团队资产化",
-          "summary": "Anthropic开放官方Skills仓库、开发者公开个人.agents目录，加上跨框架性能优化系统与技能注册表出现，Agent技能正从散落各人本地的提示词变成可复用、可审计、可版本化的团队资产。对组织而言，这意味着Agent行为第一次能被统一治理和交接，而非依赖个别成员的经验。",
+          "title": "Agent工作流从个人脚本变为团队资产",
+          "summary": "GitHub Copilot Automations 让团队把提示词、触发器与工具组合成可共享工作流，Copilot Fusion 则自动路由与编排模型；GitHub intelligence 进一步把团队约定、仓库规范与历史沉淀为 Agent 可读上下文。应用层的变化是：Agent 交付开始需要版本化、权限边界与触发条件治理，而非个人临时脚本。",
           "sources": [
             {
-              "title": "anthropics/skills：官方 Agent Skills 仓库",
-              "url": "https://github.com/anthropics/skills",
-              "publishedAt": "2026-09-06"
+              "title": "Build shared workflows for your team with Copilot Automations",
+              "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "mattpocock/skills：真实工程师的 Skills 集合",
-              "url": "https://github.com/mattpocock/skills",
-              "publishedAt": "2026-09-06"
+              "title": "Route and orchestrate models with GitHub Copilot Fusion",
+              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "ECC：跨 Agent 框架的性能优化系统",
-              "url": "https://github.com/affaan-m/ECC",
-              "publishedAt": "2026-09-08"
+              "title": "GitHub intelligence puts your code, context, and history to work",
+              "url": "https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work",
+              "publishedAt": "2026-11-02"
             }
           ]
         },
         {
-          "title": "编码Agent进入企业权限与审计轨道",
-          "summary": "GitHub Copilot陆续推出企业级Agent操作权限、托管沙箱、内容排除与用量指标，Copilot代码审查还能自动解决评论并批准PR。企业采用编码Agent的瓶颈正从能力转向管控：管理员需要明确哪些操作被阻止、需人工审批或可直接执行，并能量化采用率。",
+          "title": "Agent能力包走向复用与跨厂商标准化",
+          "summary": "Anthropic 把 Agent Skills 捐给 Agentic AI Foundation，GitHub 同期推出 repository plugin defaults 与企业插件管控。Skills 作为“提示词+工具”的复用单元，正从单厂商特性转向可迁移资产；对组织的直接影响是出现插件白名单、审计与跨平台迁移需求，团队应把重复能力整理成可复用 skill 文件。",
           "sources": [
             {
-              "title": "Enterprise managed permissions for GitHub Copilot agent operations",
-              "url": "https://github.blog/changelog/2026-09-09-enterprise-managed-permissions-for-github-copilot-agent-operations",
-              "publishedAt": "2026-09-11"
+              "title": "Donating Agent Skills to the Agentic AI Foundation",
+              "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "Add VS Code Agents to Copilot usage metrics",
-              "url": "https://github.blog/changelog/2026-09-11-add-vs-code-agents-to-copilot-usage-metrics",
-              "publishedAt": "2026-09-15"
-            },
-            {
-              "title": "Auto-resolution and analysis updates in Copilot code review",
-              "url": "https://github.blog/changelog/2026-09-11-auto-resolution-and-analysis-updates-in-copilot-code-review",
-              "publishedAt": "2026-09-15"
+              "title": "Repository plugin defaults and enterprise plugin controls generally available",
+              "url": "https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available",
+              "publishedAt": "2026-11-02"
             }
           ]
         },
         {
-          "title": "办公数据与文档审阅被对话式压缩",
-          "summary": "ChatGPT Work的Data agent让非技术员工用自然语言接数据源生成仪表盘，金融、法务等垂直版本把行业数据与模型打包，Legora案例显示文档审阅可在数分钟内完成。办公场景的变化不是聊天，而是取数、审阅、出稿这类多步骤链路被压缩成一次对话，人工退到审核位。",
+          "title": "垂直行业采用AI做初筛、人做判断",
+          "summary": "法律、金融与零售出现可复制的落地形态：律所用 AI 对交易尽调文档分组、摘要后再由律师判断；Codex 被用于比较贷款估值与分析信贷协议；零售与餐饮企业用 ChatGPT Work 处理重复流程。共同点是 AI 承担初筛与整理，人保留核对与决策，基层团队可先从标准化流程节点切入。",
           "sources": [
             {
-              "title": "Now everyone can put data to work",
-              "url": "https://openai.com/index/put-data-to-work",
-              "publishedAt": "2026-09-14"
+              "title": "Ropes & Gray AI diligence",
+              "url": "https://openai.com/index/ropes-gray-ai-diligence",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "Introducing ChatGPT for Financial Services",
-              "url": "https://openai.com/index/introducing-chatgpt-financial-services",
-              "publishedAt": "2026-09-13"
+              "title": "Benefit Street Partners answers questions faster with Codex",
+              "url": "https://openai.com/index/benefit-street-partners",
+              "publishedAt": "2026-10-20"
             },
             {
-              "title": "Legora 用 GPT-6 Astra 审阅财务文档",
-              "url": "https://openai.com/index/legora-financial-statement-review-with-astra",
-              "publishedAt": "2026-09-06"
+              "title": "How Albertsons Companies is reimagining retail from the inside out",
+              "url": "https://openai.com/index/albertsons-reimagining-retail",
+              "publishedAt": "2026-10-04"
             }
           ]
         }
@@ -148,57 +133,72 @@
     },
     {
       "window": "year",
-      "rangeStart": "2025-07-01",
-      "rangeEnd": "2026-06-29",
-      "updatedAt": "2026-06-29T12:00:00+08:00",
-      "coverageCount": 0,
-      "mode": "curated",
+      "rangeStart": "2026-06-21",
+      "rangeEnd": "2026-11-02",
+      "updatedAt": "2026-11-02T21:52:15+08:00",
+      "coverageCount": 76,
+      "mode": "generated",
       "insights": [
         {
-          "title": "AI 已进入主流，智能体仍处早期扩散",
-          "summary": "企业 AI 使用率快速普及，但真正把智能体嵌入业务流程的比例仍低。市场正在从“是否采用”转向“哪些任务值得交给智能体”。",
+          "title": "Agent工作流从个人脚本变为组织资产",
+          "summary": "GitHub把Copilot从逐任务选模型推进到自动路由与编排，并让团队把提示词、触发器和工具组合成可共享工作流；OpenAI与ServiceNow打通工单与审批流程。应用层变化是Agent开始嵌入结构化业务流程，组织需提前约定触发条件、权限边界与审计方式。",
           "sources": [
             {
-              "title": "The 2026 AI Index Report — Economy",
-              "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy",
-              "publishedAt": "2026-04-06"
+              "title": "Build shared workflows for your team with Copilot Automations",
+              "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "2026 Work Trend Index",
-              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
-              "publishedAt": "2026-05-05"
+              "title": "Route and orchestrate models with GitHub Copilot Fusion",
+              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
+              "publishedAt": "2026-11-02"
+            },
+            {
+              "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
+              "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
+              "publishedAt": "2026-11-02"
             }
           ]
         },
         {
-          "title": "高价值垂直应用从试点走向规模部署",
-          "summary": "医疗与受监管行业正在扩大生产应用，同时把审计、责任边界和人工判断保留在流程中。落地速度提升，但证据质量与真实场景验证仍是短板。",
+          "title": "垂直行业采用“AI初筛、人做判断”",
+          "summary": "法律、金融与零售等场景的落地形态趋于一致：AI先对文档分组、摘要和初筛，专业人员只做核对与判断。律所用AI做交易尽调，Legora用模型审阅财务文档，Credit Saison则以试点度量再全员推广。对基层员工而言，先梳理岗位上最标准化的流程节点，比从写文案入手更有效。",
           "sources": [
             {
-              "title": "The 2026 AI Index Report — Medicine",
-              "url": "https://hai.stanford.edu/assets/files/ai_index_report_2026_chapter_6_medicine.pdf",
-              "publishedAt": "2026-04-06"
+              "title": "Ropes & Gray 用 AI 做交易尽调",
+              "url": "https://openai.com/index/ropes-gray-ai-diligence",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "TCS and Anthropic announce strategic partnership",
-              "url": "https://www.anthropic.com/news/tcs-anthropic-partnership",
-              "publishedAt": "2026-06-12"
+              "title": "Legora is building the agentic operating system for legal work",
+              "url": "https://openai.com/index/legora",
+              "publishedAt": "2026-10-29"
+            },
+            {
+              "title": "Credit Saison 的 ChatGPT Enterprise 试点与全员推广路径",
+              "url": "https://openai.com/index/credit-saison",
+              "publishedAt": "2026-11-02"
             }
           ]
         },
         {
-          "title": "应用价值转向结构化流程与人机协同",
-          "summary": "可衡量的生产力提升更多出现在目标清晰、反馈及时的任务里。未来一年，人工判断不会消失，而会集中到任务定义、例外处理与最终质量控制。",
+          "title": "Agent能力包走向标准化与治理",
+          "summary": "Anthropic把Agent Skills捐给Agentic AI Foundation，GitHub同步推出仓库插件默认值与企业管理控制，技能正从个人提示词变成可复用、可审计的团队资产。与此同时，编码Agent被指静默上传Git历史、n8n日志泄露凭据等事件，说明能力复用必须配套最小权限与密钥治理。",
           "sources": [
             {
-              "title": "The 2026 AI Index Report — Economy",
-              "url": "https://hai.stanford.edu/ai-index/2026-ai-index-report/economy",
-              "publishedAt": "2026-04-06"
+              "title": "Donating Agent Skills to the Agentic AI Foundation",
+              "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+              "publishedAt": "2026-11-02"
             },
             {
-              "title": "2026 Work Trend Index",
-              "url": "https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization",
-              "publishedAt": "2026-05-05"
+              "title": "Repository plugin defaults and enterprise plugin controls generally available",
+              "url": "https://github.blog/changelog/2026-10-28-repository-plugin-defaults-and-enterprise-plugin-controls-generally-available",
+              "publishedAt": "2026-11-02"
+            },
+            {
+              "title": "n8n 执行日志泄露密码：自动化工作流的密钥治理",
+              "url": "https://dev.to/haopengai/the-log-that-told-everyone-the-password-redacting-secrets-in-n8n-execution-logs-4d8a",
+              "publishedAt": "2026-11-02"
             }
           ]
         }
