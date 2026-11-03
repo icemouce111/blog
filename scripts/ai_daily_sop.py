@@ -9,23 +9,25 @@ import subprocess
 import sys
 import tempfile
 import time
-import urllib.request
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
 try:
+    from scripts.ai_daily_publication import verify_publication
     from scripts.github_pr import GitHubPullRequests
     from scripts.security_check import scan_files
     from scripts.security_config import load_private_config, redact
 except ModuleNotFoundError:
+    from ai_daily_publication import verify_publication
     from github_pr import GitHubPullRequests
     from security_check import scan_files
     from security_config import load_private_config, redact
 
 
 LIVE_RSS_URL = "https://blog.icemouce.cc/ai-daily.xml"
+LIVE_SITE_URL = "https://blog.icemouce.cc"
 
 
 class PublishError(RuntimeError):
@@ -158,7 +160,7 @@ class Publisher:
         self.remote = remote
         self.branch = branch
         self.live_url = live_url
-        self.live_check = live_check or self._build_live_check(live_url)
+        self.live_check = live_check or self._check_publication
         self.verify_timeout = verify_timeout
         self.poll_interval = poll_interval
         self.artifacts = artifacts or allowed_artifact_paths
@@ -432,27 +434,22 @@ class Publisher:
                 return
             if time.monotonic() >= deadline:
                 raise PublishError(
-                    f"remote push succeeded but live RSS does not contain {date}"
+                    f"remote push succeeded but live content fingerprint/RSS verification failed for {date}"
                 )
             time.sleep(self.poll_interval)
 
-    @staticmethod
-    def _build_live_check(live_url: str | None) -> Callable[[str], bool]:
-        if live_url is None:
-            return lambda _date: True
-
-        def check(date: str) -> bool:
-            try:
-                request = urllib.request.Request(
-                    live_url,
-                    headers={"User-Agent": "ai-daily-sop/1.0"},
-                )
-                with urllib.request.urlopen(request, timeout=20) as response:
-                    return date in response.read().decode("utf-8", errors="replace")
-            except Exception:
-                return False
-
-        return check
+    def _check_publication(self, date: str) -> bool:
+        artifact = self.remote_artifact(date)
+        try:
+            expected = subprocess.run(
+                ["git", "show", f"{self.remote}/{self.branch}:{artifact}"],
+                cwd=self.repo_root, capture_output=True, timeout=120,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            return False
+        if expected.returncode != 0:
+            return False
+        return verify_publication(LIVE_SITE_URL, artifact, expected.stdout, rss_url=self.live_url)
 
 
 def publish(repo_root: Path, date: str, *, force: bool = False) -> PublishResult:

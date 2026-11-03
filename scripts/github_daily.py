@@ -449,7 +449,7 @@ def run_publisher(date_str: str, *, force: bool) -> int:
         publication_key="github-daily",
     )
     result = publisher.publish(date_str, force=force, generate=generate)
-    print(f"  [ok] {result.status}: {result.commit_sha} (remote SHA verified)")
+    print(f"  [ok] {result.status}: {result.commit_sha} (remote SHA and live content verified)")
     return 0
 
 

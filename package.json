@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && python3 scripts/security_check.py dist",
+    "build": "tsc -b && vite build && python3 scripts/ai_daily_publication.py && python3 scripts/security_check.py dist",
     "lint": "eslint .",
     "test": "npm run test:ts && npm run test:py",
     "test:ts": "node --test --experimental-strip-types tests/*.test.ts",
