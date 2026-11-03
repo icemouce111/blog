@@ -12,12 +12,14 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from zoneinfo import ZoneInfo
 
 try:
+    from scripts.ai_daily_evidence import review_evidence
     from scripts.ai_daily_sources import (
         SourceItem,
         SourceResult,
         SourceTier,
     )
 except ModuleNotFoundError:
+    from ai_daily_evidence import review_evidence
     from ai_daily_sources import SourceItem, SourceResult, SourceTier
 
 
@@ -124,6 +126,7 @@ class QualityResult:
     content: str
     mode: QualityMode
     issues: tuple[str, ...]
+    bindings: tuple[dict, ...] = ()
 
 
 def filter_usable_items(
@@ -140,22 +143,19 @@ def filter_usable_items(
         if max_age_days is not None
         else None
     )
-    latest = target_date + timedelta(days=1)
+    latest = target_date
     for item in items:
         if not item.title.strip() or not _valid_http_url(item.url):
             continue
-        published = _date_part(item.published_at)
-        if require_published_at and published is None:
+        published = _date_part(item.published_at if require_exact_date else item.metadata.get("freshness_at") or item.published_at)
+        if require_published_at and _date_part(item.published_at) is None:
             continue
         if require_exact_date:
             if published != target_date:
                 continue
-        elif (
-            published
-            and earliest is not None
-            and not earliest <= published <= latest
-        ):
-            continue
+        elif published and item.metadata.get("date_basis") not in {"deadline", "snapshot"}:
+            if published > latest or (earliest is not None and published < earliest):
+                continue
         usable.append(item)
     return usable
 
@@ -176,7 +176,10 @@ def validate_report(
             issues.append(f"report URL is not in collected evidence: {url}")
 
     seen_item_urls = {}
-    for index, block in enumerate(ORDERED_ITEM_PATTERN.findall(content), 1):
+    blocks = ORDERED_ITEM_PATTERN.findall(content)
+    if not blocks:
+        issues.append("report has no numbered items; use '1. **标题**' for each story")
+    for index, block in enumerate(blocks, 1):
         block_urls = _extract_urls(block)
         if not block_urls:
             issues.append(f"numbered item {index} has no source URL")
@@ -199,6 +202,10 @@ def validate_report(
             for url in block_urls
             if _canonical_url(url) in allowed
         ]
+        if any(not item.summary.strip() for item in block_items):
+            issues.append(f"numbered item {index} lacks usable source material; title-only writing is not allowed")
+        # Facts must be supported by this item's citations, never another article.
+        issues.extend(f"numbered item {index}: {issue}" for issue in _claim_issues(block, block_items))
         signal_types = {
             str(item.metadata.get("signal_type", "story"))
             for item in block_items
@@ -236,6 +243,17 @@ def validate_report(
                 + community_urls[0]
             )
 
+    outside_items = ORDERED_ITEM_PATTERN.sub("", content)
+    if any(line.strip() and not re.fullmatch(r"##\s+\d{2}\b.*|[-*_]{3,}", line.strip())
+           for line in outside_items.splitlines()):
+        issues.append("editorial text outside numbered items has no per-item evidence binding")
+    issues.extend(_claim_issues(outside_items, items))
+
+    return ValidationResult(not issues, tuple(issues))
+
+
+def _claim_issues(content, items):
+    issues = []
     evidence_text = "\n".join(
         f"{item.title}\n{item.summary}\n{item.engagement}"
         for item in items
@@ -251,12 +269,14 @@ def validate_report(
             issues.append(f"unsupported metric: {match[0].strip()}")
     active_sources = {item.source for item in items}
     for source_name in KNOWN_SOURCE_NAMES:
-        if source_name in content and source_name not in active_sources:
+        attributed = re.search(r"(?:据|援引|来源[:：]?)\s*" + re.escape(source_name), content)
+        attributed = attributed or re.search(re.escape(source_name) + r"\s*(?:显示|表示|指出|称|披露)", content)
+        if attributed and source_name not in active_sources:
             issues.append(
                 f"report attributes a claim to unavailable source: {source_name}"
             )
 
-    return ValidationResult(not issues, tuple(issues))
+    return issues
 
 
 def validate_repair_or_fallback(
@@ -266,6 +286,8 @@ def validate_repair_or_fallback(
     target_date: date,
     repair: Callable[[str], str | None] | None,
     require_exact_date: bool = False,
+    audit: Callable[[str], str | None] | None = None,
+    history: list[dict] | None = None,
 ) -> QualityResult:
     items = _usable_from_results(
         results,
@@ -273,28 +295,44 @@ def validate_repair_or_fallback(
         require_exact_date=require_exact_date,
     )
     initial = validate_report(content, items)
-    if initial.valid:
-        return QualityResult(content, QualityMode.ORIGINAL, ())
-
     final_issues = list(initial.issues)
-    if repair is not None:
+
+    audit_attempted = False
+
+    def accept(candidate, mode):
+        nonlocal audit_attempted
+        if audit is None:
+            return QualityResult(candidate, mode, initial.issues)
+        if audit_attempted:
+            return None
+        audit_attempted = True
+        bindings, issues = review_evidence(candidate, items, audit, history or [],
+                                          check_bound_claims=lambda block, bound: not _claim_issues(block, bound),
+                                          target_date=target_date.isoformat())
+        if not issues:
+            return QualityResult(candidate, mode, initial.issues, bindings)
+        final_issues.extend(issues)
+        return None
+
+    if initial.valid:
+        accepted = accept(content, QualityMode.ORIGINAL)
+        if accepted:
+            return accepted
+
+    if not initial.valid and repair is not None:
         repaired = repair(_repair_prompt(content, initial.issues, items))
         if repaired:
             repaired_validation = validate_report(repaired, items)
             if repaired_validation.valid:
-                return QualityResult(
-                    repaired,
-                    QualityMode.REPAIRED,
-                    initial.issues,
-                )
+                accepted = accept(repaired, QualityMode.REPAIRED)
+                if accepted:
+                    return accepted
             pruned = _prune_invalid_numbered_items(repaired, items)
             pruned_validation = validate_report(pruned, items)
             if pruned_validation.valid:
-                return QualityResult(
-                    pruned,
-                    QualityMode.REPAIRED,
-                    initial.issues,
-                )
+                accepted = accept(pruned, QualityMode.REPAIRED)
+                if accepted:
+                    return accepted
             final_issues.extend(
                 f"repair: {issue}" for issue in repaired_validation.issues
             )
@@ -323,6 +361,8 @@ def build_signal_fallback(
             result.items,
             target_date,
             require_exact_date=require_exact_date,
+            max_age_days=result.items[0].metadata.get("max_age_days", 45) if result.items else 45,
+            require_published_at=result.items[0].metadata.get("require_published_at", False) if result.items else False,
         )
         if source not in ALWAYS_RELEVANT_FALLBACK_SOURCES:
             items = [item for item in items if _is_ai_relevant(item)]
@@ -348,7 +388,7 @@ def build_signal_fallback(
     if len(parts) == 2:
         parts.extend([
             "### 系统状态",
-            "- 今日没有通过自动质量检查的有效数据。",
+            "- 今日没有新增、可核实的 AI 动态。",
         ])
     return "\n".join(parts).strip()
 
@@ -366,6 +406,8 @@ def _usable_from_results(
             result.items,
             target_date,
             require_exact_date=require_exact_date,
+            max_age_days=result.items[0].metadata.get("max_age_days", 45) if result.items else 45,
+            require_published_at=result.items[0].metadata.get("require_published_at", False) if result.items else False,
         )
     ]
 
@@ -384,13 +426,14 @@ def _repair_prompt(
 
 要求：
 - 保留 `## NN` 编号栏目结构。
+- 每条事件必须以 `1. **标题**` 这样的有序列表开头；所有正文都放入对应条目，不写条目外导语或总结。
 - 社区来源必须明确写成“据社区讨论”或“有用户/开发者指出”。
 - 删除证据不支持的最快、第一、唯一、蓝海和确定性预测。
 - 不得引用本次证据清单中不存在或抓取失败的数据源。
 - 单一调查不得扩写成“所有请求”，不得把推测目的写成既定事实。
 - 每个编号条目至少保留一个证据清单中的来源 URL。
 - 同一来源 URL 只能保留在一个编号条目；合并互补信息并删除后续重复项，不保留空板块。
-- 删除证据清单中没有出现的百分比、倍数、金额和数量。
+- 每个条目的主体、百分比、倍数、金额和限制必须来自该条自己引用的来源，禁止借用其他文章的数字。
 - `trend` 证据只能写成趋势、搜索热度或后续观察，不能写成已发生的产品事实。
 - `opportunity` 证据必须保留报名、截止、奖励、资格或行动信息，不能改写成普通新闻。
 - 不得添加证据清单之外的 URL。

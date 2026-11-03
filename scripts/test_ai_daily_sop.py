@@ -2,7 +2,7 @@ import subprocess
 import tempfile
 import time
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from pathlib import Path
 
 from scripts.ai_daily_sop import (
@@ -183,6 +183,18 @@ class PublisherTest(unittest.TestCase):
 
     def tearDown(self):
         self.temp.cleanup()
+
+    def test_github_publisher_without_rss_still_checks_online_content(self):
+        artifact = 'src/data/github-daily/2026-07-01.json'
+        publisher = Publisher(self.checkout, live_url=None, verify_timeout=0,
+                              remote_artifact=lambda _date: artifact)
+        with (patch('scripts.ai_daily_sop.subprocess.run',
+                   return_value=subprocess.CompletedProcess([], 0, b'{"date":"2026-07-01"}')),
+              patch('scripts.ai_daily_sop.verify_publication', return_value=False) as verify):
+            with self.assertRaisesRegex(PublishError, 'live content fingerprint/RSS'):
+                publisher._verify_live('2026-07-01')
+        self.assertEqual(verify.call_args.args[1:], (artifact, b'{"date":"2026-07-01"}'))
+        self.assertIsNone(verify.call_args.kwargs['rss_url'])
 
     @staticmethod
     def generate_valid(worktree: Path, date: str) -> None:

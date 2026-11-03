@@ -199,6 +199,46 @@ class CliContractTest(unittest.TestCase):
 
 
 class SourceRegistryContractTest(unittest.TestCase):
+    def test_real_generation_archives_bindings_and_rerun_does_not_republish_the_story(self):
+        import json
+        item = SourceItem(source="OpenAI",title="AI工具新增导出",url="https://example.org/fresh",
+                          summary="AI工具新增文件导出功能。",published_at="2026-07-01",source_tier=SourceTier.OFFICIAL)
+        report = "## 01 今日变化\n\n1. **AI工具新增导出**\nAI工具新增文件导出功能。[来源](https://example.org/fresh)\n"
+        response = json.dumps({"items":[{"id":"1","supported":True,"citations":[
+            {"url":item.url,"quote":item.summary}],"previousIds":[],"newInformation":""}]},ensure_ascii=False)
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            archive = root / 'src/content/ai-daily'
+            args = MODULE.parse_args(['--generate-only','--date','2026-07-01'])
+            with patch.object(MODULE,'BLOG_DIR',root), patch.object(MODULE,'CONTENT_DIR',archive), \
+                 patch.object(MODULE,'CORE_SOURCES',{'OpenAI'}), \
+                 patch.object(MODULE,'build_source_registry') as registry, \
+                 patch.object(MODULE,'call_llm',return_value=report) as analyze, \
+                 patch.object(MODULE,'call_evidence_audit',return_value=response) as audit, \
+                 patch.object(MODULE,'_refresh_derived_artifacts'),patch.object(MODULE,'scan_files'):
+                registry.return_value.fetch_all.return_value = {'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])}
+                self.assertEqual(MODULE._run_generation(args),0)
+                raw = (archive / '2026-07-01.md').read_text()
+                self.assertIn('evidence: {',raw)
+                history = MODULE.read_history(archive,date(2026,7,2))
+                self.assertEqual(history[0]['sources'][0]['url'],item.url)
+                self.assertEqual(history[0]['quotes'],[item.summary])
+                analyze.reset_mock();audit.reset_mock()
+                args.date = '2026-07-02'
+                registry.return_value.fetch_all.return_value = {'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])}
+                self.assertEqual(MODULE._run_generation(args),0)
+                analyze.assert_not_called();audit.assert_not_called()
+                next_report = (archive / '2026-07-02.md').read_text()
+                self.assertIn('没有新增',next_report)
+                self.assertNotIn(item.url,next_report)
+
+    def test_historical_filter_does_not_use_a_future_revision_of_an_old_article(self):
+        item = SourceItem('OpenAI','AI工具更新','https://example.org/old',published_at='2026-07-01',
+                          metadata={'updated_at':'2026-07-02T04:00:00Z'})
+        results = MODULE.filter_source_results({'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])},
+                                              date(2026,7,1),require_exact_date=True)
+        self.assertEqual(results['OpenAI'].items,[])
+
     def test_registry_contains_legacy_and_new_sources(self):
         names = {
             adapter.name
@@ -289,6 +329,22 @@ class SourceRegistryContractTest(unittest.TestCase):
             self.assertEqual(MODULE._run_generation(args), 0)
         refresh.assert_called_once_with(MODULE.BLOG_DIR, date.fromisoformat(today), dry_run=False, force=False)
         self.assertIn("src/data/ai-opportunities.json", scan.call_args.args[1])
+
+    def test_news_rejects_old_articles_and_urls_already_published_yesterday(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = pathlib.Path(directory)
+            (archive / "2026-06-30.md").write_text(
+                "---\ndate: 2026-06-30\n---\n## 01 今日变化\n1. **AI工具发布** [来源](https://openai.com/repeat)\n")
+            items = [SourceItem(source="OpenAI", title=title, url=url,
+                                summary="官方发布了AI工具。", published_at=published)
+                     for title, url, published in [
+                         ("AI工具发布", "https://openai.com/repeat", "2026-06-30"),
+                         ("一个月前旧文", "https://openai.com/old", "2026-06-01"),
+                         ("AI新功能", "https://openai.com/new", "2026-07-01")]]
+            with patch.object(MODULE, "CONTENT_DIR", archive):
+                results = MODULE.filter_source_results(
+                    {"OpenAI": SourceResult("OpenAI", SourceStatus.ACTIVE, items)}, date(2026, 7, 1))
+            self.assertEqual([item.title for item in results["OpenAI"].items], ["AI新功能"])
 
     def test_filters_registered_results_before_llm_analysis(self):
         results = {
