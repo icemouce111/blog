@@ -6,7 +6,25 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Mon, 02 Nov 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月07日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-07</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月07日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### GitHub Trending
+- **vercel-labs/agent-browser**：Browser automation CLI for AI agents [来源](https://github.com/vercel-labs/agent-browser)
+- **cloudflare/security-audit-skill**：A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings [来源](https://github.com/cloudflare/security-audit-skill]]></description>
+        <pubDate>Sat, 07 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-07</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年11月02日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-11-02</link>
@@ -591,26 +609,6 @@ https://openai.com/index/cooley-gopublic
 - **alibaba/open-code-review**：Fast, efficient, battle-tested at Alibaba']]></description>
         <pubDate>Thu, 17 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-17</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月16日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-16</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月16日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**OpenAI 把"数据代理"塞进了 ChatGPT Work，办公数据分析门槛再降一档**
-OpenAI 发布 ChatGPT Work 中的 Data agent，支持连接企业数据、用自然语言发现洞察并生成交互式仪表盘。这意味着不会写 SQL 的基层员工也能直接对业务数据提问并产出可视化结果。今天可以做的：找一个你手上重复做的周报或月报，试着把数据源接进去，让它先跑一遍看结果是否可信。
-
-**Cloudflare 让 Workers 的 Node.js 兼容默认开启，Agent 部署成本下降**
-Cloudflare 重建了 Workers 的模块注册表，Node.js 兼容性默认开启，应用体积上限提升到 64 MiB，并加入基于 URL 的模块注册、懒编译与共享代]]></description>
-        <pubDate>Wed, 16 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-16</guid>
     </item>
 </channel>
 </rss>
