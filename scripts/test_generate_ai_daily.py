@@ -313,7 +313,73 @@ class SourceRegistryContractTest(unittest.TestCase):
         self.assertEqual(converted["OpenAI"][0]["signal_type"], "story")
 
     def test_editor_receives_suitable_verified_opportunities_only(self):
-        items = MODULE.fetch_creator_opportunities(target_date=date(2026, 10, 30))
+        # The pipeline contract, not the live data file, is under test here.
+        # Production ai-opportunities.json refreshes daily, so a fixed
+        # snapshot keeps these assertions deterministic while preserving
+        # their original semantics: one fresh verified opportunity reaches
+        # the editor; unverified, expired, and high-follower ones do not.
+        snapshot = {
+            "opportunities": [
+                {
+                    "id": "fixture-fluffy-fresh",
+                    "title": "双十一毛茸茸节AI创作大赛",
+                    "organizer": "抖音商城 × LibTV",
+                    "type": "大赛",
+                    "url": "https://www.liblib.tv/activity/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-11-15",
+                    "deadlineText": "全程投稿截止2026-11-15",
+                    "reward": "总奖池100,000元奖金",
+                    "rewardTypes": ["cash"],
+                    "requirements": "须用LibTV完成主要AI创作并公开画布",
+                    "fit": "AI短视频与制作拆解主题可直接复用",
+                },
+                {
+                    "id": "fixture-vibe-unverified",
+                    "title": "Vibe 知识大赏",
+                    "url": "https://creator.douyin.com/fixture",
+                    "deadlineKind": "rolling",
+                    "deadlineText": "官方未列统一截止",
+                    "reward": "流量激励",
+                    "rewardTypes": ["traffic"],
+                    "requirements": "发布带话题内容",
+                    "fit": "知识可视化主题",
+                },
+                {
+                    "id": "fixture-xingtu-expired",
+                    "title": "巨量星图短视频任务",
+                    "url": "https://www.xingtu.cn/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-10-01",
+                    "deadlineText": "已截止",
+                    "reward": "任务激励",
+                    "rewardTypes": ["cash"],
+                    "requirements": "投稿短视频任务",
+                    "fit": "商品展示主题",
+                },
+                {
+                    "id": "fixture-skill-contest-high-followers",
+                    "title": "Skill 创新赛",
+                    "url": "https://developer.huaweicloud.com/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-11-24",
+                    "deadlineText": "2026-11-24截止",
+                    "reward": "赛程奖金",
+                    "rewardTypes": ["cash"],
+                    "requirements": "基于平台开发Skill",
+                    "fit": "Skill工作流主题",
+                    "minFollowers": 50000,
+                },
+            ]
+        }
+        items = MODULE.fetch_creator_opportunities(
+            target_date=date(2026, 10, 30), snapshot=snapshot)
         titles = {item["title"] for item in items}
         self.assertTrue(any("毛茸茸" in title for title in titles))
         self.assertFalse(any("Vibe" in title or "星图" in title or "Skill 创新赛" in title for title in titles))
