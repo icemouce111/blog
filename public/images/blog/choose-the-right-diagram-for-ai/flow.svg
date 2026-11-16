@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="760" viewBox="0 0 800 760" role="img" aria-labelledby="title desc">
+  <title id="title">AI 知识库：上传到可检索的流程图</title>
+  <desc id="desc">用户上传文档，API 保存任务。保存任务后，API 返回任务 ID，Worker 可以领取任务、解析并写入分块；返回响应和后台执行没有先后保证。处理成功则标记可检索，否则记录并展示失败。省略校验和重试细节。</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#477757"/></marker></defs>
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; fill: #192d23; }
+    .heading { font-size: 32px; font-weight: 700; }
+    .label { font-size: 27px; font-weight: 600; text-anchor: middle; }
+    .body { font-size: 24px; text-anchor: middle; fill: #43594c; }
+    .edge { font-size: 23px; fill: #365a42; }
+    .note { font-size: 22px; fill: #43594c; }
+    .line { fill: none; stroke: #477757; stroke-width: 2.5; marker-end: url(#arrow); }
+  </style>
+  <rect width="800" height="760" rx="20" fill="#f3f7f3"/>
+  <text x="32" y="51" class="heading">04 流程图 · 一次上传怎么完成</text>
+  <g fill="#fff" stroke="#a7bdab" stroke-width="2">
+    <rect x="200" y="90" width="340" height="65" rx="30"/>
+    <rect x="200" y="200" width="340" height="100" rx="12"/>
+    <rect x="200" y="350" width="340" height="100" rx="12"/>
+  </g>
+  <text x="370" y="133" class="label">用户上传文档</text>
+  <text x="370" y="241" class="label">API 保存任务</text>
+  <text x="370" y="279" class="body">任务状态：待处理</text>
+  <rect x="600" y="205" width="172" height="100" rx="12" fill="#fff" stroke="#a7bdab" stroke-width="2"/>
+  <text x="686" y="245" class="label">返回</text>
+  <text x="686" y="283" class="body">任务 ID</text>
+  <text x="370" y="391" class="label">Worker 领取任务</text>
+  <text x="370" y="429" class="body">解析文档 / 写入分块</text>
+  <path d="M370 495 L535 555 L370 615 L205 555 Z" fill="#f9edda" stroke="#b98d50" stroke-width="2"/>
+  <text x="370" y="565" class="label">处理成功？</text>
+  <rect x="200" y="665" width="340" height="55" rx="26" fill="#d8ebdb" stroke="#477757" stroke-width="2"/>
+  <text x="370" y="701" class="label">标记为可检索</text>
+  <rect x="600" y="510" width="172" height="100" rx="12" fill="#f8e5de" stroke="#b37961" stroke-width="2"/>
+  <text x="686" y="551" class="label">记录失败</text>
+  <text x="686" y="589" class="body">展示错误</text>
+  <path d="M370 155 V200" class="line"/>
+  <path d="M370 300 V350" class="line"/>
+  <path d="M540 250 H600" class="line"/>
+  <text x="549" y="232" class="edge">响应</text>
+  <text x="430" y="332" class="edge">任务可领取</text>
+  <path d="M370 450 V495" class="line"/>
+  <path d="M370 615 V665" class="line"/>
+  <text x="389" y="648" class="edge">是</text>
+  <path d="M535 555 H600" class="line"/>
+  <text x="553" y="541" class="edge">否</text>
+  <text x="32" y="745" class="note">任务流转示意；返回响应与后台执行无先后保证。</text>
+</svg>
