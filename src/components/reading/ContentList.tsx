@@ -15,7 +15,7 @@ export function ContentList({
       {posts.map((post) => (
         <li key={post.slug}>
           <Link to={`/blog/${post.slug}`} className="content-list-link">
-            <time>{post.date}</time>
+            <time dateTime={post.dateISO || undefined}>{post.date}</time>
             <div>
               <Heading>{post.title}</Heading>
               <p>{post.description}</p>

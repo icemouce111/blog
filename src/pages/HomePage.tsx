@@ -3,12 +3,14 @@ import { ArrowRight, ArrowUpRight, BookOpen, FolderGit2, Link2, Wrench } from 'l
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { ContentList } from '@/components/reading/ContentList'
+import { BlogGuides } from '@/components/blog/BlogGuides'
 import { getPosts } from '@/lib/posts'
 import { getAiDailyPosts } from '@/lib/ai-daily'
 import projects from '@/data/projects.json'
 
 export function HomePage() {
-  const posts = getPosts().slice(0, 3)
+  const allPosts = getPosts()
+  const posts = allPosts.slice(0, 3)
   const latest = getAiDailyPosts()[0]
   return (
     <div className="site-page">
@@ -37,6 +39,7 @@ export function HomePage() {
             </Link>
           </div>
         </section>
+        <BlogGuides posts={allPosts} />
         {projects.length > 0 && (
           <section className="site-home-section" aria-labelledby="home-projects-heading">
             <div className="site-home-section-heading">

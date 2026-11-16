@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="640" viewBox="0 0 800 640" role="img" aria-labelledby="title desc">
+  <title id="title">AI 知识库：应用架构图</title>
+  <desc id="desc">Web 页面调用 API。API 创建任务并检索 PostgreSQL，调用外部模型生成回答。Worker 从 PostgreSQL 领取任务并写回文档分块。内部应用与外部模型具有明确边界。</desc>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#477757"/></marker></defs>
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; fill: #192d23; }
+    .heading { font-size: 32px; font-weight: 700; }
+    .label { font-size: 27px; font-weight: 600; text-anchor: middle; }
+    .body { font-size: 23px; text-anchor: middle; fill: #43594c; }
+    .edge { font-size: 22px; text-anchor: middle; fill: #365a42; }
+    .note { font-size: 22px; fill: #43594c; }
+    .line { fill: none; stroke: #477757; stroke-width: 2.5; marker-end: url(#arrow); }
+  </style>
+  <rect width="800" height="640" rx="20" fill="#f3f7f3"/>
+  <text x="32" y="51" class="heading">02 架构图 · 谁负责什么</text>
+  <rect x="20" y="80" width="520" height="480" rx="16" fill="#e7f0e7" stroke="#a7bdab" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="40" y="113" class="note">本系统</text>
+  <g fill="#fff" stroke="#a7bdab" stroke-width="2">
+    <rect x="40" y="153" width="190" height="100" rx="12"/>
+    <rect x="310" y="153" width="210" height="100" rx="12"/>
+    <rect x="40" y="410" width="190" height="105" rx="12"/>
+    <rect x="310" y="410" width="210" height="105" rx="12"/>
+  </g>
+  <rect x="580" y="153" width="200" height="100" rx="12" fill="#f9edda" stroke="#b98d50" stroke-width="2"/>
+  <text x="135" y="195" class="label">Web 页面</text>
+  <text x="135" y="233" class="body">交互 / 状态展示</text>
+  <text x="415" y="195" class="label">API</text>
+  <text x="415" y="233" class="body">请求 / 检索 / 回答</text>
+  <text x="135" y="452" class="label">Worker</text>
+  <text x="135" y="490" class="body">后台解析文档</text>
+  <text x="415" y="452" class="label">PostgreSQL</text>
+  <text x="415" y="490" class="body">文档 / 任务 / 分块</text>
+  <text x="680" y="195" class="label">外部模型</text>
+  <text x="680" y="233" class="body">生成回答</text>
+  <path d="M230 203 H310" class="line"/>
+  <text x="270" y="142" class="edge">业务请求</text>
+  <path d="M520 203 H580" class="line"/>
+  <text x="650" y="125" class="edge">上下文 + 问题</text>
+  <path d="M415 253 V410" class="line"/>
+  <text x="415" y="308" class="edge" transform="translate(-110 0)">写任务</text>
+  <text x="415" y="343" class="edge" transform="translate(-110 0)">检索文档</text>
+  <path d="M230 462 H310" class="line"/>
+  <text x="270" y="445" class="edge">领任务</text>
+  <text x="270" y="497" class="edge">写分块</text>
+  <text x="32" y="605" class="note">箭头 = 主动交互方向；标签说明用途，省略响应线。</text>
+</svg>
