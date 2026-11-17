@@ -118,8 +118,8 @@ function RadarContent({ compact }: { compact: boolean }) {
   const latest = getAiDailyPosts()[0]
   const limit = compact ? 3 : 5
   const failed = Boolean(
-    collection.searchFailures || collection.pageFailures || collection.modelStatus === 'failed',
-  )
+    collection.searchFailures || collection.pageFailures || collection.agentSearchError || collection.modelStatus === 'failed',
+  ) || getOpportunityChannelCoverage().some(({ result }) => result?.state === 'unavailable' || result?.state === 'irrelevant')
   return (
     <>
       <p className="ai-daily-section-intro">
@@ -131,20 +131,26 @@ function RadarContent({ compact }: { compact: boolean }) {
         {failed ? ' · 部分来源待复核' : ''}
       </p>
       <p className="ai-opportunity-update">
-        四平台定向检索：每 {getOpportunitySearchIntervalDays()} 天一轮，未到期时沿用上次结果。
+        四平台公开检索：每 {getOpportunitySearchIntervalDays()} 天一轮，未到期时沿用上次结果；不代表已搜索登录后的站内内容。
       </p>
       <ul className="ai-opportunity-channel-status" aria-label="四平台定向搜集状态">
         {getOpportunityChannelCoverage().map(({ id, name, result }) => (
           <li key={id}>
             <strong>{name}</strong>
             <span>
-              {result
-                ? `${result.skipped ? '上次：' : ''}${result.completed}/${result.queries} 次搜索 · ${result.leads ? `${result.leads} 条候选／${result.discovered} 条新增` : '未命中有效线索'}${result.failures ? ` · ${result.failures} 次失败` : ''}`
-                : '待首次定向搜集'}
+              {result ? <>
+                {result.skipped && '上次：'}{result.queries} 条查询 ·{' '}
+                {result.rawResults === undefined ? '历史统计，待重新检索'
+                  : `返回 ${result.rawResults} 条／候选 ${result.leads} 条／新增 ${result.discovered} 条`}
+                {result.state === 'irrelevant' && ' · 返回结果偏题'}
+                {result.state === 'unavailable' && ' · 检索源不可用'}
+                {result.state === 'empty' && ' · 公开索引暂无结果'}
+                {Boolean(result.failures) && ` · ${result.failures} 条查询失败`}
+              </> : '待首次定向搜集'}
             </span>
             {result?.lastSearchedAt && (
               <span>
-                搜集 {result.lastSearchedAt} · 下次 {result.nextSearchAt}
+                尝试 {result.lastSearchedAt} · 下次 {result.nextSearchAt}
               </span>
             )}
           </li>
@@ -152,8 +158,8 @@ function RadarContent({ compact }: { compact: boolean }) {
       </ul>
       {Boolean(collection.reviewQueue?.length) && (
         <p className="ai-opportunity-update">
-          平台待核队列：{collection.reviewQueue?.length}{' '}
-          项。搜索完成不表示已核验官方账号及参与资格。
+          待人工复核：{collection.reviewQueue?.length}{' '}
+          项。尚未完成发布账号、原帖规则与参与资格核验，不代表本轮新增或已可报名。
         </p>
       )}
       <h3 className="ai-opportunity-group-title">

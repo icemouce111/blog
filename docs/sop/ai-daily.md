@@ -111,6 +111,8 @@ DEEPSEEK_MODEL=deepseek-flash
 
 小红书 MCP 默认不自动假设地址；只有设置 `XIAOHONGSHU_API_BASE` 后才启用。
 创作者机会按不足千粉、每周 5—10 小时、AI 内容制作与个人 IP 方向筛选。
+Codex 定时任务在生成 AI 日报前，按[创作者机会 SOP](creator-opportunities.md#codex-原生检索交接)
+准备到期查询的原生网络检索结果，通过 `CREATOR_SEARCH_FILE` 交给现有生成器；公开 RSS 仅作降级。
 每次当天日报生成前刷新；同日补救复用已完成的刷新，历史补档不抓未来活动。
 公开规则不完整、核验超过 7 天、截止冲突或官方身份未确认的线索单独展示，
 不进入正文的可参与推荐；高粉丝门槛与重制作任务留在“后续再看”。

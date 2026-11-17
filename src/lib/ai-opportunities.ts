@@ -12,6 +12,7 @@ interface OpportunitySeed {
     searchFailures?: number
     pageFailures?: number
     modelStatus?: string
+    agentSearchError?: string
     reviewQueue?: string[]
     channels?: Record<
       string,
@@ -22,6 +23,10 @@ interface OpportunitySeed {
         failures: number
         leads: number
         discovered: number
+        rawResults?: number
+        filteredOut?: number
+        sourceAttempts?: number
+        state?: 'relevant' | 'empty' | 'irrelevant' | 'unavailable'
         skipped?: boolean
         lastSearchedAt?: string
         nextSearchAt?: string
