@@ -70,15 +70,15 @@
     },
     {
       "window": "month",
-      "rangeStart": "2026-10-04",
-      "rangeEnd": "2026-11-02",
-      "updatedAt": "2026-11-02T21:32:42+08:00",
-      "coverageCount": 18,
+      "rangeStart": "2026-10-19",
+      "rangeEnd": "2026-11-17",
+      "updatedAt": "2026-11-17T16:15:30+08:00",
+      "coverageCount": 14,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent能力包走向可移植与可治理",
-          "summary": "Agent Skills被捐给基金会托管，SKILL.md式技能包开始脱离单一平台；GitHub则把技能、自定义Agent与MCP服务器纳入用量指标，并让Agent读取团队约定。应用层影响是：团队能力从零散提示词变成可版本管理、可审计、可迁移的资产，交付质量更依赖技能目录与流程设计。",
+          "title": "Agent技能从私有配置走向可移植资产",
+          "summary": "Agent Skills被捐给基金会托管，社区同时出现安全审计、设计、视频剪辑等技能包，技能开始以SKILL.md形式跨运行时复用。应用层影响是团队把提示词升级为可版本管理的技能目录，交付质量更依赖技能来源审计与验收标准，而非单次提问技巧。",
           "sources": [
             {
               "title": "Donating Agent Skills to the Agentic AI Foundation",
@@ -86,56 +86,41 @@
               "publishedAt": "2026-11-02"
             },
             {
-              "title": "Custom skills, agents, and MCP servers in usage metrics API",
-              "url": "https://github.blog/changelog/2026-10-22-custom-skills-agents-and-mcp-servers-in-usage-metrics-api",
-              "publishedAt": "2026-10-26"
-            },
-            {
-              "title": "GitHub intelligence puts your code, context, and history to work",
-              "url": "https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work",
-              "publishedAt": "2026-11-02"
+              "title": "cloudflare/security-audit-skill",
+              "url": "https://github.com/cloudflare/security-audit-skill",
+              "publishedAt": "2026-11-07"
             }
           ]
         },
         {
-          "title": "编程Agent从补全转向编排与运维",
-          "summary": "Copilot Fusion让模型自动路由编排，共享自动化把提示词、触发器与工具组合成团队工作流；安全侧出现代码扫描告警的Agentic autofix与Copilot应用内安全扩展。应用层变化是编程Agent开始承担跨仓库、跨会话的例行修复与安全处置，团队需要设计流程与权限边界，而非逐次提问。",
+          "title": "企业办公AI从个人试用转向流程嵌入",
+          "summary": "律所尽调、企业内部法律知识、工单审批与全员办公助手等案例显示，AI正被嵌入具体岗位流程：AI做初筛归类与摘要，人做判断签字。对组织的含义是推广路径从个人效率工具转向可展示的部门案例与流程改造，合规与复核环节成为落地前提。",
           "sources": [
-            {
-              "title": "Route and orchestrate models with GitHub Copilot Fusion",
-              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
-              "publishedAt": "2026-11-02"
-            },
-            {
-              "title": "Build shared workflows for your team with Copilot automations",
-              "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
-              "publishedAt": "2026-11-02"
-            },
-            {
-              "title": "Agentic autofix for code scanning alerts general availability",
-              "url": "https://github.blog/changelog/2026-10-15-agentic-autofix-for-code-scanning-alerts-general-availability",
-              "publishedAt": "2026-10-19"
-            }
-          ]
-        },
-        {
-          "title": "垂直行业采用转向人机分工模板",
-          "summary": "律所交易尽调由AI分组文档、生成摘要，律师复核签字；法律科技公司把模型嵌入合同分析与法律工作流；企业侧则把模型与Agent接入工单审批，并在全公司推广办公助手。应用层影响是：落地重点从单点试用转为可照搬的分工模板与部门案例，人的判断与签字仍是交付环节。",
-          "sources": [
-            {
-              "title": "Ropes & Gray AI diligence",
-              "url": "https://openai.com/index/ropes-gray-ai-diligence",
-              "publishedAt": "2026-11-02"
-            },
             {
               "title": "Legora is building the agentic operating system for legal work",
               "url": "https://openai.com/index/legora-agentic-operating-system-for-legal-work",
               "publishedAt": "2026-10-28"
             },
             {
-              "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
-              "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
-              "publishedAt": "2026-11-02"
+              "title": "How AT&T is rethinking in-house legal work with OpenAI",
+              "url": "https://openai.com/index/att-legal",
+              "publishedAt": "2026-10-23"
+            }
+          ]
+        },
+        {
+          "title": "Agent进入运维与安全值守场景",
+          "summary": "面向生产环境的AI值班与可观测产品集中出现，覆盖故障修复、SRE运维与代码扫描告警自动修复，Agent从辅助编码延伸到线上值守与安全响应。影响在于团队需同步建立权限边界、告警复核与成本控制，否则自动化动作会放大误判风险。",
+          "sources": [
+            {
+              "title": "Polylane",
+              "url": "https://www.producthunt.com/products/polylane/launches/polylane",
+              "publishedAt": "2026-10-28"
+            },
+            {
+              "title": "Agentic autofix for code scanning alerts general availability",
+              "url": "https://github.blog/changelog/2026-10-15-agentic-autofix-for-code-scanning-alerts-general-availability",
+              "publishedAt": "2026-10-19"
             }
           ]
         }
