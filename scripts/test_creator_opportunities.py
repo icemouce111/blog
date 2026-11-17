@@ -244,6 +244,7 @@ class TargetedDiscoveryTest(unittest.TestCase):
         self.assertEqual(len(plan), 10)
         for key in ('xiaohongshu', 'douyin', 'x', 'wechat'):
             self.assertEqual(sum(item['channel'] == key for item in plan), 2)
+            self.assertEqual({item['scope'] for item in plan if item['channel'] == key}, {'platform', 'web'})
         self.assertEqual([item['channel'] for item in plan[:4]], ['xiaohongshu', 'douyin', 'x', 'wechat'])
         self.assertEqual(sum(item['channel'] == 'general' for item in plan), 2)
         self.assertNotIn('{year}', str(plan))
@@ -262,9 +263,9 @@ class TargetedDiscoveryTest(unittest.TestCase):
         def search(query, _timeout):
             if 'site:xiaohongshu.com' in query:
                 return [{'title': 'AI替我说', 'url': f'https://www.xiaohongshu.com/explore/{index}'} for index in range(10)]
-            if 'site:douyin.com' in query:
+            if 'site:douyin.com' in query or 'site:iesdouyin.com' in query:
                 return [{'title': 'vibe知识大赏', 'url': 'https://www.douyin.com/video/one'}]
-            if 'site:x.com' in query:
+            if 'site:x.com' in query or 'site:twitter.com' in query:
                 return [{'title': 'AI creator program', 'url': 'https://x.com/creator/status/one'}]
             if 'site:mp.weixin.qq.com' in query:
                 return [{'title': '公众号AI征稿', 'url': 'https://mp.weixin.qq.com/s/one'}]
@@ -295,7 +296,7 @@ class TargetedDiscoveryTest(unittest.TestCase):
 
     def test_failure_is_reported_for_its_platform_without_stopping_other_searches(self):
         def search(query, _timeout):
-            if 'site:x.com' in query or '推特' in query:
+            if any(term in query for term in ('site:x.com', 'site:twitter.com', 'Twitter', 'X creator')):
                 raise TimeoutError()
             return []
         result = self.refresh(search)
@@ -315,6 +316,57 @@ class TargetedDiscoveryTest(unittest.TestCase):
         self.assertEqual(item['url'], '')
         self.assertEqual(result['collection']['channels']['xiaohongshu']['platformLeads'], 0)
         self.assertGreater(result['collection']['channels']['xiaohongshu']['secondaryLeads'], 0)
+
+    def test_platform_and_opportunity_in_summary_are_kept_as_unverified_leads(self):
+        result = self.refresh(lambda query, timeout: [{'title': 'AI短视频制作',
+            'url': 'https://report.example/program',
+            'summary': '小红书知识共创活动，招募AI创作者投稿。'}])
+        self.assertEqual(len(result['opportunities']), 1)
+        item = result['opportunities'][0]
+        self.assertEqual(item['discoveryPlatform'], 'xiaohongshu')
+        self.assertEqual(item['verification'], 'pending')
+        self.assertEqual(item['reviewMode'], 'manual')
+        self.assertIn('知识共创', item['discoverySummary'])
+
+    def test_irrelevant_search_results_are_diagnosed_instead_of_counting_as_coverage(self):
+        result = self.refresh(lambda query, timeout: [
+            {'title': 'WaveOne Open Water', 'url': 'https://swimming.example/events'}])
+        for metric in result['collection']['channels'].values():
+            self.assertEqual(metric['state'], 'irrelevant')
+            self.assertEqual(metric['rawResults'], 2)
+            self.assertEqual(metric['filteredOut'], 2)
+            self.assertEqual(metric['leads'], 0)
+
+    def test_generic_challenges_without_ai_or_creator_context_are_not_opportunities(self):
+        result = self.refresh(lambda query, timeout: [
+            {'title': 'Swimming challenge', 'url': 'https://swimming.example/events',
+             'summary': 'Open water sports event.'}])
+        self.assertFalse(result['opportunities'])
+
+    def test_native_search_file_reaches_real_refresh_without_verifying_platform_posts(self):
+        query = next(r['query'] for r in radar.discovery_plan(self.config, TODAY)
+                     if r['channel'] == 'xiaohongshu' and r['scope'] == 'web')
+        path = self.root/'native-search.json'
+        path.write_text(json.dumps({'date': str(TODAY), 'queries': [{'query': query, 'items': [
+            {'title': 'AI短视频制作', 'url': 'https://report.example/program',
+             'summary': '小红书知识共创活动，招募AI创作者投稿。'}]}]}))
+        with patch.dict('os.environ', {'CREATOR_SEARCH_FILE': str(path)}), \
+             patch('scripts.creator_search.read_rss', return_value=[]), \
+             patch.object(radar, 'fetch_official', side_effect=AssertionError('Not official rules')):
+            result = radar.refresh_opportunities(self.root, TODAY, dry_run=True)
+        self.assertEqual(len(result['opportunities']), 1)
+        self.assertEqual(result['opportunities'][0]['discoveryEngine'], 'codex-web')
+        self.assertEqual(result['opportunities'][0]['verification'], 'pending')
+        self.assertIn('codex-web', result['collection']['channels']['xiaohongshu']['engines'])
+
+    def test_invalid_native_file_is_visible_and_falls_back_without_failing_daily_news(self):
+        path = self.root/'native-search.json'
+        path.write_text(json.dumps({'date': str(TODAY-timedelta(days=1)), 'queries': []}))
+        with patch.dict('os.environ', {'CREATOR_SEARCH_FILE': str(path)}), \
+             patch('scripts.creator_search.read_rss', return_value=[]):
+            result = radar.refresh_opportunities(self.root, TODAY, dry_run=True)
+        self.assertEqual(result['collection']['agentSearchError'], 'ValueError')
+        self.assertFalse(result['opportunities'])
 
     def test_full_queue_keeps_new_discoveries_and_curated_records(self):
         old = [opportunity(id=f'discovered-old-{i}', verification='pending', url='',
@@ -342,7 +394,7 @@ class TargetedDiscoveryTest(unittest.TestCase):
         self.write_config()
         search = Mock(return_value=[])
         self.refresh(search)
-        self.assertEqual(search.call_count, 2)  # config refresh does not bypass the platform interval
+        self.assertEqual(search.call_count, 10)  # Changed search settings need one immediate collection.
 
     def test_platform_search_runs_every_three_days_and_preserves_previous_dates(self):
         with patch.object(radar, 'scan_files'):
