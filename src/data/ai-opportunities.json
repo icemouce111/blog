@@ -1,14 +1,14 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-17",
+  "updatedAt": "2026-11-18",
   "collection": {
-    "date": "2026-11-17",
-    "searches": 10,
+    "date": "2026-11-18",
+    "searches": 2,
     "searchFailures": 0,
-    "discovered": 8,
+    "discovered": 2,
     "pagesChecked": 10,
-    "pageFailures": 2,
-    "verified": 4,
+    "pageFailures": 1,
+    "verified": 1,
     "directoriesChecked": 1,
     "modelStatus": "completed",
     "discoveryFingerprint": "8a3b1fee1c5c239c6d5931f5e4d65e514435893716886238c7d4aaa80d7a3e9f",
@@ -33,7 +33,7 @@
           "homepage": 2,
           "wrong_platform": 8
         },
-        "skipped": false,
+        "skipped": true,
         "lastSearchedAt": "2026-11-17",
         "nextSearchAt": "2026-11-20",
         "state": "relevant"
@@ -58,7 +58,7 @@
           "wrong_platform": 6,
           "homepage": 4
         },
-        "skipped": false,
+        "skipped": true,
         "lastSearchedAt": "2026-11-17",
         "nextSearchAt": "2026-11-20",
         "state": "relevant"
@@ -86,7 +86,7 @@
           "opportunity_missing": 8,
           "creator_context_missing": 6
         },
-        "skipped": false,
+        "skipped": true,
         "lastSearchedAt": "2026-11-17",
         "nextSearchAt": "2026-11-20",
         "state": "irrelevant"
@@ -114,7 +114,7 @@
           "creator_context_missing": 4,
           "platform_missing": 1
         },
-        "skipped": false,
+        "skipped": true,
         "lastSearchedAt": "2026-11-17",
         "nextSearchAt": "2026-11-20",
         "state": "irrelevant"
@@ -672,6 +672,32 @@
       "reviewMode": "manual"
     },
     {
+      "id": "discovered-02c76444803d",
+      "title": "AKOOL 创作者巅峰挑战赛：瓜分 30 万美元创作者奖金",
+      "discoverySummary": "AKOOL 页面介绍使用 Seedance 2 制作原创视频并发布社交媒体参与创作者大赛；截止日期及地区资格需核验。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "https://www.akool.com/zh/blog-posts/akool-creator-clash-win-your-share-of-300-000-in-creator-rewards",
+      "sourceUrl": "https://www.akool.com/zh/blog-posts/akool-creator-clash-win-your-share-of-300-000-in-creator-rewards",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": "2026-11-18",
+      "discoveredAt": "2026-11-18",
+      "pendingReason": "官方页面发生变化或需重新确认",
+      "checkNote": "金额或门槛数字不受对应原文支持"
+    },
+    {
       "id": "discovered-0ac11c58918e",
       "title": "第三届光明科学城科幻短片大赛 2026",
       "organizer": "待核实",
@@ -693,6 +719,32 @@
       "checkedAt": null,
       "discoveredAt": "2026-11-07",
       "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
+      "id": "discovered-118a246fc3c1",
+      "title": "AI创作活动",
+      "discoverySummary": "",
+      "discoveryEngine": "",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "https://www.liblib.tv/activity/68",
+      "sourceUrl": "https://www.liblib.tv/activity/68",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": "2026-11-18",
+      "discoveredAt": "2026-11-18",
+      "pendingReason": "官方页面发生变化或需重新确认",
+      "checkNote": "金额或门槛数字不受对应原文支持"
     },
     {
       "id": "discovered-2cb0d15dbc4c",
@@ -815,7 +867,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-18",
       "discoveredAt": "2026-11-17",
       "pendingReason": "本次未能读取官方细则，待重新核实",
       "checkNote": "本次未读到完整官方页面，保留上次核验日期"
@@ -866,7 +918,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-18",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -942,10 +994,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-18",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "金额或门槛数字不受对应原文支持"
+      "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
       "id": "discovered-99d521c73a82",
@@ -1127,7 +1179,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-18",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1201,8 +1253,8 @@
       "minFollowers": null,
       "priority": 58,
       "verification": "official",
-      "verifiedAt": "2026-11-17",
-      "checkedAt": "2026-11-17",
+      "verifiedAt": "2026-11-18",
+      "checkedAt": "2026-11-18",
       "sourceHash": "9253b5129b0b0cfa15acf9754aa0020477c6364684428d35278eaee844760dfd"
     },
     {
@@ -1226,7 +1278,7 @@
       "priority": 60,
       "verification": "pending",
       "verifiedAt": "2026-10-30",
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-18",
       "sourceHash": "1a1292c791e1b3070335ddb9c7ce5c252dc4b4d41f8733c7ad038d57178ec3dd",
       "checkNote": "官方页面需重新核对，未据可访问状态更新核验日期",
       "pendingReason": "官方页面发生变化或需重新确认"
