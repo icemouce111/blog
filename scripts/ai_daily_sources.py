@@ -792,11 +792,8 @@ def _parse_rss(xml_text: str) -> list[dict[str, Any]]:
                 or _node_text(node, "content")
                 or _node_text(node, "summary")
             ),
-            "published_at": (
-                _node_text(node, "pubDate")
-                or _node_text(node, "published")
-                or _node_text(node, "updated")
-            ),
+            "published_at": _node_text(node, "pubDate") or _node_text(node, "published"),
+            "metadata": {"updated_at": _normalize_date(_node_text(node, "updated"))},
             "author": _node_text(node, "author") or None,
         })
     return items

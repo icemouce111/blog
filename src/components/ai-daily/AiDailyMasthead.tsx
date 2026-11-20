@@ -1,16 +1,23 @@
 interface AiDailyMastheadProps {
+  heading?: boolean
   date?: string
   issueId?: string
 }
 
-export function AiDailyMasthead({ date, issueId }: AiDailyMastheadProps) {
+export function AiDailyMasthead({ date, issueId, heading }: AiDailyMastheadProps) {
   return (
     <header className="ai-daily-masthead">
       <div className="ai-daily-identity">
-        <span className="ai-daily-mark" aria-hidden="true"><Sparkles /></span>
+        <span className="ai-daily-mark" aria-hidden="true">
+          <Sparkles />
+        </span>
         <div>
-          <p className="ai-daily-brand">AI 行动情报站</p>
-          <p className="ai-daily-brand-note">FILTER · EXPLAIN · ACT</p>
+          {heading ? (
+            <h1 className="ai-daily-brand">AI 行动情报站</h1>
+          ) : (
+            <p className="ai-daily-brand">AI 行动情报站</p>
+          )}
+          <p className="ai-daily-brand-note">筛选变化 · 理解价值 · 开始行动</p>
         </div>
       </div>
       <div className="ai-daily-masthead-meta">

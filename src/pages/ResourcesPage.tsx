@@ -1,3 +1,4 @@
+import { ButtonLink } from '@/components/ui/button-link'
 import { useState } from 'react'
 import { AlertTriangle, ExternalLink, LibraryBig, ShieldAlert } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -55,7 +56,10 @@ export function ResourcesPage() {
             <TabsList className="site-tabs-list mb-6 h-auto flex-wrap gap-1 bg-transparent p-0">
               {categories.map((category) => (
                 <TabsTrigger key={category.key} value={category.key}>
-                  {category.name}<span className="ml-1.5 text-xs text-muted-foreground">{category.items.length}</span>
+                  {category.name}
+                  <span className="ml-1.5 text-xs text-muted-foreground">
+                    {category.items.length}
+                  </span>
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -86,16 +90,30 @@ export function ResourcesPage() {
                         <Card key={item.name} className="site-card site-resource-card">
                           <CardHeader>
                             <CardTitle>{item.name}</CardTitle>
-                            <CardDescription className="leading-5">{item.description}</CardDescription>
+                            <CardDescription className="leading-5">
+                              {item.description}
+                            </CardDescription>
                           </CardHeader>
                           <CardContent className="mt-auto">
-                            {item.note && <p className="mb-3 text-xs leading-5 text-muted-foreground">{item.note}</p>}
+                            {item.note && (
+                              <p className="mb-3 text-xs leading-5 text-muted-foreground">
+                                {item.note}
+                              </p>
+                            )}
                             {item.url ? (
-                              <Button variant="outline" size="sm" render={<a href={item.url} target="_blank" rel="noopener noreferrer" />}>
+                              <ButtonLink
+                                variant="outline"
+                                size="sm"
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
                                 访问 <ExternalLink className="h-3.5 w-3.5" />
-                              </Button>
+                              </ButtonLink>
                             ) : (
-                              <span className="text-xs italic text-muted-foreground">链接待添加</span>
+                              <span className="text-xs italic text-muted-foreground">
+                                链接待添加
+                              </span>
                             )}
                           </CardContent>
                         </Card>

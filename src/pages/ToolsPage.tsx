@@ -1,6 +1,6 @@
+import { ButtonLink } from '@/components/ui/button-link'
 import { ExternalLink, ShieldAlert, Wrench } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import toolsData from '@/data/tools.json'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { SectionHero } from '@/components/layout/SectionHero'
@@ -46,14 +46,18 @@ export function ToolsPage() {
                   <CardDescription className="leading-5">{item.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto">
-                  {item.note && <p className="mb-3 text-xs leading-5 text-muted-foreground">{item.note}</p>}
-                  <Button
+                  {item.note && (
+                    <p className="mb-3 text-xs leading-5 text-muted-foreground">{item.note}</p>
+                  )}
+                  <ButtonLink
                     variant="outline"
                     size="sm"
-                    render={<a href={item.url} target="_blank" rel="noopener noreferrer" />}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     访问 <ExternalLink className="h-3.5 w-3.5" />
-                  </Button>
+                  </ButtonLink>
                 </CardContent>
               </Card>
             ))}

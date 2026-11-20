@@ -237,6 +237,15 @@ class ReportValidationTest(unittest.TestCase):
 
         self.assertTrue(validation.valid)
 
+    def test_cannot_borrow_a_reward_or_superlative_from_another_article(self):
+        a = official_item(title="工具A新增导出", summary="工具A新增文件导出。")
+        b = official_item(url="https://openai.com/activity-b", title="活动B",
+                          summary="活动B最高奖励100元，是本活动唯一现金奖。")
+        report = "## 01 今日变化\n\n1. **工具A**\n工具A提供100元奖励，是唯一现金奖。[来源](https://openai.com/index/new-model)\n"
+        result = validate_report(report, [a, b])
+        self.assertFalse(result.valid)
+        self.assertTrue(any("100" in issue for issue in result.issues))
+
     def test_rejects_metrics_not_present_in_evidence(self):
         unsupported = """## 01 📌 今日头条
 
@@ -252,6 +261,19 @@ class ReportValidationTest(unittest.TestCase):
 
         self.assertFalse(validate_report(unsupported, [evidence]).valid)
         self.assertTrue(validate_report(supported, [evidence]).valid)
+
+    def test_equivalent_counts_and_currency_amounts_preserve_units(self):
+        cases = [
+            ("10000次自然播放", "1 万次自然播放", True),
+            ("现金奖励10000元", "现金奖励1万元", True),
+            ("现金奖励100美元", "现金奖励100元", False),
+            ("数据为50次播放", "奖励50%", False),
+            ("数据为1000次播放", "数据为1万次播放", False),
+        ]
+        for source, claim, expected in cases:
+            with self.subTest(source=source, claim=claim):
+                report = "## 01 活动机会\n\n1. **创作计划**\n" + claim + "。来源：https://openai.com/index/new-model\n"
+                self.assertEqual(validate_report(report, [official_item(summary=source)]).valid, expected)
 
     def test_rejects_claims_attributed_to_an_unavailable_source(self):
         report = """## 01 📌 今日头条
@@ -415,7 +437,8 @@ class RepairFallbackTest(unittest.TestCase):
         self.assertIn("https://linux.do/t/topic/123", result.content)
         self.assertNotIn("invented.example", result.content)
         self.assertTrue(any("repair" in issue for issue in result.issues))
-        self.assertTrue(
+        # A source archive preserves the evidence but is deliberately not edited copy.
+        self.assertFalse(
             validate_report(
                 result.content,
                 [official_item(), community_item()],

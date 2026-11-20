@@ -1,6 +1,6 @@
+import { ButtonLink } from '@/components/ui/button-link'
 import { Code2, ExternalLink, FolderGit2 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import projectsData from '@/data/projects.json'
 import { PageContainer } from '@/components/layout/PageContainer'
 import { SectionHero } from '@/components/layout/SectionHero'
@@ -36,7 +36,9 @@ export function ProjectsPage() {
               <Card key={project.name} className="site-card site-project-card">
                 <CardHeader>
                   <div className="flex items-center justify-between gap-4">
-                    <span className="site-card-index">PROJECT {String(index + 1).padStart(2, '0')}</span>
+                    <span className="site-card-index">
+                      PROJECT {String(index + 1).padStart(2, '0')}
+                    </span>
                     <span className="site-chip">可验证实践</span>
                   </div>
                   <CardTitle>{project.name}</CardTitle>
@@ -44,18 +46,33 @@ export function ProjectsPage() {
                 </CardHeader>
                 <CardContent className="flex flex-1 flex-col">
                   <div className="flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => <span className="site-chip" key={tag}>{tag}</span>)}
+                    {project.tags.map((tag) => (
+                      <span className="site-chip" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                   <div className="site-project-actions">
                     {project.github && (
-                      <Button variant="outline" size="sm" render={<a href={project.github} target="_blank" rel="noopener noreferrer" />}>
+                      <ButtonLink
+                        variant="outline"
+                        size="sm"
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Code2 className="h-4 w-4" /> GitHub
-                      </Button>
+                      </ButtonLink>
                     )}
                     {project.demo && (
-                      <Button size="sm" render={<a href={project.demo} target="_blank" rel="noopener noreferrer" />}>
+                      <ButtonLink
+                        size="sm"
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <ExternalLink className="h-4 w-4" /> 演示
-                      </Button>
+                      </ButtonLink>
                     )}
                   </div>
                 </CardContent>

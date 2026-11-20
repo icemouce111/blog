@@ -1,8 +1,20 @@
+import { Disclosure } from '@/components/ui/disclosure'
+import { Link } from 'react-router-dom'
 import {
-  formatOpportunityDeadline,
-  getActiveAiOpportunities,
+  getOpportunityCollection,
+  getOpportunityChannelCoverage,
+  getOpportunitySearchIntervalDays,
+  getOpportunityGroups,
+  getOpportunityProfile,
   getOpportunityWatchSources,
+  todayInShanghai,
 } from '@/lib/ai-opportunities'
+import { getAiDailyPosts } from '@/lib/ai-daily'
+import {
+  pendingReason,
+  rewardLabels,
+  type CreatorOpportunity,
+} from '@/lib/creator-opportunity-policy'
 
 interface AiOpportunityRadarProps {
   variant?: 'index' | 'issue'
@@ -10,47 +22,207 @@ interface AiOpportunityRadarProps {
   number?: string
 }
 
-function OpportunityList({ limit }: { limit?: number }) {
-  const opportunities = getActiveAiOpportunities()
-  const visible = typeof limit === 'number' ? opportunities.slice(0, limit) : opportunities
-
-  if (!visible.length) {
-    return <p className="ai-opportunity-empty">暂时没有仍在报名期的机会。</p>
-  }
-
+function OpportunityList({
+  items,
+  pending = false,
+}: {
+  items: CreatorOpportunity[]
+  pending?: boolean
+}) {
+  const reference = todayInShanghai()
   return (
     <ol className="ai-opportunity-list">
-      {visible.map((item) => (
+      {items.map((item) => (
         <li key={item.id}>
           <div className="ai-opportunity-topline">
+            <span>
+              {pending
+                ? '待核实'
+                : item.fitStage === 'later'
+                  ? '后续再看'
+                  : item.fitStage === 'apply'
+                    ? '可准备申请'
+                    : '可准备投稿'}
+            </span>
             <span>{item.type}</span>
-            <time dateTime={item.deadline ?? undefined}>
-              {formatOpportunityDeadline(item.deadline)}
-            </time>
           </div>
-          <h3 className="ai-daily-serif">
-            <a href={item.url} target="_blank" rel="noreferrer">{item.title}</a>
-          </h3>
+          <h3>{item.title}</h3>
+          <div className="ai-opportunity-badges">
+            {item.rewardTypes.map((type) => (
+              <span key={type}>{rewardLabels[type]}</span>
+            ))}
+            {!item.rewardTypes.length && <span>奖励类型待核</span>}
+          </div>
           <p className="ai-opportunity-reward">{item.reward}</p>
-          <p>{item.fit}</p>
+          <dl className="ai-opportunity-facts">
+            <div>
+              <dt>关键门槛</dt>
+              <dd>
+                {item.minFollowers != null && item.minFollowers > 0
+                  ? `至少 ${item.minFollowers.toLocaleString('zh-CN')} 粉丝；`
+                  : ''}
+                {item.requirements.split(/[；;。]/)[0]}
+                {item.requirements.split(/[；;。]/).length > 1 ? '；完整要求见下方' : ''}
+              </dd>
+            </div>
+            <div>
+              <dt>截止时间</dt>
+              <dd>{item.deadlineText}</dd>
+            </div>
+            {pending && (
+              <div className="ai-opportunity-pending">
+                <dt>还需确认</dt>
+                <dd>{pendingReason(item, reference, getOpportunityProfile())}</dd>
+              </div>
+            )}
+          </dl>
+          <Disclosure className="ai-opportunity-detail">
+            <summary>完整要求与适配说明</summary>
+            <dl className="ai-opportunity-facts">
+              <div>
+                <dt>参与要求</dt>
+                <dd>{item.requirements}</dd>
+              </div>
+              <div>
+                <dt>适合怎样尝试</dt>
+                <dd>{item.fit}</dd>
+              </div>
+            </dl>
+          </Disclosure>
+          <div className="ai-opportunity-foot">
+            {item.url ? (
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                {pending ? '官方入口（细则待核）' : '查看官方规则'} ↗
+              </a>
+            ) : item.sourceUrl ? (
+              <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                查看线索（官方入口待确认） ↗
+              </a>
+            ) : null}
+            {item.verifiedAt && (
+              <span>
+                核验 {item.verifiedAt}
+                {item.checkNote ? ' · 本次检查未完成' : ''}
+              </span>
+            )}
+          </div>
         </li>
       ))}
     </ol>
   )
 }
 
-function WatchSources() {
+function RadarContent({ compact }: { compact: boolean }) {
+  const groups = getOpportunityGroups()
+  const collection = getOpportunityCollection()
+  const latest = getAiDailyPosts()[0]
+  const limit = compact ? 3 : 5
+  const failed = Boolean(
+    collection.searchFailures || collection.pageFailures || collection.agentSearchError || collection.modelStatus === 'failed',
+  ) || getOpportunityChannelCoverage().some(({ result }) => result?.state === 'unavailable' || result?.state === 'irrelevant')
   return (
-    <details className="ai-opportunity-sources">
-      <summary>官方活动入口</summary>
-      <ul>
-        {getOpportunityWatchSources().map((source) => (
-          <li key={source.url}>
-            <a href={source.url} target="_blank" rel="noreferrer">{source.name}</a>
+    <>
+      <p className="ai-daily-section-intro">
+        按起步阶段、每周 5—10 小时筛选短视频活动、AI
+        制作与合作渠道。现金、佣金、积分和流量分开；申请仍须审核，奖池不等于个人保底。
+      </p>
+      <p className="ai-opportunity-update">
+        最近搜集：{collection.date || collection.updatedAt}
+        {failed ? ' · 部分来源待复核' : ''}
+      </p>
+      <p className="ai-opportunity-update">
+        四平台公开检索：每 {getOpportunitySearchIntervalDays()} 天一轮，未到期时沿用上次结果；不代表已搜索登录后的站内内容。
+      </p>
+      <ul className="ai-opportunity-channel-status" aria-label="四平台定向搜集状态">
+        {getOpportunityChannelCoverage().map(({ id, name, result }) => (
+          <li key={id}>
+            <strong>{name}</strong>
+            <span>
+              {result ? <>
+                {result.skipped && '上次：'}{result.queries} 条查询 ·{' '}
+                {result.rawResults === undefined ? '历史统计，待重新检索'
+                  : `返回 ${result.rawResults} 条／候选 ${result.leads} 条／新增 ${result.discovered} 条`}
+                {result.state === 'irrelevant' && ' · 返回结果偏题'}
+                {result.state === 'unavailable' && ' · 检索源不可用'}
+                {result.state === 'empty' && ' · 公开索引暂无结果'}
+                {Boolean(result.failures) && ` · ${result.failures} 条查询失败`}
+              </> : '待首次定向搜集'}
+            </span>
+            {result?.lastSearchedAt && (
+              <span>
+                尝试 {result.lastSearchedAt} · 下次 {result.nextSearchAt}
+              </span>
+            )}
           </li>
         ))}
       </ul>
-    </details>
+      {Boolean(collection.reviewQueue?.length) && (
+        <p className="ai-opportunity-update">
+          待人工复核：{collection.reviewQueue?.length}{' '}
+          项。尚未完成发布账号、原帖规则与参与资格核验，不代表本轮新增或已可报名。
+        </p>
+      )}
+      <h3 className="ai-opportunity-group-title">
+        优先尝试 <span>{groups.recommended.length}</span>
+      </h3>
+      {groups.recommended.length ? (
+        <OpportunityList items={groups.recommended.slice(0, limit)} />
+      ) : (
+        <p className="ai-opportunity-empty">暂无核验有效且适合当前阶段的机会。</p>
+      )}
+      {groups.recommended.length > limit && !compact && (
+        <Disclosure className="ai-opportunity-more">
+          <summary>其余可准备的机会（{groups.recommended.length - limit}）</summary>
+          <OpportunityList items={groups.recommended.slice(limit)} />
+        </Disclosure>
+      )}
+      {compact ? (
+        <div className="ai-opportunity-index-footer">
+          <p>
+            另有 {groups.pending.length} 条待核实线索 · {groups.later.length} 项后续机会
+          </p>
+          {latest && (
+            <Link className="site-text-link" to={`/ai-daily/${latest.slug}#creator-opportunities`}>
+              查看全部机会与待核说明 →
+            </Link>
+          )}
+        </div>
+      ) : (
+        <>
+          <h3 className="ai-opportunity-group-title">
+            待核实线索 <span>{groups.pending.length}</span>
+          </h3>
+          <p className="ai-opportunity-empty">
+            奖励、账号资格、截止或活动细则尚未确认，不能视为可领取奖金或已接订单。
+          </p>
+          <OpportunityList items={groups.pending.slice(0, 3)} pending />
+          {groups.pending.length > 3 && (
+            <Disclosure className="ai-opportunity-more">
+              <summary>查看其余待核线索（{groups.pending.length - 3}）</summary>
+              <OpportunityList items={groups.pending.slice(3)} pending />
+            </Disclosure>
+          )}
+          {groups.later.length > 0 && (
+            <Disclosure className="ai-opportunity-more">
+              <summary>达到门槛或有更多时间后再看（{groups.later.length}）</summary>
+              <OpportunityList items={groups.later} />
+            </Disclosure>
+          )}
+          <Disclosure className="ai-opportunity-sources">
+            <summary>日常搜集的官方入口</summary>
+            <ul>
+              {getOpportunityWatchSources().map((source) => (
+                <li key={source.url}>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer">
+                    {source.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Disclosure>
+        </>
+      )}
+    </>
   )
 }
 
@@ -59,35 +231,28 @@ export function AiOpportunityRadar({
   id = 'creator-opportunities',
   number = '09',
 }: AiOpportunityRadarProps) {
-  if (variant === 'issue') {
-    return (
-      <section
-        className="ai-daily-content-section ai-daily-supplement ai-opportunity-section"
-        id={id}
-        aria-labelledby={`${id}-heading`}
-      >
+  return (
+    <section
+      className={
+        variant === 'issue'
+          ? 'ai-daily-content-section ai-opportunity-section'
+          : 'ai-opportunity-radar'
+      }
+      id={id}
+      aria-labelledby={`${id}-heading`}
+    >
+      {variant === 'issue' ? (
         <div className="ai-daily-content-heading">
           <span>{number}</span>
-          <h2 id={`${id}-heading`} className="ai-daily-serif">AI 创作者机会</h2>
+          <h2 id={`${id}-heading`}>AI 创作者机会</h2>
         </div>
-        <p className="ai-daily-section-intro">
-          只展示仍可参与且能由官方页面确认的计划。优先选择能沉淀教程、案例或讲师经历的机会。
-        </p>
-        <OpportunityList limit={5} />
-        <WatchSources />
-      </section>
-    )
-  }
-
-  return (
-    <aside className="ai-opportunity-radar" aria-labelledby="opportunity-radar-heading">
-      <header>
-        <p className="ai-daily-eyebrow">CREATOR RADAR</p>
-        <h2 id="opportunity-radar-heading" className="ai-daily-serif">近期可参与的 AI 创作机会</h2>
-        <p>从“今天发生了什么”再往前一步：找到能动手、投稿并积累作品的官方入口。</p>
-      </header>
-      <OpportunityList limit={4} />
-      <WatchSources />
-    </aside>
+      ) : (
+        <header>
+          <p className="ai-daily-eyebrow">CREATOR RADAR</p>
+          <h2 id={`${id}-heading`}>AI 创作者机会</h2>
+        </header>
+      )}
+      <RadarContent compact={variant === 'index'} />
+    </section>
   )
 }

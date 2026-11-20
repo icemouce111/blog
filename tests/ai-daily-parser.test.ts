@@ -81,6 +81,35 @@ test('recognizes bold numbered editorial items from generated reports', () => {
   assert.match(result.sections[0].markdown, /OpenAI 更新产品/)
 })
 
+test('recognizes standalone bold story titles returned by DeepSeek', () => {
+  const result = parseAiDailyContent(`
+## 01 今天真正重要的变化
+
+**首条变化**
+这是含有**行内强调**的摘要。
+https://example.com/lead
+
+**第二条变化**
+**[高置信度]**
+这是第二条摘要。
+https://example.com/second
+
+## 02 Agent 工程与工作流
+
+**开源工具**
+这是工具的介绍。
+https://example.com/tool
+`)
+
+  assert.equal(result.storyCount, 3)
+  assert.equal(result.leadStory?.title, '首条变化')
+  assert.equal(result.leadStory?.sourceUrl, 'https://example.com/lead')
+  assert.match(result.leadStory?.summaryMarkdown || '', /行内强调/)
+  assert.doesNotMatch(result.leadStory?.summaryMarkdown || '', /第二条变化/)
+  assert.doesNotMatch(result.sections[0].markdown, /首条变化/)
+  assert.match(result.sections[0].markdown, /第二条变化/)
+})
+
 test('falls back to the original markdown when numbered sections are absent', () => {
   const markdown = '## Notes\n\nUnstructured content'
   const result = parseAiDailyContent(markdown)

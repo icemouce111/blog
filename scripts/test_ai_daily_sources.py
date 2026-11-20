@@ -80,7 +80,7 @@ class OfficialSourceTest(unittest.TestCase):
         self.assertEqual([item.title for item in result.items], ["Agent memory patterns"])
         self.assertEqual(result.items[0].source_tier, SourceTier.OFFICIAL)
 
-    def test_atom_feed_uses_link_href_and_updated_date(self):
+    def test_atom_update_time_is_not_promoted_to_publication_time(self):
         transport = FakeTransport()
         feed_url = "https://example.com/atom.xml"
         transport.text[feed_url] = """<?xml version="1.0"?>
@@ -104,7 +104,8 @@ class OfficialSourceTest(unittest.TestCase):
 
         self.assertEqual(result.status, SourceStatus.ACTIVE)
         self.assertEqual(result.items[0].url, "https://example.com/questions/1")
-        self.assertEqual(result.items[0].published_at, "2026-07-01T12:00:00+00:00")
+        self.assertIsNone(result.items[0].published_at)
+        self.assertEqual(result.items[0].metadata["updated_at"], "2026-07-01T12:00:00+00:00")
         self.assertEqual(result.items[0].source_tier, SourceTier.COMMUNITY)
         self.assertEqual(result.signal_type, SignalType.SOCIAL)
 

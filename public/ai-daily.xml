@@ -6,7 +6,97 @@
     <description>Daily AI industry news and trends, automatically generated</description>
     <language>zh-CN</language>
     <atom:link href="https://blog.icemouce.cc/ai-daily.xml" rel="self" type="application/rss+xml"/>
-    <lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 19 Nov 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月19日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-19</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月19日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### GitHub Trending
+- **elementalsouls/Claude-BugHunter**：A Claude Code skill bundle for bug hunting and external red-team work - 82 skills, 15 slash commands, 681 disclosed-report patterns curated across 24 core vuln… [来源](https://github.com/elementalsouls/Claude-BugHunter)
+- **obra/superpowers**：An agentic skills framework & software dev]]></description>
+        <pubDate>Thu, 19 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-19</guid>
+    </item>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月18日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-18</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月18日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### GitHub Trending
+- **elementalsouls/Claude-BugHunter**：A Claude Code skill bundle for bug hunting and external red-team work - 82 skills, 15 slash commands, 681 disclosed-report patterns curated across 24 core vuln… [来源](https://github.com/elementalsouls/Claude-BugHunter)
+- **HKUDS/CLI-Anything**："CLI-Anything: Making ALL Software Agent]]></description>
+        <pubDate>Wed, 18 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-18</guid>
+    </item>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月17日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-17</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月17日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### GitHub Trending
+- **ag-ui-protocol/ag-ui**：AG-UI: the Agent-User Interaction Protocol. Bring Agents into Frontend Applications. [来源](https://github.com/ag-ui-protocol/ag-ui)
+- **backnotprop/plannotator**：The workspace to stay in the loop and on top of agents - shape, decide, plan, annotate, review code, share with team, and send all fe]]></description>
+        <pubDate>Tue, 17 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-17</guid>
+    </item>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月07日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-07</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月07日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 📡 今日来源速览
+
+### GitHub Trending
+- **vercel-labs/agent-browser**：Browser automation CLI for AI agents [来源](https://github.com/vercel-labs/agent-browser)
+- **cloudflare/security-audit-skill**：A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings [来源](https://github.com/cloudflare/security-audit-skill]]></description>
+        <pubDate>Sat, 07 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-07</guid>
+    </item>
+    <item>
+        <title><![CDATA[AI 行动情报站 - 2026年11月02日]]></title>
+        <link>https://blog.icemouce.cc/ai-daily/2026-11-02</link>
+        <description><![CDATA[# AI 行动情报站 - 2026年11月02日
+
+> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
+> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
+
+---
+
+## 01 今天真正重要的变化
+
+**GitHub 把“模型选择”变成“模型编排”，并给团队工作流加上共享自动化**
+GitHub Copilot Fusion 正式可用，用户不再逐任务挑模型，而是让 Copilot 自动路由与编排；同时 Shared Copilot Automations 开始铺开，团队可以把提示词、触发器和工具组合成共享工作流。对普通团队来说，这意味着“写提示词”正在升级为“维护可复用的自动化资产”，交付质量更依赖流程设计而非单次提问。今天可做：挑一个团队里每周重复两次以上的任务，用触发器+提示词+工具画成一张流程草图。
+https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-]]></description>
+        <pubDate>Mon, 02 Nov 2026 00:00:00 +0800</pubDate>
+        <guid>https://blog.icemouce.cc/ai-daily/2026-11-02</guid>
+    </item>
     <item>
         <title><![CDATA[AI 行动情报站 - 2026年10月29日]]></title>
         <link>https://blog.icemouce.cc/ai-daily/2026-10-29</link>
@@ -511,108 +601,6 @@
 - **]]></description>
         <pubDate>Mon, 21 Sep 2026 00:00:00 +0800</pubDate>
         <guid>https://blog.icemouce.cc/ai-daily/2026-09-21</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月19日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-19</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月19日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 📡 今日来源速览
-
-### Hacker News
-- **Show HN: Cactus Needle 3: 8-29MB automation models can match DeepSeek V4 Flash** [来源](https://cactuscompute.com/needle)
-- **Claude Code now reads AGENTS.md if there is no Claude.md** [来源](https://code.claude.com/docs/en/changelog)
-
-### GitHub Trending
-- **Continuum-AI-Corp/OrcaBonsai-27B-Uncensored**：Runtime behavioral]]></description>
-        <pubDate>Sat, 19 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-19</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月18日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-18</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月18日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**OpenAI 把“法律”做成了一条完整产品线，而不只是一个对话框。** Astra for Law 提供面向律所的定制工作流、连接的合法数据源和保密级控制；Cooley 的 GO Public 则把 ChatGPT Work 嵌进 IPO 流程，让律师更早发现问题、把判断力留在关键处。对普通读者的意义是：AI 落地正在从“通用助手”转向“带数据源和权限的行业工作台”。今天可以做的：挑一个你所在行业最耗时的流程，列出它需要的 3 个数据源和 2 个权限边界，判断能否被工作流化。
-https://openai.com/index/astra-for-law
-https://openai.com/index/cooley-gopublic
-
-**Cloudflare 给站点]]></description>
-        <pubDate>Fri, 18 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-18</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月17日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-17</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月17日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 📡 今日来源速览
-
-### Hacker News
-- **HarnessTax: How Much Does the Harness Matter for Coding Agents?** [来源](https://harnesstax.github.io/)
-- **Jev Ultrafast: A browser agent with a dynamic, indexed action space** [来源](https://github.com/browser-use/jev-ultrafast)
-
-### GitHub Trending
-- **alibaba/open-code-review**：Fast, efficient, battle-tested at Alibaba']]></description>
-        <pubDate>Thu, 17 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-17</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月16日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-16</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月16日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 今天真正重要的变化
-
-**OpenAI 把"数据代理"塞进了 ChatGPT Work，办公数据分析门槛再降一档**
-OpenAI 发布 ChatGPT Work 中的 Data agent，支持连接企业数据、用自然语言发现洞察并生成交互式仪表盘。这意味着不会写 SQL 的基层员工也能直接对业务数据提问并产出可视化结果。今天可以做的：找一个你手上重复做的周报或月报，试着把数据源接进去，让它先跑一遍看结果是否可信。
-
-**Cloudflare 让 Workers 的 Node.js 兼容默认开启，Agent 部署成本下降**
-Cloudflare 重建了 Workers 的模块注册表，Node.js 兼容性默认开启，应用体积上限提升到 64 MiB，并加入基于 URL 的模块注册、懒编译与共享代]]></description>
-        <pubDate>Wed, 16 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-16</guid>
-    </item>
-    <item>
-        <title><![CDATA[AI 行动情报站 - 2026年09月15日]]></title>
-        <link>https://blog.icemouce.cc/ai-daily/2026-09-15</link>
-        <description><![CDATA[# AI 行动情报站 - 2026年09月15日
-
-> 只保留能帮助你理解变化、开始实践或积累作品的 AI 信号。信息来自产品官方、开源社区、开发者讨论与官方活动页。
-> 编辑重点：Agent 工程与工作流、普通人的 AI 办公、AI 编程与开源实践、产品及创作者机会。
-
----
-
-## 01 📡 今日来源速览
-
-### Hacker News
-- **Pion, an agent designed to run any company autonomously** [来源](https://andonlabs.com/blog/why-we-built-pion)
-
-### GitHub Trending
-- **alibaba/open-code-review**：Fast, efficient, battle-tested at Alibaba's scale. Hybrid architecture code review tool: deterministic pipelines + LLM Agent, precise line-level comments, buil…]]></description>
-        <pubDate>Tue, 15 Sep 2026 00:00:00 +0800</pubDate>
-        <guid>https://blog.icemouce.cc/ai-daily/2026-09-15</guid>
     </item>
 </channel>
 </rss>

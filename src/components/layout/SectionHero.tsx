@@ -22,7 +22,9 @@ export function SectionHero({
   return (
     <header className={`site-section-hero site-tone-${tone}`}>
       <div className="site-section-hero-copy">
-        <span className="site-section-mark" aria-hidden="true"><Icon /></span>
+        <span className="site-section-mark" aria-hidden="true">
+          <Icon />
+        </span>
         <div>
           <p className="site-eyebrow">{eyebrow}</p>
           <h1 className="site-serif">{title}</h1>
@@ -30,7 +32,6 @@ export function SectionHero({
         </div>
       </div>
       {meta && <p className="site-section-meta">{meta}</p>}
-      <div className="site-section-orbit" aria-hidden="true" />
     </header>
   )
 }

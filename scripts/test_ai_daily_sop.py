@@ -2,7 +2,7 @@ import subprocess
 import tempfile
 import time
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 from pathlib import Path
 
 from scripts.ai_daily_sop import (
@@ -115,13 +115,14 @@ class AtomicRunLockTest(unittest.TestCase):
 
 
 class ArtifactContractTest(unittest.TestCase):
-    def test_allowed_artifacts_include_report_rss_and_trends_only(self):
+    def test_allowed_artifacts_include_only_report_and_derived_data(self):
         self.assertEqual(
             allowed_artifact_paths("2026-07-01"),
             {
                 "src/content/ai-daily/2026-07-01.md",
                 "public/ai-daily.xml",
                 "src/data/ai-trends.json",
+                "src/data/ai-opportunities.json",
             },
         )
 
@@ -150,6 +151,9 @@ class PublisherTest(unittest.TestCase):
         (self.seed / "src" / "data" / "ai-trends.json").write_text(
             '{"windows":[]}\n',
             encoding="utf-8",
+        )
+        (self.seed / "src" / "data" / "ai-opportunities.json").write_text(
+            '{"schemaVersion":2,"opportunities":[]}\n', encoding="utf-8",
         )
         run_git(self.seed, "add", ".")
         run_git(self.seed, "commit", "-m", "seed")
@@ -180,6 +184,18 @@ class PublisherTest(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def test_github_publisher_without_rss_still_checks_online_content(self):
+        artifact = 'src/data/github-daily/2026-07-01.json'
+        publisher = Publisher(self.checkout, live_url=None, verify_timeout=0,
+                              remote_artifact=lambda _date: artifact)
+        with (patch('scripts.ai_daily_sop.subprocess.run',
+                   return_value=subprocess.CompletedProcess([], 0, b'{"date":"2026-07-01"}')),
+              patch('scripts.ai_daily_sop.verify_publication', return_value=False) as verify):
+            with self.assertRaisesRegex(PublishError, 'live content fingerprint/RSS'):
+                publisher._verify_live('2026-07-01')
+        self.assertEqual(verify.call_args.args[1:], (artifact, b'{"date":"2026-07-01"}'))
+        self.assertIsNone(verify.call_args.kwargs['rss_url'])
+
     @staticmethod
     def generate_valid(worktree: Path, date: str) -> None:
         report = worktree / "src" / "content" / "ai-daily" / f"{date}.md"
@@ -193,6 +209,9 @@ class PublisherTest(unittest.TestCase):
         (worktree / "src" / "data" / "ai-trends.json").write_text(
             '{"windows":[{"window":"week"}]}\n',
             encoding="utf-8",
+        )
+        (worktree / "src" / "data" / "ai-opportunities.json").write_text(
+            '{"schemaVersion":2,"opportunities":[{"id":"checked-opportunity"}]}\n', encoding="utf-8",
         )
 
     def test_publishes_from_origin_main_without_feature_commits(self):

@@ -2,6 +2,7 @@ export interface PostMeta {
   slug: string
   title: string
   date: string
+  dateISO: string
   description: string
   tags: string[]
   cover?: string
@@ -75,6 +76,7 @@ export function getPosts(): PostMeta[] {
     posts.push({
       slug,
       title: (data.title as string) || slug,
+      dateISO: (data.date as string) || '',
       date: data.date
         ? new Date(data.date as string).toLocaleDateString('zh-CN', {
             year: 'numeric',
@@ -88,11 +90,7 @@ export function getPosts(): PostMeta[] {
     })
   }
 
-  return posts.sort((a, b) => {
-    if (!a.date) return 1
-    if (!b.date) return -1
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
+  return posts.sort((a, b) => b.dateISO.localeCompare(a.dateISO))
 }
 
 export function getPost(slug: string): Post | null {
@@ -104,6 +102,7 @@ export function getPost(slug: string): Post | null {
   return {
     slug,
     title: (data.title as string) || slug,
+    dateISO: (data.date as string) || '',
     date: data.date
       ? new Date(data.date as string).toLocaleDateString('zh-CN', {
           year: 'numeric',

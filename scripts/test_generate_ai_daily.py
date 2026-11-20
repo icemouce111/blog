@@ -199,6 +199,46 @@ class CliContractTest(unittest.TestCase):
 
 
 class SourceRegistryContractTest(unittest.TestCase):
+    def test_real_generation_archives_bindings_and_rerun_does_not_republish_the_story(self):
+        import json
+        item = SourceItem(source="OpenAI",title="AI工具新增导出",url="https://example.org/fresh",
+                          summary="AI工具新增文件导出功能。",published_at="2026-07-01",source_tier=SourceTier.OFFICIAL)
+        report = "## 01 今日变化\n\n1. **AI工具新增导出**\nAI工具新增文件导出功能。[来源](https://example.org/fresh)\n"
+        response = json.dumps({"items":[{"id":"1","supported":True,"citations":[
+            {"url":item.url,"quote":item.summary}],"previousIds":[],"newInformation":""}]},ensure_ascii=False)
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            archive = root / 'src/content/ai-daily'
+            args = MODULE.parse_args(['--generate-only','--date','2026-07-01'])
+            with patch.object(MODULE,'BLOG_DIR',root), patch.object(MODULE,'CONTENT_DIR',archive), \
+                 patch.object(MODULE,'CORE_SOURCES',{'OpenAI'}), \
+                 patch.object(MODULE,'build_source_registry') as registry, \
+                 patch.object(MODULE,'call_llm',return_value=report) as analyze, \
+                 patch.object(MODULE,'call_evidence_audit',return_value=response) as audit, \
+                 patch.object(MODULE,'_refresh_derived_artifacts'),patch.object(MODULE,'scan_files'):
+                registry.return_value.fetch_all.return_value = {'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])}
+                self.assertEqual(MODULE._run_generation(args),0)
+                raw = (archive / '2026-07-01.md').read_text()
+                self.assertIn('evidence: {',raw)
+                history = MODULE.read_history(archive,date(2026,7,2))
+                self.assertEqual(history[0]['sources'][0]['url'],item.url)
+                self.assertEqual(history[0]['quotes'],[item.summary])
+                analyze.reset_mock();audit.reset_mock()
+                args.date = '2026-07-02'
+                registry.return_value.fetch_all.return_value = {'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])}
+                self.assertEqual(MODULE._run_generation(args),0)
+                analyze.assert_not_called();audit.assert_not_called()
+                next_report = (archive / '2026-07-02.md').read_text()
+                self.assertIn('没有新增',next_report)
+                self.assertNotIn(item.url,next_report)
+
+    def test_historical_filter_does_not_use_a_future_revision_of_an_old_article(self):
+        item = SourceItem('OpenAI','AI工具更新','https://example.org/old',published_at='2026-07-01',
+                          metadata={'updated_at':'2026-07-02T04:00:00Z'})
+        results = MODULE.filter_source_results({'OpenAI':SourceResult('OpenAI',SourceStatus.ACTIVE,[item])},
+                                              date(2026,7,1),require_exact_date=True)
+        self.assertEqual(results['OpenAI'].items,[])
+
     def test_registry_contains_legacy_and_new_sources(self):
         names = {
             adapter.name
@@ -272,14 +312,105 @@ class SourceRegistryContractTest(unittest.TestCase):
         self.assertEqual(len(converted["OpenAI"]), 8)
         self.assertEqual(converted["OpenAI"][0]["signal_type"], "story")
 
-    def test_creator_opportunities_exclude_expired_items(self):
+    def test_editor_receives_suitable_verified_opportunities_only(self):
+        # The pipeline contract, not the live data file, is under test here.
+        # Production ai-opportunities.json refreshes daily, so a fixed
+        # snapshot keeps these assertions deterministic while preserving
+        # their original semantics: one fresh verified opportunity reaches
+        # the editor; unverified, expired, and high-follower ones do not.
+        snapshot = {
+            "opportunities": [
+                {
+                    "id": "fixture-fluffy-fresh",
+                    "title": "双十一毛茸茸节AI创作大赛",
+                    "organizer": "抖音商城 × LibTV",
+                    "type": "大赛",
+                    "url": "https://www.liblib.tv/activity/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-11-15",
+                    "deadlineText": "全程投稿截止2026-11-15",
+                    "reward": "总奖池100,000元奖金",
+                    "rewardTypes": ["cash"],
+                    "requirements": "须用LibTV完成主要AI创作并公开画布",
+                    "fit": "AI短视频与制作拆解主题可直接复用",
+                },
+                {
+                    "id": "fixture-vibe-unverified",
+                    "title": "Vibe 知识大赏",
+                    "url": "https://creator.douyin.com/fixture",
+                    "deadlineKind": "rolling",
+                    "deadlineText": "官方未列统一截止",
+                    "reward": "流量激励",
+                    "rewardTypes": ["traffic"],
+                    "requirements": "发布带话题内容",
+                    "fit": "知识可视化主题",
+                },
+                {
+                    "id": "fixture-xingtu-expired",
+                    "title": "巨量星图短视频任务",
+                    "url": "https://www.xingtu.cn/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-10-01",
+                    "deadlineText": "已截止",
+                    "reward": "任务激励",
+                    "rewardTypes": ["cash"],
+                    "requirements": "投稿短视频任务",
+                    "fit": "商品展示主题",
+                },
+                {
+                    "id": "fixture-skill-contest-high-followers",
+                    "title": "Skill 创新赛",
+                    "url": "https://developer.huaweicloud.com/fixture",
+                    "verification": "official",
+                    "verifiedAt": "2026-10-26",
+                    "deadlineKind": "dated",
+                    "deadline": "2026-11-24",
+                    "deadlineText": "2026-11-24截止",
+                    "reward": "赛程奖金",
+                    "rewardTypes": ["cash"],
+                    "requirements": "基于平台开发Skill",
+                    "fit": "Skill工作流主题",
+                    "minFollowers": 50000,
+                },
+            ]
+        }
         items = MODULE.fetch_creator_opportunities(
-            target_date=date(2026, 9, 20),
-        )
-
+            target_date=date(2026, 10, 30), snapshot=snapshot)
         titles = {item["title"] for item in items}
-        self.assertFalse(any("Qwen3.8-27B" in title for title in titles))
-        self.assertTrue(any("Kimi Ambassador" in title for title in titles))
+        self.assertTrue(any("毛茸茸" in title for title in titles))
+        self.assertFalse(any("Vibe" in title or "星图" in title or "Skill 创新赛" in title for title in titles))
+        self.assertTrue(all("参与门槛" in item["description"] for item in items))
+
+    def test_final_report_still_refreshes_opportunities_before_returning(self):
+        today = MODULE.datetime.now(MODULE.CST).date().isoformat()
+        args = MODULE.parse_args(["--generate-only", "--date", today])
+        with patch.object(MODULE, "refresh_opportunities") as refresh, \
+             patch.object(MODULE, "_existing_report_is_final", return_value=True), \
+             patch.object(MODULE, "_refresh_derived_artifacts"), \
+             patch.object(MODULE, "scan_files") as scan:
+            self.assertEqual(MODULE._run_generation(args), 0)
+        refresh.assert_called_once_with(MODULE.BLOG_DIR, date.fromisoformat(today), dry_run=False, force=False)
+        self.assertIn("src/data/ai-opportunities.json", scan.call_args.args[1])
+
+    def test_news_rejects_old_articles_and_urls_already_published_yesterday(self):
+        with tempfile.TemporaryDirectory() as directory:
+            archive = pathlib.Path(directory)
+            (archive / "2026-06-30.md").write_text(
+                "---\ndate: 2026-06-30\n---\n## 01 今日变化\n1. **AI工具发布** [来源](https://openai.com/repeat)\n")
+            items = [SourceItem(source="OpenAI", title=title, url=url,
+                                summary="官方发布了AI工具。", published_at=published)
+                     for title, url, published in [
+                         ("AI工具发布", "https://openai.com/repeat", "2026-06-30"),
+                         ("一个月前旧文", "https://openai.com/old", "2026-06-01"),
+                         ("AI新功能", "https://openai.com/new", "2026-07-01")]]
+            with patch.object(MODULE, "CONTENT_DIR", archive):
+                results = MODULE.filter_source_results(
+                    {"OpenAI": SourceResult("OpenAI", SourceStatus.ACTIVE, items)}, date(2026, 7, 1))
+            self.assertEqual([item.title for item in results["OpenAI"].items], ["AI新功能"])
 
     def test_filters_registered_results_before_llm_analysis(self):
         results = {

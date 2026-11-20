@@ -1,8 +1,6 @@
+import { Link } from 'react-router-dom'
 import type { GithubDailyPost } from '@/lib/github-daily'
-import {
-  getGithubDigestLabel,
-  getGithubDailyStarRanking,
-} from '@/lib/github-daily-digest'
+import { getGithubDigestLabel, getGithubDailyStarRanking } from '@/lib/github-daily-digest'
 import { ExternalLink } from 'lucide-react'
 
 interface GithubDailyDigestProps {
@@ -12,8 +10,9 @@ interface GithubDailyDigestProps {
   number?: string
 }
 
-function DigestBody({ post }: { post: GithubDailyPost }) {
+function DigestBody({ post, compact = false }: { post: GithubDailyPost; compact?: boolean }) {
   const ranking = getGithubDailyStarRanking(post)
+  const visible = compact ? ranking.slice(0, 3) : ranking
 
   return (
     <>
@@ -21,7 +20,7 @@ function DigestBody({ post }: { post: GithubDailyPost }) {
         按 GitHub Trending 上榜项目的当日新增 Star 排序；点击项目卡即可打开 GitHub。
       </p>
       <ol className="ai-github-picks">
-        {ranking.map((repo, index) => {
+        {visible.map((repo, index) => {
           return (
             <li key={repo.fullName}>
               <a
@@ -65,6 +64,11 @@ function DigestBody({ post }: { post: GithubDailyPost }) {
           )
         })}
       </ol>
+      {compact && (
+        <Link className="site-text-link" to={`/github/${post.slug}`}>
+          查看完整榜单 →
+        </Link>
+      )}
     </>
   )
 }
@@ -109,7 +113,7 @@ export function GithubDailyDigest({
         </div>
         <time dateTime={post.date}>{post.date.slice(5).replace('-', '.')}</time>
       </header>
-      <DigestBody post={post} />
+      <DigestBody post={post} compact />
     </section>
   )
 }
