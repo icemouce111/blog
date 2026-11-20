@@ -2,67 +2,82 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-10-27",
-      "rangeEnd": "2026-11-02",
-      "updatedAt": "2026-11-02T21:32:42+08:00",
+      "rangeStart": "2026-11-17",
+      "rangeEnd": "2026-11-20",
+      "updatedAt": "2026-11-20T21:52:56+08:00",
       "coverageCount": 4,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent能力包走向可移植与共享",
-          "summary": "Agent Skills被捐给基金会托管，claude-mem等跨会话记忆项目登上趋势榜，技能与记忆正从平台私有配置变成可复用、可迁移的组件。对团队而言，这意味着可以把常用操作沉淀为带触发条件和验收标准的技能包，并纳入版本管理，而不是每次重写提示词。",
+          "title": "编码智能体从写代码走向组织协作",
+          "summary": "本周信号显示编码智能体正被放进真实组织流程：SWE-CoWork 把编码智能体当作组织中的数字员工来评测，要求其明确要做什么、与同事协作并验证交付；GitHub Copilot 则推出团队级定制与代码审查自适应深度，让团队统一插件配置、按 PR 风险调整审查力度。应用层的变化是智能体从个人补全工具转为需要权限、协作与审查记录的组织成员。",
           "sources": [
             {
-              "title": "Anthropic 把 Agent Skills 捐给 Agentic AI Foundation",
-              "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
-              "publishedAt": "2026-11-02"
+              "title": "SWE-CoWork: Benchmarking Coding Agents as Digital Employees in Organizations",
+              "url": "https://huggingface.co/papers/2611.20218",
+              "publishedAt": "2026-11-17"
             },
             {
-              "title": "claude-mem：把会话记忆压缩后再注入下一次会话",
-              "url": "https://github.com/thedotmack/claude-mem",
-              "publishedAt": "2026-11-02"
+              "title": "Customize GitHub Copilot for your team",
+              "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
+              "publishedAt": "2026-11-19"
+            },
+            {
+              "title": "Copilot code review: Adaptive effort, secret detection, and more",
+              "url": "https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more",
+              "publishedAt": "2026-11-18"
             }
           ]
         },
         {
-          "title": "编程Agent从选模型转向编排与共享流程",
-          "summary": "GitHub Copilot Fusion让系统自动路由与编排模型，共享自动化则把提示词、触发器和工具组合成团队可复用工作流；GitHub intelligence进一步把团队约定和自定义指令纳入上下文。应用层的变化是交付质量更依赖流程设计与团队规范，而非单次提问技巧。",
+          "title": "智能体接入企业系统，权限与审计成前置",
+          "summary": "智能体开始通过 MCP 等协议接入 CRM、Salesforce 等企业系统，直接查询实时业务数据。随之而来的是落地约束：开发者讨论如何为编码智能体的 CRM 访问划定可锁定范围，团队也开始记录审核者对 AI 草稿的批准、修改或驳回，并追踪模型实际检索到的文档片段。应用层的重点从能否调用转向调用边界与可追溯。",
           "sources": [
             {
-              "title": "Route and orchestrate models with GitHub Copilot Fusion",
-              "url": "https://github.blog/changelog/2026-10-28-route-and-orchestrate-models-with-github-copilot-fusion",
-              "publishedAt": "2026-11-02"
+              "title": "Your Coding Agent Wants CRM Access. Here's the Part to Lock Down",
+              "url": "https://dev.to/conduyt/your-coding-agent-wants-crm-access-heres-the-part-to-lock-down-53d5",
+              "publishedAt": "2026-11-19"
             },
             {
-              "title": "Build shared workflows for your team with Copilot automations",
-              "url": "https://github.blog/changelog/2026-10-28-build-shared-workflows-for-your-team-with-copilot-automations",
-              "publishedAt": "2026-11-02"
+              "title": "Step-by-step: Connecting Claude Desktop to Salesforce Hosted MCP Server",
+              "url": "https://dev.to/ram_impviser/step-by-step-connecting-claude-desktop-to-salesforce-hosted-mcp-server-claude-querying-live-55g9",
+              "publishedAt": "2026-11-18"
             },
             {
-              "title": "GitHub intelligence puts your code, context, and history to work",
-              "url": "https://github.blog/changelog/2026-10-28-github-intelligence-puts-your-code-context-and-history-to-work",
-              "publishedAt": "2026-11-02"
+              "title": "Approved, Edited or Rejected? Record What the Reviewer Actually Did With the AI Draft",
+              "url": "https://dev.to/obligra/approved-edited-or-rejected-record-what-the-reviewer-actually-did-with-the-ai-draft-100f",
+              "publishedAt": "2026-11-20"
+            },
+            {
+              "title": "Which Chunks Did the Model See? Record Retrieval References Without Copying Your Documents",
+              "url": "https://dev.to/obligra/which-chunks-did-the-model-see-record-retrieval-references-without-copying-your-documents-19nh",
+              "publishedAt": "2026-11-18"
             }
           ]
         },
         {
-          "title": "垂直行业按岗位任务嵌入Agent工作流",
-          "summary": "律所交易尽调由AI分组文档并生成摘要、律师复核签字，法律工作出现可照搬的人机分工模板；ServiceNow与Oracle等企业应用接入ChatGPT和Codex，使工单、审批等流程可在对话中发起推进。落地重心正从通用工具转向具体岗位任务。",
+          "title": "垂直场景落地，可信输出成共同门槛",
+          "summary": "垂直行业的 AI 应用本周集中出现，但共同焦点是让输出可核验：电商购物助手强调不编造信息，客服与知识库场景要求把回答中的数字与数据核对，制造工厂用 AI 与工业物联网做预测性维护。与此同时，企业采用案例显示高管先行使用可带动团队推广。应用层的竞争点正从功能覆盖转向事实准确与可验证。",
           "sources": [
             {
-              "title": "Ropes & Gray 用 AI 做交易尽调",
-              "url": "https://openai.com/index/ropes-gray-ai-diligence",
-              "publishedAt": "2026-11-02"
+              "title": "GamiChat: An AI Shopping Assistant for E-commerce That Doesn't Make Things Up",
+              "url": "https://dev.to/devops_f31508b58ee103ca02/gamichat-an-ai-shopping-assistant-for-e-commerce-that-doesnt-make-things-up-1hdf",
+              "publishedAt": "2026-11-18"
             },
             {
-              "title": "OpenAI and ServiceNow expand partnership across enterprise workflows",
-              "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
-              "publishedAt": "2026-11-02"
+              "title": "A Figure Check That Stops an AI Assistant From Inventing Numbers",
+              "url": "https://raghunitb.medium.com/figure-check-ai-invented-numbers-5dc05b0eb749?source=rss------artificial_intelligence-5",
+              "publishedAt": "2026-11-18"
             },
             {
-              "title": "OpenAI expands partnership with Oracle to bring its apps to ChatGPT",
-              "url": "https://openai.com/index/oracle-apps-in-chatgpt",
-              "publishedAt": "2026-10-29"
+              "title": "Predictive Maintenance in Smart Factories: How AI and Industrial IoT Are Transforming Manufacturing",
+              "url": "https://dev.to/smarttechinsights26/predictive-maintenance-in-smart-factories-how-ai-and-industrial-iot-are-transforming-manufacturing-4f03",
+              "publishedAt": "2026-11-18"
+            },
+            {
+              "title": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
+              "url": "https://openai.com/business/customer-stories/sumitomo-life",
+              "publishedAt": "2026-11-19"
             }
           ]
         }
