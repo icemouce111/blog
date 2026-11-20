@@ -10,12 +10,13 @@ import hashlib
 import html
 from itertools import zip_longest
 import json
+import os
 import re
 import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta
 from decimal import Decimal
@@ -26,10 +27,12 @@ from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
 
 try:
+    from scripts.creator_search import SearchOutcome, load_agent_searches, search_leads
     from scripts.llm_config import completion_options, llm_settings
     from scripts.security_config import redact
     from scripts.security_check import scan_files
 except ModuleNotFoundError:
+    from creator_search import SearchOutcome, load_agent_searches, search_leads
     from llm_config import completion_options, llm_settings
     from security_config import redact
     from security_check import scan_files
@@ -51,6 +54,7 @@ LEAD_WORDS = re.compile(
     r"\b(?:contest|challenge|bount(?:y|ies)|affiliate|ambassador|earn|grants?|sponsorship)\b|"
     r"\b(?:creator|partner)\s+(?:program(?:me)?|fund|grant)\b|\bpaid\s+(?:collaboration|gig|task)s?\b"
 )
+CREATOR_CONTEXT = re.compile(r'(?i)(?<![a-z])AI(?![a-z])|AIGC|人工智能|创作|创意|视频|模板|穿搭|征稿|知识|creator|video|template')
 
 
 def discovery_fingerprint(config: dict) -> str:
@@ -67,10 +71,11 @@ def discovery_plan(config: dict, reference: date) -> list[dict]:
     plan = []
     for index in range(per_channel):
         for channel in channels:
-            templates = channel["queries"]
-            template = templates[(reference.toordinal() + index) % len(templates)]
-            if isinstance(template, str):
-                template = {"query": template, "scope": "platform"}
+            templates = [dict(query=item, scope="platform") if isinstance(item, str) else item
+                         for item in channel["queries"]]
+            scope = ("platform", "web")[index % 2]
+            choices = [item for item in templates if item["scope"] == scope] or templates
+            template = choices[(reference.toordinal() + index // 2) % len(choices)]
             if template["scope"] not in {"platform", "web"}:
                 raise ValueError("Unknown platform discovery scope")
             plan.append({"channel": channel["id"], "query": template["query"],
@@ -95,15 +100,22 @@ def platform_search_state(config: dict, collection: dict, reference: date) -> di
         # Older snapshots dated the whole collection rather than each platform.
         if not last and previous.get("queries", 0):
             last = iso_date(collection.get("date"))
-        due = not last or last > reference or (reference - last).days >= interval
+        changed = (collection.get("discoveryFingerprint") is not None
+                   and collection["discoveryFingerprint"] != discovery_fingerprint(config))
+        due = changed or not last or last > reference or (reference - last).days >= interval
         defaults = {"name": channel["name"], "queries": 0, "completed": 0,
                     "failures": 0, "leads": 0, "platformLeads": 0,
-                    "secondaryLeads": 0, "discovered": 0}
+                    "secondaryLeads": 0, "discovered": 0,
+                    "rawResults": 0, "filteredOut": 0, "sourceAttempts": 0, "engines": [],
+                    "rejectedReasons": {}}
         searched = reference if due else last
         state[channel["id"]] = dict(defaults if due else defaults | previous,
                                     name=channel["name"], skipped=not due,
                                     lastSearchedAt=str(searched),
                                     nextSearchAt=str(searched + timedelta(days=interval)))
+        if not due and 'rawResults' not in previous:
+            for key in ('rawResults', 'filteredOut', 'sourceAttempts', 'engines', 'rejectedReasons'):
+                state[channel['id']].pop(key, None)
     return state
 
 
@@ -126,6 +138,26 @@ def balanced_leads(batches: dict[str, list[dict]]) -> list[dict]:
 def mentions_platform(lead: dict, channel: dict) -> bool:
     text = re.sub(r"\s+", "", str(lead.get("title", "")) + str(lead.get("summary", ""))).casefold()
     return any(re.sub(r"\s+", "", term).casefold() in text for term in channel.get("terms", []))
+
+
+def lead_rejection(lead, request, config):
+    if not isinstance(lead, dict) or not isinstance(lead.get("url"), str) or not public_link(lead["url"]):
+        return "invalid_url"
+    if urllib.parse.urlsplit(lead["url"]).path in {"", "/"}:
+        return "homepage"
+    channel = next((item for item in config.get("platformChannels", []) if item["id"] == request["channel"]), None)
+    platform = platform_for_url(lead["url"], config)
+    if channel:
+        if request["scope"] == "platform" and platform != channel["id"]:
+            return "wrong_platform"
+        if request["scope"] == "web" and platform != channel["id"] and not mentions_platform(lead, channel):
+            return "platform_missing"
+    text = str(lead.get("title", "")) + " " + str(lead.get("summary", ""))
+    if not CREATOR_CONTEXT.search(text):
+        return "creator_context_missing"
+    if not LEAD_WORDS.search(text + " " + lead["url"]):
+        return "opportunity_missing"
+    return None
 
 
 def manual_review_queue(records: list[dict], reference: date, profile: dict) -> list[str]:
@@ -321,16 +353,6 @@ def fetch_official(url: str, config: dict) -> dict:
         return {"url": url, "ok": False, "error": redact(f"{type(error).__name__}: {error}")[:180]}
 
 
-def search_leads(query: str, timeout: int) -> list[dict]:
-    url = "https://www.bing.com/search?" + urllib.parse.urlencode({"q": query, "format": "rss"})
-    request = urllib.request.Request(url, headers={"User-Agent": "creator-opportunity-radar/1.0"})
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        raw = response.read(500_000)
-    root = ET.fromstring(raw)
-    return [{"title": node.findtext("title") or "活动线索", "url": node.findtext("link") or ""}
-            for node in root.findall("./channel/item")[:10]]
-
-
 def fetch_directory(url: str, config: dict) -> dict:
     if url not in {source["url"] for source in config.get("discoverySources", [])}:
         return {"ok": False, "url": url}
@@ -499,7 +521,7 @@ def refresh_opportunities(
     dry_run: bool = False,
     force: bool = False,
     fetch: Callable = fetch_official,
-    search: Callable = search_leads,
+    search: Callable | None = None,
     extract: Callable = extract_with_llm,
     directory_fetch: Callable = fetch_directory,
 ) -> dict:
@@ -526,19 +548,41 @@ def refresh_opportunities(
     batches["general"] = []
     plan = [request for request in discovery_plan(config, reference)
             if request["channel"] == "general" or not status["channels"][request["channel"]]["skipped"]]
+    try:
+        agent_results = load_agent_searches(os.environ.get('CREATOR_SEARCH_FILE'), reference,
+            {request['query'] for request in discovery_plan(config, reference)}) if search is None else {}
+    except (OSError, ValueError) as error:
+        agent_results = {}
+        status['agentSearchError'] = type(error).__name__
+        print(f"  [warn] Creator search handoff rejected: {type(error).__name__}; using public fallback")
 
     def run_search(request):
+        rejected = Counter()
+        def accept(lead):
+            reason = lead_rejection(lead, request, config)
+            if reason:
+                rejected[reason] += 1
+            return reason is None
         try:
-            leads = search(request["query"], config["limits"]["timeoutSeconds"])
-            if not isinstance(leads, list):
-                raise ValueError("Search returned a non-list")
-            return request, leads[:10], False
+            if search is None:
+                outcome = search_leads(request["query"], config["limits"]["timeoutSeconds"],
+                                       accept=accept, agent_results=agent_results)
+            else:
+                leads = search(request["query"], config["limits"]["timeoutSeconds"])
+                if not isinstance(leads, list):
+                    raise ValueError("Search returned a non-list")
+                leads = leads[:10]
+                accepted = [item for item in leads if accept(item)]
+                outcome = SearchOutcome(accepted, [{'engine': 'provided', 'rawResults': len(leads),
+                    'accepted': len(accepted), 'state': 'relevant' if accepted else 'irrelevant' if leads else 'empty'}])
+            failed = all(item['state'] == 'unavailable' for item in outcome.attempts)
+            return request, outcome, failed, rejected
         except Exception:
-            return request, [], True
+            return request, SearchOutcome([], []), True, rejected
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(run_search, plan))
-    for request, leads, failed in results:
+    for request, outcome, failed, rejected in results:
         channel = request["channel"]
         if channel in channels:
             metric = status["channels"].setdefault(channel, {"name": channels[channel]["name"],
@@ -546,29 +590,27 @@ def refresh_opportunities(
                        "platformLeads": 0, "secondaryLeads": 0, "discovered": 0})
             metric["queries"] += 1
             metric["failures" if failed else "completed"] += 1
+            metric['rawResults'] += sum(item['rawResults'] for item in outcome.attempts)
+            metric['filteredOut'] += sum(item['rawResults'] - item['accepted'] for item in outcome.attempts)
+            metric['sourceAttempts'] += len(outcome.attempts)
+            metric['engines'] = sorted(set(metric['engines']) | {item['engine'] for item in outcome.attempts})
+            metric['rejectedReasons'] = dict(Counter(metric['rejectedReasons']) + rejected)
         if failed:
             status["searchFailures"] += 1
             continue
         status["searches"] += 1
-        for lead in leads:
-            if (not isinstance(lead, dict) or not isinstance(lead.get("url"), str)
-                    or not public_link(lead["url"])):
-                continue
+        for lead in outcome.items:
             platform = platform_for_url(lead["url"], config)
-            # Search engines may ignore site: filters. Do not misattribute those hits.
-            if channel in channels:
-                if request["scope"] == "platform" and platform != channel:
-                    continue
-                if (request["scope"] == "web" and platform != channel
-                        and not mentions_platform(lead, channels[channel])):
-                    continue
-            if not LEAD_WORDS.search(str(lead.get("title", "")) + " " + lead["url"]):
-                continue
             batch = channel if channel in channels else platform or "general"
             batches.setdefault(batch, []).append(dict(lead, discoveryPlatform=batch if batch in channels else None))
             if channel in channels:
                 status["channels"][channel]["leads"] += 1
                 status["channels"][channel]["platformLeads" if platform == channel else "secondaryLeads"] += 1
+
+    for metric in status['channels'].values():
+        if not metric['skipped']:
+            metric['state'] = ('relevant' if metric['leads'] else 'unavailable' if metric['failures']
+                               else 'irrelevant' if metric['rawResults'] else 'empty')
 
     discoveries = batches["general"]
 
@@ -598,7 +640,7 @@ def refresh_opportunities(
 
     for lead in balanced_leads(batches):
         url = lead.get("url", "")
-        if (not public_link(url) or not LEAD_WORDS.search(str(lead.get("title") or "") + " " + url)
+        if (not public_link(url) or not LEAD_WORDS.search(str(lead.get("title") or "") + " " + str(lead.get('summary', '')) + " " + url)
                 or canonical_url(url) in known_urls or status["discovered"] >= config["limits"]["newCandidates"]):
             continue
         url = canonical_url(url)
@@ -606,6 +648,8 @@ def refresh_opportunities(
         key = "discovered-" + hashlib.sha256(url.encode()).hexdigest()[:12]
         platform = lead.get("discoveryPlatform") or platform_for_url(url, config)
         item = {"id": key, "title": str(lead.get("title") or "活动线索")[:160],
+                "discoverySummary": str(lead.get('summary', ''))[:800],
+                "discoveryEngine": str(lead.get('engine', '')),
                 "organizer": "待核实", "type": "新活动线索",
                 "url": url if not platform and official_url(url, config) else "", "sourceUrl": url,
                 "rewardTypes": [], "reward": "奖励细则待核实", "requirements": "参与门槛待核实",

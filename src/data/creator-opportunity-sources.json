@@ -47,10 +47,10 @@
     "jingrui-ai-competition.youku.com"
   ],
   "discoveryQueries": [
-    "{year} {month} AI短视频 知识共创 创作者 活动 扶持",
-    "{year} AI 创作者 招募 商品视频 模板 奖金 官方",
-    "{year} AI工具 创作者 任务 赏金 制作 商业合作",
-    "{year} {month} AI视频制作 商品短视频 商家 悬赏 接单 需求"
+    "AI 视频 创作者 招募",
+    "AI creator paid collaboration",
+    "AI 视频 商家 制作需求",
+    "AI 创作 比赛 奖励"
   ],
   "discoverySources": [
     {
@@ -115,11 +115,19 @@
       "queries": [
         {
           "scope": "platform",
-          "query": "(site:xiaohongshu.com OR site:xhslink.com) (\"AI替我说\" OR \"用AI讲知识\" OR \"知识共创\" OR \"创作者激励\")"
+          "query": "site:xiaohongshu.com \"AI替我说\""
         },
         {
           "scope": "web",
-          "query": "{year} {month} 小红书 AI (知识共创 OR 流量扶持 OR 流量券 OR 征稿 OR 商单 OR 招募)"
+          "query": "小红书 AI 知识共创 活动"
+        },
+        {
+          "scope": "platform",
+          "query": "site:xiaohongshu.com AI 创作者 激励"
+        },
+        {
+          "scope": "web",
+          "query": "小红书 AI 创作者 招募"
         }
       ],
       "terms": [
@@ -138,11 +146,19 @@
       "queries": [
         {
           "scope": "platform",
-          "query": "(site:douyin.com OR site:iesdouyin.com) (\"vibe知识大赏\" OR \"热点新知\" OR \"AI创作\" OR \"创作者激励\")"
+          "query": "site:douyin.com \"AI创作\" 活动"
         },
         {
           "scope": "web",
-          "query": "{year} {month} 抖音 AI (vibe知识大赏 OR 全民任务 OR 激励 OR 商家 OR 投稿 OR 扶持)"
+          "query": "抖音 AI 创作 征集"
+        },
+        {
+          "scope": "platform",
+          "query": "site:iesdouyin.com 创作者 激励"
+        },
+        {
+          "scope": "web",
+          "query": "抖音 Vibe 知识大赏"
         }
       ],
       "terms": [
@@ -161,11 +177,19 @@
       "queries": [
         {
           "scope": "platform",
-          "query": "(site:x.com OR site:twitter.com) AI (\"creator program\" OR bounty OR \"paid collaboration\" OR ambassador OR grant)"
+          "query": "site:x.com AI bounty"
         },
         {
           "scope": "web",
-          "query": "{year} (Twitter OR 推特 OR \"X creator\") AI (bounty OR \"creator program\" OR grant OR \"paid collaboration\")"
+          "query": "Twitter AI creator bounty"
+        },
+        {
+          "scope": "platform",
+          "query": "site:twitter.com AI \"creator program\""
+        },
+        {
+          "scope": "web",
+          "query": "X creator AI paid collaboration"
         }
       ],
       "terms": [
@@ -185,11 +209,19 @@
       "queries": [
         {
           "scope": "platform",
-          "query": "site:mp.weixin.qq.com AI (知识共创 OR 创作者计划 OR 创作基金 OR 流量扶持 OR 征稿 OR 激励)"
+          "query": "site:mp.weixin.qq.com AI 征稿"
         },
         {
           "scope": "web",
-          "query": "{year} {month} 公众号 AI (创作基金 OR 征稿 OR 激励 OR 商家 OR 穿搭 OR 合作 OR 接单)"
+          "query": "公众号 AI 征稿 合作"
+        },
+        {
+          "scope": "platform",
+          "query": "site:mp.weixin.qq.com 创作者 激励"
+        },
+        {
+          "scope": "web",
+          "query": "微信公众号 AI 创作基金"
         }
       ],
       "terms": [

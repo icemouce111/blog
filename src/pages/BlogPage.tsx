@@ -3,6 +3,7 @@ import Fuse from 'fuse.js'
 import { BookOpen, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { ContentList } from '@/components/reading/ContentList'
+import { BlogGuides } from '@/components/blog/BlogGuides'
 import { Badge } from '@/components/ui/badge'
 import { getAllTags, getPosts, type PostMeta } from '@/lib/posts'
 import { PageContainer } from '@/components/layout/PageContainer'
@@ -36,12 +37,15 @@ export function BlogPage() {
         <SectionHero
           eyebrow="WRITING / NOTES"
           title="博客"
-          description="记录 Agent 工程、AI 产品实践，以及一个真实问题如何被拆解和解决。"
+          description="学山的实践笔记：从 AI 辅助开发、招投标业务认知，到工具配置，记录问题、方法与仍待验证的判断。"
           icon={BookOpen}
           meta={`${posts.length} 篇文章`}
           tone="violet"
         />
 
+        <BlogGuides posts={posts} />
+
+        <h2 className="blog-all-heading">全部文章</h2>
         <div className="site-panel site-filter-panel">
           <div className="relative">
             <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -85,7 +89,7 @@ export function BlogPage() {
         {filteredPosts.length === 0 ? (
           <div className="site-panel py-16 text-center text-muted-foreground">没有找到相关文章</div>
         ) : (
-          <ContentList posts={filteredPosts} />
+          <ContentList posts={filteredPosts} headingLevel={3} />
         )}
       </PageContainer>
     </div>

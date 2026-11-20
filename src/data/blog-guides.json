@@ -1,0 +1,20 @@
+[
+  {
+    "title": "把需求讲清楚，再让 AI 写代码",
+    "description": "从选对一张图开始，分清功能、职责、连接和执行步骤。",
+    "label": "AI 辅助开发",
+    "slugs": ["choose-the-right-diagram-for-ai"]
+  },
+  {
+    "title": "读懂招投标，再理解业务",
+    "description": "先建立角色、规则和流程的地图，再看判断、例外与项目复盘。",
+    "label": "招投标业务认知",
+    "slugs": ["bidding-domain-map", "bidding-dark-knowledge"]
+  },
+  {
+    "title": "动手配置自己的工具",
+    "description": "沿着一篇完整教程，了解服务器、远程连接与网络工具的配置过程。",
+    "label": "工具与配置",
+    "slugs": ["build-your-own-vpn-from-scratch"]
+  }
+]
