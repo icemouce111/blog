@@ -1,53 +1,98 @@
 {
   "categories": [
     {
-      "name": "动漫番剧",
-      "key": "anime",
-      "items": [
-        { "name": "路漫漫", "url": "https://i.qg50.com/", "description": "高清国产动漫/日本动漫", "note": "" },
-        { "name": "MiruroTV", "url": "https://www.miruro.tv/", "description": "高清画质/英文字幕", "note": "" },
-        { "name": "E站弹幕网", "url": "https://www.ezdmw.site/", "description": "超清画质/注入B站弹幕", "note": "" },
-        { "name": "233动漫", "url": "https://www.233dm.com/", "description": "超清无广/有弹幕/特摄片", "note": "" },
-        { "name": "西瓜卡通", "url": "https://www.xgcartoon.com/", "description": "超清无广告", "note": "" }
+      "name": "AI 学习",
+      "key": "ai-learning",
+      "sections": [
+        {
+          "name": "课程与训练营",
+          "items": [
+            {
+              "name": "知乎 AI 大模型应用开发（第 13–15 期）",
+              "url": "https://pan.baidu.com/s/5KoHxmWQSV7CaGxw096pdLg",
+              "description": "已完结课程的学习资料。",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "知乎 AI 大模型应用开发实战训练营（第 18–22 期）",
+              "url": "https://pan.baidu.com/s/1FZPpyiHXFALFpMGVA4IG3A?pwd=6k67",
+              "description": "知乎实战训练营的分期资料。",
+              "note": "提取码 6k67",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "Hollis 2026 大模型应用开发实战",
+              "url": "https://pan.baidu.com/s/16cQN1LfJkxMBWDhM6T9xZw?pwd=asfa",
+              "description": "课程主题包括 Agent、MCP、RAG、Skill 和 Spring AI。",
+              "note": "提取码 asfa",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "AI 大模型应用开发实战训练营",
+              "url": "https://pan.baidu.com/s/1jdinUgp_OJT1M22kjmYnfQ?pwd=sabd",
+              "description": "面向大模型应用开发的实战训练营资料。",
+              "note": "提取码 sabd",
+              "action": "打开百度网盘"
+            }
+          ]
+        },
+        {
+          "name": "电子书",
+          "items": [
+            {
+              "name": "深入理解 AI Agent：设计原理与工程实践",
+              "url": "https://bojieli.github.io/ai-agent-book/",
+              "description": "李博杰著，介绍上下文工程、工具调用、记忆、评估和多 Agent 协作。",
+              "note": "作者网站提供在线阅读和中文 PDF 下载。",
+              "action": "打开作者网站"
+            }
+          ]
+        }
       ]
     },
     {
-      "name": "综合影视",
-      "key": "movie",
-      "items": [
-        { "name": "金牌影院", "url": "https://www.6umkq9b.com/", "description": "全网VIP资源(高画质需要手机号登录注册)", "note": "" },
-        { "name": "看片狂人", "url": "https://kuangren.us/", "description": "视频解析源", "note": "" },
-        { "name": "独播库", "url": "https://www.dbkk.cc/", "description": "部分有广/播放速度快", "note": "" },
-        { "name": "爱电影", "url": "http://ivdy.com/", "description": "全网VIP资源", "note": "" },
-        { "name": "爱壹帆", "url": "https://www.iyf.lv/", "description": "海量高清视频免费观看", "note": "" },
-        { "name": "火车太堵", "url": "https://www.tdgo.shop/", "description": "全网蓝光急速观影", "note": "" },
-        { "name": "海纳TV", "url": "https://www.hainatv.net/", "description": "高清蓝光画质/实时更新", "note": "" },
-        { "name": "欧乐影院", "url": "https://www.olehdtv.com/", "description": "超清画质/最新热门影视", "note": "" },
-        { "name": "奈飞工厂", "url": "https://www.netflixgc.com/", "description": "Netflix资源", "note": "" },
-        { "name": "厂长资源", "url": "https://www.cz233.com/", "description": "超清视频站", "note": "" },
-        { "name": "4K影视", "url": "https://www.4kvm.tv/", "description": "高清4K在线", "note": "" },
-        { "name": "注视影视", "url": "https://gaze.run/", "description": "免费在线观影", "note": "" },
-        { "name": "hao6v", "url": "https://www.6v520.com/", "description": "海量高清视频下载无广告观看有广告", "note": "" },
-        { "name": "黑夜影视", "url": "https://darkvod.com/", "description": "综合影视/多线路", "note": "" },
-        { "name": "雪落影视", "url": "https://xlys.me/", "description": "最新电影电视剧短剧", "note": "" },
-        { "name": "LIVIBO", "url": "https://www.libvio.vip/", "description": "主打国外影视", "note": "" }
-      ]
-    },
-    {
-      "name": "直播 & 其他",
-      "key": "live",
-      "items": [
-        { "name": "华人直播", "url": "https://huaren.live/", "description": "需翻墙/蓝光画质", "note": "" },
-        { "name": "ODC影视", "url": "https://www.ondemandchina.com/", "description": "需翻墙/蓝光画质", "note": "" },
-        { "name": "CN影院", "url": "https://cnys.tv/", "description": "需翻墙/蓝光画质", "note": "" }
-      ]
-    },
-    {
-      "name": "网盘资源",
-      "key": "drive",
-      "disclaimer": "本板块资源仅供学习交流使用，请于下载后 24 小时内删除。如有需要请支持正版。",
-      "items": [
-        { "name": "示例资源", "url": "", "description": "此处添加你的网盘分享链接，删除此条后添加真实资源", "note": "按此格式添加" }
+      "name": "影视娱乐",
+      "key": "entertainment",
+      "sections": [
+        {
+          "name": "动漫番剧",
+          "items": [
+            { "name": "路漫漫", "url": "https://i.qg50.com/", "description": "高清国产动漫/日本动漫", "note": "" },
+            { "name": "MiruroTV", "url": "https://www.miruro.tv/", "description": "高清画质/英文字幕", "note": "" },
+            { "name": "E站弹幕网", "url": "https://www.ezdmw.site/", "description": "超清画质/注入B站弹幕", "note": "" },
+            { "name": "233动漫", "url": "https://www.233dm.com/", "description": "超清无广/有弹幕/特摄片", "note": "" },
+            { "name": "西瓜卡通", "url": "https://www.xgcartoon.com/", "description": "超清无广告", "note": "" }
+          ]
+        },
+        {
+          "name": "综合影视",
+          "items": [
+            { "name": "金牌影院", "url": "https://www.6umkq9b.com/", "description": "全网VIP资源(高画质需要手机号登录注册)", "note": "" },
+            { "name": "看片狂人", "url": "https://kuangren.us/", "description": "视频解析源", "note": "" },
+            { "name": "独播库", "url": "https://www.dbkk.cc/", "description": "部分有广/播放速度快", "note": "" },
+            { "name": "爱电影", "url": "http://ivdy.com/", "description": "全网VIP资源", "note": "" },
+            { "name": "爱壹帆", "url": "https://www.iyf.lv/", "description": "海量高清视频免费观看", "note": "" },
+            { "name": "火车太堵", "url": "https://www.tdgo.shop/", "description": "全网蓝光急速观影", "note": "" },
+            { "name": "海纳TV", "url": "https://www.hainatv.net/", "description": "高清蓝光画质/实时更新", "note": "" },
+            { "name": "欧乐影院", "url": "https://www.olehdtv.com/", "description": "超清画质/最新热门影视", "note": "" },
+            { "name": "奈飞工厂", "url": "https://www.netflixgc.com/", "description": "Netflix资源", "note": "" },
+            { "name": "厂长资源", "url": "https://www.cz233.com/", "description": "超清视频站", "note": "" },
+            { "name": "4K影视", "url": "https://www.4kvm.tv/", "description": "高清4K在线", "note": "" },
+            { "name": "注视影视", "url": "https://gaze.run/", "description": "免费在线观影", "note": "" },
+            { "name": "hao6v", "url": "https://www.6v520.com/", "description": "海量高清视频下载无广告观看有广告", "note": "" },
+            { "name": "黑夜影视", "url": "https://darkvod.com/", "description": "综合影视/多线路", "note": "" },
+            { "name": "雪落影视", "url": "https://xlys.me/", "description": "最新电影电视剧短剧", "note": "" },
+            { "name": "LIVIBO", "url": "https://www.libvio.vip/", "description": "主打国外影视", "note": "" }
+          ]
+        },
+        {
+          "name": "直播与其他",
+          "items": [
+            { "name": "华人直播", "url": "https://huaren.live/", "description": "需翻墙/蓝光画质", "note": "" },
+            { "name": "ODC影视", "url": "https://www.ondemandchina.com/", "description": "需翻墙/蓝光画质", "note": "" },
+            { "name": "CN影院", "url": "https://cnys.tv/", "description": "需翻墙/蓝光画质", "note": "" }
+          ]
+        }
       ]
     }
   ]
