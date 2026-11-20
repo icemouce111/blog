@@ -2,4 +2,4 @@ requests
 beautifulsoup4
 lxml
 openai>=3.51.0
-pytrends>=4.9
+pytrends>=4.9.2

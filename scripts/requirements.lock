@@ -580,9 +580,9 @@ numpy==2.5.4 \
     --hash=sha256:fe4d21ab149f15e4e6043dfb0de87e6e5f34ac176cde83060e9802981fca2ac2 \
     --hash=sha256:ffa6ce09a1c6a08e9667dd9c97aa0b14184e8d18f2a14b78b2a2328c9147f076
     # via pandas
-openai==3.41.0 \
-    --hash=sha256:7060a74b239609b21f2919eb98807a8aad463b4f510b8b3b388b15559360b0a8 \
-    --hash=sha256:d065fc59d3d7d8537a77b3ceb527732952c6ff610158e8a2a95b246be637e86f
+openai==3.51.0 \
+    --hash=sha256:1cc9b80eb0f1dc15fa45fbc122ba2c99b7e5302548060c01db5719fa6181a6a9 \
+    --hash=sha256:802b7e8c6ff8cf4d59a2a163126c10ce472adf0409ac41fdaadd47c9b4ed091a
     # via -r scripts/requirements.txt
 pandas==3.1.0 \
     --hash=sha256:04ca88727dfa86837030c493d7512bb1c008aa4f5f14149c5f8d3ff446791340 \
