@@ -5,38 +5,6 @@
       "key": "ai-learning",
       "sections": [
         {
-          "name": "课程与训练营",
-          "items": [
-            {
-              "name": "知乎 AI 大模型应用开发（第 13–15 期）",
-              "url": "https://pan.baidu.com/s/5KoHxmWQSV7CaGxw096pdLg",
-              "description": "已完结课程的学习资料。",
-              "action": "打开百度网盘"
-            },
-            {
-              "name": "知乎 AI 大模型应用开发实战训练营（第 18–22 期）",
-              "url": "https://pan.baidu.com/s/1FZPpyiHXFALFpMGVA4IG3A?pwd=6k67",
-              "description": "知乎实战训练营的分期资料。",
-              "note": "提取码 6k67",
-              "action": "打开百度网盘"
-            },
-            {
-              "name": "Hollis 2026 大模型应用开发实战",
-              "url": "https://pan.baidu.com/s/16cQN1LfJkxMBWDhM6T9xZw?pwd=asfa",
-              "description": "课程主题包括 Agent、MCP、RAG、Skill 和 Spring AI。",
-              "note": "提取码 asfa",
-              "action": "打开百度网盘"
-            },
-            {
-              "name": "AI 大模型应用开发实战训练营",
-              "url": "https://pan.baidu.com/s/1jdinUgp_OJT1M22kjmYnfQ?pwd=sabd",
-              "description": "面向大模型应用开发的实战训练营资料。",
-              "note": "提取码 sabd",
-              "action": "打开百度网盘"
-            }
-          ]
-        },
-        {
           "name": "电子书",
           "items": [
             {
@@ -101,13 +69,34 @@
       "disclaimer": "本板块资源仅供学习交流使用，请于下载后 24 小时内删除。如有需要请支持正版。",
       "sections": [
         {
-          "name": "网盘资源",
+          "name": "课程与训练营",
           "items": [
             {
-              "name": "示例资源",
-              "url": "",
-              "description": "此处添加你的网盘分享链接，删除此条后添加真实资源",
-              "note": "按此格式添加"
+              "name": "知乎 AI 大模型应用开发（第 13–15 期）",
+              "url": "https://pan.baidu.com/s/5KoHxmWQSV7CaGxw096pdLg",
+              "description": "已完结课程的学习资料。",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "知乎 AI 大模型应用开发实战训练营（第 18–22 期）",
+              "url": "https://pan.baidu.com/s/1FZPpyiHXFALFpMGVA4IG3A?pwd=6k67",
+              "description": "知乎实战训练营的分期资料。",
+              "note": "提取码 6k67",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "Hollis 2026 大模型应用开发实战",
+              "url": "https://pan.baidu.com/s/16cQN1LfJkxMBWDhM6T9xZw?pwd=asfa",
+              "description": "课程主题包括 Agent、MCP、RAG、Skill 和 Spring AI。",
+              "note": "提取码 asfa",
+              "action": "打开百度网盘"
+            },
+            {
+              "name": "AI 大模型应用开发实战训练营",
+              "url": "https://pan.baidu.com/s/1jdinUgp_OJT1M22kjmYnfQ?pwd=sabd",
+              "description": "面向大模型应用开发的实战训练营资料。",
+              "note": "提取码 sabd",
+              "action": "打开百度网盘"
             }
           ]
         }
