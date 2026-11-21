@@ -49,6 +49,7 @@ RESTRICTED_CLAIMS = (
     "用于追踪和识别",
 )
 KNOWN_SOURCE_NAMES = (
+    "AIHOT",
     "Hacker News",
     "GitHub Trending",
     "V2EX",
@@ -206,6 +207,11 @@ def validate_report(
             issues.append(f"numbered item {index} lacks usable source material; title-only writing is not allowed")
         # Facts must be supported by this item's citations, never another article.
         issues.extend(f"numbered item {index}: {issue}" for issue in _claim_issues(block, block_items))
+        attributed = [item for item in block_items if item.metadata.get("requires_attribution")]
+        missing_provider = any(item.source.casefold() not in block.casefold() for item in attributed)
+        missing_marker = attributed and not any(marker in block for marker in ATTRIBUTION_MARKERS)
+        if missing_provider or missing_marker:
+            issues.append("secondary summary lacks explicit provider attribution")
         signal_types = {
             str(item.metadata.get("signal_type", "story"))
             for item in block_items
@@ -377,6 +383,8 @@ def build_signal_fallback(
                 lead = f"活动机会：{item.title}"
             elif item.source_tier == SourceTier.COMMUNITY:
                 lead = f"据 {source} 社区：{item.title}"
+            elif item.metadata.get("requires_attribution"):
+                lead = f"据 {source} 整理：{item.title}"
             else:
                 lead = item.title
             line = f"- **{lead}**"
@@ -429,6 +437,7 @@ def _repair_prompt(
 - 在事实和来源约束允许时保留面向读者的通俗解释、具体场景和可操作建议，不凭空补充效果或保证。
 - 每条事件必须以 `1. **标题**` 这样的有序列表开头；所有正文都放入对应条目，不写条目外导语或总结。
 - 社区来源必须明确写成“据社区讨论”或“有用户/开发者指出”。
+- AIHOT 是二手摘要，必须明确写“据 AIHOT 整理”，不能改成官方原文或未经采集的原文 URL。
 - 删除证据不支持的最快、第一、唯一、蓝海和确定性预测。
 - 不得引用本次证据清单中不存在或抓取失败的数据源。
 - 单一调查不得扩写成“所有请求”，不得把推测目的写成既定事实。
@@ -456,11 +465,16 @@ def _prune_invalid_numbered_items(
     evidence: Iterable[SourceItem],
 ) -> str:
     items = list(evidence)
+    used_urls = set()
 
     def keep_valid(match: re.Match[str]) -> str:
         block = match.group(0).strip()
         candidate = f"## 01 校验\n\n{block}\n"
-        return match.group(0) if validate_report(candidate, items).valid else ""
+        urls = {_canonical_url(url) for url in _extract_urls(block)}
+        if urls & used_urls or not validate_report(candidate, items).valid:
+            return ""
+        used_urls.update(urls)
+        return match.group(0)
 
     pruned = ORDERED_ITEM_PATTERN.sub(keep_valid, content)
     sections = re.split(r"(?m)(?=^##\s+)", pruned)
