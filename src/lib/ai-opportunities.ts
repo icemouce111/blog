@@ -14,24 +14,6 @@ interface OpportunitySeed {
     modelStatus?: string
     agentSearchError?: string
     reviewQueue?: string[]
-    channels?: Record<
-      string,
-      {
-        name: string
-        queries: number
-        completed: number
-        failures: number
-        leads: number
-        discovered: number
-        rawResults?: number
-        filteredOut?: number
-        sourceAttempts?: number
-        state?: 'relevant' | 'empty' | 'irrelevant' | 'unavailable'
-        skipped?: boolean
-        lastSearchedAt?: string
-        nextSearchAt?: string
-      }
-    >
   }
 }
 
@@ -62,16 +44,4 @@ export function getOpportunityCollection() {
 }
 export function getOpportunityProfile() {
   return sourceConfig.profile
-}
-
-export function getOpportunityChannelCoverage() {
-  return sourceConfig.platformChannels.map((channel) => ({
-    id: channel.id,
-    name: channel.name,
-    result: seed.collection.channels?.[channel.id],
-  }))
-}
-
-export function getOpportunitySearchIntervalDays() {
-  return sourceConfig.limits.platformSearchIntervalDays
 }

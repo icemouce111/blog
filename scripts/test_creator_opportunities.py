@@ -127,6 +127,14 @@ class OpportunityPolicyTest(unittest.TestCase):
         root = Path(__file__).resolve().parent.parent
         radar.validate_snapshot(json.loads((root / radar.DATA_PATH).read_text()), json.loads((root / radar.CONFIG_PATH).read_text()))
 
+    def test_checked_in_search_plan_only_schedules_daily_general_discovery(self):
+        root = Path(__file__).resolve().parent.parent
+        config = json.loads((root / radar.CONFIG_PATH).read_text())
+        plan = radar.discovery_plan(config, TODAY)
+        self.assertEqual(len(plan), 2)
+        self.assertTrue(all(request['channel'] == 'general' for request in plan))
+        self.assertEqual(radar.platform_search_state(config, {}, TODAY), {})
+
 
 class RefreshTest(unittest.TestCase):
     def setUp(self):
@@ -155,6 +163,35 @@ class RefreshTest(unittest.TestCase):
         self.assertEqual(new["url"], "")
         self.assertEqual(new["sourceUrl"], "https://thirdparty.example/activity")
         self.assertEqual(result["collection"]["discovered"], 1)
+
+    def test_queryless_platforms_are_classified_without_running_targeted_searches(self):
+        root = Path(__file__).resolve().parent.parent
+        config = json.loads((root / radar.CONFIG_PATH).read_text())
+        config['officialHosts'].append('official.example')
+        config['limits'].update(searchQueries=2, pagesPerRun=0)
+        config['limits'].pop('queriesPerChannel', None)
+        config['limits'].pop('platformSearchIntervalDays', None)
+        config['watchSources'] = []
+        config['discoverySources'] = []
+        for channel in config['platformChannels']:
+            channel.pop('queries', None)
+        (self.root / radar.CONFIG_PATH).write_text(json.dumps(config))
+        path = self.root / radar.DATA_PATH
+        snapshot = json.loads(path.read_text())
+        snapshot['collection'] = {'date': str(TODAY - timedelta(days=1)), 'channels': {
+            channel['id']: {'queries': 2, 'lastSearchedAt': str(TODAY - timedelta(days=1))}
+            for channel in config['platformChannels']}}
+        path.write_text(json.dumps(snapshot))
+        search = Mock(return_value=[{'title': 'AI creator program',
+                                    'url': 'https://x.com/creator/status/program'}])
+        result = self.run_refresh(search=search)
+        self.assertEqual(search.call_count, 2)
+        self.assertEqual(result['collection']['channels'], {})
+        self.assertEqual(result['collection']['incidentalPlatformDiscoveries'], {'x': 1})
+        discovered = next(item for item in result['opportunities'] if item['id'] != 'sample')
+        self.assertEqual(discovered['discoveryPlatform'], 'x')
+        self.assertEqual(discovered['verification'], 'pending')
+        self.assertEqual(discovered['reviewMode'], 'manual')
 
     def test_dry_run_keeps_snapshot_unchanged(self):
         path = self.root / radar.DATA_PATH
@@ -217,6 +254,15 @@ class TargetedDiscoveryTest(unittest.TestCase):
         self.root = Path(self.temp.name)
         config_path = Path(__file__).resolve().parent.parent / radar.CONFIG_PATH
         self.config = json.loads(config_path.read_text())
+        self.config['limits'].update(searchQueries=10, queriesPerChannel=2,
+                                     generalSearchQueries=2, platformSearchIntervalDays=3)
+        web_queries = {'xiaohongshu': '小红书 AI 创作者 招募', 'douyin': '抖音 AI 创作 征集',
+                       'x': 'Twitter AI creator bounty', 'wechat': '公众号 AI 征稿 合作'}
+        for channel in self.config['platformChannels']:
+            channel['queries'] = [
+                {'scope': 'platform', 'query': f"site:{channel['hosts'][0]} AI creator program"},
+                {'scope': 'web', 'query': web_queries[channel['id']]},
+            ]
         self.config['watchSources'] = []
         self.config['discoverySources'] = []
         self.config['limits']['newCandidates'] = 5

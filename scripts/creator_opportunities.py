@@ -62,8 +62,9 @@ def discovery_fingerprint(config: dict) -> str:
 
 
 def discovery_plan(config: dict, reference: date) -> list[dict]:
-    """Reserve each platform's searches before rotating general discovery terms."""
-    channels = config.get("platformChannels", [])
+    """Run configured platform searches, then rotate general discovery terms."""
+    channels = [channel for channel in config.get("platformChannels", [])
+                if channel.get("queries")]
     budget = config["limits"]["searchQueries"]
     per_channel = config["limits"].get("queriesPerChannel", 2)
     if channels and budget < len(channels) * per_channel:
@@ -95,6 +96,8 @@ def platform_search_state(config: dict, collection: dict, reference: date) -> di
         raise ValueError("Platform search interval must be a positive number of days")
     state = {}
     for channel in config.get("platformChannels", []):
+        if not channel.get("queries"):
+            continue
         previous = collection.get("channels", {}).get(channel["id"], {})
         last = iso_date(previous.get("lastSearchedAt"))
         # Older snapshots dated the whole collection rather than each platform.
@@ -662,11 +665,12 @@ def refresh_opportunities(
             item.update(discoveryPlatform=platform, reviewMode="manual",
                         type=channels[platform]["name"] + "活动与合作线索",
                         pendingReason="须核验发布账号身份、当前官方细则和实际资格；站内帖子不等于官方活动")
-            if status["channels"][platform]["skipped"]:
+            metric = status["channels"].get(platform)
+            if metric is None or metric["skipped"]:
                 incidental = status.setdefault("incidentalPlatformDiscoveries", {})
                 incidental[platform] = incidental.get(platform, 0) + 1
             else:
-                status["channels"][platform]["discovered"] += 1
+                metric["discovered"] += 1
         records[key] = item
         status["discovered"] += 1
 
