@@ -57,11 +57,13 @@ export function AiTrendInsights() {
   const trendData = useMemo(() => parseAiTrendData(trendSeed), [])
   if (!trendData.windows.length) return null
   return (
-    <section className="ai-trends" aria-labelledby="trend-heading">
-      <header>
-        <p className="ai-daily-eyebrow">GLOBAL SIGNALS</p>
-        <h2 id="trend-heading">AI 应用趋势洞察</h2>
-      </header>
+    <Disclosure open className="ai-trends ai-daily-foldable" aria-labelledby="trend-heading">
+      <summary className="ai-daily-supplement-heading">
+        <div>
+          <p className="ai-daily-eyebrow">GLOBAL SIGNALS</p>
+          <h2 id="trend-heading">AI 应用趋势洞察</h2>
+        </div>
+      </summary>
       <Tabs defaultValue={trendData.windows[0].window}>
         <TabsList className="ai-trend-tabs" aria-label="趋势时间范围">
           {trendData.windows.map((snapshot) => (
@@ -76,6 +78,6 @@ export function AiTrendInsights() {
           </TabsContent>
         ))}
       </Tabs>
-    </section>
+    </Disclosure>
   )
 }

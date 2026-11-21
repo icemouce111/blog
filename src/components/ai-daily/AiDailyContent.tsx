@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { MarkdownContent } from '@/components/reading/MarkdownContent'
+import { Disclosure } from '@/components/ui/disclosure'
 import type { AiDailyPost } from '@/lib/ai-daily'
 import type { AiDailySection } from '@/lib/ai-daily-parser'
 import { AiDailySignalStats } from './AiDailySignalStats'
@@ -53,32 +54,34 @@ export function AiDailyContent({
       />
 
       {sections.map((section) => (
-        <section
-          className="ai-daily-content-section"
+        <Disclosure
+          open
+          className="ai-daily-content-section ai-daily-foldable"
           id={section.id}
           key={section.id}
           aria-labelledby={`${section.id}-heading`}
         >
-          <div className="ai-daily-content-heading">
+          <summary className="ai-daily-content-heading">
             <span>{section.number}</span>
             <h2 id={`${section.id}-heading`} className="ai-daily-serif">
               {section.title}
             </h2>
-          </div>
+          </summary>
           {section.markdown && (
             <div className="ai-daily-markdown">
               <MarkdownContent sections={[]}>{section.markdown}</MarkdownContent>
             </div>
           )}
-        </section>
+        </Disclosure>
       ))}
 
       {parsed.fallbackMarkdown && (
-        <section className="ai-daily-content-section">
+        <Disclosure open className="ai-daily-content-section ai-daily-foldable">
+          <summary className="ai-daily-content-heading"><h2>本期内容</h2></summary>
           <div className="ai-daily-markdown">
             <MarkdownContent sections={[]}>{parsed.fallbackMarkdown}</MarkdownContent>
           </div>
-        </section>
+        </Disclosure>
       )}
 
       {afterSections}

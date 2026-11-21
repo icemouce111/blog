@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MarkdownContent } from '@/components/reading/MarkdownContent'
+import { Disclosure } from '@/components/ui/disclosure'
 import type { AiDailyMeta, AiDailyPost } from '@/lib/ai-daily'
 import type { AiDailySection } from '@/lib/ai-daily-parser'
 import { AiDailySignalStats } from './AiDailySignalStats'
@@ -54,14 +55,16 @@ export function AiDailyLatestIssue({
             '$1\n\n    ',
           )
           return (
-            <section id={section.id} key={section.id} aria-labelledby={`${section.id}-preview-heading`}>
-              <header className="ai-daily-news-heading">
+            <Disclosure open className="ai-daily-foldable" id={section.id} key={section.id} aria-labelledby={`${section.id}-preview-heading`}>
+              <summary className="ai-daily-news-heading">
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <h3 id={`${section.id}-preview-heading`}>{section.title}</h3>
-                <Link to={`/ai-daily/${latest.slug}#${encodeURIComponent(section.id)}`}>本期全文 ↗</Link>
-              </header>
+              </summary>
               <MarkdownContent sections={[]}>{previewMarkdown}</MarkdownContent>
-            </section>
+              <div className="ai-daily-preview-footer">
+                <Link to={`/ai-daily/${latest.slug}#${encodeURIComponent(section.id)}`}>查看本板块全文 ↗</Link>
+              </div>
+            </Disclosure>
           )
         })}
         {latest.parsed.fallbackMarkdown && (
@@ -82,11 +85,11 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
   const visibleArchive = expanded ? archive : archive.slice(0, 8)
 
   return (
-    <section className="ai-daily-archive" aria-labelledby="daily-archive-heading">
-      <div className="ai-daily-section-label">
+    <Disclosure open className="ai-daily-archive ai-daily-foldable" aria-labelledby="daily-archive-heading">
+      <summary className="ai-daily-section-label">
         <h2 id="daily-archive-heading">往期简报</h2>
         <span>{archive.length} 期</span>
-      </div>
+      </summary>
       <ol className="ai-daily-archive-list">
         {visibleArchive.map((post) => (
           <li key={post.slug}>
@@ -115,6 +118,6 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
           {expanded ? '收起往期' : `查看全部 ${archive.length} 期`}
         </button>
       )}
-    </section>
+    </Disclosure>
   )
 }
