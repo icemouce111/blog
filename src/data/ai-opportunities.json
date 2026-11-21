@@ -1,122 +1,18 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-20",
+  "updatedAt": "2026-11-21",
   "collection": {
-    "date": "2026-11-20",
-    "searches": 10,
+    "date": "2026-11-21",
+    "searches": 2,
     "searchFailures": 0,
     "discovered": 6,
     "pagesChecked": 10,
-    "pageFailures": 3,
+    "pageFailures": 1,
     "verified": 1,
     "directoriesChecked": 1,
     "modelStatus": "completed",
-    "discoveryFingerprint": "8a3b1fee1c5c239c6d5931f5e4d65e514435893716886238c7d4aaa80d7a3e9f",
-    "channels": {
-      "xiaohongshu": {
-        "name": "小红书",
-        "queries": 2,
-        "completed": 2,
-        "failures": 0,
-        "leads": 1,
-        "platformLeads": 0,
-        "secondaryLeads": 1,
-        "discovered": 0,
-        "rawResults": 11,
-        "filteredOut": 10,
-        "sourceAttempts": 3,
-        "engines": [
-          "bing-rss",
-          "codex-web"
-        ],
-        "rejectedReasons": {
-          "homepage": 2,
-          "wrong_platform": 8
-        },
-        "skipped": false,
-        "lastSearchedAt": "2026-11-20",
-        "nextSearchAt": "2026-11-23",
-        "state": "relevant"
-      },
-      "douyin": {
-        "name": "抖音",
-        "queries": 2,
-        "completed": 2,
-        "failures": 0,
-        "leads": 1,
-        "platformLeads": 0,
-        "secondaryLeads": 1,
-        "discovered": 1,
-        "rawResults": 11,
-        "filteredOut": 10,
-        "sourceAttempts": 3,
-        "engines": [
-          "bing-rss",
-          "codex-web"
-        ],
-        "rejectedReasons": {
-          "homepage": 2,
-          "wrong_platform": 8
-        },
-        "skipped": false,
-        "lastSearchedAt": "2026-11-20",
-        "nextSearchAt": "2026-11-23",
-        "state": "relevant"
-      },
-      "x": {
-        "name": "推特 / X",
-        "queries": 2,
-        "completed": 2,
-        "failures": 0,
-        "leads": 0,
-        "platformLeads": 0,
-        "secondaryLeads": 0,
-        "discovered": 0,
-        "rawResults": 22,
-        "filteredOut": 22,
-        "sourceAttempts": 4,
-        "engines": [
-          "bing-rss",
-          "codex-web"
-        ],
-        "rejectedReasons": {
-          "homepage": 3,
-          "wrong_platform": 8,
-          "platform_missing": 2,
-          "creator_context_missing": 7,
-          "opportunity_missing": 2
-        },
-        "skipped": false,
-        "lastSearchedAt": "2026-11-20",
-        "nextSearchAt": "2026-11-23",
-        "state": "irrelevant"
-      },
-      "wechat": {
-        "name": "公众号",
-        "queries": 2,
-        "completed": 2,
-        "failures": 0,
-        "leads": 2,
-        "platformLeads": 0,
-        "secondaryLeads": 2,
-        "discovered": 2,
-        "rawResults": 12,
-        "filteredOut": 10,
-        "sourceAttempts": 3,
-        "engines": [
-          "bing-rss",
-          "codex-web"
-        ],
-        "rejectedReasons": {
-          "homepage": 2,
-          "wrong_platform": 8
-        },
-        "skipped": false,
-        "lastSearchedAt": "2026-11-20",
-        "nextSearchAt": "2026-11-23",
-        "state": "relevant"
-      }
-    },
+    "discoveryFingerprint": "469404ab43bd470a06012d23222d209533604aaf8d4a87f4d944743f78434b54",
+    "channels": {},
     "reviewQueue": [
       "huawei-xhs-skill-2026",
       "douyin-open-tasks",
@@ -716,10 +612,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-18",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "金额或门槛数字不受对应原文支持"
+      "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
       "id": "discovered-0ac11c58918e",
@@ -767,6 +663,31 @@
       "verifiedAt": null,
       "checkedAt": null,
       "discoveredAt": "2026-11-19",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
+      "id": "discovered-223a4c9c008a",
+      "title": "Gendia Creator Partnership Program",
+      "discoverySummary": "Gendia 页面介绍面向视觉内容创作者的合作渠道，支持方式、合作范围与期待需联系确认，不能视为已经获得付费任务。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.gendia.ai/creators",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
       "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
@@ -818,6 +739,31 @@
       "pendingReason": "须核验发布账号身份、当前官方细则和实际资格；站内帖子不等于官方活动",
       "discoveryPlatform": "douyin",
       "reviewMode": "manual"
+    },
+    {
+      "id": "discovered-34ff98ef9d6b",
+      "title": "Creator Partnership Program - Meshy",
+      "discoverySummary": "Meshy 页面介绍与创作者直接开展付费视频合作，提到 AI、3D、游戏等领域背景；申请门槛、交付要求和具体报酬需核验。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.meshy.ai/creator-partnership-program",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
       "id": "discovered-39691f413f2d",
@@ -899,6 +845,31 @@
       "reviewMode": "manual"
     },
     {
+      "id": "discovered-3e19595831af",
+      "title": "Siren Creator Program",
+      "discoverySummary": "页面介绍按审核通过的帖子付费、客户推荐佣金和月度结算的创作者计划；当前资格、地区与具体付款条件仍需复核。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://mysiren.ai/creators",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-4cfd2fc7e1ef",
       "title": "AIGC 国际大赛 2026",
       "organizer": "待核实",
@@ -942,7 +913,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "奖励或门槛缺少官方原文证据"
@@ -1000,6 +971,31 @@
       "reviewMode": "manual"
     },
     {
+      "id": "discovered-66abaacaa652",
+      "title": "Melius Creator Partner Program",
+      "discoverySummary": "页面介绍一个月的创作者付费试合作，视频数量、积分、付款和日期由双方在开始前商定；资格与当前名额待核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.melius.com/creator-program",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-692d2575f4cf",
       "title": "AI创作活动",
       "discoverySummary": "",
@@ -1020,7 +1016,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-17",
       "pendingReason": "本次未能读取官方细则，待重新核实",
       "checkNote": "本次未读到完整官方页面，保留上次核验日期"
@@ -1046,7 +1042,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1097,7 +1093,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1153,6 +1149,31 @@
       "reviewMode": "manual"
     },
     {
+      "id": "discovered-9040fc3e9b0f",
+      "title": "Creator Partnership Program - Topview AI",
+      "discoverySummary": "页面介绍会员、创作积分、功能抢先体验、展示或合作等分级权益；付费广告及进一步使用内容需单独协议，不能将积分当现金。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.topview.ai/creator-partnership-program",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-96b9e530b43b",
       "title": "Earn with Picsart — get paid to create content | Picsart",
       "discoverySummary": "Picsart 介绍创作者发布内容及收益计划；参与资格、地区与结算条件需核验。",
@@ -1198,7 +1219,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-19",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "奖励或门槛缺少官方原文证据"
@@ -1460,7 +1481,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-21",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1513,6 +1534,31 @@
       "verifiedAt": null,
       "checkedAt": null,
       "discoveredAt": "2026-11-17",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
+      "id": "discovered-f797c93aa710",
+      "title": "Creator program for AI video creators - Leap",
+      "discoverySummary": "页面介绍面向 AI 视频创作者的按帖付费合作，并要求为付费帖子标注广告或合作关系；具体奖励、地区与申请条件需复核。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.tryleap.ai/creators",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-21",
       "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
@@ -1609,8 +1655,8 @@
       "minFollowers": null,
       "priority": 72,
       "verification": "official",
-      "verifiedAt": "2026-11-19",
-      "checkedAt": "2026-11-19",
+      "verifiedAt": "2026-11-21",
+      "checkedAt": "2026-11-21",
       "sourceHash": "0f6568e355a9dd9d41ec0ef3373b8eb0366994e5a7c72629d431b98d750110dd"
     }
   ]
