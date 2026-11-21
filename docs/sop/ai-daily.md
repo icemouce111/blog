@@ -67,13 +67,14 @@ Hacker News、GitHub 和 Hugging Face Papers 使用按日查询；没有可回�
 
 ## 数据源与凭证
 
-默认主流程启用官方、项目和经过限额的社区来源：OpenAI、Anthropic、GitHub Changelog、Cloudflare Blog、LangChain Blog、GitHub Trending、HuggingFace Papers、V2EX、Linux.do、Reddit、Stack Overflow、Medium AI、DEV Community、博客园、Google Trends、AI Creator Opportunities。
+默认主流程启用官方、项目和经过限额的社区来源：OpenAI、Anthropic、GitHub Changelog、Cloudflare Blog、LangChain Blog、GitHub Trending、HuggingFace Papers、V2EX、Linux.do、Reddit、Stack Overflow、Medium AI、DEV Community、博客园、Google Trends、AI Creator Opportunities、AIHOT。
 
 Hacker News、Product Hunt、X/Twitter、Follow Builders、YouTube、Bilibili、Zhihu 和小红书的适配器仍保留在代码中，但默认不进入日报主流程；重新启用前应先补充来源级过滤和测试。
 
 | 来源 | 首选方式 | 信号类型 | 环境变量 |
 | --- | --- | --- | --- |
 | OpenAI | 官方 RSS | story | 无 |
+| AIHOT | `/api/v1/items` 精选 JSON | story / 二手摘要 | 无 |
 | Anthropic | 官方 Newsroom + Sitemap | story | 无 |
 | GitHub Changelog | 官方 RSS + 主题关键词 | story | 无 |
 | Cloudflare Blog | 官方 RSS + AI 关键词 | story | 无 |
@@ -119,6 +120,31 @@ Codex 定时任务在生成 AI 日报前，按[创作者机会 SOP](creator-oppo
 完整来源、字段和故障处理见 [创作者机会 SOP](creator-opportunities.md)。
 浏览器来源只作为 Linux.do、Reddit 等来源的降级路径；标记为 `skipped` 或 `degraded`，不能阻止官方来源生成日报。
 
+### AIHOT 与项目方向
+
+沿用现有调度、生成器、逐条核验、PR/CI 和线上验收，不增加独立管线。
+`src/data/ai-daily-editorial.json` 集中保存三条主线、匹配主题、六类输入的编辑优先级及写作原则：
+Agent 工程与可靠工作流、面向普通人的 AI 办公教学、能交付和商业化的 AI 产品。
+匹配主题只提供排序提示，不自动判断事实、剔除无关键词材料或编造项目关联。
+六个成稿栏目继续保留；模型、产品、行业、论文、教程、观点是输入分类，不按分类凑数。
+栏目条数只有上限，没有最低配额。产品使用场景与有资格、报酬和期限的活动分开表述。
+修复仍重复引用同一 URL 时，沿用条目清理流程保留首个有效条目，再逐条核验，不因后续重复项放弃全部可用内容。
+
+AIHOT 默认开启，可用配置中的 `aihot.enabled` 停用。每次请求精选 `24h`、按原发时间排序，
+最多取 20 条，按项目方向排序后保留 12 条交给现有日期与历史过滤，编辑输入最多 6 条。
+不复制 AIHOT 日报成稿、不逐个分类并行请求、不抓取任意原文网页。
+字段与参数以 [AIHOT OpenAPI](https://aihot.news/openapi-v1.json) 为准。
+
+AIHOT 摘要始终标记为聚合方二手材料，正文和来源速览须明确归因 AIHOT，链接指向其阅读页。
+原文 URL 保存为溯源及去重身份，不进入可引用证据清单；现有来源已采集同一原文时优先保留现有材料。
+编辑版的逐条证据记录保留原文别名，后续跨日去重只读取正文哈希匹配的记录。
+发现时间不补成原发时间；未知原发时间、过期、未来日期按现有规则排除。历史补档跳过该实时接口。
+
+临时目录 `ai-daily-aihot/` 保存按请求 URL 分开的 ETag 缓存，不提交仓库或发布到站点。
+遵守服务端 `max-age`（最多缓存 5 分钟），到期条件请求；304 复用已保存正文。
+429、503 或网络错误本次不重试，由现有来源状态记录失败，不把 AIHOT 加入核心来源故障判断。
+缓存不可写时仍可使用当次有效响应。开源 Skill 的许可与数据服务条款分别适用，来源标注不代表获得独立授权；见 [AIHOT 使用条款](https://aihot.news/terms)。
+
 ## 自动质量控制
 
 发布前自动执行以下检查：
@@ -144,7 +170,7 @@ Codex 定时任务在生成 AI 日报前，按[创作者机会 SOP](creator-oppo
 - 读取已有日报作为持久历史，兼容编号、无编号粗体标题和来源速览：同一规范 URL 不重复刊登；同标题不同 URL 进入增量核验；语义核验还比较最近 40 条历史并补入明确命中的旧记录。历史补档不读取当日之后的日报，同日重跑不受自身记录干扰。
 - 同 URL 的后续只在已有材料哈希、材料实际改变、存在更新日期时重新进入候选，且必须引用未刊登过的新事实摘录。旧归档缺少哈希时保守跳过同 URL；不会为旧文章批量重做模型调用。
 - Stars、浏览数等独立热度字段不作为材料变化。每日榜单和趋势快照，以及机会栏目的既定刷新周期，不按普通新闻重复规则删除。
-- 核心源正常响应但没有新条目时生成空期来源速览，不编造新闻，也不再次调用编辑模型；全部核心抓取失败仍报错。
+- 核心源正常响应且所有 story 来源都没有新条目时生成空期来源速览，不编造新闻，也不再次调用编辑模型；AIHOT 有合格新条目时可进入编辑。全部核心抓取失败仍报错，聚合源不能掩盖该故障。
 
 语义核验使用现有模型，是额外的证据约束，不是独立事实裁判。程序能验证引用范围、摘录、数字和历史记录，但不能保证来源本身真实或模型语义判断零漏判。
 

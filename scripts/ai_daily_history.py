@@ -78,6 +78,9 @@ def read_history(directory: Path, target: date) -> list[dict]:
             title = heading[1] if heading else block.splitlines()[0]
             sources = saved[index].get('sources', []) if index < len(saved) and isinstance(saved[index], dict) else []
             sources = [source for source in sources if isinstance(source, dict) and isinstance(source.get('url'), str)] if isinstance(sources, list) else []
+            # Only hash-matched evidence receipts may supply unpublished identity aliases.
+            urls = sorted(set(urls) | {canonical_url(source['original_url']) for source in sources
+                                      if isinstance(source.get('original_url'), str)})
             citations = saved[index].get('citations', []) if index < len(saved) else []
             quotes = [citation['quote'] for citation in citations if isinstance(citation, dict) and isinstance(citation.get('quote'), str)] if isinstance(citations, list) else []
             history.append({'id': f'{path.stem}:{index + 1}', 'date': path.stem,
@@ -95,18 +98,22 @@ def prepare_history(items, history: list[dict], target: date):
             output.append(item)
             continue
         url = canonical_url(item.url)
-        matches = [old for old in history if url in old['urls'] or event_title(item.title) == old['event_key']]
+        identities = {url}
+        if item.metadata.get('original_url'):
+            identities.add(canonical_url(item.metadata['original_url']))
+        matches = [old for old in history if identities.intersection(old['urls']) or event_title(item.title) == old['event_key']]
         if not matches:
             output.append(item)
             continue
         updated_day = shanghai_day(item.metadata.get('updated_at'))
         previous_hashes = {source['content_hash'] for old in matches for source in old.get('sources', [])
-                           if canonical_url(source.get('url', '')) == url
+                           if identities.intersection({canonical_url(source.get('url', '')),
+                                                       canonical_url(source.get('original_url') or '')})
                            and isinstance(source.get('content_hash'), str)
                            and re.fullmatch(r'[a-f0-9]{64}', source['content_hash'])}
         # Legacy reports without material hashes cannot prove an update. A new URL
         # for the same event can proceed to the semantic check, never an old URL.
-        same_url = any(url in old['urls'] for old in matches)
+        same_url = any(identities.intersection(old['urls']) for old in matches)
         changed_update = (previous_hashes and material_hash(item) not in previous_hashes
                           and updated_day is not None and updated_day <= target
                           and updated_day.isoformat() > max(old['date'] for old in matches))

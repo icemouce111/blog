@@ -264,6 +264,7 @@ class SourceRegistryContractTest(unittest.TestCase):
                 "Medium AI",
                 "DEV Community",
                 "博客园",
+                "AIHOT",
             },
         )
 
@@ -557,6 +558,10 @@ class HistoricalFetcherTest(unittest.TestCase):
 
 
 class AnalysisPromptContractTest(unittest.TestCase):
+    def test_sections_have_no_minimum_quota_and_product_use_is_distinct_from_rewards(self):
+        self.assertIn("栏目没有最低条数", MODULE.ANALYSIS_SYSTEM_PROMPT)
+        self.assertIn("产品实践写具体场景与低成本验证，不包装成赚钱活动", MODULE.ANALYSIS_SYSTEM_PROMPT)
+
     def test_forbids_reusing_the_same_event_across_sections(self):
         self.assertIn(
             "同一事件只能出现在一个板块",

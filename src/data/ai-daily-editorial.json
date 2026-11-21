@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "agent-engineering",
+      "name": "Agent 工程与可靠工作流",
+      "purpose": "提升多 Agent、工具调用、记忆、评测和自动化的可靠性与复用性。",
+      "topics": [
+        "agent",
+        "智能体",
+        "skill",
+        "mcp",
+        "rag",
+        "context",
+        "上下文",
+        "记忆",
+        "评测",
+        "可观测",
+        "自动化"
+      ]
+    },
+    {
+      "id": "office-teaching",
+      "name": "面向普通人的 AI 办公教学",
+      "purpose": "把技术变化翻译成文档、表格、知识库、协作和招投标场景中可复现的操作。",
+      "topics": [
+        "document",
+        "spreadsheet",
+        "文档",
+        "表格",
+        "知识库",
+        "办公",
+        "协作",
+        "招投标",
+        "引用定位",
+        "长文档"
+      ]
+    },
+    {
+      "id": "shippable-products",
+      "name": "能交付和商业化的 AI 产品",
+      "purpose": "关注真实需求、产品实现、部署成本、内容生产和有证据的合作机会。",
+      "topics": [
+        "developer",
+        "coding",
+        "typescript",
+        "react",
+        "cloudflare",
+        "部署",
+        "成本",
+        "开源",
+        "创作者",
+        "短视频",
+        "交付"
+      ]
+    }
+  ],
+  "categories": {
+    "ai-models": {
+      "name": "AI 模型",
+      "priority": 2,
+      "guidance": "关注工具调用、长文档、成本和部署条件的实际变化，不只复述跑分。"
+    },
+    "ai-products": {
+      "name": "AI 产品",
+      "priority": 3,
+      "guidance": "重点关注 Agent 工具、文档表格、办公协作和可交付能力。"
+    },
+    "industry": {
+      "name": "行业动态",
+      "priority": 1,
+      "guidance": "优先解释 API、价格、授权、可用性和交付约束的影响。"
+    },
+    "paper": {
+      "name": "论文",
+      "priority": 2,
+      "guidance": "优先有可验证方法或实现的检索、记忆、评测与文档理解研究。"
+    },
+    "tip": {
+      "name": "教程",
+      "priority": 3,
+      "guidance": "重点关注可复现的 Skills、MCP、RAG、自动化、测试和部署实践。"
+    },
+    "opinion": {
+      "name": "观点",
+      "priority": 0,
+      "guidance": "少量采用有证据的方法论和复盘，明确归因，不把观点升级成事实。"
+    }
+  },
+  "selectionRules": [
+    "分类和关键词只用于排序提示，不代表值得报道；不要按类别凑条数。",
+    "每条说明实际变化、与主线的关系、适用场景，以及一个低成本可验证动作。",
+    "没有实际关联就略过，不为结合项目编造影响、收益或合作机会。",
+    "保留原六个栏目，同一事件只进入一个主栏目；无合格材料时减少条目或省略栏目。",
+    "筛选参考项目问题，正文写读者可迁移的方法，不写个人排班或内部工作过程。"
+  ],
+  "aihot": {
+    "enabled": true,
+    "fetchLimit": 20,
+    "editorialLimit": 6,
+    "timeoutSeconds": 20
+  }
+}

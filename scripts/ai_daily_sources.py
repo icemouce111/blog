@@ -728,10 +728,12 @@ class SourceRegistry:
                 item.metadata["signal_type"] = result.signal_type.value
             deduplicated = []
             for item in result.items:
-                key = _canonical_url(item.url)
-                if key in seen_urls:
+                identities = {_canonical_url(item.url)}
+                if item.metadata.get("original_url"):
+                    identities.add(_canonical_url(item.metadata["original_url"]))
+                if identities & seen_urls:
                     continue
-                seen_urls.add(key)
+                seen_urls.update(identities)
                 deduplicated.append(item)
             result.items = deduplicated
             ordered[adapter.name] = result
