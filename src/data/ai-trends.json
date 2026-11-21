@@ -3,20 +3,36 @@
     {
       "window": "week",
       "rangeStart": "2026-11-17",
-      "rangeEnd": "2026-11-20",
-      "updatedAt": "2026-11-20T21:52:56+08:00",
-      "coverageCount": 4,
+      "rangeEnd": "2026-11-21",
+      "updatedAt": "2026-11-21T14:59:46+08:00",
+      "coverageCount": 5,
       "mode": "generated",
       "insights": [
         {
-          "title": "编码智能体从写代码走向组织协作",
-          "summary": "本周信号显示编码智能体正被放进真实组织流程：SWE-CoWork 把编码智能体当作组织中的数字员工来评测，要求其明确要做什么、与同事协作并验证交付；GitHub Copilot 则推出团队级定制与代码审查自适应深度，让团队统一插件配置、按 PR 风险调整审查力度。应用层的变化是智能体从个人补全工具转为需要权限、协作与审查记录的组织成员。",
+          "title": "Agent从对话走向受控执行",
+          "summary": "本周多期日报显示，Agent 的讨论重心从模型能力转向执行边界：开发者文章强调工具调用让 LLM 进入自主执行，同时要求参数级权限、沙箱隔离与人工介入；企业侧则通过网关、MCP 连接器把 Agent 接入 CRM、代码评审等既有流程。应用层的变化是 Agent 开始被当作需要治理的生产组件，而非演示工具。",
           "sources": [
             {
-              "title": "SWE-CoWork: Benchmarking Coding Agents as Digital Employees in Organizations",
-              "url": "https://huggingface.co/papers/2611.20218",
-              "publishedAt": "2026-11-17"
+              "title": "AI Agents & Tool Calling: How LLMs Move Beyond Conversations to Autonomous Execution",
+              "url": "https://medium.com/@ramthearchitect/ai-agents-tool-calling-how-llms-move-beyond-conversations-to-autonomous-execution-23e7a760a12e?source=rss------artificial_intelligence-5",
+              "publishedAt": "2026-11-19"
             },
+            {
+              "title": "手搓 AI Agent 10：让 Agent 可信——参数级权限、沙箱隔离与人工介入",
+              "url": "https://www.cnblogs.com/MrHuo/p/23719171/agent-from-scratch-10",
+              "publishedAt": "2026-11-19"
+            },
+            {
+              "title": "8 Best Agent Gateways in 2026: Bifrost, Kong, AgentCore, Gravitee and 4 More Compared",
+              "url": "https://dev.to/sebuzdugan/8-best-agent-gateways-in-2026-bifrost-kong-agentcore-gravitee-and-4-more-compared-4igm",
+              "publishedAt": "2026-11-20"
+            }
+          ]
+        },
+        {
+          "title": "编程Agent嵌入团队协作流程",
+          "summary": "GitHub Copilot 本周连续更新：团队可共享插件与自定义配置、代码评审按 PR 自适应调整深度并加入密钥检测、通过 MCP 连接 Supabase、Box、Calendly 等服务，CLI 还能等待 PR 事件。这些变化把编程 Agent 从个人补全工具推进到团队级工作流，组织需要开始管理配置来源、评审策略与外部系统权限。",
+          "sources": [
             {
               "title": "Customize GitHub Copilot for your team",
               "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
@@ -26,58 +42,32 @@
               "title": "Copilot code review: Adaptive effort, secret detection, and more",
               "url": "https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more",
               "publishedAt": "2026-11-18"
-            }
-          ]
-        },
-        {
-          "title": "智能体接入企业系统，权限与审计成前置",
-          "summary": "智能体开始通过 MCP 等协议接入 CRM、Salesforce 等企业系统，直接查询实时业务数据。随之而来的是落地约束：开发者讨论如何为编码智能体的 CRM 访问划定可锁定范围，团队也开始记录审核者对 AI 草稿的批准、修改或驳回，并追踪模型实际检索到的文档片段。应用层的重点从能否调用转向调用边界与可追溯。",
-          "sources": [
+            },
             {
-              "title": "Your Coding Agent Wants CRM Access. Here's the Part to Lock Down",
-              "url": "https://dev.to/conduyt/your-coding-agent-wants-crm-access-heres-the-part-to-lock-down-53d5",
+              "title": "Connect Supabase, Box, Calendly, and more to Copilot",
+              "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
               "publishedAt": "2026-11-19"
-            },
-            {
-              "title": "Step-by-step: Connecting Claude Desktop to Salesforce Hosted MCP Server",
-              "url": "https://dev.to/ram_impviser/step-by-step-connecting-claude-desktop-to-salesforce-hosted-mcp-server-claude-querying-live-55g9",
-              "publishedAt": "2026-11-18"
-            },
-            {
-              "title": "Approved, Edited or Rejected? Record What the Reviewer Actually Did With the AI Draft",
-              "url": "https://dev.to/obligra/approved-edited-or-rejected-record-what-the-reviewer-actually-did-with-the-ai-draft-100f",
-              "publishedAt": "2026-11-20"
-            },
-            {
-              "title": "Which Chunks Did the Model See? Record Retrieval References Without Copying Your Documents",
-              "url": "https://dev.to/obligra/which-chunks-did-the-model-see-record-retrieval-references-without-copying-your-documents-19nh",
-              "publishedAt": "2026-11-18"
             }
           ]
         },
         {
-          "title": "垂直场景落地，可信输出成共同门槛",
-          "summary": "垂直行业的 AI 应用本周集中出现，但共同焦点是让输出可核验：电商购物助手强调不编造信息，客服与知识库场景要求把回答中的数字与数据核对，制造工厂用 AI 与工业物联网做预测性维护。与此同时，企业采用案例显示高管先行使用可带动团队推广。应用层的竞争点正从功能覆盖转向事实准确与可验证。",
+          "title": "垂直场景强调可核验输出",
+          "summary": "本周应用案例集中在金融研究、电商客服、企业文档与销售等垂直场景，共同点是强调来源可追溯与结果可核验：Hebbia 用 GPT-6 Astra 提升来源覆盖与引用相关性，GamiChat 主打不编造信息的购物助手，开发者也在讨论记录检索片段与审核人对 AI 草稿的实际处理。应用层的竞争点正从生成质量转向可审计性。",
           "sources": [
+            {
+              "title": "Hebbia sees improvements in financial research with GPT-6 Astra",
+              "url": "https://openai.com/business/customer-stories/hebbia",
+              "publishedAt": "2026-11-21"
+            },
             {
               "title": "GamiChat: An AI Shopping Assistant for E-commerce That Doesn't Make Things Up",
               "url": "https://dev.to/devops_f31508b58ee103ca02/gamichat-an-ai-shopping-assistant-for-e-commerce-that-doesnt-make-things-up-1hdf",
               "publishedAt": "2026-11-18"
             },
             {
-              "title": "A Figure Check That Stops an AI Assistant From Inventing Numbers",
-              "url": "https://raghunitb.medium.com/figure-check-ai-invented-numbers-5dc05b0eb749?source=rss------artificial_intelligence-5",
-              "publishedAt": "2026-11-18"
-            },
-            {
-              "title": "Predictive Maintenance in Smart Factories: How AI and Industrial IoT Are Transforming Manufacturing",
-              "url": "https://dev.to/smarttechinsights26/predictive-maintenance-in-smart-factories-how-ai-and-industrial-iot-are-transforming-manufacturing-4f03",
-              "publishedAt": "2026-11-18"
-            },
-            {
-              "title": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
-              "url": "https://openai.com/business/customer-stories/sumitomo-life",
-              "publishedAt": "2026-11-19"
+              "title": "Approved, Edited or Rejected? Record What the Reviewer Actually Did With the AI Draft",
+              "url": "https://dev.to/obligra/approved-edited-or-rejected-record-what-the-reviewer-actually-did-with-the-ai-draft-100f",
+              "publishedAt": "2026-11-20"
             }
           ]
         }
