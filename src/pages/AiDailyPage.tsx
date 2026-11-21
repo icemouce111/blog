@@ -1,32 +1,28 @@
 import { AiDailyArchiveList, AiDailyLatestIssue } from '@/components/ai-daily/AiDailyIssueList'
 import { AiDailyMasthead } from '@/components/ai-daily/AiDailyMasthead'
-import { AiTrendInsights } from '@/components/ai-daily/AiTrendInsights'
-import { AiOpportunityRadar } from '@/components/ai-daily/AiOpportunityRadar'
-import { GithubDailyDigest } from '@/components/ai-daily/GithubDailyDigest'
+import { AiDailySupplements } from '@/components/ai-daily/AiDailySupplements'
 import { ReadingLayout } from '@/components/reading/ReadingLayout'
 import '@/components/ai-daily/ai-daily.css'
 import { PageContainer } from '@/components/layout/PageContainer'
 import trendSeed from '@/data/ai-trends.json'
-import { getAiDailyPosts } from '@/lib/ai-daily'
+import { getAiDailyPost, getAiDailyPosts } from '@/lib/ai-daily'
+import { getAiDailyReadingSections } from '@/lib/ai-daily-parser'
 import { parseAiTrendData } from '@/lib/ai-trends'
 import { getGithubDailyPosts } from '@/lib/github-daily'
-import { getGithubDigestLabel } from '@/lib/github-daily-digest'
-import { getActiveAiOpportunities } from '@/lib/ai-opportunities'
 import type { ReadingSection } from '@/lib/reading-navigation'
 
 export function AiDailyPage() {
   const posts = getAiDailyPosts()
+  const latest = posts[0] ? getAiDailyPost(posts[0].slug) : null
   const githubPost = getGithubDailyPosts()[0]
-  const opportunityCount = getActiveAiOpportunities().length
-  const openSourceCount = Math.min(
-    3,
-    githubPost?.highlights.length || githubPost?.repos.length || 0,
-  )
-  const openSourceLabel = githubPost ? getGithubDigestLabel(githubPost) : undefined
+  const sections = latest ? getAiDailyReadingSections(latest.parsed) : []
+  const previews = sections.filter((section) => section.markdown.trim()).slice(0, 4)
   const navigationSections: ReadingSection[] = [
-    { id: 'latest-issue-heading', title: '今日主线' },
-    { id: 'creator-opportunities', title: 'AI 创作者机会' },
-    ...(githubPost ? [{ id: 'github-picks', title: 'GitHub 每日新增 Star 排行' }] : []),
+    { id: 'latest-issue-heading', title: '本期资讯' },
+    ...previews.map((section) => ({ id: section.id, title: section.title, level: 3 as const })),
+    { id: 'daily-extras', title: '工具与机会' },
+    ...(githubPost ? [{ id: 'github-picks', title: 'GitHub 开源项目', level: 3 as const }] : []),
+    { id: 'creator-opportunities', title: 'AI 创作者机会', level: 3 },
     ...(parseAiTrendData(trendSeed).windows.length
       ? [{ id: 'trend-heading', title: 'AI 应用趋势洞察' }]
       : []),
@@ -40,15 +36,8 @@ export function AiDailyPage() {
         {posts.length > 0 ? (
           <ReadingLayout sections={navigationSections}>
             <div className="ai-daily-archive-layout">
-              <AiDailyLatestIssue
-                latest={posts[0]}
-                openSourceCount={openSourceCount}
-                openSourceLabel={openSourceLabel}
-                opportunityCount={opportunityCount}
-              />
-              <AiOpportunityRadar />
-              {githubPost && <GithubDailyDigest post={githubPost} />}
-              <AiTrendInsights />
+              {latest && <AiDailyLatestIssue latest={latest} sections={sections} />}
+              <AiDailySupplements githubPost={githubPost} showTrends />
               <AiDailyArchiveList archive={posts.slice(1)} />
             </div>
           </ReadingLayout>

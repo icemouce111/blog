@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { MarkdownContent } from '@/components/reading/MarkdownContent'
+import { Disclosure } from '@/components/ui/disclosure'
 import type { AiDailyPost } from '@/lib/ai-daily'
 import type { AiDailySection } from '@/lib/ai-daily-parser'
 import { AiDailySignalStats } from './AiDailySignalStats'
@@ -7,21 +8,13 @@ import { AiDailySignalStats } from './AiDailySignalStats'
 interface AiDailyContentProps {
   post: AiDailyPost
   sections?: AiDailySection[]
-  beforeSections?: ReactNode
   afterSections?: ReactNode
-  openSourceCount?: number
-  openSourceLabel?: string
-  opportunityCount?: number
 }
 
 export function AiDailyContent({
   post,
   sections = post.parsed.sections,
-  beforeSections,
   afterSections,
-  openSourceCount = 0,
-  openSourceLabel,
-  opportunityCount = 0,
 }: AiDailyContentProps) {
   const { parsed } = post
   const leadTitle = parsed.leadStory?.title || post.leadTitle
@@ -31,13 +24,13 @@ export function AiDailyContent({
     <div className="ai-daily-content">
       <div className="ai-daily-briefing-bar">
         <span>行动简报 / {post.date}</span>
-        <strong>预计阅读 {post.readingMinutes} 分钟</strong>
+        <span className="ai-daily-format-label">{post.isSignalArchive ? '来源速览' : '编辑简报'}</span>
       </div>
       <header className="ai-daily-story-header">
         <p className="ai-daily-featured-kicker">
-          <span /> 今日主线
+          <span /> {post.isSignalArchive ? '本期资讯' : '今日主线'}
         </p>
-        <h1 className="ai-daily-serif">{leadTitle}</h1>
+        <h1 id="daily-issue-heading" className="ai-daily-serif">{leadTitle}</h1>
         {leadSummary && (
           <div className="ai-daily-standfirst">
             <MarkdownContent sections={[]}>{leadSummary}</MarkdownContent>
@@ -55,40 +48,40 @@ export function AiDailyContent({
 
       <AiDailySignalStats
         signals={post.storyCount}
-        openSource={openSourceCount}
-        openSourceLabel={openSourceLabel}
-        opportunities={opportunityCount}
+        sources={post.sourceCount}
+        readingMinutes={post.readingMinutes}
+        isSignalArchive={post.isSignalArchive}
       />
 
-      {beforeSections}
-
       {sections.map((section) => (
-        <section
-          className="ai-daily-content-section"
+        <Disclosure
+          open
+          className="ai-daily-content-section ai-daily-foldable"
           id={section.id}
           key={section.id}
           aria-labelledby={`${section.id}-heading`}
         >
-          <div className="ai-daily-content-heading">
+          <summary className="ai-daily-content-heading">
             <span>{section.number}</span>
             <h2 id={`${section.id}-heading`} className="ai-daily-serif">
               {section.title}
             </h2>
-          </div>
+          </summary>
           {section.markdown && (
             <div className="ai-daily-markdown">
               <MarkdownContent sections={[]}>{section.markdown}</MarkdownContent>
             </div>
           )}
-        </section>
+        </Disclosure>
       ))}
 
       {parsed.fallbackMarkdown && (
-        <section className="ai-daily-content-section">
+        <Disclosure open className="ai-daily-content-section ai-daily-foldable">
+          <summary className="ai-daily-content-heading"><h2>本期内容</h2></summary>
           <div className="ai-daily-markdown">
             <MarkdownContent sections={[]}>{parsed.fallbackMarkdown}</MarkdownContent>
           </div>
-        </section>
+        </Disclosure>
       )}
 
       {afterSections}
