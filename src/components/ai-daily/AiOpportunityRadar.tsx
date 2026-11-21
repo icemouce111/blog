@@ -215,7 +215,7 @@ export function AiOpportunityRadar({
     >
       {variant === 'issue' ? (
         <div className="ai-daily-content-heading">
-          <span>{number}</span>
+          {number && <span>{number}</span>}
           <h2 id={`${id}-heading`}>AI 创作者机会</h2>
         </div>
       ) : (
