@@ -3,24 +3,24 @@
     {
       "window": "week",
       "rangeStart": "2026-11-17",
-      "rangeEnd": "2026-11-21",
-      "updatedAt": "2026-11-21T14:59:46+08:00",
-      "coverageCount": 5,
+      "rangeEnd": "2026-11-22",
+      "updatedAt": "2026-11-22T22:37:03+08:00",
+      "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent从对话走向受控执行",
-          "summary": "本周多期日报显示，Agent 的讨论重心从模型能力转向执行边界：开发者文章强调工具调用让 LLM 进入自主执行，同时要求参数级权限、沙箱隔离与人工介入；企业侧则通过网关、MCP 连接器把 Agent 接入 CRM、代码评审等既有流程。应用层的变化是 Agent 开始被当作需要治理的生产组件，而非演示工具。",
+          "title": "Agent技能包与网关走向工程化",
+          "summary": "本周开源社区集中出现面向具体岗位的Agent技能包与技能评测框架，覆盖漏洞挖掘、投资分析、研究写作等场景；同时Agent网关、MCP连接器与团队级定制进入产品更新，说明应用层正从单点演示转向可复用技能与统一接入的组织级工作流。",
           "sources": [
             {
-              "title": "AI Agents & Tool Calling: How LLMs Move Beyond Conversations to Autonomous Execution",
-              "url": "https://medium.com/@ramthearchitect/ai-agents-tool-calling-how-llms-move-beyond-conversations-to-autonomous-execution-23e7a760a12e?source=rss------artificial_intelligence-5",
-              "publishedAt": "2026-11-19"
+              "title": "elementalsouls/Claude-BugHunter",
+              "url": "https://github.com/elementalsouls/Claude-BugHunter",
+              "publishedAt": "2026-11-22"
             },
             {
-              "title": "手搓 AI Agent 10：让 Agent 可信——参数级权限、沙箱隔离与人工介入",
-              "url": "https://www.cnblogs.com/MrHuo/p/23719171/agent-from-scratch-10",
-              "publishedAt": "2026-11-19"
+              "title": "NVIDIA/SkillEvaluator",
+              "url": "https://github.com/NVIDIA/SkillEvaluator",
+              "publishedAt": "2026-11-18"
             },
             {
               "title": "8 Best Agent Gateways in 2026: Bifrost, Kong, AgentCore, Gravitee and 4 More Compared",
@@ -30,29 +30,29 @@
           ]
         },
         {
-          "title": "编程Agent嵌入团队协作流程",
-          "summary": "GitHub Copilot 本周连续更新：团队可共享插件与自定义配置、代码评审按 PR 自适应调整深度并加入密钥检测、通过 MCP 连接 Supabase、Box、Calendly 等服务，CLI 还能等待 PR 事件。这些变化把编程 Agent 从个人补全工具推进到团队级工作流，组织需要开始管理配置来源、评审策略与外部系统权限。",
+          "title": "企业采用转向治理与权限边界",
+          "summary": "随着编码Agent接入CRM、文档与代码库，本周讨论焦点从能力转向边界：参数级权限、沙箱隔离、人工介入与工具输出门控成为落地前提；企业侧也开始要求Copilot定制来源受控、记录审阅者对AI草稿的实际处理，组织采用进入可审计阶段。",
           "sources": [
             {
-              "title": "Customize GitHub Copilot for your team",
-              "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
+              "title": "手搓 AI Agent 10：让 Agent 可信——参数级权限、沙箱隔离与人工介入",
+              "url": "https://www.cnblogs.com/MrHuo/p/23719171/agent-from-scratch-10",
               "publishedAt": "2026-11-19"
             },
             {
-              "title": "Copilot code review: Adaptive effort, secret detection, and more",
-              "url": "https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more",
-              "publishedAt": "2026-11-18"
+              "title": "A Routine Docs Lookup Carried the Attack: What ContextCrush (CVE-2026-75130) Teaches About Gating Actions Caused by Tool Output",
+              "url": "https://dev.to/ginigenai_hp_0ae441ead91f/a-routine-docs-lookup-carried-the-attack-what-contextcrush-cve-2026-75130-teaches-about-gating-gi4",
+              "publishedAt": "2026-11-22"
             },
             {
-              "title": "Connect Supabase, Box, Calendly, and more to Copilot",
-              "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
-              "publishedAt": "2026-11-19"
+              "title": "Control where GitHub Copilot customizations come from",
+              "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from",
+              "publishedAt": "2026-11-17"
             }
           ]
         },
         {
-          "title": "垂直场景强调可核验输出",
-          "summary": "本周应用案例集中在金融研究、电商客服、企业文档与销售等垂直场景，共同点是强调来源可追溯与结果可核验：Hebbia 用 GPT-6 Astra 提升来源覆盖与引用相关性，GamiChat 主打不编造信息的购物助手，开发者也在讨论记录检索片段与审核人对 AI 草稿的实际处理。应用层的竞争点正从生成质量转向可审计性。",
+          "title": "垂直行业工作流被Agent嵌入",
+          "summary": "金融研究、保险、法律、电商客服与制造业维护等场景出现具体落地：企业用模型提升来源覆盖与引用质量，销售与客服插件接入CRM和商品数据，预测性维护结合工业物联网。应用层变化在于Agent被嵌入既有业务流程，而非独立工具。",
           "sources": [
             {
               "title": "Hebbia sees improvements in financial research with GPT-6 Astra",
@@ -60,14 +60,14 @@
               "publishedAt": "2026-11-21"
             },
             {
-              "title": "GamiChat: An AI Shopping Assistant for E-commerce That Doesn't Make Things Up",
-              "url": "https://dev.to/devops_f31508b58ee103ca02/gamichat-an-ai-shopping-assistant-for-e-commerce-that-doesnt-make-things-up-1hdf",
-              "publishedAt": "2026-11-18"
+              "title": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
+              "url": "https://openai.com/business/customer-stories/sumitomo-life",
+              "publishedAt": "2026-11-19"
             },
             {
-              "title": "Approved, Edited or Rejected? Record What the Reviewer Actually Did With the AI Draft",
-              "url": "https://dev.to/obligra/approved-edited-or-rejected-record-what-the-reviewer-actually-did-with-the-ai-draft-100f",
-              "publishedAt": "2026-11-20"
+              "title": "Predictive Maintenance in Smart Factories: How AI and Industrial IoT Are Transforming Manufacturing",
+              "url": "https://dev.to/smarttechinsights26/predictive-maintenance-in-smart-factories-how-ai-and-industrial-iot-are-transforming-manufacturing-4f03",
+              "publishedAt": "2026-11-18"
             }
           ]
         }
