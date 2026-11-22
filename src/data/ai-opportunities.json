@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-21",
+  "updatedAt": "2026-11-22",
   "collection": {
-    "date": "2026-11-21",
+    "date": "2026-11-22",
     "searches": 2,
     "searchFailures": 0,
-    "discovered": 6,
+    "discovered": 1,
     "pagesChecked": 10,
-    "pageFailures": 1,
+    "pageFailures": 2,
     "verified": 1,
     "directoriesChecked": 1,
     "modelStatus": "completed",
@@ -612,10 +612,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-22",
       "discoveredAt": "2026-11-18",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "奖励或门槛缺少官方原文证据"
+      "checkNote": "官方页面需重新核对，未据可访问状态更新核验日期"
     },
     {
       "id": "discovered-0ac11c58918e",
@@ -913,10 +913,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-22",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "奖励或门槛缺少官方原文证据"
+      "checkNote": "金额或门槛数字不受对应原文支持"
     },
     {
       "id": "discovered-6028044c7aa1",
@@ -1016,7 +1016,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-22",
       "discoveredAt": "2026-11-17",
       "pendingReason": "本次未能读取官方细则，待重新核实",
       "checkNote": "本次未读到完整官方页面，保留上次核验日期"
@@ -1042,10 +1042,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-22",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "金额或门槛数字不受对应原文支持"
+      "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
       "id": "discovered-70b1875100f6",
@@ -1093,7 +1093,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-22",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1147,6 +1147,32 @@
       "pendingReason": "须核验发布账号身份、当前官方细则和实际资格；站内帖子不等于官方活动",
       "discoveryPlatform": "douyin",
       "reviewMode": "manual"
+    },
+    {
+      "id": "discovered-88439037f561",
+      "title": "AKOOL AI Film Challenge | Enter Your AI Film",
+      "discoverySummary": "AI 影片挑战赛页面展示参赛类别与创作者奖励，活动状态和规则需核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "https://akool.com/zh/aifilmchallenge",
+      "sourceUrl": "https://akool.com/zh/aifilmchallenge",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": "2026-11-22",
+      "discoveredAt": "2026-11-22",
+      "pendingReason": "官方页面发生变化或需重新确认",
+      "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
       "id": "discovered-9040fc3e9b0f",
@@ -1605,8 +1631,8 @@
       "minFollowers": null,
       "priority": 58,
       "verification": "official",
-      "verifiedAt": "2026-11-20",
-      "checkedAt": "2026-11-20",
+      "verifiedAt": "2026-11-22",
+      "checkedAt": "2026-11-22",
       "sourceHash": "9253b5129b0b0cfa15acf9754aa0020477c6364684428d35278eaee844760dfd"
     },
     {
@@ -1630,7 +1656,7 @@
       "priority": 60,
       "verification": "pending",
       "verifiedAt": "2026-10-30",
-      "checkedAt": "2026-11-20",
+      "checkedAt": "2026-11-22",
       "sourceHash": "1a1292c791e1b3070335ddb9c7ce5c252dc4b4d41f8733c7ad038d57178ec3dd",
       "checkNote": "官方页面需重新核对，未据可访问状态更新核验日期",
       "pendingReason": "官方页面发生变化或需重新确认"
