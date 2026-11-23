@@ -3,35 +3,35 @@
     {
       "window": "week",
       "rangeStart": "2026-11-17",
-      "rangeEnd": "2026-11-22",
-      "updatedAt": "2026-11-22T22:37:03+08:00",
-      "coverageCount": 6,
+      "rangeEnd": "2026-11-23",
+      "updatedAt": "2026-11-23T21:49:20+08:00",
+      "coverageCount": 7,
       "mode": "generated",
       "insights": [
         {
-          "title": "Agent技能包与网关走向工程化",
-          "summary": "本周开源社区集中出现面向具体岗位的Agent技能包与技能评测框架，覆盖漏洞挖掘、投资分析、研究写作等场景；同时Agent网关、MCP连接器与团队级定制进入产品更新，说明应用层正从单点演示转向可复用技能与统一接入的组织级工作流。",
+          "title": "编码智能体从补全走向组织内数字员工",
+          "summary": "本周信号显示编码智能体正被放进真实组织流程：SWE-CoWork 把编码智能体当作数字员工，考察其确定目标、协作与交付；GitHub Copilot 支持团队共享插件与自定义配置，并新增 PR 事件等待能力，便于智能体接入评审流。影响在于采用重点从模型能力转向权限、协作规范与可审计交付。",
           "sources": [
             {
-              "title": "elementalsouls/Claude-BugHunter",
-              "url": "https://github.com/elementalsouls/Claude-BugHunter",
-              "publishedAt": "2026-11-22"
+              "title": "SWE-CoWork: Benchmarking Coding Agents as Digital Employees in Organizations",
+              "url": "https://huggingface.co/papers/2611.20218",
+              "publishedAt": "2026-11-17"
             },
             {
-              "title": "NVIDIA/SkillEvaluator",
-              "url": "https://github.com/NVIDIA/SkillEvaluator",
-              "publishedAt": "2026-11-18"
+              "title": "Customize GitHub Copilot for your team",
+              "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
+              "publishedAt": "2026-11-19"
             },
             {
-              "title": "8 Best Agent Gateways in 2026: Bifrost, Kong, AgentCore, Gravitee and 4 More Compared",
-              "url": "https://dev.to/sebuzdugan/8-best-agent-gateways-in-2026-bifrost-kong-agentcore-gravitee-and-4-more-compared-4igm",
-              "publishedAt": "2026-11-20"
+              "title": "Wait for pull request events with GitHub CLI",
+              "url": "https://github.blog/changelog/2026-11-18-wait-for-pull-request-events-with-github-cli",
+              "publishedAt": "2026-11-19"
             }
           ]
         },
         {
-          "title": "企业采用转向治理与权限边界",
-          "summary": "随着编码Agent接入CRM、文档与代码库，本周讨论焦点从能力转向边界：参数级权限、沙箱隔离、人工介入与工具输出门控成为落地前提；企业侧也开始要求Copilot定制来源受控、记录审阅者对AI草稿的实际处理，组织采用进入可审计阶段。",
+          "title": "智能体接入企业系统，权限与工具边界成焦点",
+          "summary": "MCP 与连接器让智能体直接触达 CRM、文档与业务数据，本周讨论集中在“给什么参数值”而非“给不给工具”：参数级权限、沙箱隔离、人工介入与失败即拒绝成为落地共识。同时出现针对 MCP 工具扫描的测试集与工具输出触发攻击的案例，说明企业采用智能体的门槛正从接入转向治理与审计。",
           "sources": [
             {
               "title": "手搓 AI Agent 10：让 Agent 可信——参数级权限、沙箱隔离与人工介入",
@@ -39,35 +39,35 @@
               "publishedAt": "2026-11-19"
             },
             {
+              "title": "The poison is in the parameters: a labelled test set for MCP tool scanners",
+              "url": "https://dev.to/mspro3210/the-poison-is-in-the-parameters-a-labelled-test-set-for-mcp-tool-scanners-25k2",
+              "publishedAt": "2026-11-23"
+            },
+            {
               "title": "A Routine Docs Lookup Carried the Attack: What ContextCrush (CVE-2026-75130) Teaches About Gating Actions Caused by Tool Output",
               "url": "https://dev.to/ginigenai_hp_0ae441ead91f/a-routine-docs-lookup-carried-the-attack-what-contextcrush-cve-2026-75130-teaches-about-gating-gi4",
               "publishedAt": "2026-11-22"
-            },
-            {
-              "title": "Control where GitHub Copilot customizations come from",
-              "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from",
-              "publishedAt": "2026-11-17"
             }
           ]
         },
         {
-          "title": "垂直行业工作流被Agent嵌入",
-          "summary": "金融研究、保险、法律、电商客服与制造业维护等场景出现具体落地：企业用模型提升来源覆盖与引用质量，销售与客服插件接入CRM和商品数据，预测性维护结合工业物联网。应用层变化在于Agent被嵌入既有业务流程，而非独立工具。",
+          "title": "办公与垂直工作流被智能体重构为可交付产物",
+          "summary": "ChatGPT Space 把页面、幻灯片、图片与文件收进统一工作区并支持协作与自动更新；Figma 演示用 Specs 汇集 PRD、数据与设计说明，再由 agent 生成供编码智能体使用的实现计划。企业侧，保险与金融团队用 ChatGPT Enterprise 做调研、提案与代码草稿，说明办公采用正从问答转向端到端工作流与可复用产物。",
           "sources": [
             {
-              "title": "Hebbia sees improvements in financial research with GPT-6 Astra",
-              "url": "https://openai.com/business/customer-stories/hebbia",
+              "title": "ChatGPT 推出 Space：统一管理页面、幻灯片、图片与文件",
+              "url": "https://aihot.news/items/ekf0so0xitc52thkrxx3mwax1",
+              "publishedAt": "2026-11-21"
+            },
+            {
+              "title": "Figma 演示用 Specs 与 Figma agent 把上下文变成可实现的开发计划",
+              "url": "https://aihot.news/items/w612ivonntodntv1ydkt2lqwh",
               "publishedAt": "2026-11-21"
             },
             {
               "title": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
               "url": "https://openai.com/business/customer-stories/sumitomo-life",
               "publishedAt": "2026-11-19"
-            },
-            {
-              "title": "Predictive Maintenance in Smart Factories: How AI and Industrial IoT Are Transforming Manufacturing",
-              "url": "https://dev.to/smarttechinsights26/predictive-maintenance-in-smart-factories-how-ai-and-industrial-iot-are-transforming-manufacturing-4f03",
-              "publishedAt": "2026-11-18"
             }
           ]
         }
