@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-22",
+  "updatedAt": "2026-11-23",
   "collection": {
-    "date": "2026-11-22",
+    "date": "2026-11-23",
     "searches": 2,
     "searchFailures": 0,
-    "discovered": 1,
+    "discovered": 3,
     "pagesChecked": 10,
     "pageFailures": 2,
     "verified": 1,
@@ -612,10 +612,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-22",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-18",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "官方页面需重新核对，未据可访问状态更新核验日期"
+      "checkNote": "金额或门槛数字不受对应原文支持"
     },
     {
       "id": "discovered-0ac11c58918e",
@@ -913,7 +913,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-22",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -971,6 +971,31 @@
       "reviewMode": "manual"
     },
     {
+      "id": "discovered-6655e6027478",
+      "title": "需求大厅_视频制作/拍摄/剪辑兼职接单平台_光厂服务(VJshi片场)",
+      "discoverySummary": "视频制作需求大厅列有 AI 短剧、视频剪辑等任务，页面显示预算与招募状态；具体任务细则和签单情况需核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.vjshi.com/service/demands",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-23",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-66abaacaa652",
       "title": "Melius Creator Partner Program",
       "discoverySummary": "页面介绍一个月的创作者付费试合作，视频数量、积分、付款和日期由双方在开始前商定；资格与当前名额待核实。",
@@ -1016,7 +1041,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-22",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-17",
       "pendingReason": "本次未能读取官方细则，待重新核实",
       "checkNote": "本次未读到完整官方页面，保留上次核验日期"
@@ -1042,10 +1067,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-22",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "奖励或门槛缺少官方原文证据"
+      "checkNote": "金额或门槛数字不受对应原文支持"
     },
     {
       "id": "discovered-70b1875100f6",
@@ -1093,7 +1118,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-22",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1175,6 +1200,31 @@
       "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
+      "id": "discovered-8853ed214cff",
+      "title": "创作者招募计划｜加入黄果短剧",
+      "discoverySummary": "页面招募 AI 短剧创作者和编剧提交作品、剧本或 Demo；合作条款与报酬需核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://fuzalo.com/creators",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-23",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-9040fc3e9b0f",
       "title": "Creator Partnership Program - Topview AI",
       "discoverySummary": "页面介绍会员、创作积分、功能抢先体验、展示或合作等分级权益；付费广告及进一步使用内容需单独协议，不能将积分当现金。",
@@ -1245,10 +1295,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "奖励或门槛缺少官方原文证据"
+      "checkNote": "金额或门槛数字不受对应原文支持"
     },
     {
       "id": "discovered-99d521c73a82",
@@ -1489,6 +1539,31 @@
       "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
+      "id": "discovered-d56eabf4f208",
+      "title": "寻求AI短视频制作团队或个人创作者（长期合作） - 英鸟网|ybirds",
+      "discoverySummary": "信息发布者寻求制作商品宣传用途 AI 短视频的团队或个人长期合作；对方身份、报酬与合作条件需核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.ybirds.com/class/533222",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-23",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-e292b8ade6a5",
       "title": "AI创作活动",
       "organizer": "待核实",
@@ -1507,7 +1582,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-21",
+      "checkedAt": "2026-11-23",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1681,8 +1756,8 @@
       "minFollowers": null,
       "priority": 72,
       "verification": "official",
-      "verifiedAt": "2026-11-21",
-      "checkedAt": "2026-11-21",
+      "verifiedAt": "2026-11-23",
+      "checkedAt": "2026-11-23",
       "sourceHash": "0f6568e355a9dd9d41ec0ef3373b8eb0366994e5a7c72629d431b98d750110dd"
     }
   ]
