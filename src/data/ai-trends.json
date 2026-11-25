@@ -2,21 +2,16 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-11-17",
-      "rangeEnd": "2026-11-23",
-      "updatedAt": "2026-11-23T21:49:20+08:00",
-      "coverageCount": 7,
+      "rangeStart": "2026-11-19",
+      "rangeEnd": "2026-11-25",
+      "updatedAt": "2026-11-25T21:48:31+08:00",
+      "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
-          "title": "编码智能体从补全走向组织内数字员工",
-          "summary": "本周信号显示编码智能体正被放进真实组织流程：SWE-CoWork 把编码智能体当作数字员工，考察其确定目标、协作与交付；GitHub Copilot 支持团队共享插件与自定义配置，并新增 PR 事件等待能力，便于智能体接入评审流。影响在于采用重点从模型能力转向权限、协作规范与可审计交付。",
+          "title": "编码智能体从补全走向团队级工作流",
+          "summary": "本周信号显示，编码智能体正被嵌入代码评审、CI 修复与合并冲突处理等团队流程，而非只做行内补全。GitHub 让团队共享 Copilot 插件配置，并支持用 CLI 等待 PR 事件；Claude Ship 则把 PR 审查与守护拆成多个智能体。影响是采用重点从个人提效转向流程治理与权限边界。",
           "sources": [
-            {
-              "title": "SWE-CoWork: Benchmarking Coding Agents as Digital Employees in Organizations",
-              "url": "https://huggingface.co/papers/2611.20218",
-              "publishedAt": "2026-11-17"
-            },
             {
               "title": "Customize GitHub Copilot for your team",
               "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
@@ -26,48 +21,48 @@
               "title": "Wait for pull request events with GitHub CLI",
               "url": "https://github.blog/changelog/2026-11-18-wait-for-pull-request-events-with-github-cli",
               "publishedAt": "2026-11-19"
+            },
+            {
+              "title": "Claude Code 团队发布实用指南讲解 Claude Ship 的 PR 审查与守护用法",
+              "url": "https://aihot.news/items/uyodjb16jngloilypsm1d3q0d",
+              "publishedAt": "2026-11-25"
             }
           ]
         },
         {
-          "title": "智能体接入企业系统，权限与工具边界成焦点",
-          "summary": "MCP 与连接器让智能体直接触达 CRM、文档与业务数据，本周讨论集中在“给什么参数值”而非“给不给工具”：参数级权限、沙箱隔离、人工介入与失败即拒绝成为落地共识。同时出现针对 MCP 工具扫描的测试集与工具输出触发攻击的案例，说明企业采用智能体的门槛正从接入转向治理与审计。",
+          "title": "办公套件与设计工具接入智能体上下文",
+          "summary": "办公与设计场景的应用层变化，是把邮件、文档、表格、日历以及 PRD、设计标注等上下文交给智能体调用。Google Workspace MCP servers 与 gwscli 正式发布并支持个人模式一键开通；Figma 演示用 Specs 汇集上下文，再由 Figma agent 生成供编码智能体使用的实现计划。影响是跨工具交接开始标准化。",
           "sources": [
             {
-              "title": "手搓 AI Agent 10：让 Agent 可信——参数级权限、沙箱隔离与人工介入",
-              "url": "https://www.cnblogs.com/MrHuo/p/23719171/agent-from-scratch-10",
-              "publishedAt": "2026-11-19"
-            },
-            {
-              "title": "The poison is in the parameters: a labelled test set for MCP tool scanners",
-              "url": "https://dev.to/mspro3210/the-poison-is-in-the-parameters-a-labelled-test-set-for-mcp-tool-scanners-25k2",
-              "publishedAt": "2026-11-23"
-            },
-            {
-              "title": "A Routine Docs Lookup Carried the Attack: What ContextCrush (CVE-2026-75130) Teaches About Gating Actions Caused by Tool Output",
-              "url": "https://dev.to/ginigenai_hp_0ae441ead91f/a-routine-docs-lookup-carried-the-attack-what-contextcrush-cve-2026-75130-teaches-about-gating-gi4",
-              "publishedAt": "2026-11-22"
-            }
-          ]
-        },
-        {
-          "title": "办公与垂直工作流被智能体重构为可交付产物",
-          "summary": "ChatGPT Space 把页面、幻灯片、图片与文件收进统一工作区并支持协作与自动更新；Figma 演示用 Specs 汇集 PRD、数据与设计说明，再由 agent 生成供编码智能体使用的实现计划。企业侧，保险与金融团队用 ChatGPT Enterprise 做调研、提案与代码草稿，说明办公采用正从问答转向端到端工作流与可复用产物。",
-          "sources": [
-            {
-              "title": "ChatGPT 推出 Space：统一管理页面、幻灯片、图片与文件",
-              "url": "https://aihot.news/items/ekf0so0xitc52thkrxx3mwax1",
-              "publishedAt": "2026-11-21"
+              "title": "Google Workspace MCP servers 与 gwscli 正式发布，Personal 模式一键开通",
+              "url": "https://aihot.news/items/nm8mi41auemid3iivue4tel3d",
+              "publishedAt": "2026-11-25"
             },
             {
               "title": "Figma 演示用 Specs 与 Figma agent 把上下文变成可实现的开发计划",
               "url": "https://aihot.news/items/w612ivonntodntv1ydkt2lqwh",
               "publishedAt": "2026-11-21"
+            }
+          ]
+        },
+        {
+          "title": "智能体进入客服、法务与电话等垂直流程",
+          "summary": "垂直行业的采用信号集中在客服、法务与电话沟通：Richpanel 用模型为支持智能体配备工具和流程，并称可在 30 天内自动化部分支持工作；OpenAI 与 LECG、Cooley 讨论内部法务的连接式智能；千问 Go 打电话经授权可代拨电话、沟通需求。影响是智能体从问答界面进入可执行、需授权的业务动作。",
+          "sources": [
+            {
+              "title": "Richpanel helps companies automate 50% of support in 30 days",
+              "url": "https://openai.com/business/customer-stories/richpanel-ai-customer-support",
+              "publishedAt": "2026-11-25"
             },
             {
-              "title": "How Sumitomo Life’s leaders helped teams adopt ChatGPT Enterprise",
-              "url": "https://openai.com/business/customer-stories/sumitomo-life",
-              "publishedAt": "2026-11-19"
+              "title": "Connected intelligence for in-house legal",
+              "url": "https://openai.com/business/learn/connected-intelligence-for-in-house-legal",
+              "publishedAt": "2026-11-25"
+            },
+            {
+              "title": "千问APP免费开放千问Go打电话服务，经授权可代打电话和定时来电",
+              "url": "https://aihot.news/items/cebavio3uyjwli5r3imsuq1si",
+              "publishedAt": "2026-11-25"
             }
           ]
         }
