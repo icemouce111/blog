@@ -1,13 +1,13 @@
 {
   "schemaVersion": 2,
-  "updatedAt": "2026-11-25",
+  "updatedAt": "2026-11-26",
   "collection": {
-    "date": "2026-11-25",
+    "date": "2026-11-26",
     "searches": 2,
     "searchFailures": 0,
-    "discovered": 4,
+    "discovered": 2,
     "pagesChecked": 10,
-    "pageFailures": 1,
+    "pageFailures": 2,
     "verified": 1,
     "directoriesChecked": 1,
     "modelStatus": "completed",
@@ -612,7 +612,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-25",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-18",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -913,7 +913,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-25",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "奖励或门槛缺少官方原文证据"
@@ -1041,7 +1041,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-25",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-17",
       "pendingReason": "本次未能读取官方细则，待重新核实",
       "checkNote": "本次未读到完整官方页面，保留上次核验日期"
@@ -1067,7 +1067,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-25",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-19",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1118,10 +1118,35 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-25",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
+    },
+    {
+      "id": "discovered-7c5a53567b35",
+      "title": "好创意大赛官网",
+      "discoverySummary": "页面介绍百度 S5 AI 互动内容专项赛，征稿对象为高校在校学生和教师，含互动视频、游戏与互动剧方向；具体资格和截止时间待核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www2.cdec.org.cn/articleDetail/2552",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-26",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
       "id": "discovered-7efa4cc9ce67",
@@ -1225,6 +1250,31 @@
       "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
     },
     {
+      "id": "discovered-897954cfa2b4",
+      "title": "湖南青年AI短视频创作大赛｜最高3万元，11月30日截止-AIBetas",
+      "discoverySummary": "第三方介绍面向湖南省内 AI 创作者和企业的短视频比赛，具体参赛条件、截止时间及官方规则待核实。",
+      "discoveryEngine": "codex-web",
+      "organizer": "待核实",
+      "type": "新活动线索",
+      "url": "",
+      "sourceUrl": "https://www.aibetas.com/aigc_events/hunan-youth-ai-short-video-competition-2026",
+      "rewardTypes": [],
+      "reward": "奖励细则待核实",
+      "requirements": "参与门槛待核实",
+      "deadline": null,
+      "deadlineKind": "unknown",
+      "deadlineText": "截止时间待核实",
+      "fitStage": "apply",
+      "fit": "需核对是否适合起步阶段的AI内容创作",
+      "minFollowers": null,
+      "priority": 50,
+      "verification": "pending",
+      "verifiedAt": null,
+      "checkedAt": null,
+      "discoveredAt": "2026-11-26",
+      "pendingReason": "新发现，尚未完成官方身份与活动细则核验"
+    },
+    {
       "id": "discovered-9040fc3e9b0f",
       "title": "Creator Partnership Program - Topview AI",
       "discoverySummary": "页面介绍会员、创作积分、功能抢先体验、展示或合作等分级权益；付费广告及进一步使用内容需单独协议，不能将积分当现金。",
@@ -1295,10 +1345,10 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-23",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
-      "checkNote": "金额或门槛数字不受对应原文支持"
+      "checkNote": "奖励或门槛缺少官方原文证据"
     },
     {
       "id": "discovered-98a2d18a004e",
@@ -1657,7 +1707,7 @@
       "priority": 50,
       "verification": "pending",
       "verifiedAt": null,
-      "checkedAt": "2026-11-23",
+      "checkedAt": "2026-11-26",
       "discoveredAt": "2026-11-17",
       "pendingReason": "官方页面发生变化或需重新确认",
       "checkNote": "金额或门槛数字不受对应原文支持"
@@ -1856,8 +1906,8 @@
       "minFollowers": null,
       "priority": 72,
       "verification": "official",
-      "verifiedAt": "2026-11-23",
-      "checkedAt": "2026-11-23",
+      "verifiedAt": "2026-11-26",
+      "checkedAt": "2026-11-26",
       "sourceHash": "0f6568e355a9dd9d41ec0ef3373b8eb0366994e5a7c72629d431b98d750110dd"
     }
   ]
