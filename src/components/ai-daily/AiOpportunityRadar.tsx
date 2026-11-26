@@ -204,27 +204,30 @@ export function AiOpportunityRadar({
   number = '09',
 }: AiOpportunityRadarProps) {
   return (
-    <section
+    <Disclosure
+      open
       className={
         variant === 'issue'
-          ? 'ai-daily-content-section ai-opportunity-section'
-          : 'ai-opportunity-radar'
+          ? 'ai-daily-content-section ai-opportunity-section ai-daily-foldable'
+          : 'ai-opportunity-radar ai-daily-foldable'
       }
       id={id}
       aria-labelledby={`${id}-heading`}
     >
       {variant === 'issue' ? (
-        <div className="ai-daily-content-heading">
-          <span>{number}</span>
+        <summary className="ai-daily-content-heading">
+          {number && <span>{number}</span>}
           <h2 id={`${id}-heading`}>AI 创作者机会</h2>
-        </div>
+        </summary>
       ) : (
-        <header>
-          <p className="ai-daily-eyebrow">CREATOR RADAR</p>
-          <h2 id={`${id}-heading`}>AI 创作者机会</h2>
-        </header>
+        <summary className="ai-daily-supplement-heading">
+          <div>
+            <p className="ai-daily-eyebrow">CREATOR RADAR</p>
+            <h2 id={`${id}-heading`}>AI 创作者机会</h2>
+          </div>
+        </summary>
       )}
       <RadarContent compact={variant === 'index'} />
-    </section>
+    </Disclosure>
   )
 }

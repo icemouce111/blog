@@ -1,29 +1,29 @@
 interface AiDailySignalStatsProps {
   signals: number
-  openSource: number
-  openSourceLabel?: string
-  opportunities: number
+  sources: number
+  readingMinutes: number
+  isSignalArchive?: boolean
 }
 
 export function AiDailySignalStats({
   signals,
-  openSource,
-  openSourceLabel = '开源精选',
-  opportunities,
+  sources,
+  readingMinutes,
+  isSignalArchive = false,
 }: AiDailySignalStatsProps) {
   return (
     <dl className="ai-daily-signal-stats" aria-label="本期情报概览">
       <div>
-        <dt>今日信号</dt>
+        <dt>{isSignalArchive ? '收录条目' : '本期解读'}</dt>
         <dd><strong>{signals}</strong><span>条</span></dd>
       </div>
       <div>
-        <dt>{openSourceLabel}</dt>
-        <dd><strong>{openSource}</strong><span>个</span></dd>
+        <dt>来源链接</dt>
+        <dd><strong>{sources}</strong><span>个</span></dd>
       </div>
       <div>
-        <dt>可行动机会</dt>
-        <dd><strong>{opportunities}</strong><span>项</span></dd>
+        <dt>预计阅读</dt>
+        <dd><strong>{readingMinutes}</strong><span>分钟</span></dd>
       </div>
     </dl>
   )

@@ -223,3 +223,37 @@ export function parseAiDailyContent(content: string): ParsedAiDailyContent {
     fallbackMarkdown: sections.length ? '' : editorialContent.trim(),
   }
 }
+
+export function getAiDailyReadingSections(parsed: ParsedAiDailyContent): AiDailySection[] {
+  if (!parsed.isSignalArchive) return parsed.sections
+
+  const sources = parsed.sections.flatMap((section) => {
+    const headings = [...section.markdown.matchAll(/^###\s+(.+)$/gm)]
+    if (!headings.length) return [section]
+
+    return headings.map((heading, index) => {
+      const title = cleanSectionTitle(heading[1])
+      const start = (heading.index ?? 0) + heading[0].length
+      const end = headings[index + 1]?.index ?? section.markdown.length
+      const introduction = index === 0 ? section.markdown.slice(0, heading.index).trim() : ''
+      return {
+        number: section.number,
+        title,
+        id: createSectionId('source', title),
+        markdown: [introduction, section.markdown.slice(start, end).trim()].filter(Boolean).join('\n\n'),
+      }
+    })
+  })
+
+  // Readable news and research lead; the original supplementary material stays available.
+  const preferred = ['AIHOT', 'OpenAI', 'Anthropic', 'HuggingFace Papers']
+  const supplements = ['GitHub Trending', 'AI Creator Opportunities', 'Google Trends']
+  function readingOrder(section: AiDailySection) {
+    const index = preferred.indexOf(section.title)
+    if (index >= 0) return index
+    return supplements.includes(section.title) ? preferred.length + 1 : preferred.length
+  }
+  return sources
+    .toSorted((first, second) => readingOrder(first) - readingOrder(second))
+    .map((section, index) => ({ ...section, number: String(index + 1).padStart(2, '0') }))
+}

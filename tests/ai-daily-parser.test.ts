@@ -6,6 +6,7 @@ import {
   isAiDailySlug,
   parseFrontmatter,
   parseAiDailyContent,
+  getAiDailyReadingSections,
 } from '../src/lib/ai-daily-parser.ts'
 
 test('parses numbered editorial sections and derives a lead story', () => {
@@ -42,6 +43,42 @@ test('parses numbered editorial sections and derives a lead story', () => {
   assert.doesNotMatch(result.sections[0].markdown, /模型推理进入新阶段/)
   assert.equal(result.footer, '*本日报由自动化系统生成*')
   assert.doesNotMatch(result.sections[1].markdown, /本日报由自动化系统生成/)
+  assert.deepEqual(getAiDailyReadingSections(result), result.sections)
+})
+
+test('来源速览优先展示资讯和研究，同时保留补充材料和来源链接', () => {
+  const parsed = parseAiDailyContent(`
+## 01 今日来源速览
+
+本期来源摘要。
+
+### GitHub Trending
+- **项目** [来源](https://github.com/example/repo)
+
+### HuggingFace Papers
+- **论文** [来源](https://huggingface.co/papers/example)
+
+### AI Creator Opportunities
+- **合作渠道** [来源](https://example.org/creator)
+
+### AIHOT
+- **产品变化** [来源](https://aihot.news/items/example)
+
+### OpenAI
+- **官方发布** [来源](https://openai.com/example)
+`)
+  const sections = getAiDailyReadingSections(parsed)
+  assert.deepEqual(sections.map((section) => section.title), [
+    'AIHOT', 'OpenAI', 'HuggingFace Papers', 'GitHub Trending', 'AI Creator Opportunities',
+  ])
+  assert.equal(sections[0].id, 'source-aihot')
+  assert.deepEqual(sections.map((section) => section.number), ['01', '02', '03', '04', '05'])
+  const markdown = sections.map((section) => section.markdown).join('\n')
+  for (const url of parsed.sections[0].markdown.match(/https?:\/\/[^)]+/g) || []) {
+    assert.ok(markdown.includes(url), `${url} 必须保留`)
+  }
+  assert.ok(markdown.includes('本期来源摘要。'))
+  assert.equal(parsed.sections[0].title, '今日来源速览')
 })
 
 test('recognizes a numbered signal archive and indented source items', () => {

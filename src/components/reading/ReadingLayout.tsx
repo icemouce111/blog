@@ -18,6 +18,11 @@ interface ReadingLayoutProps {
 function scrollToHeading(id: string, smooth: boolean) {
   const target = document.getElementById(id)
   if (!target) return
+  let disclosure = target.closest('details')
+  while (disclosure) {
+    disclosure.open = true
+    disclosure = disclosure.parentElement?.closest('details') ?? null
+  }
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   target.scrollIntoView({ block: 'start', behavior: smooth && !reduced ? 'smooth' : 'auto' })
 }
@@ -47,7 +52,9 @@ export function ReadingLayout({ sections, children, directoryFooter }: ReadingLa
         activeReadingSection(
           sections.flatMap(({ id }) => {
             const element = document.getElementById(id)
-            return element ? [{ id, top: element.getBoundingClientRect().top }] : []
+            return element?.getClientRects().length
+              ? [{ id, top: element.getBoundingClientRect().top }]
+              : []
           }),
           offset,
         ),

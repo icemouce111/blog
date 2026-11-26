@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { Link } from 'react-router-dom'
-import type { AiDailyMeta } from '@/lib/ai-daily'
+import { MarkdownContent } from '@/components/reading/MarkdownContent'
+import { Disclosure } from '@/components/ui/disclosure'
+import type { AiDailyMeta, AiDailyPost } from '@/lib/ai-daily'
+import type { AiDailySection } from '@/lib/ai-daily-parser'
 import { AiDailySignalStats } from './AiDailySignalStats'
 
 interface AiDailyLatestIssueProps {
-  latest: AiDailyMeta
-  openSourceCount: number
-  openSourceLabel?: string
-  opportunityCount: number
+  latest: AiDailyPost
+  sections: AiDailySection[]
 }
 
 interface AiDailyArchiveListProps {
@@ -17,38 +17,63 @@ interface AiDailyArchiveListProps {
 
 export function AiDailyLatestIssue({
   latest,
-  openSourceCount,
-  openSourceLabel,
-  opportunityCount,
+  sections,
 }: AiDailyLatestIssueProps) {
+  const previews = sections.filter((section) => section.markdown.trim()).slice(0, 4)
   return (
     <section className="ai-daily-latest" aria-labelledby="latest-issue-heading">
       <div className="ai-daily-briefing-bar">
         <span>最新一期 / {latest.dateISO}</span>
-        <strong>预计阅读 {latest.readingMinutes} 分钟</strong>
+        <div className="ai-daily-briefing-links">
+          <span className="ai-daily-format-label">{latest.isSignalArchive ? '来源速览' : '编辑简报'}</span>
+          <Link to={`/ai-daily/${latest.slug}`}>全文 ↗</Link>
+        </div>
       </div>
       <article className="ai-daily-featured">
         <div className="ai-daily-featured-kicker">
-          <span /> 今日主线
+          <span /> {latest.isSignalArchive ? '本期资讯' : '今日主线'}
         </div>
         <h2 id="latest-issue-heading" className="ai-daily-serif">
           <Link to={`/ai-daily/${latest.slug}`}>{latest.leadTitle}</Link>
         </h2>
         {latest.leadSummary && (
           <div className="ai-daily-featured-summary">
-            <ReactMarkdown>{latest.leadSummary}</ReactMarkdown>
+            <MarkdownContent sections={[]}>{latest.leadSummary}</MarkdownContent>
           </div>
         )}
-        <Link className="ai-daily-read-link" to={`/ai-daily/${latest.slug}`}>
-          <span aria-hidden="true">→</span> 阅读本期行动情报
-        </Link>
       </article>
       <AiDailySignalStats
         signals={latest.storyCount}
-        openSource={openSourceCount}
-        openSourceLabel={openSourceLabel}
-        opportunities={opportunityCount}
+        sources={latest.sourceCount}
+        readingMinutes={latest.readingMinutes}
+        isSignalArchive={latest.isSignalArchive}
       />
+      <div className="ai-daily-news-preview">
+        {previews.map((section, index) => {
+          const previewMarkdown = section.markdown.replace(
+            /^(\s*(?:[-*+]|\d+\.)\s+\*\*[^*\n]+\*\*)[：:][ \t]*/gm,
+            '$1\n\n    ',
+          )
+          return (
+            <Disclosure open className="ai-daily-foldable" id={section.id} key={section.id} aria-labelledby={`${section.id}-preview-heading`}>
+              <summary className="ai-daily-news-heading">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3 id={`${section.id}-preview-heading`}>{section.title}</h3>
+              </summary>
+              <MarkdownContent sections={[]}>{previewMarkdown}</MarkdownContent>
+              <div className="ai-daily-preview-footer">
+                <Link to={`/ai-daily/${latest.slug}#${encodeURIComponent(section.id)}`}>查看本板块全文 ↗</Link>
+              </div>
+            </Disclosure>
+          )
+        })}
+        {latest.parsed.fallbackMarkdown && (
+          <MarkdownContent sections={[]}>{latest.parsed.fallbackMarkdown}</MarkdownContent>
+        )}
+      </div>
+      <Link className="ai-daily-all-stories" to={`/ai-daily/${latest.slug}`}>
+        查看本期全部内容 <span aria-hidden="true">→</span>
+      </Link>
     </section>
   )
 }
@@ -60,11 +85,11 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
   const visibleArchive = expanded ? archive : archive.slice(0, 8)
 
   return (
-    <section className="ai-daily-archive" aria-labelledby="daily-archive-heading">
-      <div className="ai-daily-section-label">
+    <Disclosure open className="ai-daily-archive ai-daily-foldable" aria-labelledby="daily-archive-heading">
+      <summary className="ai-daily-section-label">
         <h2 id="daily-archive-heading">往期简报</h2>
         <span>{archive.length} 期</span>
-      </div>
+      </summary>
       <ol className="ai-daily-archive-list">
         {visibleArchive.map((post) => (
           <li key={post.slug}>
@@ -73,7 +98,7 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
               <span className="ai-daily-archive-copy">
                 <span className="ai-daily-archive-title ai-daily-serif">{post.leadTitle}</span>
                 <span className="ai-daily-archive-note">
-                  {post.isSignalArchive ? '来源速览' : `${post.storyCount} 条编辑信号`}
+                  {post.isSignalArchive ? `来源速览 · ${post.storyCount} 条记录` : `${post.storyCount} 条编辑信号`}
                 </span>
               </span>
               <span className="ai-daily-archive-arrow" aria-hidden="true">
@@ -93,6 +118,6 @@ export function AiDailyArchiveList({ archive }: AiDailyArchiveListProps) {
           {expanded ? '收起往期' : `查看全部 ${archive.length} 期`}
         </button>
       )}
-    </section>
+    </Disclosure>
   )
 }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Disclosure } from '@/components/ui/disclosure'
 import type { GithubDailyPost } from '@/lib/github-daily'
 import { getGithubDigestLabel, getGithubDailyStarRanking } from '@/lib/github-daily-digest'
 import { ExternalLink } from 'lucide-react'
@@ -83,28 +84,29 @@ export function GithubDailyDigest({
 
   if (variant === 'issue') {
     return (
-      <section
-        className="ai-daily-content-section ai-daily-supplement ai-github-section"
+      <Disclosure
+        open
+        className="ai-daily-content-section ai-daily-supplement ai-github-section ai-daily-foldable"
         id={id}
         aria-labelledby={`${id}-heading`}
       >
-        <div className="ai-daily-content-heading">
+        <summary className="ai-daily-content-heading">
           <span>{number}</span>
           <h2 id={`${id}-heading`} className="ai-daily-serif">
             GitHub {digestLabel}
           </h2>
-        </div>
+        </summary>
         <p className="ai-daily-section-intro">
           {post.dateDisplay} · 按 GitHub Trending 上榜项目的当日新增 Star 排序。
         </p>
         <DigestBody post={post} />
-      </section>
+      </Disclosure>
     )
   }
 
   return (
-    <section className="ai-github-digest" id={id} aria-labelledby={`${id}-heading`}>
-      <header>
+    <Disclosure open className="ai-github-digest ai-daily-foldable" id={id} aria-labelledby={`${id}-heading`}>
+      <summary className="ai-daily-supplement-heading">
         <div>
           <p className="ai-daily-eyebrow">OPEN SOURCE PICKS</p>
           <h2 id={`${id}-heading`} className="ai-daily-serif">
@@ -112,8 +114,8 @@ export function GithubDailyDigest({
           </h2>
         </div>
         <time dateTime={post.date}>{post.date.slice(5).replace('-', '.')}</time>
-      </header>
+      </summary>
       <DigestBody post={post} compact />
-    </section>
+    </Disclosure>
   )
 }
