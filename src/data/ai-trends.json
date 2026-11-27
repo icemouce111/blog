@@ -2,15 +2,15 @@
   "windows": [
     {
       "window": "week",
-      "rangeStart": "2026-11-20",
-      "rangeEnd": "2026-11-26",
-      "updatedAt": "2026-11-26T21:46:51+08:00",
+      "rangeStart": "2026-11-21",
+      "rangeEnd": "2026-11-27",
+      "updatedAt": "2026-11-27T22:26:51+08:00",
       "coverageCount": 6,
       "mode": "generated",
       "insights": [
         {
           "title": "Agent从演示走向生产治理",
-          "summary": "本周多期日报显示，Agent 应用的重心从“能不能做”转向“如何管住”。Google 工程师提出 Learn、Guard、Review、Score 四层生产路线图，Google 又要求 Agent 自 2027 年起必须经 Workspace MCP 服务器访问 Gmail、Drive，直接调用 REST API 将受限；开发者侧则讨论数据驻留与 Agent 权限必须分开、自愈定位器何时该拒绝错误修复。这意味着企业采用 Agent 的前置条件正从模型能力转为权限、审计与评分机制。",
+          "summary": "本周多期日报显示，Agent 应用的重心从“能不能做”转向“如何可控地做”：Google 工程师提出 Learn、Guard、Review、Score 四层生产路线，企业侧开始用检查清单评估 Copilot Studio 项目，开发者则讨论上下文漂移、工具权限与数据库误操作等风险。影响是组织采用 Agent 前需先补齐审查、评分与权限边界，而非只比较模型能力。",
           "sources": [
             {
               "title": "Google engineers publish a four-layer roadmap for running AI agents in production",
@@ -18,30 +18,25 @@
               "publishedAt": "2026-11-26"
             },
             {
-              "title": "Google 强制 AI Agent 走 Workspace MCP 服务器，Gmail 服务器不能发邮件",
-              "url": "https://aihot.news/items/vboh9u5yjfjgj1ha6rl804tkh",
+              "title": "7 Questions to Answer Before Your Company Builds a Copilot Studio Agent",
+              "url": "https://medium.com/tsinfo-technologies/7-questions-to-answer-before-your-company-builds-a-copilot-studio-agent-f1f1f4084516?source=rss------artificial_intelligence-5",
               "publishedAt": "2026-11-26"
             },
             {
-              "title": "Private AI Is Not Enough: Why Data Residency and Agent Permissions Must Be Separate",
-              "url": "https://medium.com/@agents_78378/private-ai-is-not-enough-why-data-residency-and-agent-permissions-must-be-separate-4291e586dbb0?source=rss------artificial_intelligence-5",
-              "publishedAt": "2026-11-25"
+              "title": "上下文漂移如何影响你的 AI Agent：470 项实验与一个免费的 MCP 解法",
+              "url": "https://aihot.news/items/br6usy3mxv1q0mzxhgf9y8qam",
+              "publishedAt": "2026-11-26"
             }
           ]
         },
         {
-          "title": "编码Agent进入团队级工作流",
-          "summary": "编码 Agent 正从个人补全工具变成团队流程的一环。iFood 把编码 Agent 扩展到 15,000 个仓库，Clay 用 Codex 与 ChatGPT 支撑销售研究与打法生成；GitHub 将 Copilot 代码审查计费默认归到组织，Claude Code 团队推出 Code Review、PR Steward 等智能体处理 PR、失败 CI 与合并冲突。组织开始为 Agent 的产出付费并设定审查边界，而非仅按席位采购。",
+          "title": "编码Agent进入代码审查与交付链",
+          "summary": "编码 Agent 正从补全代码扩展到 PR 审查、CI 修复与合并冲突处理：Claude Code 团队推出 Code Review、PR Steward 等智能体，GitHub 也将 Copilot 代码审查计费默认归到组织。与此同时，开发者强调 AI 审查结果需稳定映射为告警，避免措辞变化制造重复噪音。影响是代码审查成为 Agent 落地最明确的组织级工作流入口。",
           "sources": [
             {
-              "title": "How iFood scales coding agents across 15,000 repositories",
-              "url": "https://openai.com/business/customer-stories/ifood",
+              "title": "Claude Code 团队发布实用指南讲解 Claude Ship 的 PR 审查与守护用法",
+              "url": "https://aihot.news/items/uyodjb16jngloilypsm1d3q0d",
               "publishedAt": "2026-11-25"
-            },
-            {
-              "title": "Clay helps sales teams win with Codex and ChatGPT",
-              "url": "https://openai.com/business/customer-stories/clay-plugins-openai",
-              "publishedAt": "2026-11-26"
             },
             {
               "title": "Copilot code review billing will default to the organization",
@@ -49,20 +44,20 @@
               "publishedAt": "2026-11-26"
             },
             {
-              "title": "Claude Code 团队发布实用指南讲解 Claude Ship 的 PR 审查与守护用法",
-              "url": "https://aihot.news/items/uyodjb16jngloilypsm1d3q0d",
-              "publishedAt": "2026-11-25"
+              "title": "From AI Findings to SARIF: Keep Alerts Stable Across Runs",
+              "url": "https://dev.to/pavelespitia/from-ai-findings-to-sarif-keep-alerts-stable-across-runs-2329",
+              "publishedAt": "2026-11-27"
             }
           ]
         },
         {
-          "title": "办公与客服场景被Agent接管",
-          "summary": "面向普通办公与客户服务的 Agent 正在补齐“执行”环节。ChatGPT 推出 Space 统一管理页面、幻灯片、图片与文件，并可从已连接工具自动更新；千问 APP 免费开放代打电话服务，经授权可代为沟通需求；Richpanel 用 GPT-6 系列模型让 AI 客服在 30 天内自动化约一半支持工作。应用层竞争从生成内容转向替用户完成跨工具、跨渠道的具体事务。",
+          "title": "办公套件与垂直场景被Agent接管",
+          "summary": "办公与垂直行业出现明确的 Agent 接入路径：Google 将 Workspace MCP 服务器正式开放并计划要求 Agent 经其访问 Gmail、Drive 等服务，千问 App 开放代打电话，Figma 演示用 Specs 与 agent 生成开发计划。影响是 Agent 不再停留在聊天框，而是嵌入邮件、日程、设计交付与电话沟通等具体流程，组织需同步调整权限与数据驻留策略。",
           "sources": [
             {
-              "title": "ChatGPT 推出 Space：统一管理页面、幻灯片、图片与文件",
-              "url": "https://aihot.news/items/ekf0so0xitc52thkrxx3mwax1",
-              "publishedAt": "2026-11-21"
+              "title": "Google 强制 AI Agent 走 Workspace MCP 服务器，Gmail 服务器不能发邮件",
+              "url": "https://aihot.news/items/vboh9u5yjfjgj1ha6rl804tkh",
+              "publishedAt": "2026-11-26"
             },
             {
               "title": "千问APP免费开放千问Go打电话服务，经授权可代打电话和定时来电",
@@ -70,9 +65,9 @@
               "publishedAt": "2026-11-25"
             },
             {
-              "title": "Richpanel helps companies automate 50% of support in 30 days",
-              "url": "https://openai.com/business/customer-stories/richpanel-ai-customer-support",
-              "publishedAt": "2026-11-25"
+              "title": "Figma 演示用 Specs 与 Figma agent 把上下文变成可实现的开发计划",
+              "url": "https://aihot.news/items/w612ivonntodntv1ydkt2lqwh",
+              "publishedAt": "2026-11-21"
             }
           ]
         }
